@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+body {
+    background-image: url(../images/bg.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh; /* 添加这一行代码，设置高度为浏览器窗口的高度 */
+}
+
+#main{
+    width: 1009px;
+    height: 555px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; /* 将容器设置为弹性容器 */
+    border-radius: 6px; /* 设置圆角半径 */
+    
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+a {
+    text-decoration: none !important;
+  }
+  
+
+a img, a span {
+    vertical-align: middle;
+  }
+
+#head {
+    width: 35px;
+    height: 35px;
+  }
+
+
+#nr {
+    margin-top: 20px;
+    font-size: 11px;
+}
+
+ul li{
+    padding: 25px;
+}
+
+
+/*搜索框*/
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;/*和顶部的距离*/
+   
+    
+}
+.form-control {
+    height: calc(2.5em + .75rem + 2px);
+  }
+
+
+/*搜索按钮*/
+button {
+
+    box-shadow: 0 2px 4px rgba(65, 63, 63, 0.3); /* 设置阴影效果 */
+}
+
+
+/*选项卡*/
+.xx {
+    padding-top: 50px;
+    width: 50%; /* 调整选项卡的宽度 */
+    margin: 0 auto; /* 居中 */
+  }
+ 

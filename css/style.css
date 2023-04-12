@@ -4,7 +4,7 @@
 
 }
 body {
-    background-image: url(../images/bg.png);
+    background-image: url(../images/bg1.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -77,3 +77,37 @@ button {
     margin: 0 auto; /* 居中 */
   }
  
+  .shake {
+    animation: shake 0.5s;
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-10px);
+    }
+    50% {
+      transform: translateX(10px);
+    }
+    75% {
+      transform: translateX(-10px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+
+/*按钮透明度*/
+  .btn {
+    opacity: 0.8;
+  }
+
+/*内容透明度*/
+  .list-group {
+    opacity: 0.7; /* 将透明度设置为 0.8 */
+  }
+  
+  

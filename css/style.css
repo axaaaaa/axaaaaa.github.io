@@ -21,9 +21,14 @@ body {
     transform: translate(-50%, -50%);
     display: flex; /* 将容器设置为弹性容器 */
     border-radius: 6px; /* 设置圆角半径 */
-    
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
+
+
+
+
+
+
 a {
     text-decoration: none !important;
   }
@@ -110,4 +115,22 @@ button {
     opacity: 0.7; /* 将透明度设置为 0.8 */
   }
   
+
+
+  /* 当屏幕宽度大于等于 768px 时 */
+@media screen and (min-width: 768px) {
+  #main {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+/* 当屏幕宽度小于 768px 时 */
+@media screen and (max-width: 767px) {
+  #main {
+    width: 80%;
+    height: 80%;
+  }
+}
+
   

@@ -5,12 +5,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>星辰启航</title>
+  <title>星辰</title>
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-<!--搜索框抖动效果-->
+  <script src="js/script.js"></script>
+
+  <!--搜索框抖动效果-->
   <script>
     function search() {
       var searchBox = document.getElementById("search-input");
@@ -34,14 +35,12 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
 
-
-
   <!--搜索框-->
   <div class="d-flex justify-content-center">
     <div class="search-container col-6">
       <div class="input-group mb-3">
         <input type="text" class="form-control" id="search-input" style="background-color: rgba(255, 255, 255, 0.4);"
-          placeholder="搜索内容" aria-label="搜索内容" aria-describedby="button-addon2">
+          placeholder="Google" aria-label="Google" aria-describedby="button-addon2">
         <button onclick="search()" class="btn btn-primary" type="button" id="search-button">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
             viewBox="0 0 16 16">
@@ -53,8 +52,6 @@
       </div>
     </div>
   </div>
-
-
 
 
   <script>
@@ -70,18 +67,13 @@
     });
   </script>
 
-
-
-
   <!--内容-->
   <div id="main" style="background-color: rgba(255, 255, 255, 0.1);"><!--调整透明色-->
     <!--选项卡-->
-    <div class="btn-group-vertical" role="group" aria-label="Vertical button group" >
+    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
       <button type="button" class="btn btn-primary" onclick="showDiv('div1')"><svg xmlns="http://www.w3.org/2000/svg"
-          width="16" height="16" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16" >
-          <path
-            d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5ZM3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.58 26.58 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.933.933 0 0 1-.765.935c-.845.147-2.34.346-4.235.346-1.895 0-3.39-.2-4.235-.346A.933.933 0 0 1 3 9.219V8.062Zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a24.767 24.767 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25.286 25.286 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135Z">
-          </path>
+          width="16" height="16" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
+     
           <path
             d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2V1.866ZM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5Z">
           </path>
@@ -105,44 +97,23 @@
             d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975 1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z" />
         </svg>
         AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
-      <button type="button" class="btn btn-primary" onclick="showDiv('div3')">AI声音</button>
+
+
+   
     </div>
 
     <div id="div1">
       <!-- 这里是第一个div的内容 -->
 
-      <div class="list-group">
-        <a href="https://chat.openai.com/chat" target="_blank"
-          class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-          <img src="images/ico/chatgpt.png" alt="台布斯" width="42" height="42" class="rounded-circle flex-shrink-0"
-            _mstalt="49348" _msthash="6">
-          <div class="d-flex gap-2 w-100 justify-content-between">
+      <div class="list-group list-group-flush">
+        <a href="https://chat.openai.com/" target="_blank" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <img src="images/ico/chatgpt.png"  width="42" height="42" >
             <div class="border-2">
-              <h6 class="mb-0" _msttexthash="24317436" _msthash="7">ChatGPT</h6>
-              <p class="mb-0 opacity-75" _msttexthash="45110533" _msthash="8">大语言模型</p>
+              <h6 class="mb-0">ChatGPT</h6>
+              <p class="mb-0 opacity-75">大语言模型</p>
             </div>
-
-          </div>
         </a>
-        <a href="https://www.bing.com" target="_blank" class="list-group-item list-group-item-action d-flex gap-3 py-3"
-          aria-current="true">
-          <img src="images/ico/bing.jpg" alt="台布斯" width="42" height="42" class="rounded-circle flex-shrink-0"
-            _mstalt="49348" _msthash="10">
-          <div class="d-flex gap-2 w-100 justify-content-between">
-            <div>
-              <h6 class="mb-0" _msttexthash="31917587" _msthash="11">Bing</h6>
-              <p class="mb-0 opacity-75" _msttexthash="140760022" _msthash="12">搜索引擎</p>
-            </div>
 
-          </div>
-        </a>
         <a href="https://yiyan.baidu.com/" target="_blank"
           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
           <img src="images/ico/baidu.ico" alt="台布斯" width="42" height="42" class="rounded-circle flex-shrink-0"
@@ -152,32 +123,29 @@
               <h6 class="mb-0" _msttexthash="16336372" _msthash="15">文言一心</h6>
               <p class="mb-0 opacity-75" _msttexthash="45110533" _msthash="16">百度大语言模型</p>
             </div>
-
           </div>
         </a>
+
         <a href="https://bard.google.com/" target="_blank"
           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-          <img src="https://www.gstatic.com/lamda/images/favicon_v1_150160cddff7f294ce30.svg" alt="台布斯" width="42"
+          <img src="https://www.gstatic.com/lamda/images/favicon_v1_150160cddff7f294ce30.svg"  width="42"
             height="42" class="rounded-circle flex-shrink-0" _mstalt="49348" _msthash="14">
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0" _msttexthash="16336372" _msthash="15">Google Bard</h6>
               <p class="mb-0 opacity-75" _msttexthash="45110533" _msthash="16">Google出品</p>
             </div>
-
           </div>
         </a>
 
         <a href="https://tongyi.aliyun.com/" target="_blank"
           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-          <img src="./images/ico/ali.jpg" alt="台布斯" width="42" height="42" class="rounded-circle flex-shrink-0"
-            _mstalt="49348" _msthash="14">
+          <img src="./images/ico/ali.jpg"  width="42" height="42" class="rounded-circle flex-shrink-0">
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
-              <h6 class="mb-0" _msttexthash="16336372" _msthash="15">通义千问</h6>
-              <p class="mb-0 opacity-75" _msttexthash="45110533" _msthash="16">阿里出品</p>
+              <h6 class="mb-0">通义千问</h6>
+              <p class="mb-0 opacity-75">阿里出品</p>
             </div>
-
           </div>
         </a>
 
@@ -185,13 +153,13 @@
 
     </div>
 
+
+
     <div id="div2" style="display:none">
       <!-- 这里是第二个div的内容 -->
 
       <div class="list-group">
-
-
-
+        <!--Mj绘图-->
         <a href="https://www.midjourney.com/" target="_blank"
           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
           <img src="images/ico/Midjourney_Emblem.png" alt="台布斯" width="42" height="42"
@@ -223,15 +191,6 @@
         document.getElementById(divId).style.display = "block";
       }
     </script>
-
-
-
-
-
-
-
-
-
 
 
 

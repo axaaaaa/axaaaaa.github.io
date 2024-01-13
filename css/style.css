@@ -4,7 +4,7 @@
 
 }
 body {
-    background-image: url(../images/bg1.jpg);
+    /*background-image: url(../images/bg.jpg);*/
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -12,22 +12,16 @@ body {
 }
 
 #main{
-    width: 1009px;
+    width: 1000px;
     height: 555px;
-    background-color: rgb(255, 255, 255);
     position: absolute;
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex; /* 将容器设置为弹性容器 */
-    border-radius: 6px; /* 设置圆角半径 */
+    border-radius: 4px; /* 设置圆角半径 */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
-
-
-
-
-
 
 a {
     text-decoration: none !important;
@@ -59,8 +53,7 @@ ul li{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;/*和顶部的距离*/
-   
+    margin-top: 160px;/*和顶部的距离*/
     
 }
 .form-control {
@@ -107,15 +100,14 @@ button {
 
 /*按钮透明度*/
   .btn {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
 /*内容透明度*/
   .list-group {
-    opacity: 0.7; /* 将透明度设置为 0.8 */
+    opacity: 0.8; /* 将透明度设置为 0.8 */
   }
   
-
 
   /* 当屏幕宽度大于等于 768px 时 */
 @media screen and (min-width: 768px) {
@@ -133,4 +125,22 @@ button {
   }
 }
 
+/*按钮组*/
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
   
+/*按钮*/
+.anniu{
+  width:150px;
+  height: 60px;
+  opacity: 0.9; /* 将透明度设置为 0.8 */
+  background-color:#0d6efd;
+  color: #fff;
+  border-color: transparent;
+  /*margin-bottom: 1px;*/
+
+}
+

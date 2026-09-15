@@ -30,4 +30,3 @@ class Tests(unittest.TestCase):
             self.assertEqual(c.check("https://example.com", {})["status"], "retrying")
 if __name__ == "__main__":
     unittest.main()
-

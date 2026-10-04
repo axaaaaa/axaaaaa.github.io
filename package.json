@@ -1,0 +1,64 @@
+{
+  "name": "navigation-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:deploy": "vue-cli-service build && node scripts/prepare-deploy.mjs",
+    "prepare:deploy": "node scripts/prepare-deploy.mjs",
+    "gen:sites": "python scripts/generate-sites-list.py",
+    "check:sites": "python scripts/generate-sites-list.py --check",
+    "status:local": "cd dist && python ../scripts/check_sites.py",
+    "lint": "vue-cli-service lint",
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.8",
+    "cheerio": "^1.0.0",
+    "core-js": "^3.8.3",
+    "cors": "^2.8.5",
+    "element-plus": "^2.8.8",
+    "express": "^4.21.1",
+    "node-fetch": "^2.7.0",
+    "pinyin-pro": "^3.26.0",
+    "rss-parser": "^3.13.0",
+    "rsshub": "^1.0.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.5.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "compression-webpack-plugin": "^12.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "unplugin-auto-import": "^21.0.0",
+    "unplugin-vue-components": "^31.0.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

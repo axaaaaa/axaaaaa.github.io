@@ -1,0 +1,218 @@
+<template>
+  <footer class="footer" :class="{ 'dark-theme': currentTheme === 'dark' }">
+    <div class="footer-wrapper">
+      
+      <div class="footer-top">
+        <div class="social-links">
+          <a href="https://github.com" target="_blank" title="GitHub" class="social-link">
+            <el-icon><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></el-icon>
+          </a>
+          <a href="mailto:bwang694@gmail.com" title="联系我们" class="social-link">
+            <el-icon><Message /></el-icon>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-middle">
+        <div class="stats-item">
+          <span class="label">收录分类</span>
+          <span class="value">{{ totalCategories }}</span>
+        </div>
+        <div class="divider">/</div>
+        <div class="stats-item">
+          <span class="label">收录链接</span>
+          <span class="value">{{ totalLinks }}</span>
+        </div>
+        <div class="divider">/</div>
+        <div class="stats-item">
+          <span class="label">运行天数</span>
+          <span class="value">{{ runningDays }}</span>
+        </div>
+        <div class="divider">/</div>
+        <div class="stats-item">
+          <span class="label">最后更新</span>
+          <span class="value">{{ lastUpdateTime }}</span>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-actions">
+          <a href="#" @click.prevent="$emit('show-donate')" class="action-btn donate-btn">
+            <el-icon><Coffee /></el-icon>
+            <span>支持我们</span>
+          </a>
+        </div>
+        <div class="footer-slogan">去往心之所向。</div>
+      </div>
+
+    </div>
+  </footer>
+</template>
+
+<script>
+import { Message, Coffee } from '@element-plus/icons-vue'
+import { navData } from "../nav-data.js"
+
+export default {
+  name: 'NavigationFooter',
+  components: { Message, Coffee },
+  props: {
+    currentTheme: { type: String, required: true }
+  },
+  computed: {
+    totalCategories() {
+      return navData.length;
+    },
+    totalLinks() {
+      return navData.reduce((total, category) => {
+        let count = 0;
+        if (category.subCategories) {
+          count += category.subCategories.reduce((subTotal, sub) => {
+            return subTotal + (sub.links ? sub.links.length : 0);
+          }, 0);
+        }
+        if (category.links) {
+          count += category.links.length;
+        }
+        return total + count;
+      }, 0);
+    },
+    // 网站运行天数
+    runningDays() {
+      const startDate = new Date('2024-11-23'); // 网站创建日期：2024年11月23日
+      const today = new Date();
+      const diffTime = Math.abs(today - startDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays + ' 天';
+    },
+    lastUpdateTime() {
+      return new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).replace(/\//g, '-');
+    }
+  }
+}
+</script>
+
+<style scoped>
+.footer {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #e4e7ed;
+  margin-top: 40px;
+  padding: 24px 20px;
+}
+
+.footer-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #909399;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: #409EFF;
+}
+
+.social-link svg { width: 18px; height: 18px; }
+
+.footer-middle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #909399;
+}
+
+.stats-item { display: flex; gap: 4px; align-items: baseline; }
+.stats-item .value { color: #606266; font-weight: 500; }
+.divider { color: #dcdfe6; }
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-actions { display: flex; gap: 12px; }
+
+.footer-slogan {
+  font-size: 14px;
+  color: #909399;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-decoration: none;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  background: #fff;
+}
+
+.donate-btn:hover {
+  color: #409EFF;
+  border-color: #409EFF;
+}
+
+/* 暗黑模式 - 黑客帝国绿 */
+.footer.dark-theme {
+  background: #0a0a0a;
+  border-top-color: rgba(0, 255, 65, 0.2);
+}
+
+.dark-theme .social-link:hover,
+.dark-theme .stats-item .value,
+.dark-theme .action-btn:hover {
+  color: var(--dark-text-link, #39ff14);
+}
+
+.dark-theme .divider { color: var(--dark-text-muted, #008822); }
+
+.dark-theme .action-btn {
+  background: transparent;
+  border-color: rgba(0, 255, 65, 0.3);
+  color: var(--dark-text-primary, #00ff41);
+}
+
+.dark-theme .action-btn:hover {
+  background: rgba(0, 255, 65, 0.1);
+  border-color: rgba(0, 255, 65, 0.5);
+}
+
+.dark-theme .stats-item .label,
+.dark-theme .footer-middle,
+.dark-theme .footer-slogan {
+  color: var(--dark-text-muted, #008822);
+}
+
+@media (max-width: 768px) {
+  .footer-middle { flex-wrap: wrap; justify-content: center; }
+}
+</style>

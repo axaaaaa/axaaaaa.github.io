@@ -1,0 +1,30 @@
+.DS_Store
+node_modules
+/dist
+
+# 巡检结果与本地缓存（status.json 由 Actions 生成）
+status.json
+.status-cache/
+*__pycache__/
+*.pyc
+*.bak
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

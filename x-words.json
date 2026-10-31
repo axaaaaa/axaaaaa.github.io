@@ -1,0 +1,217 @@
+{
+  "source": "X榜单话题榜",
+  "sourceUrl": "https://xbangdan.com/words/",
+  "fetchedAt": "2026-10-31T13:57:31.855196+00:00",
+  "sourceUpdatedText": "10-31 21:01",
+  "categories": [
+    {
+      "key": "society",
+      "label": "社会民生"
+    },
+    {
+      "key": "ent",
+      "label": "娱乐八卦"
+    },
+    {
+      "key": "ai",
+      "label": "AI"
+    },
+    {
+      "key": "money",
+      "label": "财经币圈"
+    },
+    {
+      "key": "xcircle",
+      "label": "X"
+    }
+  ],
+  "items": [
+    {
+      "rank": 1,
+      "title": "巴基斯坦军方介入斡旋美伊局势",
+      "summary": "巴基斯坦陆军参谋长向伊朗官员提交调解方案，该提案已获美国批准并得伊朗初步同意。",
+      "category": "society",
+      "categoryLabel": "社会民生",
+      "trend": "down",
+      "viewsText": "196.0万",
+      "meta": "社会民生 · 26 帖 · 24 人在说 · 13:46 首发",
+      "url": "https://x.com/i/status/2112420242660147537"
+    },
+    {
+      "rank": 2,
+      "title": "网传太原出租车侵犯女乘客视频流出",
+      "summary": "网络流传一段太原出租车内监控录像，疑似司机侵犯醉酒女乘客，真实性引发大量讨论。",
+      "category": "society",
+      "categoryLabel": "社会民生",
+      "trend": "down",
+      "viewsText": "152.7万",
+      "meta": "社会民生 · 49 帖 · 35 人在说 · 11:05 首发",
+      "url": "https://x.com/i/status/2112381932055171194"
+    },
+    {
+      "rank": 3,
+      "title": "网友八卦范冰冰早期电影与明星旧闻",
+      "summary": "部分网民重新翻出范冰冰早期电影《苹果》的激情戏片段，发帖议论其当年拍摄细节及明星旧闻。",
+      "category": "ent",
+      "categoryLabel": "娱乐八卦",
+      "trend": "down",
+      "viewsText": "105.3万",
+      "meta": "娱乐八卦 · 19 帖 · 16 人在说 · 11:08 首发",
+      "url": "https://x.com/i/status/2112514180054155357"
+    },
+    {
+      "rank": 4,
+      "title": "开源DeepInfer推理框架",
+      "summary": "深度求索团队以开源协议正式开源生产级推理框架，公布了单集群吞吐性能数据。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "down",
+      "viewsText": "98.3万",
+      "meta": "AI 科技 · 115 帖 · 99 人在说 · 17:04 首发",
+      "url": "https://x.com/i/status/2112471106426900677"
+    },
+    {
+      "rank": 5,
+      "title": "SpaceX发布财报业绩大超预期",
+      "summary": "SpaceX公布最新季度财报，每股收益达到预期的百分之二百三十以上，营收同比增长百分之一百六十一。",
+      "category": "money",
+      "categoryLabel": "财经币圈",
+      "trend": "up",
+      "viewsText": "53.0万",
+      "meta": "财经币圈 · 114 帖 · 74 人在说 · 10:58 首发",
+      "url": "https://x.com/i/status/2112431631537770786"
+    },
+    {
+      "rank": 6,
+      "title": "传字节阿里腾讯向英伟达大批订购芯片",
+      "summary": "传路透社称字节、阿里与腾讯向英伟达订购逾三百万块显卡，总金额超三百五十亿美元。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "up",
+      "viewsText": "36.6万",
+      "meta": "AI 科技 · 19 帖 · 17 人在说 · 10:44 首发",
+      "url": "https://x.com/i/status/2112473587080958429"
+    },
+    {
+      "rank": 7,
+      "title": "主流第三方MC启动器停用国内下载",
+      "summary": "因合规要求与家长举报，包括PCL在内的国内主流我的世界第三方启动器相继停用下载功能。",
+      "category": "society",
+      "categoryLabel": "社会民生",
+      "trend": "down",
+      "viewsText": "33.3万",
+      "meta": "社会民生 · 23 帖 · 21 人在说 · 12:01 首发",
+      "url": "https://x.com/i/status/2112466601660293552"
+    },
+    {
+      "rank": 8,
+      "title": "投资者讨论奈飞财报与高管人事",
+      "summary": "奈飞发布季度财报实现净利润三十七亿美元，同时被曝裁员千人后主导高管亦遭免职。",
+      "category": "money",
+      "categoryLabel": "财经币圈",
+      "trend": "peak",
+      "viewsText": "23.5万",
+      "meta": "财经币圈 · 52 帖 · 45 人在说 · 10:58 首发",
+      "url": "https://x.com/i/status/2112494329444941963"
+    },
+    {
+      "rank": 9,
+      "title": "网友热议中东宗教鄙视链与外籍劳工",
+      "summary": "推特网民热议沙特于十月十四日因清真寺亲吻处决孟加拉夫妇的传闻，探讨劳工阶层待遇。",
+      "category": "society",
+      "categoryLabel": "社会民生",
+      "trend": "peak",
+      "viewsText": "21.0万",
+      "meta": "社会民生 · 9 帖 · 9 人在说 · 13:03 首发",
+      "url": "https://x.com/i/status/2112484034324652110"
+    },
+    {
+      "rank": 10,
+      "title": "网传程序员大V用AI洗稿遭封号",
+      "summary": "网传知名程序员博主因使用人工智能工具在社交平台洗稿搬运内容，被多名用户投诉后遭到封禁。",
+      "category": "xcircle",
+      "categoryLabel": "X",
+      "trend": "down",
+      "viewsText": "19.4万",
+      "meta": "X 圈内 · 16 帖 · 16 人在说 · 13:28 首发",
+      "url": "https://x.com/i/status/2112530807437111615"
+    },
+    {
+      "rank": 11,
+      "title": "电视去广告CleanYourTV走红",
+      "summary": "开源工具走红网络，支持用户通过局域网清理安卓系统电视开机广告并精简系统桌面。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "down",
+      "viewsText": "19.0万",
+      "meta": "AI 科技 · 11 帖 · 10 人在说 · 11:43 首发",
+      "url": "https://x.com/i/status/2112425816688562215"
+    },
+    {
+      "rank": 12,
+      "title": "网友热议科普博主小Lin说视频风格",
+      "summary": "网友围绕科普博主小Lin说的视频风格展开热议，重点讨论其团队专业打磨与IP符号的不可替代性。",
+      "category": "xcircle",
+      "categoryLabel": "X",
+      "trend": "down",
+      "viewsText": "18.8万",
+      "meta": "X 圈内 · 10 帖 · 3 人在说 · 12:00 首发",
+      "url": "https://x.com/i/status/2112421104824570048"
+    },
+    {
+      "rank": 13,
+      "title": "MiniMax发布M3.1系列模型",
+      "summary": "MiniMax正式发布M3.1系列模型，不仅揭晓此前霸榜的匿名模型身份还展示了七万张算力储备。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "down",
+      "viewsText": "18.4万",
+      "meta": "AI 科技 · 68 帖 · 58 人在说 · 10:40 首发",
+      "url": "https://x.com/i/status/2112395852253962304"
+    },
+    {
+      "rank": 14,
+      "title": "币安钱包上线AgentID域名抢注",
+      "summary": "币安钱包上线不可转让的智能体域名功能，用户充值少量币安币支付燃气费可抢注三位靓号。",
+      "category": "money",
+      "categoryLabel": "财经币圈",
+      "trend": "down",
+      "viewsText": "17.8万",
+      "meta": "财经币圈 · 38 帖 · 37 人在说 · 11:29 首发",
+      "url": "https://x.com/i/status/2112479869884088808"
+    },
+    {
+      "rank": 15,
+      "title": "网友分享GamsGo低价合租AI订阅",
+      "summary": "多位网友分享在合租平台低价订阅智能工具，月费降至五美元左右且支持支付宝付款。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "down",
+      "viewsText": "10.2万",
+      "meta": "AI 科技 · 24 帖 · 16 人在说 · 17:12 首发",
+      "url": "https://x.com/i/status/2112472092193312923"
+    },
+    {
+      "rank": 16,
+      "title": "陆奇旗下奇绩创坛遭美国政府制裁",
+      "summary": "美国财政部与国务院将陆奇创办的奇绩创坛列入制裁名单，起因涉前谷歌员工窃密事件。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "peak",
+      "viewsText": "9.8万",
+      "meta": "AI 科技 · 8 帖 · 7 人在说 · 11:03 首发",
+      "url": "https://x.com/i/status/2112404685998960760"
+    },
+    {
+      "rank": 17,
+      "title": "开发者热议个人Agent部署方案",
+      "summary": "多位开发者围绕个人智能体主机选型与部署方案展开讨论，争论权限全开与硬件配置的安全性。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "",
+      "viewsText": "6.4万",
+      "meta": "AI 科技 · 3 帖 · 3 人在说 · 14:04 首发",
+      "url": "https://x.com/i/status/2112527334561718352"
+    }
+  ]
+}

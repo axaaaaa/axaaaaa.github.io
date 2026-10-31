@@ -7,6 +7,7 @@ import urllib.request
 from html.parser import HTMLParser
 from datetime import datetime, timezone
 from pathlib import Path
+from source_images import attach_covers,cache_source_covers
 
 class Node:
     def __init__(self, tag='', attrs=()):
@@ -70,7 +71,8 @@ def parse_trending(html):
 def fetch(period):
     req = urllib.request.Request('https://github.com/trending?since=' + period, headers={'User-Agent':'NavigationTrending/1.0', 'Accept':'text/html'})
     with urllib.request.urlopen(req, timeout=30) as response:
-        return parse_trending(response.read(4_000_000).decode('utf-8'))
+        body=response.read(4_000_000)
+        return cache_source_covers('github',attach_covers('github',parse_trending(body.decode('utf-8')),body,'https://github.com/'))
 
 def main():
     parser = argparse.ArgumentParser()

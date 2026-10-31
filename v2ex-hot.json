@@ -1,32 +1,25 @@
 {
-  "updatedAt": "2026-10-31T06:05:43.504935+00:00",
+  "updatedAt": "2026-10-31T14:31:05.277080+00:00",
   "items": [
     {
-      "id": 1253203,
-      "title": "AppleTV 看不了国内的优爱腾，国际版的会员要另开，于是……",
-      "url": "https://www.v2ex.com/t/1253203",
-      "node": "Apple",
-      "author": "ricwangcom",
-      "replies": 70,
-      "createdAt": "2026-10-30T06:59:23+00:00"
+      "id": 1253376,
+      "title": "求助： 10GB 音乐文件如何高速分享给好友？网盘限速、微信限大小， NAS 也受运营商上行限制",
+      "url": "https://www.v2ex.com/t/1253376",
+      "node": "问与答",
+      "author": "jonathan001",
+      "replies": 87,
+      "createdAt": "2026-10-31T03:53:53+00:00"
     },
     {
-      "id": 1253190,
-      "title": "人生第一次相亲了",
-      "url": "https://www.v2ex.com/t/1253190",
-      "node": "生活",
-      "author": "akko",
-      "replies": 50,
-      "createdAt": "2026-10-30T06:31:09+00:00"
-    },
-    {
-      "id": 1253188,
-      "title": "为什么越来越多人学习英语了？",
-      "url": "https://www.v2ex.com/t/1253188",
-      "node": "职场话题",
-      "author": "koukou1213",
-      "replies": 47,
-      "createdAt": "2026-10-30T06:28:47+00:00"
+      "id": 1253343,
+      "title": "AI 时代少有人类阅读，我开始建自己的独立站，但真的是 49 年入国军吗",
+      "url": "https://www.v2ex.com/t/1253343",
+      "node": "程序员",
+      "author": "1244943563",
+      "replies": 69,
+      "createdAt": "2026-10-31T01:06:13+00:00",
+      "cover": "source-covers/v2ex/65d01f189a79ff797dd4418e.png",
+      "originalCover": "https://cdn.jsdelivr.net/gh/kingshuaishuai/ys-imgs@main/quirepub/4dfc71519187e9dc8176a7145ec7e6a4.png"
     },
     {
       "id": 1253314,
@@ -34,35 +27,8 @@
       "url": "https://www.v2ex.com/t/1253314",
       "node": "生活",
       "author": "happyyl",
-      "replies": 47,
+      "replies": 67,
       "createdAt": "2026-10-30T15:26:47+00:00"
-    },
-    {
-      "id": 1253198,
-      "title": "30 男飞机",
-      "url": "https://www.v2ex.com/t/1253198",
-      "node": "问与答",
-      "author": "zhangleiggboy",
-      "replies": 39,
-      "createdAt": "2026-10-30T06:44:37+00:00"
-    },
-    {
-      "id": 1253376,
-      "title": "求助： 10GB 音乐文件如何高速分享给好友？网盘限速、微信限大小， NAS 也受运营商上行限制",
-      "url": "https://www.v2ex.com/t/1253376",
-      "node": "问与答",
-      "author": "jonathan001",
-      "replies": 36,
-      "createdAt": "2026-10-31T03:53:53+00:00"
-    },
-    {
-      "id": 1253192,
-      "title": "下单了新 mbp，港版，准备去香港取货，第一次去有什么要注意的吗",
-      "url": "https://www.v2ex.com/t/1253192",
-      "node": "MacBook Pro",
-      "author": "CL7",
-      "replies": 36,
-      "createdAt": "2026-10-30T06:32:52+00:00"
     },
     {
       "id": 1253339,
@@ -70,7 +36,7 @@
       "url": "https://www.v2ex.com/t/1253339",
       "node": "职场话题",
       "author": "giscyw",
-      "replies": 34,
+      "replies": 56,
       "createdAt": "2026-10-31T00:31:58+00:00"
     },
     {
@@ -79,8 +45,55 @@
       "url": "https://www.v2ex.com/t/1253305",
       "node": "Apple",
       "author": "EeveeRibbon",
-      "replies": 33,
+      "replies": 41,
       "createdAt": "2026-10-30T14:40:34+00:00"
+    },
+    {
+      "id": 1253357,
+      "title": "现在教育真的太卷了，一年级上学期期中测验趣事",
+      "url": "https://www.v2ex.com/t/1253357",
+      "node": "教育",
+      "author": "qxmqh",
+      "replies": 41,
+      "createdAt": "2026-10-31T02:00:23+00:00"
+    },
+    {
+      "id": 1253348,
+      "title": "台湾 Claude 号生意有搞头吗",
+      "url": "https://www.v2ex.com/t/1253348",
+      "node": "Claude",
+      "author": "383394544",
+      "replies": 33,
+      "createdAt": "2026-10-31T01:38:04+00:00"
+    },
+    {
+      "id": 1253347,
+      "title": "claude 似乎 今天对 pro 和 free 用户执行 ID verification 了",
+      "url": "https://www.v2ex.com/t/1253347",
+      "node": "问与答",
+      "author": "xyooyx",
+      "replies": 30,
+      "createdAt": "2026-10-31T01:36:16+00:00"
+    },
+    {
+      "id": 1253335,
+      "title": "大家目前被封禁了几个 Claude 账户？",
+      "url": "https://www.v2ex.com/t/1253335",
+      "node": "Claude",
+      "author": "GoogolChrome111",
+      "replies": 29,
+      "createdAt": "2026-10-30T23:47:21+00:00"
+    },
+    {
+      "id": 1253370,
+      "title": "LockSticky 喜提大陆 App Store 下架",
+      "url": "https://www.v2ex.com/t/1253370",
+      "node": "程序员",
+      "author": "zitup",
+      "replies": 24,
+      "createdAt": "2026-10-31T03:25:39+00:00",
+      "cover": "source-covers/v2ex/6b43eb23104d5508404e74e1.png",
+      "originalCover": "https://i.imgur.com/g8EBC2v.png"
     }
   ]
 }

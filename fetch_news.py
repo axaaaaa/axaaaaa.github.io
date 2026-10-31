@@ -8,6 +8,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
+from source_images import attach_covers,cache_source_covers
 
 SOURCES = [
     ('IT之家', 'https://www.ithome.com/rss/', '科技动态'),
@@ -44,7 +45,9 @@ def fetch(source):
     name, url, category = source
     request = urllib.request.Request(url, headers={'User-Agent': 'NavigationNews/1.0 RSS Reader'})
     with urllib.request.urlopen(request, timeout=20) as response:
-        return parse_feed(response.read(2_000_000), name, category)
+        body=response.read(2_000_000)
+        key='ithome' if name=='IT之家' else 'huggingface'
+        return cache_source_covers(key,attach_covers(key,parse_feed(body,name,category),body,url))
 
 def main():
     parser = argparse.ArgumentParser()

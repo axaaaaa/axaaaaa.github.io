@@ -4,6 +4,7 @@ import json
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+from source_images import CoverParser,cache_source_covers
 
 URL = 'https://www.v2ex.com/api/topics/hot.json'
 
@@ -27,6 +28,8 @@ def normalize(rows):
         member = row.get('member') if isinstance(row.get('member'), dict) else {}
         replies = row.get('replies', 0)
         items.append({'id': topic_id, 'title': title.strip(), 'url': f'https://www.v2ex.com/t/{topic_id}', 'node': str(node.get('title', '')), 'author': str(member.get('username', '')), 'replies': replies if isinstance(replies, int) and replies >= 0 else 0, 'createdAt': created})
+        parser=CoverParser('v2ex',items[-1]['url']);parser.feed('<article>'+str(row.get('content_rendered') or '')+'</article>')
+        if parser.content_cover:items[-1]['cover']=parser.content_cover
     if not items:
         raise ValueError('No valid hot topics')
     return items[:24]
@@ -38,7 +41,7 @@ def main():
     try:
         request = urllib.request.Request(URL, headers={'User-Agent': 'NavigationHotTopics/1.0', 'Accept': 'application/json'})
         with urllib.request.urlopen(request, timeout=25) as response:
-            items = normalize(json.loads(response.read(2_000_000)))
+            items = cache_source_covers('v2ex',normalize(json.loads(response.read(2_000_000))))
         data = {'updatedAt': datetime.now(timezone.utc).isoformat(), 'items': items}
         output.parent.mkdir(parents=True, exist_ok=True)
         temp = output.with_suffix('.tmp')

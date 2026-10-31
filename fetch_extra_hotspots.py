@@ -1,10 +1,11 @@
-"""Independent public source snapshots; all parsing uses the Python standard library."""
-import argparse,json,re,urllib.request,xml.etree.ElementTree as ET
+"""Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
+import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from urllib.parse import urljoin,urlparse
 from datetime import datetime,timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers
 SOURCES={
  'woshipm':{'name':'人人都是产品经理','kind':'产品与运营文章','url':'https://www.woshipm.com/','endpoint':'https://www.woshipm.com/feed','icon':'https://www.woshipm.com/favicon.ico'},
  'csdn':{'name':'CSDN 博客','kind':'最新技术文章','url':'https://blog.csdn.net/','endpoint':'https://blog.csdn.net/nav/newarticles','icon':'https://blog.csdn.net/favicon.ico'},
@@ -12,7 +13,7 @@ SOURCES={
  'zcool':{'name':'站酷','kind':'设计作品发现','url':'https://www.zcool.com.cn/discover','endpoint':'https://www.zcool.com.cn/discover','icon':'https://www.zcool.com.cn/favicon.ico'},
  'xz':{'name':'先知社区','kind':'安全技术文章','url':'https://xz.aliyun.com/','endpoint':'https://xz.aliyun.com/','icon':'https://xz.aliyun.com/favicon.ico'},
  'anquanke':{'name':'安全客','kind':'安全资讯与研究','url':'https://www.anquanke.com/','endpoint':'https://api.anquanke.com/data/v1/posts?size=24&page=1','icon':'https://www.anquanke.com/favicon.ico'},
- 'freebuf':{'name':'FreeBuf','kind':'安全资讯','url':'https://www.freebuf.com/','endpoint':'https://www.freebuf.com/feed','icon':'https://www.freebuf.com/favicon.ico'},
+ 'freebuf':{'name':'FreeBuf','kind':'安全资讯','url':'https://www.freebuf.com/','endpoint':'https://www.freebuf.com/','icon':'https://www.freebuf.com/favicon.ico'},
  'yicai':{'name':'第一财经','kind':'财经资讯','url':'https://www.yicai.com/','endpoint':'https://www.yicai.com/','icon':'https://www.yicai.com/favicon.ico'},
  'sinafinance':{'name':'新浪财经','kind':'财经资讯','url':'https://finance.sina.com.cn/','endpoint':'https://finance.sina.com.cn/','icon':'https://finance.sina.com.cn/favicon.ico'},
  'pojie52':{'name':'吾爱破解热门','kind':'论坛最新热门','url':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','endpoint':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','icon':'https://www.52pojie.cn/favicon.ico'},
@@ -44,9 +45,12 @@ class Links(HTMLParser):
 
 def parse_source(key,body):
  rows=[]
- def add(title,url,meta=''):
+ def add(title,url,meta='',cover=''):
   title=clean(title)
-  if len(title)>2 and valid_url(url):rows.append({'title':title,'url':url,'meta':clean(meta)})
+  if len(title)>2 and valid_url(url):
+   row={'title':title,'url':url,'meta':clean(meta)};image=clean_cover(key,cover,SOURCES[key]['url'])
+   if image:row['cover']=image
+   rows.append(row)
  if key in ['sspai','hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
   root=ET.fromstring(body)
   for item in root.findall('.//item'):add(item.findtext('title'),item.findtext('link') or '',item.findtext('pubDate') or '')
@@ -57,10 +61,10 @@ def parse_source(key,body):
    content=row.get('content',{});counter=row.get('content_counter',{});id=str(content.get('content_id',''))
    if id.isdigit():add(content.get('title'),'https://juejin.cn/post/'+id,f"{counter.get('view',0)} 阅读 · {counter.get('like',0)} 赞")
  elif key=='toutiao':
-  for row in json.loads(body).get('data',[]):add(row.get('Title'),str(row.get('Url','')).replace('\\u0026','&'),f"热度 {row.get('HotValue','—')}")
+  for row in json.loads(body).get('data',[]):add(row.get('Title'),str(row.get('Url','')).replace('\\u0026','&'),f"热度 {row.get('HotValue','—')}",(row.get('Image') or {}).get('url',''))
  elif key=='qq':
   for group in json.loads(body).get('idlist',[]):
-   for row in group.get('newslist',[]):add(row.get('title'),row.get('url') or '',row.get('time') or '')
+   for row in group.get('newslist',[]):add(row.get('title'),row.get('url') or '',row.get('time') or '',next(iter(row.get('bigImage') or row.get('tmp3pic') or []),''))
  elif key=='netease':
   text=body.decode('utf-8-sig');data=json.loads(text[text.index('{'):text.rfind('}')+1])
   def walk(value):
@@ -71,7 +75,7 @@ def parse_source(key,body):
  elif key=='anquanke':
   for row in json.loads(body).get('data',[]):
    id=str(row.get('id',''))
-   if id.isdigit():add(row.get('title'),'https://www.anquanke.com/post/id/'+id,row.get('date') or '')
+   if id.isdigit():add(row.get('title'),'https://www.anquanke.com/post/id/'+id,row.get('date') or '',row.get('cover',''))
  elif key in ['csdn','zcool','xz']:
   parser=Links();parser.feed(body.decode('utf-8'))
   patterns={
@@ -81,6 +85,7 @@ def parse_source(key,body):
   }
   for href,title in parser.links:
    url=urljoin(SOURCES[key]['url'],href).split('?')[0].split('#')[0]
+   if key=='csdn' and any(t in title for t in ['版权申诉','账号管理规范']):continue
    if key=='csdn' and '/blogdevteam/article/details/126135357' in url:continue
    if re.fullmatch(patterns[key],url) and len(title)>3:add(title,url)
  elif key in ['yicai','sinafinance']:
@@ -110,7 +115,9 @@ def parse_source(key,body):
    if match and '科技爱好者周刊' in title:weekly.append((int(match.group(1)),title,url))
   for issue,title,url in sorted(weekly,reverse=True):add(title,url,f'第 {issue} 期')
  elif key=='uisdc':
-  parser=Links();parser.feed(body.decode('utf-8'))
+  text=body.decode('utf-8');marker=text.find('id="home_list_normal"')
+  if marker>=0:text=text[marker:]
+  parser=Links();parser.feed(text)
   for url,title in parser.links:
    url=urljoin(SOURCES[key]['url'],url)
    if re.fullmatch(r'https://www\.uisdc\.com/[a-zA-Z0-9-]{4,}',url) and url.rsplit('/',1)[-1] not in ['about','group','news','archives','contact','privacy','sitemap'] and len(title)>=10:add(title,url)
@@ -127,11 +134,45 @@ def parse_source(key,body):
  if not unique:raise ValueError('No valid source entries')
  return unique[:24]
 
+FREEBUF_SELECTOR = '.article-list-view .article-item .article-title-link'
+
+def normalize_freebuf_rows(rows):
+ items=[];seen=set()
+ for row in rows:
+  title=clean(row.get('title'));url=urljoin(SOURCES['freebuf']['url'],row.get('url') or '')
+  if not re.fullmatch(r'https://www\.freebuf\.com/(?:news|articles)(?:/[A-Za-z0-9_-]+)*/\d+\.html',url):continue
+  if len(title)<3 or url in seen:continue
+  seen.add(url);item={'title':title,'url':url,'meta':clean(row.get('meta'))};cover=clean_cover('freebuf',row.get('cover'),SOURCES['freebuf']['url'])
+  if cover:item['cover']=cover
+  items.append(item)
+ if not items:raise ValueError('No valid FreeBuf article entries')
+ return items[:24]
+
+def fetch_freebuf_items():
+ from playwright.sync_api import sync_playwright
+ with sync_playwright() as playwright:
+  browser=playwright.chromium.launch(headless=os.environ.get('FREEBUF_HEADLESS') == '1',channel=os.environ.get('FREEBUF_BROWSER_CHANNEL') or None)
+  try:
+   page=browser.new_page(locale='zh-CN',viewport={'width':1440,'height':1000})
+   page.goto(SOURCES['freebuf']['endpoint'],wait_until='domcontentloaded',timeout=60000)
+   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=45000)
+   rows=page.locator(FREEBUF_SELECTOR).evaluate_all("""links => links.map(a => ({
+    title: a.textContent,
+    url: a.href,
+    cover: a.closest('.article-item')?.querySelector('.img-view img')?.getAttribute('data-src') || a.closest('.article-item')?.querySelector('.img-view img')?.src || '',
+    meta: a.closest('.article-item')?.querySelector('.bottom-right')?.innerText || ''
+   }))""")
+   return normalize_freebuf_rows(rows)
+  finally:browser.close()
+
 def fetch(key):
- source=SOURCES[key];req=urllib.request.Request(source['endpoint'],headers={'User-Agent':'Mozilla/5.0','Referer':source['url'],'Accept':'application/json,application/xml,text/html;q=0.9,*/*;q=0.8'})
+ source=SOURCES[key]
+ if key=='freebuf':
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,fetch_freebuf_items())}
+ req=urllib.request.Request(source['endpoint'],headers={'User-Agent':'Mozilla/5.0','Referer':source['url'],'Accept':'application/json,application/xml,text/html;q=0.9,*/*;q=0.8'})
  with urllib.request.urlopen(req,timeout=25) as r:body=r.read(4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
- items=parse_source(key,body)
+ items=cache_source_covers(key,attach_covers(key,parse_source(key,body),body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/extra-hotspots.json');out=Path(parser.parse_args().output);previous={}
@@ -144,10 +185,14 @@ def main():
   except Exception as error:
    print(f'SOURCE_PRESERVED {key}: {error}')
    old=previous.get(key)
-   if old and old.get('items'):return key,old
+   if old and old.get('items'):
+    try:return key,{**old,'items':cache_source_covers(key,attach_covers(key,old['items'],b'<html></html>',SOURCES[key]['url']))}
+    except Exception:return key,old
    config=SOURCES[key]
    return key,{**{k:v for k,v in config.items() if k!='endpoint'},'updatedAt':None,'items':[],'unavailable':True}
  with ThreadPoolExecutor(max_workers=7) as pool:sources={k:v for k,v in pool.map(load,SOURCES) if v}
  if not sources:raise SystemExit('No current or cached sources available')
- out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps({'sources':sources},ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out);print(f'EXTRA_SOURCES_OK count={len(sources)}')
+ out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps({'sources':sources},ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out)
+ if out.resolve()==(Path(__file__).resolve().parents[1]/'public'/'extra-hotspots.json').resolve():prune_covers(sources)
+ print(f'EXTRA_SOURCES_OK count={len(sources)}')
 if __name__=='__main__':main()

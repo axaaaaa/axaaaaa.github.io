@@ -28,6 +28,8 @@ jobs:
             v2ex-hot.json
             hacker-news.json
             weibo-hot.json
+            markets.json
+            exchange-rates.json
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: news-
       - name: Refresh headlines
@@ -37,6 +39,8 @@ jobs:
           python fetch_v2ex.py --output v2ex-hot.json
           python fetch_hacker_news.py --output hacker-news.json
           python fetch_weibo.py --output weibo-hot.json
+          python fetch_markets.py --output markets.json
+          python fetch_exchange_rates.py --output exchange-rates.json
       - name: Save headlines
         uses: actions/cache/save@v4
         with:
@@ -46,6 +50,8 @@ jobs:
             v2ex-hot.json
             hacker-news.json
             weibo-hot.json
+            markets.json
+            exchange-rates.json
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Restore previous status
         uses: actions/cache/restore@v4
@@ -65,7 +71,7 @@ jobs:
       - name: Package existing static website
         run: |
           mkdir -p _site
-          cp index.html favicon.ico status.json news.json github-trending.json v2ex-hot.json hacker-news.json weibo-hot.json _site/
+          cp index.html favicon.ico status.json news.json github-trending.json v2ex-hot.json hacker-news.json weibo-hot.json markets.json exchange-rates.json _site/
           cp -R css img js _site/
           if [ -f og-image.jpg ]; then cp og-image.jpg _site/; fi
           if [ -f CNAME ]; then cp CNAME _site/; fi

@@ -1,0 +1,91 @@
+name: Website status and Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '23 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: pages-status
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore previous headlines
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            news.json
+            github-trending.json
+            v2ex-hot.json
+            hacker-news.json
+            weibo-hot.json
+          key: news-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: news-
+      - name: Refresh headlines
+        run: |
+          python fetch_news.py --output news.json
+          python fetch_github_trending.py --output github-trending.json
+          python fetch_v2ex.py --output v2ex-hot.json
+          python fetch_hacker_news.py --output hacker-news.json
+          python fetch_weibo.py --output weibo-hot.json
+      - name: Save headlines
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            news.json
+            github-trending.json
+            v2ex-hot.json
+            hacker-news.json
+            weibo-hot.json
+          key: news-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Restore previous status
+        uses: actions/cache/restore@v4
+        with:
+          path: .status-cache/status.json
+          key: site-status-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: site-status-
+      - name: Test checker
+        run: python -m unittest discover -s scripts -p test_check_sites.py
+      - name: Check public websites
+        run: python scripts/check_sites.py
+      - name: Save status history
+        uses: actions/cache/save@v4
+        with:
+          path: .status-cache/status.json
+          key: site-status-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Package existing static website
+        run: |
+          mkdir -p _site
+          cp index.html favicon.ico status.json news.json github-trending.json v2ex-hot.json hacker-news.json weibo-hot.json _site/
+          cp -R css img js _site/
+          if [ -f og-image.jpg ]; then cp og-image.jpg _site/; fi
+          if [ -f CNAME ]; then cp CNAME _site/; fi
+          for dir in country-flags engine-icons fingerprint-lab; do
+            if [ -d "$dir" ]; then cp -R "$dir" _site/; fi
+          done
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

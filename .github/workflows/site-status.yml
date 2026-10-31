@@ -77,11 +77,15 @@ jobs:
       - name: Package existing static website
         run: |
           mkdir -p _site
-          cp index.html favicon.ico status.json news.json github-trending.json v2ex-hot.json hacker-news.json weibo-hot.json markets.json exchange-rates.json extra-hotspots.json history-today.json _site/
+          for f in index.html favicon.ico status.json news.json github-trending.json \
+                   v2ex-hot.json hacker-news.json weibo-hot.json markets.json \
+                   exchange-rates.json extra-hotspots.json history-today.json \
+                   x-global.json x-hot.json x-words.json x-articles.json og-image.jpg; do
+            if [ -f "$f" ]; then cp "$f" _site/; fi
+          done
           cp -R css img js _site/
-          if [ -f og-image.jpg ]; then cp og-image.jpg _site/; fi
           if [ -f CNAME ]; then cp CNAME _site/; fi
-          for dir in country-flags engine-icons fingerprint-lab; do
+          for dir in country-flags engine-icons fingerprint-lab source-covers source-icons; do
             if [ -d "$dir" ]; then cp -R "$dir" _site/; fi
           done
           touch _site/.nojekyll

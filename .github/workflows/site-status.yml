@@ -34,6 +34,10 @@ jobs:
             history-today.json
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: news-
+      - name: Install Playwright for FreeBuf scraping
+        run: |
+          python -m pip install playwright==1.64.1
+          python -m playwright install --with-deps chromium
       - name: Refresh headlines
         run: |
           python fetch_news.py --output news.json
@@ -43,7 +47,7 @@ jobs:
           python fetch_weibo.py --output weibo-hot.json
           python fetch_markets.py --output markets.json
           python fetch_exchange_rates.py --output exchange-rates.json
-          python fetch_extra_hotspots.py --output extra-hotspots.json
+          xvfb-run -a python fetch_extra_hotspots.py --output extra-hotspots.json
           python fetch_history_today.py --output history-today.json
       - name: Save headlines
         uses: actions/cache/save@v4

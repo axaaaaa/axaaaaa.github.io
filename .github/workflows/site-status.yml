@@ -32,6 +32,10 @@ jobs:
             exchange-rates.json
             extra-hotspots.json
             history-today.json
+            x-hot.json
+            x-global.json
+            x-words.json
+            x-articles.json
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: news-
       - name: Install Playwright for FreeBuf scraping
@@ -49,6 +53,14 @@ jobs:
           python fetch_exchange_rates.py --output exchange-rates.json
           xvfb-run -a python fetch_extra_hotspots.py --output extra-hotspots.json
           python fetch_history_today.py --output history-today.json
+      - name: Test X collectors
+        run: python -m unittest discover -s scripts -p "test_x_*.py"
+      - name: Refresh X rankings
+        run: |
+          xvfb-run -a python fetch_x_hot.py --output x-hot.json
+          xvfb-run -a python fetch_x_global.py --output x-global.json
+          xvfb-run -a python fetch_x_words.py --output x-words.json
+          xvfb-run -a python fetch_x_articles.py --output x-articles.json
       - name: Save headlines
         uses: actions/cache/save@v4
         with:
@@ -62,6 +74,10 @@ jobs:
             exchange-rates.json
             extra-hotspots.json
             history-today.json
+            x-hot.json
+            x-global.json
+            x-words.json
+            x-articles.json
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Restore previous status
         uses: actions/cache/restore@v4

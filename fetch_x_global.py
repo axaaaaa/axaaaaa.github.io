@@ -1,6 +1,6 @@
 """Fetch overseas rankings from the public GLOBAL_D JSON embedded in X榜单."""
 import argparse,json,math,re,urllib.request
-from datetime import date,datetime,timezone
+from datetime import date,datetime,timezone,timedelta
 from pathlib import Path
 from source_images import clean_cover,cache_source_covers
 SOURCE='https://xbangdan.com/global/'
@@ -85,7 +85,13 @@ def fetch():
  except Exception as error:
   print(f'X_GLOBAL_BROWSER_FALLBACK {type(error).__name__}');return fetch_browser()
 
-def update(out):
+def fetch_previous(latest_date):
+ req=urllib.request.Request(SOURCE+'r-prev.json',headers={'User-Agent':'Mozilla/5.0','Accept':'application/json'})
+ with urllib.request.urlopen(req,timeout=25) as response:data=normalize(json.loads(response.read(8_000_000)))
+ if date.fromisoformat(data['dataDate'])!=date.fromisoformat(latest_date)-timedelta(days=1):raise ValueError('Previous date mismatch')
+ return data
+
+def update(out,include_previous=False):
  try:
   data=fetch()
   top=sorted((r for r in data['items'] if r.get('cover')),key=lambda r:r['likes'],reverse=True)[:100]
@@ -99,9 +105,18 @@ def update(out):
    except (ValueError,OSError):raise RuntimeError('No valid overseas snapshot') from error
    print(f'X_GLOBAL_PRESERVED {type(error).__name__}: {error}');return False
   raise
+ if include_previous:
+  try:data['previousDay']=fetch_previous(data['dataDate'])
+  except Exception as error:
+   data['previousDay']=None;print(f'X_GLOBAL_PREVIOUS_PRESERVED {type(error).__name__}: {error}')
+   if out.exists():
+    try:
+     old=json.loads(out.read_text(encoding='utf-8-sig'));candidate=old if old.get('dataDate')!=data['dataDate'] else old.get('previousDay')
+     if candidate and date.fromisoformat(candidate['dataDate'])==date.fromisoformat(data['dataDate'])-timedelta(days=1):data['previousDay']=candidate
+    except (ValueError,OSError,KeyError,TypeError):pass
  out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out)
  print(f'X_GLOBAL_OK categories={len(data["categories"])} items={len(data["items"])} date={data["dataDate"]}');return True
 
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/x-global.json');update(Path(parser.parse_args().output))
+ parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/x-global.json');update(Path(parser.parse_args().output),include_previous=True)
 if __name__=='__main__':main()

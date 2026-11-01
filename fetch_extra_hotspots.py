@@ -134,7 +134,7 @@ def parse_source(key,body):
  if not unique:raise ValueError('No valid source entries')
  return unique[:24]
 
-FREEBUF_SELECTOR = 'a[href*="/articles/"], a[href*="/news/"]'
+FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href*=".html"]'
 FREEBUF_FEED = 'https://www.freebuf.com/rss'
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 

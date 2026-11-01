@@ -59,4 +59,14 @@ class Tests(unittest.TestCase):
    path=Path(tmp)/'public/source-covers/github'/('a'*24+'.png');path.parent.mkdir(parents=True);path.write_bytes(b'test');x.prune_covers({'sspai':{'items':[]}});self.assertTrue(path.exists())
  def test_other_source(self):
   rows=[{'title':'Test','url':'https://example.com/post'}];self.assertIs(x.attach_covers('unknown',rows,b'', ''),rows)
+ def test_deployed_cache_uses_repository_root(self):
+  url='https://image.uisdc.com/root.png'
+  with tempfile.TemporaryDirectory() as tmp,patch.object(x,'__file__',str(Path(tmp)/'source_images.py')):
+   response=io.BytesIO(b'\x89PNG\r\n\x1a\nfixture');response.url=url
+   with patch.object(x.urllib.request,'urlopen',return_value=response):row=x.cache_source_covers('uisdc',[{'cover':url}])[0]
+   self.assertTrue((Path(tmp)/row['cover']).exists())
+   self.assertEqual(x.public_directory(),Path(tmp))
+ def test_source_cache_uses_public_directory(self):
+  with tempfile.TemporaryDirectory() as tmp,patch.object(x,'__file__',str(Path(tmp)/'scripts/source_images.py')):
+   self.assertEqual(x.public_directory(),Path(tmp)/'public')
 if __name__=='__main__':unittest.main()

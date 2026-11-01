@@ -27,7 +27,7 @@ def fetch(config):
         except Exception as exc:error=exc
     raise error
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/markets.json');out=Path(parser.parse_args().output);previous={}
+    parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/markets.json');parser.add_argument('--skip-caps',action='store_true');args=parser.parse_args();out=Path(args.output);previous={}
     if out.exists():
         try:previous={i['symbol']:i for i in json.loads(out.read_text(encoding='utf-8-sig')).get('items',[])}
         except (ValueError,OSError,KeyError,TypeError):pass
@@ -38,7 +38,12 @@ def main():
             return {**old,**CRYPTO_NAMES[config[0]],'name':config[1]} if old and config[0] in CRYPTO_NAMES else old
     with ThreadPoolExecutor(max_workers=6) as pool:items=[i for i in pool.map(load,SYMBOLS) if i]
     if not items:raise SystemExit('No market snapshots available')
-    # Optional enrichment is isolated from price collection; offline fixtures/custom outputs remain pure.
-    if out.resolve()==(Path(__file__).resolve().parents[1]/'public'/'markets.json').resolve():items=enrich_market_caps(items,previous,out.parent/'exchange-rates.json')
+    # Both the source checkout (public/) and the deployed checkout (repository root)
+    # collect caps. Offline callers must explicitly request --skip-caps.
+    if not args.skip_caps:items=enrich_market_caps(items,previous,out.parent/'exchange-rates.json')
+    eligible=[i for i in items if i.get('kind')!='index']
+    missing=sum(not number(i.get('marketCapUsd')) or i.get('marketCapUsd',0)<=0 for i in eligible)
+    print(f'MARKET_CAP_COVERAGE available={len(eligible)-missing} total={len(eligible)}')
+    if missing and not args.skip_caps:print(f'MARKET_CAP_PRESERVED missing={missing}')
     out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps({'updatedAt':datetime.now(timezone.utc).isoformat(),'source':'Yahoo Finance','items':items},ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out);print(f'MARKETS_OK items={len(items)}')
 if __name__=='__main__':main()

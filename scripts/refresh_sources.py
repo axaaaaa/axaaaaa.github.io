@@ -7,7 +7,6 @@ COLLECTORS=[
  ('news','资讯 RSS','fetch_news.py','news.json'),
  ('github','GitHub Trending','fetch_github_trending.py','github-trending.json'),
  ('v2ex','V2EX','fetch_v2ex.py','v2ex-hot.json'),
- ('hacker-news','Hacker News','fetch_hacker_news.py','hacker-news.json'),
  ('weibo','微博','fetch_weibo.py','weibo-hot.json'),
  ('exchange-rates','汇率','fetch_exchange_rates.py','exchange-rates.json'),
  ('markets','市场行情与市值','fetch_markets.py','markets.json'),

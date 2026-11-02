@@ -26,7 +26,6 @@ jobs:
             news.json
             github-trending.json
             v2ex-hot.json
-            hacker-news.json
             weibo-hot.json
             markets.json
             exchange-rates.json
@@ -55,7 +54,6 @@ jobs:
             news.json
             github-trending.json
             v2ex-hot.json
-            hacker-news.json
             weibo-hot.json
             markets.json
             exchange-rates.json
@@ -87,7 +85,7 @@ jobs:
         run: |
           mkdir -p _site
           for f in index.html favicon.ico status.json news.json github-trending.json \
-                   v2ex-hot.json hacker-news.json weibo-hot.json markets.json \
+                   v2ex-hot.json weibo-hot.json markets.json \
                    exchange-rates.json extra-hotspots.json history-today.json \
                    x-global.json x-hot.json x-words.json x-articles.json collection-health.json og-image.jpg; do
             if [ -f "$f" ]; then cp "$f" _site/; fi

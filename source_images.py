@@ -93,11 +93,17 @@ def attach_covers(key,items,body,base):
  with ThreadPoolExecutor(max_workers=4) as pool:list(pool.map(enrich,pending))
  return result
 
+def public_directory():
+ from pathlib import Path
+ folder=Path(__file__).resolve().parent
+ return folder.parent/'public' if folder.name=='scripts' else folder
+
+
 def cache_source_covers(key,items):
  import hashlib
  from pathlib import Path
  if key not in IMAGE_SOURCES:return items
- root=Path(__file__).resolve().parents[1]/'public'/'source-covers'/key
+ root=public_directory()/'source-covers'/key
  def cache(row):
   image=clean_cover(key,row.get('cover'))
   if not image:return row
@@ -123,7 +129,7 @@ def cache_source_covers(key,items):
 
 def prune_covers(sources):
  from pathlib import Path
- root=Path(__file__).resolve().parents[1]/'public'/'source-covers'
+ root=public_directory()/'source-covers'
  used={row.get('cover','') for data in sources.values() for row in data.get('items',[])}
  for key in set(sources)&IMAGE_SOURCES:
   folder=root/key
@@ -134,7 +140,7 @@ def prune_covers(sources):
 def prune_all_covers():
  import json
  from pathlib import Path
- public=Path(__file__).resolve().parents[1]/'public';sources={}
+ public=public_directory();sources={}
  def load(name):
   try:return json.loads((public/name).read_text(encoding='utf-8-sig'))
   except (OSError,ValueError):return {}

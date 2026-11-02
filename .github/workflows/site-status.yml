@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '23 * * * *'
+    - cron: '17,47 * * * *' # retry opportunity twice hourly; GitHub scheduling is best-effort
 permissions:
   contents: read
 concurrency:
@@ -32,23 +32,22 @@ jobs:
             exchange-rates.json
             extra-hotspots.json
             history-today.json
+            x-hot.json
+            x-global.json
+            x-words.json
+            x-articles.json
+            collection-health.json
+            source-covers/
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: news-
       - name: Install Playwright for FreeBuf scraping
         run: |
           python -m pip install playwright==1.64.1
           python -m playwright install --with-deps chromium
-      - name: Refresh headlines
-        run: |
-          python fetch_news.py --output news.json
-          python fetch_github_trending.py --output github-trending.json
-          python fetch_v2ex.py --output v2ex-hot.json
-          python fetch_hacker_news.py --output hacker-news.json
-          python fetch_weibo.py --output weibo-hot.json
-          python fetch_markets.py --output markets.json
-          python fetch_exchange_rates.py --output exchange-rates.json
-          xvfb-run -a python fetch_extra_hotspots.py --output extra-hotspots.json
-          python fetch_history_today.py --output history-today.json
+      - name: Test collectors
+        run: python -m unittest discover -s scripts -p "test_*.py"
+      - name: Refresh independent sources and record health
+        run: xvfb-run -a python scripts/refresh_sources.py
       - name: Save headlines
         uses: actions/cache/save@v4
         with:
@@ -62,6 +61,12 @@ jobs:
             exchange-rates.json
             extra-hotspots.json
             history-today.json
+            x-hot.json
+            x-global.json
+            x-words.json
+            x-articles.json
+            collection-health.json
+            source-covers/
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Restore previous status
         uses: actions/cache/restore@v4
@@ -84,7 +89,7 @@ jobs:
           for f in index.html favicon.ico status.json news.json github-trending.json \
                    v2ex-hot.json hacker-news.json weibo-hot.json markets.json \
                    exchange-rates.json extra-hotspots.json history-today.json \
-                   x-global.json x-hot.json x-words.json x-articles.json og-image.jpg; do
+                   x-global.json x-hot.json x-words.json x-articles.json collection-health.json og-image.jpg; do
             if [ -f "$f" ]; then cp "$f" _site/; fi
           done
           cp -R css img js _site/

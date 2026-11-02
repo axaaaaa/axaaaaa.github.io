@@ -134,7 +134,34 @@ def parse_source(key,body):
  if not unique:raise ValueError('No valid source entries')
  return unique[:24]
 
-FREEBUF_SELECTOR = '.article-list-view .article-item .article-title-link'
+FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href*=".html"]'
+FREEBUF_FEED = 'https://www.freebuf.com/rss'
+WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
+
+def request_body(url):
+ req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8'})
+ with urllib.request.urlopen(req,timeout=25) as r:body=r.read(4_000_000)
+ if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
+ return body
+
+def parse_freebuf_feed(body):
+ root=ET.fromstring(body);rows=[]
+ atom={'a':'http://www.w3.org/2005/Atom'}
+ for item in root.findall('.//item'):
+  rows.append({'title':item.findtext('title'),'url':item.findtext('link'),'meta':item.findtext('pubDate')})
+ for item in root.findall('a:entry',atom):
+  link=next((a.get('href') for a in item.findall('a:link',atom) if a.get('rel','alternate')=='alternate'),'')
+  rows.append({'title':item.findtext('a:title',namespaces=atom),'url':link,'meta':item.findtext('a:updated',namespaces=atom)})
+ return normalize_freebuf_rows(rows)
+
+def parse_weekly_backup(body):
+ text=body.decode('utf-8');rows=[]
+ for issue,title,path in re.findall(r'-\s*第\s*(\d+)\s*期[：:]\s*\[([^\n]+?)\]\((docs/issue-\d+\.md)\)',text):
+  if path!=f'docs/issue-{issue}.md':continue
+  rows.append((int(issue),{'title':f'科技爱好者周刊（第 {issue} 期）：{title}','url':'https://github.com/ruanyf/weekly/blob/master/'+path,'meta':f'第 {issue} 期 · 作者官方仓库'}))
+ if not rows:raise ValueError('No weekly issues in official repository')
+ return [row for _,row in sorted(rows,key=lambda pair:pair[0],reverse=True)[:24]]
+
 
 def normalize_freebuf_rows(rows):
  items=[];seen=set()
@@ -155,7 +182,8 @@ def fetch_freebuf_items():
   try:
    page=browser.new_page(locale='zh-CN',viewport={'width':1440,'height':1000})
    page.goto(SOURCES['freebuf']['endpoint'],wait_until='domcontentloaded',timeout=60000)
-   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=45000)
+   if '验证' in page.title():raise RuntimeError('FreeBuf returned a verification page')
+   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=15000)
    rows=page.locator(FREEBUF_SELECTOR).evaluate_all("""links => links.map(a => ({
     title: a.textContent,
     url: a.href,
@@ -168,28 +196,36 @@ def fetch_freebuf_items():
 def fetch(key):
  source=SOURCES[key]
  if key=='freebuf':
-  return {**{k:v for k,v in source.items() if k!='endpoint'},'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,fetch_freebuf_items())}
- req=urllib.request.Request(source['endpoint'],headers={'User-Agent':'Mozilla/5.0','Referer':source['url'],'Accept':'application/json,application/xml,text/html;q=0.9,*/*;q=0.8'})
- with urllib.request.urlopen(req,timeout=25) as r:body=r.read(4_000_000)
- if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
- items=cache_source_covers(key,attach_covers(key,parse_source(key,body),body,source['url']))
- return {**{k:v for k,v in source.items() if k!='endpoint'},'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+  try:items=parse_freebuf_feed(request_body(FREEBUF_FEED));used=FREEBUF_FEED
+  except Exception as error:
+   print(f'FREEBUF_FEED_FALLBACK {type(error).__name__}: {error}')
+   items=fetch_freebuf_items();used=source['endpoint']
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
+ try:
+  body=request_body(source['endpoint']);items=parse_source(key,body);used=source['endpoint']
+ except Exception:
+  if key!='ruanyifeng':raise
+  body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
+ items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
+ return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/extra-hotspots.json');out=Path(parser.parse_args().output);previous={}
  if out.exists():
   try:previous=json.loads(out.read_text(encoding='utf-8-sig')).get('sources',{})
   except (OSError,ValueError):pass
  def load(key):
+  attempted=datetime.now(timezone.utc).isoformat()
   try:
-   data=fetch(key);print(f'SOURCE_OK {key} items={len(data["items"])}');return key,data
+   data=fetch(key);data['collection']={'status':'ok','lastAttemptAt':attempted,'lastSuccessAt':data['updatedAt'],'error':''}
+   print(f'SOURCE_OK {key} items={len(data["items"])}');return key,data
   except Exception as error:
    print(f'SOURCE_PRESERVED {key}: {error}')
    old=previous.get(key)
+   health={'status':'stale' if old and old.get('items') else 'unavailable','lastAttemptAt':attempted,'lastSuccessAt':old.get('updatedAt') if old else None,'error':str(error)[:500]}
    if old and old.get('items'):
-    try:return key,{**old,'items':cache_source_covers(key,attach_covers(key,old['items'],b'<html></html>',SOURCES[key]['url']))}
-    except Exception:return key,old
+    return key,{**old,'collection':health}
    config=SOURCES[key]
-   return key,{**{k:v for k,v in config.items() if k!='endpoint'},'updatedAt':None,'items':[],'unavailable':True}
+   return key,{**{k:v for k,v in config.items() if k!='endpoint'},'updatedAt':None,'items':[],'unavailable':True,'collection':health}
  with ThreadPoolExecutor(max_workers=7) as pool:sources={k:v for k,v in pool.map(load,SOURCES) if v}
  if not sources:raise SystemExit('No current or cached sources available')
  out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps({'sources':sources},ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out)

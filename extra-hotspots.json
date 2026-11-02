@@ -3062,6 +3062,142 @@
           "originalCover": "https://imgs.gamersky.com/upimg/new_preview/2026/10/31/origin_b_202610311721032004.jpg"
         }
       ]
+    },
+    "tieba": {
+      "name": "百度贴吧",
+      "kind": "热议话题榜",
+      "url": "https://tieba.baidu.com/",
+      "icon": "https://tieba.baidu.com/favicon.ico",
+      "sourceUrlUsed": "https://tieba.baidu.com/hottopic/browse/topicList",
+      "updatedAt": "2026-11-02T15:49:10.503633+00:00",
+      "items": [
+        {
+          "title": "武汉警方通报网约车被围堵事件",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368880",
+          "meta": "热议话题 · 热度 2,303,970"
+        },
+        {
+          "title": "表情包终极对决,大肥鱼vs滑稽",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368865",
+          "meta": "热议话题 · 热度 1,932,792"
+        },
+        {
+          "title": "联赛飞太拉胯?或因无暇训练",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368881",
+          "meta": "热议话题 · 热度 1,867,992"
+        },
+        {
+          "title": "81岁硬核吧友月饼盒造收音机",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368837",
+          "meta": "热议话题 · 热度 1,734,291"
+        },
+        {
+          "title": "罗技再骂顾客是狗,吧友开炮",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368861",
+          "meta": "热议话题 · 热度 1,229,228"
+        },
+        {
+          "title": "枪魔输二级咒灵,汪吧论战炸圈",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368864",
+          "meta": "热议话题 · 热度 1,162,275"
+        },
+        {
+          "title": "二游“主祭”开盒获刑,吧友叫好",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368874",
+          "meta": "热议话题 · 热度 1,059,576"
+        },
+        {
+          "title": "微软裁员6万,全怪印度人摸鱼",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368856",
+          "meta": "热议话题 · 热度 818,593"
+        },
+        {
+          "title": "美女声优cos小羊肖恩遭炎上",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368858",
+          "meta": "热议话题 · 热度 574,794"
+        },
+        {
+          "title": "宙斯疑回T1,十六强太扎心",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368844",
+          "meta": "热议话题 · 热度 513,303"
+        },
+        {
+          "title": "赛博鱼塘!大肥鱼AI涌入鲸鱼吧",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368798",
+          "meta": "热议话题 · 热度 368,020"
+        },
+        {
+          "title": "泪目,许哥带队搜刮免费食物",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368836",
+          "meta": "热议话题 · 热度 266,551"
+        },
+        {
+          "title": "美邮轮停航,乘客海上养老梦碎",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368828",
+          "meta": "热议话题 · 热度 193,932"
+        },
+        {
+          "title": "给力!吧友自建邮票目录网站",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368843",
+          "meta": "热议话题 · 热度 156,757"
+        },
+        {
+          "title": "网约车误入万圣节人流遭围攻",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368816",
+          "meta": "热议话题 · 热度 117,264"
+        },
+        {
+          "title": "普通人不配?AI巨头嫌内存浪费",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368792",
+          "meta": "热议话题 · 热度 109,395"
+        },
+        {
+          "title": "岁月史书?大体老师事件被篡改",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368804",
+          "meta": "热议话题 · 热度 79,688"
+        },
+        {
+          "title": "吧友举报留学生遭学校开盒",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368833",
+          "meta": "热议话题 · 热度 66,625"
+        },
+        {
+          "title": "Bin放话取代Zeus做世一上",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368815",
+          "meta": "热议话题 · 热度 65,388"
+        },
+        {
+          "title": "攻防闪一体?影之刃被批轮椅",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368813",
+          "meta": "热议话题 · 热度 55,935"
+        },
+        {
+          "title": "Viper哽咽透露母亲患癌",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368714",
+          "meta": "热议话题 · 热度 55,210"
+        },
+        {
+          "title": "BLG首场直面DK,TES八强战IG",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368659",
+          "meta": "热议话题 · 热度 47,421"
+        },
+        {
+          "title": "战胜心魔!BLG横扫HLE晋级八强",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368656",
+          "meta": "热议话题 · 热度 41,256"
+        },
+        {
+          "title": "吧友甩Steam数据,影之刃零进前六",
+          "url": "https://tieba.baidu.com/hottopic/browse/hottopic?topic_id=28368733",
+          "meta": "热议话题 · 热度 37,576"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-02T15:49:10.503633+00:00",
+        "lastSuccessAt": "2026-11-02T15:49:10.503633+00:00",
+        "error": ""
+      }
     }
   }
 }

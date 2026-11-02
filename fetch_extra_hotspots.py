@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers
 SOURCES={
+ 'tieba':{'name':'百度贴吧','kind':'热议话题榜','url':'https://tieba.baidu.com/','endpoint':'https://tieba.baidu.com/hottopic/browse/topicList','icon':'https://tieba.baidu.com/favicon.ico'},
  'woshipm':{'name':'人人都是产品经理','kind':'产品与运营文章','url':'https://www.woshipm.com/','endpoint':'https://www.woshipm.com/feed','icon':'https://www.woshipm.com/favicon.ico'},
  'csdn':{'name':'CSDN 博客','kind':'最新技术文章','url':'https://blog.csdn.net/','endpoint':'https://blog.csdn.net/nav/newarticles','icon':'https://blog.csdn.net/favicon.ico'},
  'oschina':{'name':'开源中国','kind':'开源资讯','url':'https://www.oschina.net/','endpoint':'https://www.oschina.net/news/rss','icon':'https://www.oschina.net/favicon.ico'},
@@ -51,7 +52,19 @@ def parse_source(key,body):
    row={'title':title,'url':url,'meta':clean(meta)};image=clean_cover(key,cover,SOURCES[key]['url'])
    if image:row['cover']=image
    rows.append(row)
- if key in ['sspai','hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
+ if key=='tieba':
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('errno')!=0:raise ValueError('Invalid Tieba response')
+  topics=data.get('data',{}).get('bang_topic',{}).get('topic_list',[])
+  if not isinstance(topics,list):raise ValueError('Invalid Tieba topic list')
+  for row in topics:
+   if not isinstance(row,dict) or row.get('is_ad'):continue
+   id=row.get('topic_id');title=row.get('topic_name');heat=row.get('discuss_num')
+   if isinstance(id,bool) or not str(id).isdigit() or int(id)<=0 or not isinstance(title,str):continue
+   meta='热议话题'
+   if isinstance(heat,int) and not isinstance(heat,bool) and heat>=0:meta+=f' · 热度 {heat:,}'
+   add(title,'https://tieba.baidu.com/hottopic/browse/hottopic?topic_id='+str(int(id)),meta)
+ elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
   root=ET.fromstring(body)
   for item in root.findall('.//item'):add(item.findtext('title'),item.findtext('link') or '',item.findtext('pubDate') or '')
  elif key=='juejin':

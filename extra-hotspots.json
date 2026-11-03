@@ -1255,129 +1255,66 @@
       "kind": "论坛最新热门",
       "url": "https://www.52pojie.cn/forum.php?mod=guide&view=hot",
       "icon": "https://www.52pojie.cn/favicon.ico",
-      "updatedAt": "2026-10-31T14:33:35.019825+00:00",
+      "sourceUrlUsed": "https://www.52pojie.cn/",
+      "updatedAt": "2026-11-03T12:57:11.107867+00:00",
       "items": [
         {
-          "title": "小学学习平台V1.1-20261031",
-          "url": "https://www.52pojie.cn/thread-2134217-1-1.html",
-          "meta": ""
+          "title": "【原创软件】微信聊天记录导出 Moect V1.2.0（已更新）",
+          "url": "https://www.52pojie.cn/thread-2135155-1-1.html",
+          "meta": "人气热门"
         },
         {
-          "title": "WorkBuddy自动签到v0.05 支持猫猫旅行和多账号同签",
+          "title": "【清理未活跃会员】清理2026年暑假开放注册未活跃会员公告",
+          "url": "https://www.52pojie.cn/thread-2135393-1-1.html",
+          "meta": "人气热门"
+        },
+        {
+          "title": "WorkBuddy自动签到v0.0.15 支持猫猫旅行和多账号同签软件内登录",
           "url": "https://www.52pojie.cn/thread-2135057-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "LAN快传 v1.0",
-          "url": "https://www.52pojie.cn/thread-2134429-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "IDA Pro v9.5.261026 - 2026 年 10 月 27 日最终版本（包含 Windows/Mac/Linux/ARM...",
-          "url": "https://www.52pojie.cn/thread-2134627-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "把整本 PDF 变成 Markdown：PaddleOCR-VL 批量转换小工具",
-          "url": "https://www.52pojie.cn/thread-2134867-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "祝酒词生成器V1.0",
-          "url": "https://www.52pojie.cn/thread-2134832-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "行政后勤管理系统_v1.0",
-          "url": "https://www.52pojie.cn/thread-2134111-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "电脑资产管理系统 AssetPro v2.0.0",
-          "url": "https://www.52pojie.cn/thread-2133917-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "NetEye 网络透视镜 v0.3",
-          "url": "https://www.52pojie.cn/thread-2134708-1-1.html",
-          "meta": ""
+          "meta": "人气热门"
         },
         {
           "title": "视频查重工具",
           "url": "https://www.52pojie.cn/thread-2134874-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "ios通话录音 提示音 移除工具",
-          "url": "https://www.52pojie.cn/thread-2134044-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "天若OCR6.1.2增加截图功能",
-          "url": "https://www.52pojie.cn/thread-2134678-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "正贤学习平台 v0.1.2 —— 把小学六年的练习、考试与纸质组卷，装进一台离线电脑",
-          "url": "https://www.52pojie.cn/thread-2133786-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "3D风格新闻片头生成器",
-          "url": "https://www.52pojie.cn/thread-2134865-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "Transub Player V1.6.0最新版，实时视频语音转文字",
-          "url": "https://www.52pojie.cn/thread-2134096-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "局域网文件共享工具V1.4",
-          "url": "https://www.52pojie.cn/thread-2133092-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "AdGuard_4.16.0去广告神器",
-          "url": "https://www.52pojie.cn/thread-2134876-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "打工人利器：会议记录（录音+自动文档模式拍照+pdf输出）",
-          "url": "https://www.52pojie.cn/thread-2134115-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "文件外发暗水印工具",
-          "url": "https://www.52pojie.cn/thread-2133586-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "[Windows] 抖音去水印下载工具v3.2.0",
-          "url": "https://www.52pojie.cn/thread-2133922-1-1.html",
-          "meta": ""
-        },
-        {
-          "title": "小白用AI做的小说阅读器-小白阅读2.0",
-          "url": "https://www.52pojie.cn/thread-2133894-1-1.html",
-          "meta": ""
+          "meta": "人气热门"
         },
         {
           "title": "拍照姿势卡V1.0",
           "url": "https://www.52pojie.cn/thread-2135010-1-1.html",
-          "meta": ""
+          "meta": "人气热门"
         },
         {
-          "title": "豆包语音输入（独立版）1.0.0",
+          "title": "3D风格新闻片头生成器",
+          "url": "https://www.52pojie.cn/thread-2134865-1-1.html",
+          "meta": "人气热门"
+        },
+        {
+          "title": "截图软件 Airsnip 轻截 0.6.0",
+          "url": "https://www.52pojie.cn/thread-2135212-1-1.html",
+          "meta": "人气热门"
+        },
+        {
+          "title": "豆包语音输入（独立版）1.4.1",
           "url": "https://www.52pojie.cn/thread-2135062-1-1.html",
-          "meta": ""
+          "meta": "人气热门"
         },
         {
-          "title": "Cppcryptfs 文件夹挂载加密 v1.4.5.0 汉化版",
-          "url": "https://www.52pojie.cn/thread-2133267-1-1.html",
-          "meta": ""
+          "title": "AdGuard_4.16.0去广告神器",
+          "url": "https://www.52pojie.cn/thread-2134876-1-1.html",
+          "meta": "人气热门"
+        },
+        {
+          "title": "微信 4.1.15.56 防撤回",
+          "url": "https://www.52pojie.cn/thread-2135034-1-1.html",
+          "meta": "人气热门"
         }
-      ]
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+        "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+        "error": ""
+      }
     },
     "kanxue": {
       "name": "看雪论坛热门",
@@ -3196,6 +3133,492 @@
         "status": "ok",
         "lastAttemptAt": "2026-11-02T15:49:10.503633+00:00",
         "lastSuccessAt": "2026-11-02T15:49:10.503633+00:00",
+        "error": ""
+      }
+    },
+    "bilibili": {
+      "name": "哔哩哔哩（B站）",
+      "kind": "热门视频 · 非播放量排行",
+      "url": "https://www.bilibili.com/v/popular/all",
+      "icon": "https://www.bilibili.com/favicon.ico",
+      "sourceUrlUsed": "https://api.bilibili.com/x/web-interface/popular?pn=1&ps=24",
+      "updatedAt": "2026-11-03T10:49:43.242303+00:00",
+      "items": [
+        {
+          "title": "总有世界，与你同频｜《弧光猎人》同频测试PV&国服全新PVP事件预告",
+          "url": "https://www.bilibili.com/video/BV1RA4w6AE74",
+          "meta": "UP主 弧光猎人_ARCRaiders · 1,428,252 播放 · 16,066 点赞"
+        },
+        {
+          "title": "《原神》角色预告-「米提亚：井井有条」",
+          "url": "https://www.bilibili.com/video/BV19b4A6PECX",
+          "meta": "UP主 原神 · 945,366 播放 · 111,712 点赞"
+        },
+        {
+          "title": "《崩坏：星穹铁道》走近星穹——「星神★阿哈：为了拖稿竟说自己是星神？」",
+          "url": "https://www.bilibili.com/video/BV1mU4u6yEz5",
+          "meta": "UP主 崩坏星穹铁道 · 877,481 播放 · 83,379 点赞"
+        },
+        {
+          "title": "【纪录片】蓝色星球 第三季 01 热带海域",
+          "url": "https://www.bilibili.com/video/BV13dxa6LEe4",
+          "meta": "UP主 哔哩哔哩纪录片 · 929,138 播放 · 4,520 点赞"
+        },
+        {
+          "title": "一条没下巴的鱼杀穿奥陶纪？",
+          "url": "https://www.bilibili.com/video/BV1Xx4c6tEKM",
+          "meta": "UP主 我们都是社畜 · 1,488,150 播放 · 66,189 点赞"
+        },
+        {
+          "title": "网络热传生物鉴定 第65期",
+          "url": "https://www.bilibili.com/video/BV18wxY63Erp",
+          "meta": "UP主 无穷小亮的科普日常 · 295,861 播放 · 35,717 点赞"
+        },
+        {
+          "title": "哟西！故乡的樱花开了！",
+          "url": "https://www.bilibili.com/video/BV1w34A62Eq2",
+          "meta": "UP主 大漠叔叔 · 2,213,521 播放 · 175,550 点赞"
+        },
+        {
+          "title": "宠粉天花板，请我的粉丝朋友清空一家零食店，你来选我买单，看看要花多少钱",
+          "url": "https://www.bilibili.com/video/BV14o4F6EELU",
+          "meta": "UP主 superB太 · 3,238,891 播放 · 131,678 点赞"
+        },
+        {
+          "title": "BLG vs HLE小曲《狼的诱惑》",
+          "url": "https://www.bilibili.com/video/BV17m4M64Emr",
+          "meta": "UP主 蔚蓝边际 · 438,315 播放 · 34,205 点赞"
+        },
+        {
+          "title": "入职鹰角成为卫戍协议策划的一天",
+          "url": "https://www.bilibili.com/video/BV19P4w6aEk3",
+          "meta": "UP主 摸鱼事务所 · 573,541 播放 · 33,984 点赞"
+        },
+        {
+          "title": "周 术 回 战 |魔法Zc目录",
+          "url": "https://www.bilibili.com/video/BV13n4g6QEqx",
+          "meta": "UP主 魔法Zc目录 · 80,630 播放 · 11,859 点赞"
+        },
+        {
+          "title": "大家好，这里是 DeepSeek Harness，正式入驻 B 站！",
+          "url": "https://www.bilibili.com/video/BV1i24P6rEmt",
+          "meta": "UP主 DeepSeekHarness · 1,926,757 播放 · 159,424 点赞"
+        },
+        {
+          "title": "第1期：南山雪地徒步，邂逅新疆冬日浪漫【此生要去的100个地方 第二季】",
+          "url": "https://www.bilibili.com/video/BV13YxJ6kEgu",
+          "meta": "UP主 综艺哔哔机 · 221,821 播放 · 2,838 点赞"
+        },
+        {
+          "title": "《猫和老鼠》中的配乐细节竟然有这么多？！",
+          "url": "https://www.bilibili.com/video/BV17i4w66E7V",
+          "meta": "UP主 大福咕咕 · 714,586 播放 · 49,886 点赞"
+        },
+        {
+          "title": "世界上最贵的象拔蚌，客人嫌贵不吃，厨师长下班了开个小灶",
+          "url": "https://www.bilibili.com/video/BV1czxC6dEKu",
+          "meta": "UP主 张森的下班料理 · 861,267 播放 · 58,570 点赞"
+        },
+        {
+          "title": "180万一平米！假装要给男友买义乌1700万9平米的爆火房…他震惊了！",
+          "url": "https://www.bilibili.com/video/BV1zUx16tEKg",
+          "meta": "UP主 是王小白呀 · 643,193 播放 · 17,167 点赞"
+        },
+        {
+          "title": "【RESCENE】'With' 官方MV",
+          "url": "https://www.bilibili.com/video/BV19z4u6DEB7",
+          "meta": "UP主 RESCENE_official · 61,249 播放 · 10,219 点赞"
+        },
+        {
+          "title": "谁是有史以来最能整活的超级天才！",
+          "url": "https://www.bilibili.com/video/BV19sx46cEKB",
+          "meta": "UP主 海棠家的大肥鱼 · 624,128 播放 · 33,338 点赞"
+        },
+        {
+          "title": "【邓肯】恐怖的“林夕的娃娃间”事件丨猜不透的“黛西事件”！",
+          "url": "https://www.bilibili.com/video/BV1yv4M6vEMa",
+          "meta": "UP主 勾手老大爷邓肯 · 82,784 播放 · 6,955 点赞"
+        },
+        {
+          "title": "开破车挑战纽北！证明中国人比德国人更会玩车",
+          "url": "https://www.bilibili.com/video/BV1HH4u6PEsa",
+          "meta": "UP主 极速拍档 · 65,199 播放 · 9,172 点赞"
+        },
+        {
+          "title": "【大肥鱼】《secret base ～君がくれたもの～》未闻花名 ED 翻唱❀🐋",
+          "url": "https://www.bilibili.com/video/BV1K9xv65EQC",
+          "meta": "UP主 你的鱼胆真是肥嘟嘟的 · 179,036 播放 · 62,705 点赞"
+        },
+        {
+          "title": "无限流+大逃杀+规则怪谈！网飞又一部重磅神剧《末路兼职》60分钟完整解说",
+          "url": "https://www.bilibili.com/video/BV1XYxh63E8y",
+          "meta": "UP主 小侠夜班车 · 682,325 播放 · 28,608 点赞"
+        },
+        {
+          "title": "【文明与地图】12个大模型扮演君主谁能带领人类走向星际文明？",
+          "url": "https://www.bilibili.com/video/BV1onxb6rEeE",
+          "meta": "UP主 再改需求是修勾 · 354,203 播放 · 38,952 点赞"
+        },
+        {
+          "title": "跟着君哥在回坊炫烤肉，那叫一个美…",
+          "url": "https://www.bilibili.com/video/BV1Ac4c61E2C",
+          "meta": "UP主 野文不懂吃 · 507,758 播放 · 22,402 点赞"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T10:49:43.242317+00:00",
+        "lastSuccessAt": "2026-11-03T10:49:43.242303+00:00",
+        "error": ""
+      }
+    },
+    "ijingyi_new": {
+      "name": "精易论坛 · 最新帖",
+      "kind": "最新帖",
+      "url": "https://bbs.ijingyi.com/",
+      "icon": "https://bbs.ijingyi.com/favicon.ico",
+      "sourceUrlUsed": "https://bbs.ijingyi.com/",
+      "updatedAt": "2026-11-03T12:51:01.703016+00:00",
+      "items": [
+        {
+          "title": "[易语言软件开源] 【开源】让 AI 直接写易语言：DSH 接入 IDE 实时改代码+编译.....",
+          "url": "https://bbs.ijingyi.com/thread-14881478-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[图文资料] vmware17.6.3去虚拟化技术文档",
+          "url": "https://bbs.ijingyi.com/thread-14881476-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[闲聊] deepseek又崩了？",
+          "url": "https://bbs.ijingyi.com/thread-14881474-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[技术专题] CheckVM SDK",
+          "url": "https://bbs.ijingyi.com/thread-14881473-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[原创软件] 获取网页请求体插入到易语言",
+          "url": "https://bbs.ijingyi.com/thread-14881471-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[原创软件] 每月考勤",
+          "url": "https://bbs.ijingyi.com/thread-14881470-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[易源码分享] CCHTTP调用PHP 当做后端接口",
+          "url": "https://bbs.ijingyi.com/thread-14881465-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[闲聊] 人手一个易语言？",
+          "url": "https://bbs.ijingyi.com/thread-14881460-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[闲聊] 论坛有玩鱼的吗？",
+          "url": "https://bbs.ijingyi.com/thread-14881458-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[易语言纯源码] 开源分享之全功能驱动读写源码",
+          "url": "https://bbs.ijingyi.com/thread-14881456-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[原创软件] 【蜗牛快搜】自然语言搜索文件",
+          "url": "https://bbs.ijingyi.com/thread-14881455-1-1.html",
+          "meta": "最新帖"
+        },
+        {
+          "title": "[闲聊] 大漠注册码 免费使用 求帮忙消费",
+          "url": "https://bbs.ijingyi.com/thread-14881454-1-1.html",
+          "meta": "最新帖"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T12:51:01.703016+00:00",
+        "lastSuccessAt": "2026-11-03T12:51:01.703016+00:00",
+        "error": ""
+      }
+    },
+    "ijingyi_hot": {
+      "name": "精易论坛 · 本周热帖",
+      "kind": "本周热帖",
+      "url": "https://bbs.ijingyi.com/",
+      "icon": "https://bbs.ijingyi.com/favicon.ico",
+      "sourceUrlUsed": "https://bbs.ijingyi.com/",
+      "updatedAt": "2026-11-03T12:51:03.023886+00:00",
+      "items": [
+        {
+          "title": "[易语言纯源码] 开源分享之全功能驱动读写源码",
+          "url": "https://bbs.ijingyi.com/thread-14881456-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[转载软件] Shielden2.4.0 加壳软件离线版 修复版",
+          "url": "https://bbs.ijingyi.com/thread-14881432-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[易源码分享] 窗口分析器，改自论坛版本，两种方式获取外部窗口画框..",
+          "url": "https://bbs.ijingyi.com/thread-14881342-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[原创软件] 超强防破 功能强大 一键加密 卫士盾网络验证V3.1.5 永久免费..",
+          "url": "https://bbs.ijingyi.com/thread-14881345-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[原创软件] 比特工坊 yolo模型训练标注工具【免安装环境】首发免费版..",
+          "url": "https://bbs.ijingyi.com/thread-14881319-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[易语言成品模块] HTTP监听弹幕dy",
+          "url": "https://bbs.ijingyi.com/thread-14881421-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[易源码分享] 银河系顶级win系统开关机助手4.0 有视频",
+          "url": "https://bbs.ijingyi.com/thread-14881350-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[易源码分享] CCHTTP调用PHP 当做后端接口",
+          "url": "https://bbs.ijingyi.com/thread-14881465-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[原创软件] VX OCR 引擎的本地 HTTP 服务与在线测试工具",
+          "url": "https://bbs.ijingyi.com/thread-14881408-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[易语言成品模块] YOLOv5/8/11/26免环境训练工具支持A/N/I卡",
+          "url": "https://bbs.ijingyi.com/thread-14881340-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[原创软件] 小帅html窗口UI-升级",
+          "url": "https://bbs.ijingyi.com/thread-14881359-1-1.html",
+          "meta": "本周热帖"
+        },
+        {
+          "title": "[易源码分享] 大文件读取模块+示例",
+          "url": "https://bbs.ijingyi.com/thread-14881384-1-1.html",
+          "meta": "本周热帖"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T12:51:03.023886+00:00",
+        "lastSuccessAt": "2026-11-03T12:51:03.023886+00:00",
+        "error": ""
+      }
+    },
+    "pojie52_new": {
+      "name": "吾爱破解 · 新鲜出炉",
+      "kind": "新鲜出炉",
+      "url": "https://www.52pojie.cn/forum.php?mod=guide&view=newthread",
+      "icon": "https://www.52pojie.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.52pojie.cn/",
+      "updatedAt": "2026-11-03T12:57:11.107867+00:00",
+      "items": [
+        {
+          "title": "比特彗星 BitComet Stable (build 2.23.10.20)",
+          "url": "https://www.52pojie.cn/thread-2135613-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "清风输入法+郑码管理工具 v1.1",
+          "url": "https://www.52pojie.cn/thread-2135605-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "我宣布了自己死亡--github生命检测",
+          "url": "https://www.52pojie.cn/thread-2135602-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "【开放注册公告】吾爱破解论坛2026年11月11日光棍节开放注册公告",
+          "url": "https://www.52pojie.cn/thread-2135597-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "ios本地视频播放器，海报封面展示，支持搜索，不联网，支持ios11 ...",
+          "url": "https://www.52pojie.cn/thread-2135591-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "无聊学习了一下MCP Server，附简单实现",
+          "url": "https://www.52pojie.cn/thread-2135581-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "文件管理器 Double Commander v1.2.10",
+          "url": "https://www.52pojie.cn/thread-2135576-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "量尺通",
+          "url": "https://www.52pojie.cn/thread-2135572-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "快捷文本粘贴工具 QuickTextPaste v9.61",
+          "url": "https://www.52pojie.cn/thread-2135571-1-1.html",
+          "meta": "新鲜出炉"
+        },
+        {
+          "title": "桌面数字时钟工具 DesktopDigitalClock v6.41",
+          "url": "https://www.52pojie.cn/thread-2135568-1-1.html",
+          "meta": "新鲜出炉"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+        "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+        "error": ""
+      }
+    },
+    "pojie52_tech": {
+      "name": "吾爱破解 · 技术分享",
+      "kind": "技术分享",
+      "url": "https://www.52pojie.cn/forum.php?mod=guide&view=tech",
+      "icon": "https://www.52pojie.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.52pojie.cn/",
+      "updatedAt": "2026-11-03T12:57:11.107867+00:00",
+      "items": [
+        {
+          "title": "[AI-generated]某企业加固加载Frida流程",
+          "url": "https://www.52pojie.cn/thread-2135420-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "AnyDesk 9.8.x 授权验证分析与通用补丁工具(特征码定位 + 运行时 ...",
+          "url": "https://www.52pojie.cn/thread-2135385-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "Electron 应用逆向分析实战：Thief 7.2.1 VIP 验证机制拆解",
+          "url": "https://www.52pojie.cn/thread-2135359-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "全程使用AI破解了一个浏览器的订阅",
+          "url": "https://www.52pojie.cn/thread-2135342-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "iOS Flutter应用会员逻辑分析与静态补丁",
+          "url": "https://www.52pojie.cn/thread-2135331-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "【勒索解密】群晖NAS .L0CK3D勒索病毒特定条件下可解密（附解密 ...",
+          "url": "https://www.52pojie.cn/thread-2135307-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "Shielden2.4.0_Local_Cracked.By.Sound",
+          "url": "https://www.52pojie.cn/thread-2135279-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "TreeSize 授权模块分析与算法还原",
+          "url": "https://www.52pojie.cn/thread-2135275-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "DMDE 许可证算法分析与通用注册机(win32/win64)",
+          "url": "https://www.52pojie.cn/thread-2135202-1-1.html",
+          "meta": "技术分享"
+        },
+        {
+          "title": "一套结合ai快速分析安卓算法的半通用流程",
+          "url": "https://www.52pojie.cn/thread-2135124-1-1.html",
+          "meta": "技术分享"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+        "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+        "error": ""
+      }
+    },
+    "pojie52_digest": {
+      "name": "吾爱破解 · 精华采撷",
+      "kind": "精华采撷",
+      "url": "https://www.52pojie.cn/forum.php?mod=guide&view=digest",
+      "icon": "https://www.52pojie.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.52pojie.cn/",
+      "updatedAt": "2026-11-03T12:57:11.107867+00:00",
+      "items": [
+        {
+          "title": "基于 AST 的 ob 混淆还原思路：以 acw_xx__v2 为例",
+          "url": "https://www.52pojie.cn/thread-2132797-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "学习 VMP 虚拟机吧（四）：VMP2 还是那台机器",
+          "url": "https://www.52pojie.cn/thread-2132351-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "spiderdemo T30 WebSocket+jsvmp题解及详细思路",
+          "url": "https://www.52pojie.cn/thread-2131711-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "拆开 Microsoft Edge 的 App-Bound Encryption：从「读不出」到 ...",
+          "url": "https://www.52pojie.cn/thread-2131346-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "Bastion 棱堡，对称加密算法库，支持CTR、CBC、XTS、AEAD、HASH ...",
+          "url": "https://www.52pojie.cn/thread-2131143-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "ks app rpc调用加密算法实现搜索",
+          "url": "https://www.52pojie.cn/thread-2131016-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "【吾爱首发】游戏《Sora No Kiseki the 2nd》打包解包工具FPACTo ...",
+          "url": "https://www.52pojie.cn/thread-2130872-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "SigilHook：用 AngelScript 做 x86/x64 函数 Hook 的注入式运行 ...",
+          "url": "https://www.52pojie.cn/thread-2130534-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "The Enigma Protector vm还原插件",
+          "url": "https://www.52pojie.cn/thread-2127264-1-1.html",
+          "meta": "精华采撷"
+        },
+        {
+          "title": "某象滑块纯算逆向分析",
+          "url": "https://www.52pojie.cn/thread-2125447-1-1.html",
+          "meta": "精华采撷"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+        "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
         "error": ""
       }
     }

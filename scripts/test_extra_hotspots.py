@@ -19,10 +19,15 @@ class Tests(unittest.TestCase):
   self.assertTrue(rows[0]['url'].endswith('weekly-issue-417.html'))
   self.assertEqual(rows[0]['meta'],'第 417 期')
  def test_forums(self):
-  html='<a href="thread-99-1-1.html">导航入口排除</a><tbody id="normalthread_123"><a href="thread-123-1-1.html">公开热门帖子标题</a></tbody>'
-  rows=x.parse_source('pojie52',html.encode('gb18030'))
-  self.assertEqual(len(rows),1)
-  self.assertTrue(rows[0]['url'].endswith('thread-123-1-1.html'))
+  headers=''.join(f'<td><a href="forum.php?mod=guide&amp;view={v}">榜单</a></td>' for v in ['newthread','tech','hot','digest'])
+  columns=''.join('<td>'+''.join(f'<a href="thread-{c*100+i}-1-1.html">首页帖子{c}-{i}</a>' for i in range(1,11))+'</td>' for c in range(4))
+  html=f'<table class="toplist_7ree"><tr>{headers}</tr><tr>{columns}</tr></table>'
+  for c,key in enumerate(['pojie52_new','pojie52_tech','pojie52','pojie52_digest']):
+   rows=x.parse_source(key,html.encode('gb18030'))
+   self.assertEqual(len(rows),10)
+   self.assertTrue(rows[0]['url'].endswith(f'thread-{c*100+1}-1-1.html'))
+   self.assertTrue(rows[-1]['url'].endswith(f'thread-{c*100+10}-1-1.html'))
+  with self.assertRaises(ValueError):x.parse_source('pojie52',b'<html>missing homepage table</html>')
   rows=x.parse_source('kanxue','<a href="thread-123.htm">公开技术热门帖子</a><a href="user-1.htm">作者个人页排除</a>'.encode())
   self.assertEqual(len(rows),1)
  def test_finance(self):

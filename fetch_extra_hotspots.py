@@ -7,6 +7,13 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers
 SOURCES={
+ 'pojie52_new':{'name':'吾爱破解 · 新鲜出炉','kind':'新鲜出炉','url':'https://www.52pojie.cn/forum.php?mod=guide&view=newthread','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
+ 'pojie52_tech':{'name':'吾爱破解 · 技术分享','kind':'技术分享','url':'https://www.52pojie.cn/forum.php?mod=guide&view=tech','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
+ 'pojie52_digest':{'name':'吾爱破解 · 精华采撷','kind':'精华采撷','url':'https://www.52pojie.cn/forum.php?mod=guide&view=digest','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
+
+ 'ijingyi_new':{'name':'精易论坛 · 最新帖','kind':'最新帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/','icon':'https://bbs.ijingyi.com/favicon.ico'},
+ 'ijingyi_hot':{'name':'精易论坛 · 本周热帖','kind':'本周热帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/','icon':'https://bbs.ijingyi.com/favicon.ico'},
+ 'bilibili':{'name':'哔哩哔哩（B站）','kind':'热门视频 · 非播放量排行','url':'https://www.bilibili.com/v/popular/all','endpoint':'https://api.bilibili.com/x/web-interface/popular?pn=1&ps=24','icon':'https://www.bilibili.com/favicon.ico'},
  'tieba':{'name':'百度贴吧','kind':'热议话题榜','url':'https://tieba.baidu.com/','endpoint':'https://tieba.baidu.com/hottopic/browse/topicList','icon':'https://tieba.baidu.com/favicon.ico'},
  'woshipm':{'name':'人人都是产品经理','kind':'产品与运营文章','url':'https://www.woshipm.com/','endpoint':'https://www.woshipm.com/feed','icon':'https://www.woshipm.com/favicon.ico'},
  'csdn':{'name':'CSDN 博客','kind':'最新技术文章','url':'https://blog.csdn.net/','endpoint':'https://blog.csdn.net/nav/newarticles','icon':'https://blog.csdn.net/favicon.ico'},
@@ -17,7 +24,7 @@ SOURCES={
  'freebuf':{'name':'FreeBuf','kind':'安全资讯','url':'https://www.freebuf.com/','endpoint':'https://www.freebuf.com/','icon':'https://www.freebuf.com/favicon.ico'},
  'yicai':{'name':'第一财经','kind':'财经资讯','url':'https://www.yicai.com/','endpoint':'https://www.yicai.com/','icon':'https://www.yicai.com/favicon.ico'},
  'sinafinance':{'name':'新浪财经','kind':'财经资讯','url':'https://finance.sina.com.cn/','endpoint':'https://finance.sina.com.cn/','icon':'https://finance.sina.com.cn/favicon.ico'},
- 'pojie52':{'name':'吾爱破解热门','kind':'论坛最新热门','url':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','endpoint':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','icon':'https://www.52pojie.cn/favicon.ico'},
+ 'pojie52':{'name':'吾爱破解热门','kind':'论坛最新热门','url':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'kanxue':{'name':'看雪论坛热门','kind':'论坛热门榜','url':'https://bbs.kanxue.com/thread-hotlist-all-3.htm','endpoint':'https://bbs.kanxue.com/thread-hotlist-all-3.htm','icon':'https://bbs.kanxue.com/favicon.ico'},
  'ruanyifeng':{'name':'科技爱好者周刊','kind':'阮一峰 · 最新期刊','url':'https://www.ruanyifeng.com/blog/weekly/index.html','endpoint':'https://www.ruanyifeng.com/blog/weekly/index.html','icon':'https://www.ruanyifeng.com/favicon.ico'},
  'uisdc':{'name':'优设网','kind':'设计资讯','url':'https://www.uisdc.com/','endpoint':'https://www.uisdc.com/','icon':'https://www.uisdc.com/favicon.ico'},
@@ -44,7 +51,30 @@ class Links(HTMLParser):
  def handle_endtag(self,t):
   if t=='a' and self.current:self.links.append((self.current[0],clean(''.join(self.current[1]))));self.current=None
 
+def parse_pojie_home(key,body):
+ text=body.decode('gb18030')
+ table=re.search(r'<table\b[^>]*class=["\'][^"\']*\btoplist_7ree\b[^"\']*["\'][^>]*>(.*?)</table>',text,re.S|re.I)
+ if not table:raise ValueError('Missing Pojie homepage ranking table')
+ trs=re.findall(r'<tr\b[^>]*>(.*?)</tr>',table.group(1),re.S|re.I)
+ if len(trs)<2:raise ValueError('Missing Pojie homepage ranking rows')
+ headers=re.findall(r'<td\b[^>]*>(.*?)</td>',trs[0],re.S|re.I)
+ columns=re.findall(r'<td\b[^>]*>(.*?)</td>',trs[1],re.S|re.I)
+ view={'pojie52_new':'newthread','pojie52_tech':'tech','pojie52':'hot','pojie52_digest':'digest'}[key]
+ index=None
+ for i,header in enumerate(headers):
+  links=Links();links.feed(header)
+  if any(re.search(r'[?&]view='+view+r'(?:&|$)',href) for href,title in links.links):index=i;break
+ if index is None or index>=len(columns):raise ValueError('Missing Pojie homepage category')
+ parser=Links();parser.feed(columns[index]);items=[];seen=set()
+ for href,title in parser.links:
+  url=urljoin('https://www.52pojie.cn/',href)
+  if re.fullmatch(r'https://www\.52pojie\.cn/thread-\d+-\d+-\d+\.html',url) and len(title)>2 and url not in seen:
+   seen.add(url);items.append({'title':title,'url':url,'meta':{'newthread':'新鲜出炉','tech':'技术分享','hot':'人气热门','digest':'精华采撷'}[view]})
+ if len(items)<10:raise ValueError('Incomplete Pojie homepage top 10')
+ return items[:10]
+
 def parse_source(key,body):
+ if key in ['pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return parse_pojie_home(key,body)
  rows=[]
  def add(title,url,meta='',cover=''):
   title=clean(title)
@@ -52,7 +82,40 @@ def parse_source(key,body):
    row={'title':title,'url':url,'meta':clean(meta)};image=clean_cover(key,cover,SOURCES[key]['url'])
    if image:row['cover']=image
    rows.append(row)
- if key=='tieba':
+ if key=='bilibili':
+  data=json.loads(body)
+  if not isinstance(data,dict) or type(data.get('code')) is not int or data['code']!=0:raise ValueError('Invalid Bilibili response')
+  payload=data.get('data')
+  videos=payload.get('list') if isinstance(payload,dict) else None
+  if not isinstance(videos,list):raise ValueError('Invalid Bilibili video list')
+  for row in videos:
+   if not isinstance(row,dict):continue
+   bvid=row.get('bvid');title=row.get('title')
+   if not isinstance(bvid,str) or not re.fullmatch(r'BV[1-9A-HJ-NP-Za-km-z]{10}',bvid) or not isinstance(title,str):continue
+   owner=row.get('owner') if isinstance(row.get('owner'),dict) else {}
+   stat=row.get('stat') if isinstance(row.get('stat'),dict) else {}
+   meta=[]
+   if isinstance(owner.get('name'),str) and clean(owner['name']):meta.append('UP主 '+clean(owner['name']))
+   for field,label in [('view','播放'),('like','点赞')]:
+    value=stat.get(field)
+    if type(value) is int and value>=0:meta.append(f'{value:,} {label}')
+   add(title,'https://www.bilibili.com/video/'+bvid,' · '.join(meta))
+ elif key in ['ijingyi_new','ijingyi_hot']:
+  text=body.decode('utf-8')
+  marker=text.find('lay-id="newthread"')
+  if marker<0:raise ValueError('Missing Jingyi thread tabs')
+  text=text[text.rfind('<li',0,marker):]
+  tabs=re.findall(r'<li\b[^>]*lay-id=["\']([^"\']+)',text.split('<div class="layui-tab-content">',1)[0])
+  target='newthread' if key=='ijingyi_new' else 'hot'
+  if target not in tabs:raise ValueError('Missing Jingyi requested tab')
+  panels=re.findall(r'<ul\b[^>]*class=["\']thread["\'][^>]*>(.*?)</ul>',text,flags=re.S|re.I)
+  index=tabs.index(target)
+  if index>=len(panels):raise ValueError('Missing Jingyi thread panel')
+  parser=Links();parser.feed(panels[index])
+  for href,title in parser.links:
+   url=urljoin(SOURCES[key]['url'],href)
+   if re.fullmatch(r'https://bbs\.ijingyi\.com/thread-\d+-\d+-\d+\.html',url):add(title,url,SOURCES[key]['kind'])
+ elif key=='tieba':
   data=json.loads(body)
   if not isinstance(data,dict) or data.get('errno')!=0:raise ValueError('Invalid Tieba response')
   topics=data.get('data',{}).get('bang_topic',{}).get('topic_list',[])
@@ -109,15 +172,15 @@ def parse_source(key,body):
    url=urljoin(SOURCES[key]['url'],href)
    pattern=r'https://www\.yicai\.com/news/\d+\.html' if key=='yicai' else r'https://finance\.sina\.com\.cn/[a-zA-Z0-9/_-]+/doc-[a-zA-Z0-9]+\.shtml'
    if re.fullmatch(pattern,url) and len(title)>6:add(title,url)
- elif key in ['pojie52','kanxue']:
-  text=body.decode('gb18030' if key=='pojie52' else 'utf-8')
-  if key=='pojie52':
+ elif key in ['pojie52','pojie52_new','pojie52_tech','pojie52_digest','kanxue']:
+  text=body.decode('gb18030' if key.startswith('pojie52') else 'utf-8')
+  if key.startswith('pojie52'):
    blocks=re.findall(r'<tbody\b[^>]*id=["\']normalthread_\d+["\'][^>]*>(.*?)</tbody>',text,flags=re.S|re.I)
    text='\n'.join(blocks)
   parser=Links();parser.feed(text)
   for href,title in parser.links:
    url=urljoin(SOURCES[key]['url'],href)
-   pattern=r'https://www\.52pojie\.cn/thread-\d+-\d+-\d+\.html' if key=='pojie52' else r'https://bbs\.kanxue\.com/thread-\d+\.htm'
+   pattern=r'https://www\.52pojie\.cn/thread-\d+-\d+-\d+\.html' if key.startswith('pojie52') else r'https://bbs\.kanxue\.com/thread-\d+\.htm'
    if re.fullmatch(pattern,url) and len(title)>4:add(title,url)
  elif key=='ruanyifeng':
   parser=Links();parser.feed(body.decode('utf-8'))
@@ -152,7 +215,7 @@ FREEBUF_FEED = 'https://www.freebuf.com/rss'
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
 def request_body(url):
- req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8'})
+ req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {}),'User-Agent':'Mozilla/5.0','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8'})
  with urllib.request.urlopen(req,timeout=25) as r:body=r.read(4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
@@ -219,6 +282,7 @@ def fetch(key):
  except Exception:
   if key!='ruanyifeng':raise
   body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
+ if key in ['bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():

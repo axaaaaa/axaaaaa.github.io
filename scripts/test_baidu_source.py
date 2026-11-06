@@ -10,6 +10,7 @@ class BaiduTests(unittest.TestCase):
   self.assertEqual(len(items),2);self.assertEqual(items[0]['meta'],'热度 12345');self.assertIn('wd=%',items[0]['url'])
  def test_invalid(self):
   with self.assertRaises(ValueError):parse_source('baidu',b'<html>empty</html>')
+ @unittest.skipUnless((Path(__file__).resolve().parents[1]/'src/components/SourceNewsCard.vue').is_file(),'Vue integration requires source checkout')
  def test_integration(self):
   root=Path(__file__).resolve().parents[1]
   self.assertIn("'bilibili','baidu','tieba'",(root/'src/components/NavigationLinks.vue').read_text(encoding='utf8'))

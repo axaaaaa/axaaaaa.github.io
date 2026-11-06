@@ -14,6 +14,7 @@ class MicrosoftSeebugTests(unittest.TestCase):
  def test_missing_table(self):
   for b in [b'',b'<html>verification</html>',b'<table><td class="vul-title-wrapper">']:
    with self.assertRaises(ValueError):f.parse_source('seebug',b)
+ @unittest.skipUnless((Path(__file__).resolve().parents[1]/'src/components/SourceNewsCard.vue').is_file(),'Vue integration requires source checkout')
  def test_ui_configuration(self):
   root=Path(__file__).resolve().parents[1]
   for key in ['microsoft','seebug']:

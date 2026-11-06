@@ -10,6 +10,7 @@ class DoubanCoverTests(unittest.TestCase):
  def test_invalid_cover(self):
   for url in ['https://evil.test/a.jpg','javascript:alert(1)','https://doubanio.com.evil.test/a.jpg']:
    self.assertEqual(clean_cover('douban',url),'')
+ @unittest.skipUnless((Path(__file__).resolve().parents[1]/'src/components/SourceNewsCard.vue').is_file(),'Vue integration requires source checkout')
  def test_douban_only_override(self):
   root=Path(__file__).resolve().parents[1];s=(root/'src/components/SourceNewsCard.vue').read_text(encoding='utf8')
   self.assertIn("(this.sourceId==='douban'||SHOW_SOURCE_IMAGES)",s)

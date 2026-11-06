@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin,urlparse
 from concurrent.futures import ThreadPoolExecutor
 DOMAINS={
+'douban':('doubanio.com',),
 'sspai':('sspai.com',),'uisdc':('uisdc.com',),'zcool':('zcool.cn','zcool.com.cn'),'gamersky':('gamersky.com',),'freebuf':('3001.net','freebuf.com'),
 'woshipm':('woshipm.com','aixq.cc'),'csdn':('csdnimg.cn','csdn.net'),'oschina':('oschina.net','oscimg.net'),'xz':('aliyun.com','aliyuncs.com'),'anquanke':('qhimg.com','anquanke.com'),
 'yicai':('yicai.com','yicai.net'),'sinafinance':('sinaimg.cn','sina.com.cn'),'pojie52':('52pojie.cn',),'kanxue':('kanxue.com','kanxue.cn'),'ruanyifeng':('beekka.com','ruanyifeng.com'),
@@ -155,3 +156,48 @@ def prune_all_covers():
   elif isinstance(data.get('items'),list):sources[key]={'items':data['items']}
  prune_covers(sources)
  print('SOURCE_COVERS_PRUNED referenced snapshots retained')
+
+
+def cache_douban_posters(items):
+ """Read public posters in a browser, then serve validated image bytes locally."""
+ import hashlib,os
+ from pathlib import Path
+ root=public_directory()/'source-covers'/'douban';results=[dict(row) for row in items];pending={}
+ for row in results:
+  original=clean_cover('douban',row.get('originalCover') or row.get('cover'))
+  if not original:continue
+  token=hashlib.sha256(original.encode()).hexdigest()[:24]
+  existing=next((path for path in root.glob(token+'.*') if path.suffix in ['.jpg','.png','.webp','.gif']),None) if root.exists() else None
+  if existing:
+   row.update(originalCover=original,cover='source-covers/douban/'+existing.name);continue
+  # Douban's public image CDN shares poster identifiers across image nodes.
+  u=urlparse(original);candidate=u._replace(netloc='img3.doubanio.com').geturl()
+  pending.setdefault(candidate,[]).append((row,original,token))
+ if not pending:return results
+ try:
+  from playwright.sync_api import sync_playwright
+  with sync_playwright() as playwright:
+   browser=playwright.chromium.launch(headless=True,channel=os.environ.get('DOUBAN_BROWSER_CHANNEL') or None)
+   try:
+    page=browser.new_page();responses=[]
+    page.on('response',lambda response:responses.append(response) if response.url in pending else None)
+    page.goto('https://movie.douban.com/',wait_until='domcontentloaded',timeout=30000)
+    page.evaluate("""async urls=>Promise.all(urls.map(src=>new Promise(resolve=>{
+     const img=new Image();const timer=setTimeout(resolve,10000);
+     img.onload=img.onerror=()=>{clearTimeout(timer);resolve()};img.src=src;document.body.append(img);
+    })))""",list(pending))
+    for response in responses:
+     try:
+      if response.status!=200:continue
+      content=response.body()
+      if not content or len(content)>2_000_000:continue
+      ext='jpg' if content.startswith(b'\xff\xd8\xff') else 'png' if content.startswith(b'\x89PNG\r\n\x1a\n') else 'webp' if content[:4]==b'RIFF' and content[8:12]==b'WEBP' else 'gif' if content[:6] in [b'GIF87a',b'GIF89a'] else ''
+      if not ext:continue
+      root.mkdir(parents=True,exist_ok=True)
+      for row,original,token in pending[response.url]:
+       target=root/(token+'.'+ext);temporary=target.with_suffix('.tmp');temporary.write_bytes(content);temporary.replace(target)
+       row.update(originalCover=original,cover='source-covers/douban/'+target.name)
+     except Exception:continue
+   finally:browser.close()
+ except Exception as error:print('DOUBAN_POSTER_CACHE_PENDING '+type(error).__name__)
+ return results

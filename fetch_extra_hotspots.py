@@ -1,12 +1,24 @@
 """Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
 import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
-from urllib.parse import urljoin,urlparse
+from urllib.parse import urljoin,urlparse,quote
 from datetime import datetime,timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers
+from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers,cache_douban_posters
 SOURCES={
+ 'douban':{'name': '豆瓣电影', 'kind': '热门电影 · 豆瓣评分', 'url': 'https://movie.douban.com/explore', 'endpoint': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=24&page_start=0', 'icon': 'https://movie.douban.com/favicon.ico'},
+ 'microsoft':{'name': '微软安全博客', 'kind': '安全研究与资讯 · 中文机译', 'url': 'https://www.microsoft.com/en-us/security/blog/', 'endpoint': 'https://www.microsoft.com/en-us/security/blog/feed/', 'icon': 'https://www.microsoft.com/favicon.ico'},
+ 'seebug':{'name': 'Seebug 漏洞库', 'kind': '最新漏洞情报', 'url': 'https://www.seebug.org/', 'endpoint': 'https://www.seebug.org/', 'icon': 'https://www.seebug.org/favicon.ico'},
+
+ 'securelist':{'name': 'Securelist · 卡巴斯基', 'kind': '威胁研究 · 中文机译', 'url': 'https://securelist.com/', 'endpoint': 'https://securelist.com/feed/', 'icon': 'https://securelist.com/favicon.ico'},
+ 'checkpoint':{'name': 'Check Point Research', 'kind': '安全研究 · 中文机译', 'url': 'https://research.checkpoint.com/', 'endpoint': 'https://research.checkpoint.com/feed/', 'icon': 'https://research.checkpoint.com/favicon.ico'},
+ 'sentinellabs':{'name': 'SentinelLABS', 'kind': '威胁情报 · 中文机译', 'url': 'https://www.sentinelone.com/labs/', 'endpoint': 'https://www.sentinelone.com/labs/feed/', 'icon': 'https://www.sentinelone.com/favicon.ico'},
+ 'elastic':{'name': 'Elastic Security Labs', 'kind': '检测与研究 · 中文机译', 'url': 'https://www.elastic.co/security-labs', 'endpoint': 'https://www.elastic.co/security-labs/rss/feed.xml', 'icon': 'https://www.elastic.co/favicon.ico'},
+ 'eset':{'name': 'ESET · WeLiveSecurity', 'kind': '威胁研究与资讯 · 中文机译', 'url': 'https://www.welivesecurity.com/en/', 'endpoint': 'https://www.welivesecurity.com/en/rss/feed/', 'icon': 'https://www.welivesecurity.com/favicon.ico'},
+
+ 'bleepingcomputer':{'name':'BleepingComputer','kind':'国际安全资讯 · 中文机译','url':'https://www.bleepingcomputer.com/','endpoint':'https://www.bleepingcomputer.com/feed/','icon':'https://www.bleepingcomputer.com/favicon.ico'},
+ 'baidu':{'name':'百度热搜','kind':'实时热搜榜','url':'https://top.baidu.com/board?tab=realtime','endpoint':'https://top.baidu.com/board?tab=realtime','icon':'https://www.baidu.com/favicon.ico'},
  'pojie52_new':{'name':'吾爱破解 · 新鲜出炉','kind':'新鲜出炉','url':'https://www.52pojie.cn/forum.php?mod=guide&view=newthread','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_tech':{'name':'吾爱破解 · 技术分享','kind':'技术分享','url':'https://www.52pojie.cn/forum.php?mod=guide&view=tech','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_digest':{'name':'吾爱破解 · 精华采撷','kind':'精华采撷','url':'https://www.52pojie.cn/forum.php?mod=guide&view=digest','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
@@ -38,6 +50,34 @@ SOURCES={
  'hellogithub':{'name':'HelloGitHub','kind':'开源月刊','url':'https://hellogithub.com/','endpoint':'https://hellogithub.com/rss','icon':'https://hellogithub.com/favicon.ico'},
  'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'}
 }
+SECURITY_RESEARCH_SOURCES={'microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
+SECURITY_FEED_HOSTS={
+ 'microsoft':{'www.microsoft.com','microsoft.com'},
+ 'securelist':{'securelist.com'},'checkpoint':{'research.checkpoint.com'},
+ 'sentinellabs':{'www.sentinelone.com','sentinelone.com'},'elastic':{'www.elastic.co','elastic.co'},
+ 'eset':{'www.welivesecurity.com','welivesecurity.com','www.eset.com','eset.com'}
+}
+
+def parse_security_feed(key,body):
+ root=ET.fromstring(body);atom={'a':'http://www.w3.org/2005/Atom'};rows=[];seen=set()
+ for entry in root.findall('.//item') or root.findall('a:entry',atom):
+  title=clean(entry.findtext('title') or entry.findtext('a:title',namespaces=atom))
+  url=clean(entry.findtext('link') or next((link.get('href','') for link in entry.findall('a:link',atom) if link.get('rel','alternate')=='alternate'),''))
+  try:
+   u=urlparse(url)
+   if u.scheme!='https' or u.hostname not in SECURITY_FEED_HOSTS[key] or u.username or u.password or u.port not in [None,443]:continue
+  except ValueError:continue
+  if key=='microsoft' and not re.fullmatch(r'/[a-z]{2}-[a-z]{2}/security/blog/\d{4}/\d{2}/\d{2}/[^/]+/',u.path):continue
+  if key=='sentinellabs' and not u.path.startswith('/labs/'):continue
+  if key=='elastic' and not u.path.startswith('/security-labs/'):continue
+  if key=='eset' and u.hostname.endswith('eset.com') and not u.path.startswith('/blog/'):continue
+  if not title or url in seen:continue
+  seen.add(url)
+  rows.append({'title':title,'url':url,'meta':clean(entry.findtext('pubDate') or entry.findtext('a:updated',namespaces=atom))})
+  if len(rows)==24:break
+ if not rows:raise ValueError('No valid security research entries')
+ return rows
+
 def clean(s):return re.sub(r'\s+',' ',str(s or '')).strip()
 def valid_url(url):
  try:return urlparse(url).scheme in ['http','https'] and bool(urlparse(url).hostname)
@@ -74,6 +114,46 @@ def parse_pojie_home(key,body):
  return items[:10]
 
 def parse_source(key,body):
+ if key=='douban':
+  data=json.loads(body)
+  if not isinstance(data,dict) or not isinstance(data.get('subjects'),list):raise ValueError('Invalid Douban movie response')
+  rows=[];seen=set()
+  for movie in data['subjects']:
+   if not isinstance(movie,dict):continue
+   id=str(movie.get('id',''));title=movie.get('title');url=movie.get('url','')
+   if not id.isdigit() or not isinstance(title,str) or not clean(title) or not isinstance(url,str):continue
+   if url!='https://movie.douban.com/subject/'+id+'/':continue
+   if id in seen:continue
+   seen.add(id)
+   try:rating=float(movie.get('rate'))
+   except (TypeError,ValueError):rating=0
+   meta=f'豆瓣 {rating:.1f} 分' if 0<rating<=10 else '暂无评分'
+   if movie.get('is_new') is True:meta+=' · 新上榜'
+   row={'title':clean(title),'url':url,'meta':meta}
+   cover=clean_cover('douban',movie.get('cover'))
+   if cover:row['cover']=cover
+   rows.append(row)
+   if len(rows)==24:break
+  if not rows:raise ValueError('No valid Douban movies')
+  return rows
+
+ if key=='seebug':
+  text=body.decode('utf-8')
+  # Only the latest-vulnerabilities table; never mix the PoC/popular lists.
+  table=re.search(r'<td\b[^>]*class=["\'][^"\']*vul-title-wrapper[^"\']*["\']',text)
+  if not table:raise ValueError('Missing Seebug latest vulnerability table')
+  start=text.rfind('<table',0,table.start());end=text.find('</table>',table.end())
+  if start<0 or end<0:raise ValueError('Incomplete Seebug latest vulnerability table')
+  links=Links();links.feed(text[start:end]);items=[];seen=set()
+  for href,title in links.links:
+   url=urljoin(SOURCES[key]['url'],href)
+   match=re.fullmatch(r'https://www\.seebug\.org/vuldb/ssvid-(\d+)/?',url)
+   if not match or len(title)<3 or re.fullmatch(r'SSV-\d+',title) or url in seen:continue
+   seen.add(url);items.append({'title':title,'url':url,'meta':'SSV-'+match.group(1)+' · 最新漏洞'})
+  if not items:raise ValueError('No valid Seebug vulnerabilities')
+  return items[:24]
+
+ if key in SECURITY_RESEARCH_SOURCES:return parse_security_feed(key,body)
  if key in ['pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return parse_pojie_home(key,body)
  rows=[]
  def add(title,url,meta='',cover=''):
@@ -82,7 +162,19 @@ def parse_source(key,body):
    row={'title':title,'url':url,'meta':clean(meta)};image=clean_cover(key,cover,SOURCES[key]['url'])
    if image:row['cover']=image
    rows.append(row)
- if key=='bilibili':
+ if key=='baidu':
+  match=re.search(r'<!--s-data:(.*?)-->',body.decode('utf-8'),re.S)
+  if not match:raise ValueError('Missing Baidu ranking data')
+  cards=json.loads(match.group(1))['data']['cards']
+  for card in cards:
+   if card.get('component')!='hotList':continue
+   for row in card.get('content',[]):
+    if not isinstance(row,dict) or row.get('isTop'):continue
+    title=clean(row.get('word'))
+    if not title:continue
+    heat=str(row.get('hotScore',''))
+    add(title,'https://www.baidu.com/s?wd='+quote(title),'热度 '+heat if heat.isdigit() else '')
+ elif key=='bilibili':
   data=json.loads(body)
   if not isinstance(data,dict) or type(data.get('code')) is not int or data['code']!=0:raise ValueError('Invalid Bilibili response')
   payload=data.get('data')
@@ -127,6 +219,12 @@ def parse_source(key,body):
    meta='热议话题'
    if isinstance(heat,int) and not isinstance(heat,bool) and heat>=0:meta+=f' · 热度 {heat:,}'
    add(title,'https://tieba.baidu.com/hottopic/browse/hottopic?topic_id='+str(int(id)),meta)
+ elif key=='bleepingcomputer':
+  root=ET.fromstring(body)
+  for item in root.findall('.//item'):
+   url=clean(item.findtext('link'))
+   if not re.fullmatch(r'https://www\.bleepingcomputer\.com/news/security/[a-zA-Z0-9_-]+/',url):continue
+   add(item.findtext('title'),url,item.findtext('pubDate') or '')
  elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
   root=ET.fromstring(body)
   for item in root.findall('.//item'):add(item.findtext('title'),item.findtext('link') or '',item.findtext('pubDate') or '')
@@ -215,8 +313,8 @@ FREEBUF_FEED = 'https://www.freebuf.com/rss'
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
 def request_body(url):
- req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {}),'User-Agent':'Mozilla/5.0','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8'})
- with urllib.request.urlopen(req,timeout=25) as r:body=r.read(4_000_000)
+ req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8'})
+ with urllib.request.urlopen(req,timeout=25) as r:body=r.read(12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -269,6 +367,26 @@ def fetch_freebuf_items():
    return normalize_freebuf_rows(rows)
   finally:browser.close()
 
+def translate_title(title):
+ url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title)
+ data=json.loads(request_body(url))
+ translated=clean(''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str)))
+ if not translated or not re.search(r'[\u4e00-\u9fff]',translated):raise ValueError('Translation did not return Chinese')
+ return translated
+
+def translate_security_titles(items,previous=None):
+ cached={row.get('originalTitle'):row for row in (previous or {}).get('items',[]) if row.get('translationStatus')=='translated' and row.get('title')}
+ def translate(row):
+  original=row['title'];result={**row,'originalTitle':original,'translationStatus':'original'}
+  try:
+   result['title']=cached[original]['title'] if original in cached else translate_title(original)
+   result['translationStatus']='translated'
+  except Exception as error:
+   print(f'TRANSLATION_PENDING {type(error).__name__}')
+  result['meta']=('机器翻译' if result['translationStatus']=='translated' else '英文原题 · 翻译待更新')+(' · '+row['meta'] if row.get('meta') else '')
+  return result
+ with ThreadPoolExecutor(max_workers=4) as pool:return list(pool.map(translate,items))
+
 def fetch(key):
  source=SOURCES[key]
  if key=='freebuf':
@@ -282,7 +400,13 @@ def fetch(key):
  except Exception:
   if key!='ruanyifeng':raise
   body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
- if key in ['bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key=='bleepingcomputer' or key in SECURITY_RESEARCH_SOURCES:
+  previous={}
+  try:previous=json.loads((Path(__file__).resolve().parents[1]/'public/extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
+  except (OSError,ValueError):pass
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items,previous)}
+ if key=='douban':return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items)}
+ if key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():

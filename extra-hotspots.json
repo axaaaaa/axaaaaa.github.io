@@ -3621,6 +3621,1106 @@
         "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
         "error": ""
       }
+    },
+    "baidu": {
+      "name": "百度热搜",
+      "kind": "实时热搜榜",
+      "url": "https://top.baidu.com/board?tab=realtime",
+      "icon": "https://www.baidu.com/favicon.ico",
+      "sourceUrlUsed": "https://top.baidu.com/board?tab=realtime",
+      "updatedAt": "2026-11-06T17:05:29.496652+00:00",
+      "items": [
+        {
+          "title": "一双“电动鞋”售价7999元",
+          "url": "https://www.baidu.com/s?wd=%E4%B8%80%E5%8F%8C%E2%80%9C%E7%94%B5%E5%8A%A8%E9%9E%8B%E2%80%9D%E5%94%AE%E4%BB%B77999%E5%85%83",
+          "meta": "热度 7809120"
+        },
+        {
+          "title": "125台公交车退役电池卖了300万元",
+          "url": "https://www.baidu.com/s?wd=125%E5%8F%B0%E5%85%AC%E4%BA%A4%E8%BD%A6%E9%80%80%E5%BD%B9%E7%94%B5%E6%B1%A0%E5%8D%96%E4%BA%86300%E4%B8%87%E5%85%83",
+          "meta": "热度 7712822"
+        },
+        {
+          "title": "进博会如何连接世界",
+          "url": "https://www.baidu.com/s?wd=%E8%BF%9B%E5%8D%9A%E4%BC%9A%E5%A6%82%E4%BD%95%E8%BF%9E%E6%8E%A5%E4%B8%96%E7%95%8C",
+          "meta": "热度 7617920"
+        },
+        {
+          "title": "6城住户存款超3万亿",
+          "url": "https://www.baidu.com/s?wd=6%E5%9F%8E%E4%BD%8F%E6%88%B7%E5%AD%98%E6%AC%BE%E8%B6%853%E4%B8%87%E4%BA%BF",
+          "meta": "热度 7521367"
+        },
+        {
+          "title": "17岁职校生手搓充电宝 校长现场拍板",
+          "url": "https://www.baidu.com/s?wd=17%E5%B2%81%E8%81%8C%E6%A0%A1%E7%94%9F%E6%89%8B%E6%90%93%E5%85%85%E7%94%B5%E5%AE%9D%20%E6%A0%A1%E9%95%BF%E7%8E%B0%E5%9C%BA%E6%8B%8D%E6%9D%BF",
+          "meta": "热度 7427257"
+        },
+        {
+          "title": "女子带娃仅点6元豆芽连吃7碗米饭",
+          "url": "https://www.baidu.com/s?wd=%E5%A5%B3%E5%AD%90%E5%B8%A6%E5%A8%83%E4%BB%85%E7%82%B96%E5%85%83%E8%B1%86%E8%8A%BD%E8%BF%9E%E5%90%837%E7%A2%97%E7%B1%B3%E9%A5%AD",
+          "meta": "热度 7334001"
+        },
+        {
+          "title": "圆通总裁潘水苗心疼儿子Tim工作辛苦",
+          "url": "https://www.baidu.com/s?wd=%E5%9C%86%E9%80%9A%E6%80%BB%E8%A3%81%E6%BD%98%E6%B0%B4%E8%8B%97%E5%BF%83%E7%96%BC%E5%84%BF%E5%AD%90Tim%E5%B7%A5%E4%BD%9C%E8%BE%9B%E8%8B%A6",
+          "meta": "热度 7236609"
+        },
+        {
+          "title": "女中医看了墓碑上的药方说实用还不贵",
+          "url": "https://www.baidu.com/s?wd=%E5%A5%B3%E4%B8%AD%E5%8C%BB%E7%9C%8B%E4%BA%86%E5%A2%93%E7%A2%91%E4%B8%8A%E7%9A%84%E8%8D%AF%E6%96%B9%E8%AF%B4%E5%AE%9E%E7%94%A8%E8%BF%98%E4%B8%8D%E8%B4%B5",
+          "meta": "热度 7137568"
+        },
+        {
+          "title": "陈都灵发言 大气",
+          "url": "https://www.baidu.com/s?wd=%E9%99%88%E9%83%BD%E7%81%B5%E5%8F%91%E8%A8%80%20%E5%A4%A7%E6%B0%94",
+          "meta": "热度 7042220"
+        },
+        {
+          "title": "谷爱凌谈不要过度美化吃苦",
+          "url": "https://www.baidu.com/s?wd=%E8%B0%B7%E7%88%B1%E5%87%8C%E8%B0%88%E4%B8%8D%E8%A6%81%E8%BF%87%E5%BA%A6%E7%BE%8E%E5%8C%96%E5%90%83%E8%8B%A6",
+          "meta": "热度 6952848"
+        },
+        {
+          "title": "智慧教室会侵犯学生隐私系误读",
+          "url": "https://www.baidu.com/s?wd=%E6%99%BA%E6%85%A7%E6%95%99%E5%AE%A4%E4%BC%9A%E4%BE%B5%E7%8A%AF%E5%AD%A6%E7%94%9F%E9%9A%90%E7%A7%81%E7%B3%BB%E8%AF%AF%E8%AF%BB",
+          "meta": "热度 6849882"
+        },
+        {
+          "title": "美国股市为何暴跌",
+          "url": "https://www.baidu.com/s?wd=%E7%BE%8E%E5%9B%BD%E8%82%A1%E5%B8%82%E4%B8%BA%E4%BD%95%E6%9A%B4%E8%B7%8C",
+          "meta": "热度 6754588"
+        },
+        {
+          "title": "暴雪大暴雪 周六强度达巅峰",
+          "url": "https://www.baidu.com/s?wd=%E6%9A%B4%E9%9B%AA%E5%A4%A7%E6%9A%B4%E9%9B%AA%20%E5%91%A8%E5%85%AD%E5%BC%BA%E5%BA%A6%E8%BE%BE%E5%B7%85%E5%B3%B0",
+          "meta": "热度 6664323"
+        },
+        {
+          "title": "酒店27层落地窗可外开且无护栏",
+          "url": "https://www.baidu.com/s?wd=%E9%85%92%E5%BA%9727%E5%B1%82%E8%90%BD%E5%9C%B0%E7%AA%97%E5%8F%AF%E5%A4%96%E5%BC%80%E4%B8%94%E6%97%A0%E6%8A%A4%E6%A0%8F",
+          "meta": "热度 6568409"
+        },
+        {
+          "title": "这到底是机器人还是真人",
+          "url": "https://www.baidu.com/s?wd=%E8%BF%99%E5%88%B0%E5%BA%95%E6%98%AF%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%98%E6%98%AF%E7%9C%9F%E4%BA%BA",
+          "meta": "热度 6464840"
+        },
+        {
+          "title": "“缅北最严厉的父亲”来了",
+          "url": "https://www.baidu.com/s?wd=%E2%80%9C%E7%BC%85%E5%8C%97%E6%9C%80%E4%B8%A5%E5%8E%89%E7%9A%84%E7%88%B6%E4%BA%B2%E2%80%9D%E6%9D%A5%E4%BA%86",
+          "meta": "热度 6370020"
+        },
+        {
+          "title": "人民日报评女厕偷拍黑产",
+          "url": "https://www.baidu.com/s?wd=%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5%E8%AF%84%E5%A5%B3%E5%8E%95%E5%81%B7%E6%8B%8D%E9%BB%91%E4%BA%A7",
+          "meta": "热度 6287738"
+        },
+        {
+          "title": "大学生精细AA：这菜我没吃 单独结账",
+          "url": "https://www.baidu.com/s?wd=%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%B2%BE%E7%BB%86AA%EF%BC%9A%E8%BF%99%E8%8F%9C%E6%88%91%E6%B2%A1%E5%90%83%20%E5%8D%95%E7%8B%AC%E7%BB%93%E8%B4%A6",
+          "meta": "热度 6174624"
+        },
+        {
+          "title": "老钱修猫修狗火了：利润不高但够用",
+          "url": "https://www.baidu.com/s?wd=%E8%80%81%E9%92%B1%E4%BF%AE%E7%8C%AB%E4%BF%AE%E7%8B%97%E7%81%AB%E4%BA%86%EF%BC%9A%E5%88%A9%E6%B6%A6%E4%B8%8D%E9%AB%98%E4%BD%86%E5%A4%9F%E7%94%A8",
+          "meta": "热度 6090808"
+        },
+        {
+          "title": "S16淘汰赛：KC对决T1",
+          "url": "https://www.baidu.com/s?wd=S16%E6%B7%98%E6%B1%B0%E8%B5%9B%EF%BC%9AKC%E5%AF%B9%E5%86%B3T1",
+          "meta": "热度 5991914"
+        },
+        {
+          "title": "残疾人证怎么成了生意",
+          "url": "https://www.baidu.com/s?wd=%E6%AE%8B%E7%96%BE%E4%BA%BA%E8%AF%81%E6%80%8E%E4%B9%88%E6%88%90%E4%BA%86%E7%94%9F%E6%84%8F",
+          "meta": "热度 5902617"
+        },
+        {
+          "title": "国家卫健委党组：坚决拥护党中央决定",
+          "url": "https://www.baidu.com/s?wd=%E5%9B%BD%E5%AE%B6%E5%8D%AB%E5%81%A5%E5%A7%94%E5%85%9A%E7%BB%84%EF%BC%9A%E5%9D%9A%E5%86%B3%E6%8B%A5%E6%8A%A4%E5%85%9A%E4%B8%AD%E5%A4%AE%E5%86%B3%E5%AE%9A",
+          "meta": "热度 5792378"
+        },
+        {
+          "title": "90后姑娘收集上万枚鸡蛋壳做白鹤裙",
+          "url": "https://www.baidu.com/s?wd=90%E5%90%8E%E5%A7%91%E5%A8%98%E6%94%B6%E9%9B%86%E4%B8%8A%E4%B8%87%E6%9E%9A%E9%B8%A1%E8%9B%8B%E5%A3%B3%E5%81%9A%E7%99%BD%E9%B9%A4%E8%A3%99",
+          "meta": "热度 5707418"
+        },
+        {
+          "title": "赵丽颖王仁君拥抱",
+          "url": "https://www.baidu.com/s?wd=%E8%B5%B5%E4%B8%BD%E9%A2%96%E7%8E%8B%E4%BB%81%E5%90%9B%E6%8B%A5%E6%8A%B1",
+          "meta": "热度 5613571"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastSuccessAt": "2026-11-06T17:05:29.496652+00:00",
+        "lastAttemptAt": "2026-11-06T17:05:29.496652+00:00",
+        "error": ""
+      }
+    },
+    "bleepingcomputer": {
+      "name": "BleepingComputer",
+      "kind": "国际安全资讯 · 中文机译",
+      "url": "https://www.bleepingcomputer.com/",
+      "icon": "https://www.bleepingcomputer.com/favicon.ico",
+      "sourceUrlUsed": "https://www.bleepingcomputer.com/",
+      "updatedAt": "2026-11-06T17:16:58.261227+00:00",
+      "items": [
+        {
+          "title": "Veeam 警告 AMD EPYC 主机上的软件设备启动失败",
+          "url": "https://www.bleepingcomputer.com/news/security/veeam-software-appliance-vms-fail-to-boot-on-amd-epyc-hosts/",
+          "meta": "机器翻译",
+          "originalTitle": "Veeam warns of Software Appliance boot failures on AMD EPYC hosts",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Chainaanalysis 称所有客户的凭证均被泄露",
+          "url": "https://www.bleepingcomputer.com/news/security/chainalysis-says-breach-exposed-credentials-for-all-customers/",
+          "meta": "机器翻译",
+          "originalTitle": "Chainalysis says breach exposed credentials for all customers",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "D-Link 警告 DGS-3130 系列交换机存在多个零日漏洞",
+          "url": "https://www.bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches/",
+          "meta": "机器翻译",
+          "originalTitle": "D-Link warns of multiple zero-days in DGS-3130 Series switches",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "MetaMask 表示最近的攻击并未影响钱包基础设施",
+          "url": "https://www.bleepingcomputer.com/news/security/metamask-says-recent-attack-didnt-affect-wallet-infrastructure/",
+          "meta": "机器翻译",
+          "originalTitle": "MetaMask says recent attack didn’t affect wallet infrastructure",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "FBI、CISA 警告针对制冷系统的网络攻击",
+          "url": "https://www.bleepingcomputer.com/news/security/fbi-cisa-warn-of-cyberattacks-targeting-refrigeration-systems/",
+          "meta": "机器翻译",
+          "originalTitle": "FBI, CISA warn of cyberattacks targeting refrigeration systems",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "假 OpenAI、SpaceX 事件被用来窃取微软、谷歌账户",
+          "url": "https://www.bleepingcomputer.com/news/security/fake-openai-spacex-events-used-to-steal-microsoft-google-accounts/",
+          "meta": "机器翻译",
+          "originalTitle": "Fake OpenAI, SpaceX events used to steal Microsoft, Google accounts",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "stale",
+        "lastSuccessAt": "2026-11-06T17:16:58.261227+00:00",
+        "lastAttemptAt": "2026-11-06T17:16:58.261227+00:00",
+        "error": "Direct RSS fetch returned HTTP 403; initial headlines verified through web reader."
+      }
+    },
+    "securelist": {
+      "name": "Securelist · 卡巴斯基",
+      "kind": "威胁研究 · 中文机译",
+      "url": "https://securelist.com/",
+      "icon": "https://securelist.com/favicon.ico",
+      "sourceUrlUsed": "https://securelist.com/feed/",
+      "updatedAt": "2026-11-06T17:24:07.702094+00:00",
+      "items": [
+        {
+          "title": "虚拟化安全：攻击层和错误配置的影响",
+          "url": "https://securelist.com/virtualization-security-esxi-and-proxmox-ransomware-cases/121819/",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 10:00:12 +0000",
+          "originalTitle": "Virtualization security: attack layers and misconfiguration impact",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "SOC 文件 5：管道中的幽灵，或 Storm-2603 造成的无文件 SharePoint 漏洞",
+          "url": "https://securelist.com/storm-2603-fileless-toolshell-attack/121467/",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 10:00:11 +0000",
+          "originalTitle": "The SOC Files 5: Ghost in the pipeline, or a fileless SharePoint breach by Storm-2603",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "KICS for Networks 5.0 中的 MLEP：机器学习如何帮助跟踪 OT 设备的网络行为",
+          "url": "https://securelist.com/tr/machine-learning-event-processor-in-kics-for-networks/121794/",
+          "meta": "机器翻译 · Tue, 03 Nov 2026 10:00:07 +0000",
+          "originalTitle": "MLEP in KICS for Networks 5.0: how machine learning helps track network behavior of OT devices",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Cyber​​StrikeAI 在野外：在现实世界中对组织的攻击中使用 AI",
+          "url": "https://securelist.com/tr/cyberstrikeai-attacks/121715/",
+          "meta": "机器翻译 · Mon, 02 Nov 2026 08:00:24 +0000",
+          "originalTitle": "CyberStrikeAI in the wild: the use of AI in real-world attacks on organizations",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "实践中的过滤器生成：从算法到法学硕士",
+          "url": "https://securelist.com/practical-filter-generation/121697/",
+          "meta": "机器翻译 · Fri, 30 Oct 2026 10:00:44 +0000",
+          "originalTitle": "Filter generation in practice: from algorithms to LLMs",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "未知APT利用NetamLoader攻击为亚洲政府定制的Win10操作系统",
+          "url": "https://securelist.com/netamloader/121676/",
+          "meta": "机器翻译 · Thu, 29 Oct 2026 08:00:15 +0000",
+          "originalTitle": "Unknown APT uses NetamLoader to attack a Win10 OS customized for governments in Asia",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "数百万安全摄像头面临风险：Intelbras 设备中的 DoS 漏洞",
+          "url": "https://securelist.com/intelbras-camera-vulnerability/121131/",
+          "meta": "机器翻译 · Wed, 28 Oct 2026 10:00:18 +0000",
+          "originalTitle": "Millions of security cameras at risk: DoS vulnerability in Intelbras devices",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "不安全的邻居：漏洞链如何导致云基础设施中的隔离绕过",
+          "url": "https://securelist.com/cloud-infrastructure-isolation-bypass/121609/",
+          "meta": "机器翻译 · Tue, 27 Oct 2026 12:00:19 +0000",
+          "originalTitle": "An insecure neighbor: how a vulnerability chain led to an isolation bypass in cloud infrastructure",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "安全部署 AI 代理：卡巴斯基产品如何缓解 AI 威胁",
+          "url": "https://securelist.com/tr/how-to-secure-ai-agents/121444/",
+          "meta": "机器翻译 · Mon, 26 Oct 2026 10:00:18 +0000",
+          "originalTitle": "Deploying AI agents securely: how Kaspersky products mitigate AI threats",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "APT41如何复活BlackLotus bootkit来攻击中亚外交机构",
+          "url": "https://securelist.com/uefi-bootkit-blackx/121539/",
+          "meta": "机器翻译 · Thu, 22 Oct 2026 06:00:48 +0000",
+          "originalTitle": "How APT41 revived the BlackLotus bootkit to attack diplomatic organizations in Central Asia",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastSuccessAt": "2026-11-06T17:24:07.702094+00:00",
+        "lastAttemptAt": "2026-11-06T17:24:07.702094+00:00",
+        "error": ""
+      }
+    },
+    "sentinellabs": {
+      "name": "SentinelLABS",
+      "kind": "威胁情报 · 中文机译",
+      "url": "https://www.sentinelone.com/labs/",
+      "icon": "https://www.sentinelone.com/favicon.ico",
+      "sourceUrlUsed": "https://www.sentinelone.com/labs/feed/",
+      "updatedAt": "2026-11-06T17:24:05.744548+00:00",
+      "items": [
+        {
+          "title": "已验证IDA |使法学硕士驱动的逆向工程可检查、可持续和可重用",
+          "url": "https://www.sentinelone.com/labs/verifiedida-making-llm-driven-reverse-engineering-inspectable-continuable-and-reusable/",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 14:00:03 +0000",
+          "originalTitle": "VerifiedIDA | Making LLM-Driven Reverse Engineering Inspectable, Continuable and Reusable",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "除霜和破坏|对欧洲制冷攻击的评估",
+          "url": "https://www.sentinelone.com/labs/defrost-and-disrupt-an-assessment-of-europe-s-refrigeration-attacks/",
+          "meta": "机器翻译 · Tue, 03 Nov 2026 14:57:27 +0000",
+          "originalTitle": "Defrost and Disrupt | An Assessment of Europe’s Refrigeration Attacks",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "LABScon26 重播 |主题演讲：人工智能影响的冷静分析",
+          "url": "https://www.sentinelone.com/labs/labscon26-replay-keynote-a-sober-analysis-of-ai-impact/",
+          "meta": "机器翻译 · Wed, 28 Oct 2026 13:00:00 +0000",
+          "originalTitle": "LABScon26 Replay | Keynote: A Sober Analysis of AI Impact",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "不要打电话给我们，我们会调用您的 API | TraderTraitor 后门在没有加密货币关系的受害者身上重新出现",
+          "url": "https://www.sentinelone.com/labs/dont-call-us-well-call-your-apis-tradertraitor-backdoors-resurface-on-victim-with-no-crypto-ties/",
+          "meta": "机器翻译 · Fri, 18 Sep 2026 17:00:16 +0000",
+          "originalTitle": "Don’t Call Us, We’ll Call Your APIs | TraderTraitor Backdoors Resurface on Victim With No Crypto Ties",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "特工 |追踪拥抱脸部的非法 OpenAI 代理活动",
+          "url": "https://www.sentinelone.com/labs/agents-at-large-tracing-illicit-openai-agent-activity-on-hugging-face/",
+          "meta": "机器翻译 · Wed, 16 Sep 2026 10:00:34 +0000",
+          "originalTitle": "Agents at Large | Tracing Illicit OpenAI Agent Activity on Hugging Face",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "该模型是恶意软件四种代理入侵告诉防御者什么",
+          "url": "https://www.sentinelone.com/labs/the-model-is-the-malware-what-four-agentic-intrusions-tell-defenders/",
+          "meta": "机器翻译 · Thu, 13 Aug 2026 13:00:40 +0000",
+          "originalTitle": "The Model Is the Malware | What Four Agentic Intrusions Tell Defenders",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "索尔搜索 |前沿模型能否应对自主的长期恶意软件分析？",
+          "url": "https://www.sentinelone.com/labs/frontier-models-tackle-autonomous-long-horizon-malware-analysis/",
+          "meta": "机器翻译 · Wed, 22 Jul 2026 16:55:29 +0000",
+          "originalTitle": "Sol Searching | Can Frontier Models Tackle Autonomous Long-Horizon Malware Analysis?",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "伊朗战争网络威胁格局|年中评估重要事项",
+          "url": "https://www.sentinelone.com/labs/iran-war-cyber-threat-landscape-a-midyear-assessment-on-what-matters/",
+          "meta": "机器翻译 · Tue, 21 Jul 2026 13:00:21 +0000",
+          "originalTitle": "Iran War Cyber Threat Landscape | A Midyear Assessment on What Matters",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "情境工程|用于自动恶意软件分析的压缩和代理内存",
+          "url": "https://www.sentinelone.com/labs/context-engineering-compaction-agent-memory-for-automated-malware-analysis/",
+          "meta": "机器翻译 · Thu, 02 Jul 2026 13:00:02 +0000",
+          "originalTitle": "Context Engineering | Compaction & Agent Memory for Automated Malware Analysis",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "macOS.Gaslight | Rust 后门将快速注入攻击给分析师，而不是沙箱",
+          "url": "https://www.sentinelone.com/labs/macos-gaslight-rust-backdoor-turns-prompt-injection-on-the-analyst-not-the-sandbox/",
+          "meta": "机器翻译 · Tue, 23 Jun 2026 21:59:42 +0000",
+          "originalTitle": "macOS.Gaslight | Rust Backdoor Turns Prompt Injection on the Analyst, Not the Sandbox",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastSuccessAt": "2026-11-06T17:24:05.744548+00:00",
+        "lastAttemptAt": "2026-11-06T17:24:05.744548+00:00",
+        "error": ""
+      }
+    },
+    "elastic": {
+      "name": "Elastic Security Labs",
+      "kind": "检测与研究 · 中文机译",
+      "url": "https://www.elastic.co/security-labs",
+      "icon": "https://www.elastic.co/favicon.ico",
+      "sourceUrlUsed": "https://www.elastic.co/security-labs/rss/feed.xml",
+      "updatedAt": "2026-11-06T17:24:06.227033+00:00",
+      "items": [
+        {
+          "title": "现代化威胁追踪：使用语义搜索查找有风险的 AI 代理行为",
+          "url": "https://www.elastic.co/security-labs/blog/ai-agent-session-monitoring-embedding-models",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 12:45:02 GMT",
+          "originalTitle": "Modernising threat hunting: Using Semantic Search to Find Risky AI Agent Behavior",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "当信任成为有效负载时：威胁内部等季度报告",
+          "url": "https://www.elastic.co/security-labs/reports/threats-etc-report-november-2026-trouble-with-trust",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 00:00:00 GMT",
+          "originalTitle": "When trust becomes the payload: Inside the threats, etc quarterly report",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "内核驱逐通知：wesp.sys 揭示了有关 Windows 端点安全平台的内容",
+          "url": "https://www.elastic.co/security-labs/blog/windows-endpoint-security-platform-wesp",
+          "meta": "机器翻译 · Mon, 26 Oct 2026 00:00:00 GMT",
+          "originalTitle": "Kernel eviction notice: What wesp.sys reveals about the Windows Endpoint Security Platform",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "CVE-2026-73570 如何将 Zimbra 日志文件转变为远程代码执行",
+          "url": "https://www.elastic.co/security-labs/threat-command/command-injection-zimbra-cve-2026-73570",
+          "meta": "机器翻译 · Fri, 23 Oct 2026 00:00:00 GMT",
+          "originalTitle": "How CVE-2026-73570 turns a Zimbra log file into remote code execution",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "php2shell：评估与 CVE-2026-109618 和 CVE-2026-109619 相关的 Elastic 检测覆盖率",
+          "url": "https://www.elastic.co/security-labs/threat-command/php2shell-php-rce-detection",
+          "meta": "机器翻译 · Tue, 20 Oct 2026 22:00:00 GMT",
+          "originalTitle": "php2shell: Assessing Elastic detection coverage relevant to CVE-2026-109618 and CVE-2026-109619",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "审计审计员：揭露 Apex Accelerator",
+          "url": "https://www.elastic.co/security-labs/threat-command/apex-accelerator-malicious-npm-packages",
+          "meta": "机器翻译 · Mon, 12 Oct 2026 00:00:00 GMT",
+          "originalTitle": "Auditing the auditor: Unmasking Apex Accelerator",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "推出 AlertZero：警报队列的收件箱为零",
+          "url": "https://www.elastic.co/security-labs/blog/ai-soc-automation-alertzero",
+          "meta": "机器翻译 · Thu, 08 Oct 2026 00:00:00 GMT",
+          "originalTitle": "Introducing AlertZero: Inbox zero for your alert queue",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "标签背后：Elastic SIEM 如何对噪声、速度和威胁覆盖范围的 1,781 条检测规则进行评分",
+          "url": "https://www.elastic.co/security-labs/blog/elastic-siem-detection-rule-tags",
+          "meta": "机器翻译 · Mon, 05 Oct 2026 00:00:00 GMT",
+          "originalTitle": "Behind the tags: How Elastic SIEM grades 1,781 detection rules on noise, speed, and threat coverage",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "没有适用于 Linux 的 MDM？ 68 行弹性工作流程使每个端点的配置保持最新",
+          "url": "https://www.elastic.co/security-labs/blog/linux-endpoint-management-elastic-workflows",
+          "meta": "机器翻译 · Tue, 29 Sep 2026 00:00:00 GMT",
+          "originalTitle": "No MDM for Linux? A 68-line Elastic workflow keeps every endpoint's config current",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "未包含隔离：使用 Elastic 和 Sublime 进行代理网络钓鱼响应",
+          "url": "https://www.elastic.co/security-labs/blog/phishing-incident-response-sublime-security",
+          "meta": "机器翻译 · Mon, 28 Sep 2026 00:00:00 GMT",
+          "originalTitle": "Quarantined isn't contained: Agentic phishing response with Elastic and Sublime",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "自动驾驶仪上的云威胁仿真：上下文就是一切",
+          "url": "https://www.elastic.co/security-labs/threat-command/cloud-threat-emulation-methodology",
+          "meta": "机器翻译 · Mon, 21 Sep 2026 00:00:00 GMT",
+          "originalTitle": "Cloud Threat Emulation on Autopilot: Context is Everything",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "一个 SOC，100 个项目：在 Elastic Security Serverless 上运行集中式警报分类",
+          "url": "https://www.elastic.co/security-labs/blog/centralized-alert-triage-cross-project-search",
+          "meta": "机器翻译 · Fri, 18 Sep 2026 00:00:00 GMT",
+          "originalTitle": "One SOC, 100 projects: running centralized alert triage on Elastic Security Serverless",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "您从未安装过的扩展程序：KREMLIN 伪造 Chrome 自己的完整性检查来窃取银行会话",
+          "url": "https://www.elastic.co/security-labs/threat-command/malicious-browser-extension-kremlin-banking-malware",
+          "meta": "机器翻译 · Mon, 14 Sep 2026 00:00:00 GMT",
+          "originalTitle": "The extension you never installed: KREMLIN forges Chrome's own integrity checks to steal banking sessions",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Linux检测工程-本地提权",
+          "url": "https://www.elastic.co/security-labs/threat-command/linux-privilege-escalation-detection-framework",
+          "meta": "机器翻译 · Fri, 11 Sep 2026 00:00:00 GMT",
+          "originalTitle": "Linux Detection Engineering - Local Privilege Escalation",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "为什么 2026 年是升级到代理 AI SOC 的一年",
+          "url": "https://www.elastic.co/security-labs/blog/why-2026-is-the-year-to-upgrade-to-an-agentic-ai-soc",
+          "meta": "机器翻译 · Tue, 08 Sep 2026 21:00:00 GMT",
+          "originalTitle": "Why 2026 is the Year to Upgrade to an Agentic AI SOC",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "数据访问：安全供应商锁定的隐性成本",
+          "url": "https://www.elastic.co/security-labs/blog/siem-data-export-comparison",
+          "meta": "机器翻译 · Fri, 04 Sep 2026 00:00:00 GMT",
+          "originalTitle": "Data access: the hidden cost of security vendor lock-in",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "如何将 Kubernetes 审核日志与容器运行时数据关联起来",
+          "url": "https://www.elastic.co/security-labs/threat-command/kubernetes-audit-logs-container-escape",
+          "meta": "机器翻译 · Thu, 03 Sep 2026 15:19:21 GMT",
+          "originalTitle": "How to correlate Kubernetes audit logs with container runtime data",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "REVSTEALER 崛起：对新兴信息窃取者的分析",
+          "url": "https://www.elastic.co/security-labs/threat-command/revstealer-credential-harvesting-infostealer",
+          "meta": "机器翻译 · Wed, 02 Sep 2026 00:00:00 GMT",
+          "originalTitle": "REVSTEALER ramps up: analysis of up-and-coming infostealer",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Linux检测工程-无文件执行",
+          "url": "https://www.elastic.co/security-labs/threat-command/memfd-create-linux-fileless-execution",
+          "meta": "机器翻译 · Tue, 01 Sep 2026 14:26:37 GMT",
+          "originalTitle": "Linux Detection Engineering - Fileless Execution",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "从 88 行到 1 行：使用 Elastic Defend 检测 DLL 劫持",
+          "url": "https://www.elastic.co/security-labs/threat-command/dll-search-order-hijacking-elastic-defend",
+          "meta": "机器翻译 · Fri, 28 Aug 2026 00:00:00 GMT",
+          "originalTitle": "From 88 lines to 1: Detecting DLL hijacking with Elastic Defend",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Elastic 的代理 SOC 内部：我们如何将 AI 警报分类的准确率从 60% 提高到 92%",
+          "url": "https://www.elastic.co/security-labs/blog/alert-triage-agentic-soc-self-correcting-agents",
+          "meta": "机器翻译 · Tue, 25 Aug 2026 00:00:00 GMT",
+          "originalTitle": "Inside Elastic's agentic SOC: How we took AI alert triage from 60% to 92% accuracy",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "实体维护人员团队如何在 Elastic Security 中监控、连接实体并对其进行评分",
+          "url": "https://www.elastic.co/security-labs/blog/entity-resolution-identity-scoring-elastic-security",
+          "meta": "机器翻译 · Mon, 24 Aug 2026 00:00:00 GMT",
+          "originalTitle": "How a team of entity maintainers monitors, connects and scores entities in Elastic Security",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "1300 万次工具调用：使用 Elastic Agent 审核每个 AI 编码代理操作",
+          "url": "https://www.elastic.co/security-labs/blog/ai-coding-agent-audit-cursor-hooks",
+          "meta": "机器翻译 · Tue, 11 Aug 2026 00:00:00 GMT",
+          "originalTitle": "13 million tool calls: auditing every AI coding agent action with Elastic Agent",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "安全信号日志尾随看不到：使用 Elastic Agent 跟踪 npm 冷却时间删除",
+          "url": "https://www.elastic.co/security-labs/blog/npm-cooldown-removal-detection-elastic-agent",
+          "meta": "机器翻译 · Fri, 07 Aug 2026 00:00:00 GMT",
+          "originalTitle": "The security signal log tailing can't see: tracking npm cooldown removals with Elastic Agent",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastSuccessAt": "2026-11-06T17:24:06.227033+00:00",
+        "lastAttemptAt": "2026-11-06T17:24:06.227033+00:00",
+        "error": ""
+      }
+    },
+    "eset": {
+      "name": "ESET · WeLiveSecurity",
+      "kind": "威胁研究与资讯 · 中文机译",
+      "url": "https://www.welivesecurity.com/en/",
+      "icon": "https://www.welivesecurity.com/favicon.ico",
+      "sourceUrlUsed": "https://www.welivesecurity.com/en/rss/feed/",
+      "updatedAt": "2026-11-06T17:24:05.713641+00:00",
+      "items": [
+        {
+          "title": "SlippyNunchucks 劫持搜狗输入法品牌推广机制传播恶意软件",
+          "url": "https://www.welivesecurity.com/en/eset-research/slippynunchucks-hijacks-sogou-input-methods-brand-promotion-mechanism-to-distribute-malware/",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 09:55:00 +0000",
+          "originalTitle": "SlippyNunchucks hijacks Sogou Input Method’s brand promotion mechanism to distribute malware",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "戈尔巴格：兽人在边境从乌克兰获取情报",
+          "url": "https://www.welivesecurity.com/en/eset-research/gorbag-orcs-border-harvesting-intelligence-ukraine/",
+          "meta": "机器翻译 · Tue, 03 Nov 2026 09:50:00 +0000",
+          "originalTitle": "Gorbag: Orcs at the border harvesting intelligence from Ukraine",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "当混乱出现时，值得信赖的供应商必须指导他们的中小企业客户",
+          "url": "https://www.welivesecurity.com/en/business-security/when-confusion-reigns-trusted-vendors-guide-smb-customers/",
+          "meta": "机器翻译 · Mon, 02 Nov 2026 09:55:00 +0000",
+          "originalTitle": "When confusion reigns, trusted vendors must guide their SMB customers",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "本月托尼·安斯科姆 (Tony Anscombe) 的安全报道 – 2026 年 10 月版",
+          "url": "https://www.welivesecurity.com/en/videos/month-security-tony-anscombe-october-2026/",
+          "meta": "机器翻译 · Fri, 30 Oct 2026 15:03:14 +0000",
+          "originalTitle": "This month in security with Tony Anscombe – October 2026 edition",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Amatera：多产的信息窃取者如何工作和传播",
+          "url": "https://www.welivesecurity.com/en/malware/amatera-how-prolific-infostealer-works-spreads/",
+          "meta": "机器翻译 · Thu, 29 Oct 2026 08:00:00 +0000",
+          "originalTitle": "Amatera: How the prolific infostealer works and spreads",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "网络安全黑色周的教训",
+          "url": "https://www.welivesecurity.com/en/business-security/lessons-cybersecurity-black-week/",
+          "meta": "机器翻译 · Wed, 28 Oct 2026 10:33:51 +0000",
+          "originalTitle": "Lessons from cybersecurity Black Week",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "ESET APT 活动报告 2026 年第 2 季度 - 2026 年第 3 季度",
+          "url": "https://www.welivesecurity.com/en/eset-research/eset-apt-activity-report-q2-2026-q3-2026/",
+          "meta": "机器翻译 · Wed, 28 Oct 2026 09:45:00 +0000",
+          "originalTitle": "ESET APT Activity Report Q2 2026–Q3 2026",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "PHP2Shell：关于两个 PHP 关键缺陷的了解",
+          "url": "https://www.welivesecurity.com/en/videos/php2shell-what-know-two-critical-php-flaws/",
+          "meta": "机器翻译 · Mon, 26 Oct 2026 13:25:00 +0000",
+          "originalTitle": "PHP2Shell: What to know about two critical PHP flaws",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "MythicRatatoskr：在 UAC-0099-Sandworm 协作中部署的启用 Yggdrasil 的后门",
+          "url": "https://www.welivesecurity.com/en/eset-research/mythicratatoskr-yggdrasil-enabled-backdoor-deployed-uac0099-sandworm-collaboration/",
+          "meta": "机器翻译 · Thu, 22 Oct 2026 08:45:00 +0000",
+          "originalTitle": "MythicRatatoskr: An Yggdrasil-enabled backdoor deployed in a UAC-0099-Sandworm collaboration",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "该广告是骗局吗？点击之前如何判断",
+          "url": "https://www.welivesecurity.com/en/social-media/is-ad-scam-how-tell-before-click/",
+          "meta": "机器翻译 · Tue, 20 Oct 2026 09:00:00 +0000",
+          "originalTitle": "Is the ad a scam? How to tell before you click",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "收件箱里充斥着注册信息？电子邮件轰炸的解释",
+          "url": "https://www.welivesecurity.com/en/cybersecurity/inbox-flooded-signup-messages-email-bombing/",
+          "meta": "机器翻译 · Fri, 16 Oct 2026 09:00:00 +0000",
+          "originalTitle": "Inbox flooded with sign-up messages? Email bombing explained",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "医疗保险诈骗电话、短信和广告：本次公开注册需要注意什么",
+          "url": "https://www.welivesecurity.com/en/scams/medicare-open-enrollment-season-scams/",
+          "meta": "机器翻译 · Wed, 14 Oct 2026 09:00:00 +0000",
+          "originalTitle": "Medicare scam calls, texts and ads: What to watch for this Open Enrollment",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "当数据泄露通知没有说明太多内容时该怎么办",
+          "url": "https://www.welivesecurity.com/en/how-to/what-to-do-when-a-data-breach-notice-tells-you-almost-nothing/",
+          "meta": "机器翻译 · Mon, 12 Oct 2026 09:00:00 +0000",
+          "originalTitle": "What to do when a data breach notice doesn't say much",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "MATCHBOIL：新伎俩，同样的邪恶意图",
+          "url": "https://www.welivesecurity.com/en/eset-research/matchboil-new-tricks-same-old-evil-intentions/",
+          "meta": "机器翻译 · Thu, 08 Oct 2026 08:45:00 +0000",
+          "originalTitle": "MATCHBOIL: New tricks, same old evil intentions",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "针对 YouTube 创作者的品牌交易骗局内幕",
+          "url": "https://www.welivesecurity.com/en/social-media/brand-deal-scam-targeting-youtube-creators/",
+          "meta": "机器翻译 · Wed, 07 Oct 2026 09:00:00 +0000",
+          "originalTitle": "Inside a brand deal scam targeting YouTube creators",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "追求简单性：为什么中小型企业需要高级保护而不需要复杂性",
+          "url": "https://www.welivesecurity.com/en/business-security/quest-simplicity-why-smbs-want-advanced-protection-without-complexity/",
+          "meta": "机器翻译 · Tue, 06 Oct 2026 09:00:00 +0000",
+          "originalTitle": "The quest for simplicity: Why SMBs want advanced protection without the complexity",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "本月托尼·安斯科姆 (Tony Anscombe) 的安全报道 – 2026 年 9 月版",
+          "url": "https://www.welivesecurity.com/en/videos/month-security-tony-anscombe-september-2026/",
+          "meta": "机器翻译 · Wed, 30 Sep 2026 08:00:00 +0000",
+          "originalTitle": "This month in security with Tony Anscombe – September 2026 edition",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "分时度假退出骗局：从假买家到追偿欺诈",
+          "url": "https://www.welivesecurity.com/en/scams/timeshare-exit-scams-fake-buyers-recovery-scams/",
+          "meta": "机器翻译 · Tue, 29 Sep 2026 09:00:00 +0000",
+          "originalTitle": "Timeshare exit scams: From fake buyers to recovery fraud",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "魔鬼仍在电子邮件中——但戴着新面具",
+          "url": "https://www.welivesecurity.com/en/business-security/devil-email-wearing-new-mask/",
+          "meta": "机器翻译 · Mon, 28 Sep 2026 09:00:00 +0000",
+          "originalTitle": "The devil is still in the email – but wears a new mask",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "那个振动编码的应用程序安全吗？下载前5次检查",
+          "url": "https://www.welivesecurity.com/en/mobile-security/is-new-vibe-coded-app-safe-5-questions-ask-first/",
+          "meta": "机器翻译 · Fri, 25 Sep 2026 09:00:00 +0000",
+          "originalTitle": "Is that vibe coded app safe? 5 checks before you download",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "被告知要在比特币 ATM 机上付款吗？首先阅读此内容",
+          "url": "https://www.welivesecurity.com/en/scams/been-told-pay-bitcoin-atm-read-first/",
+          "meta": "机器翻译 · Thu, 24 Sep 2026 09:00:00 +0000",
+          "originalTitle": "Been told to pay at a Bitcoin ATM? Read this first",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "正在寻找免费的 Robux？这是真实的，什么是骗局",
+          "url": "https://www.welivesecurity.com/en/kids-online/looking-for-free-robux-heres-whats-real-whats-scam/",
+          "meta": "机器翻译 · Tue, 22 Sep 2026 09:00:00 +0000",
+          "originalTitle": "Looking for free Robux? Here’s what’s real, and what’s a scam",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "中小企业网络安全压力：人工智能代理在工作，旧攻击在超速运转",
+          "url": "https://www.welivesecurity.com/en/business-security/smb-cybersecurity-squeeze-ai-agents-work-old-attacks-overdrive/",
+          "meta": "机器翻译 · Mon, 21 Sep 2026 09:00:00 +0000",
+          "originalTitle": "The SMB cybersecurity squeeze: AI agents at work, old attacks in overdrive",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "“裸体”应用程序：如果有人为你制作假裸体该怎么办",
+          "url": "https://www.welivesecurity.com/en/privacy/nudify-apps-fake-nude-you/",
+          "meta": "机器翻译 · Fri, 18 Sep 2026 09:00:00 +0000",
+          "originalTitle": "‘Nudify’ apps: What to do if someone makes a fake nude of you",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastSuccessAt": "2026-11-06T17:24:05.713641+00:00",
+        "lastAttemptAt": "2026-11-06T17:24:05.713641+00:00",
+        "error": ""
+      }
+    },
+    "checkpoint": {
+      "name": "Check Point Research",
+      "kind": "安全研究 · 中文机译",
+      "url": "https://research.checkpoint.com/",
+      "icon": "https://research.checkpoint.com/favicon.ico",
+      "sourceUrlUsed": "https://research.checkpoint.com/",
+      "updatedAt": "2026-11-06T17:24:13.702387+00:00",
+      "items": [
+        {
+          "title": "PuzzleMask：滥用简单的散文作为隐蔽的人工智能攻击媒介",
+          "url": "https://research.checkpoint.com/2026/puzzlemask-abusing-plain-prose-as-a-covert-ai-attack-vector/",
+          "meta": "机器翻译 · 2026-09-10",
+          "originalTitle": "PuzzleMask: Abusing Plain Prose as a Covert AI Attack Vector",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "沙箱内的共享剪贴板：ChatGPT 跨账户数据泄露",
+          "url": "https://research.checkpoint.com/2026/the-shared-clipboard-inside-the-sandbox-cross-account-data-leakage-in-chatgpt/",
+          "meta": "机器翻译 · 2026-09-08",
+          "originalTitle": "The Shared Clipboard Inside the Sandbox: Cross-Account Data Leakage in ChatGPT",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "玩弄系统：一名华语演员如何将巴西政府网站变成 SEO 武器",
+          "url": "https://research.checkpoint.com/2026/gaming-the-system-how-a-chinese-speaking-actor-turned-brazilian-government-sites-into-an-seo-weapon/",
+          "meta": "机器翻译 · 2026-09-02",
+          "originalTitle": "Gaming the system: how a Chinese-speaking actor turned Brazilian government sites into an SEO weapon",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "打破密封：JSCeal 编译的 V8 字节码的静态反混淆",
+          "url": "https://research.checkpoint.com/2026/breaking-the-seal-static-deobfuscation-of-jsceals-compiled-v8-bytecode/",
+          "meta": "机器翻译 · 2026-08-31",
+          "originalTitle": "Breaking the Seal: Static Deobfuscation of JSCeal’s Compiled V8 Bytecode",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "BTR Reforged：将 Defender 的修复驱动程序武器化为内核操作原语",
+          "url": "https://research.checkpoint.com/2026/btr-reforged-weaponizing-defenders-remediation-driver-as-a-kernel-operation-primitive/",
+          "meta": "机器翻译 · 2026-08-20",
+          "originalTitle": "BTR Reforged: Weaponizing Defender’s Remediation Driver as a Kernel Operation Primitive",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "2026 年第二季度勒索软件状况",
+          "url": "https://research.checkpoint.com/2026/the-state-of-ransomware-q2-2026/",
+          "meta": "机器翻译 · 2026-08-13",
+          "originalTitle": "The State of Ransomware Q2 2026",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "stale",
+        "lastSuccessAt": "2026-11-06T17:24:13.702387+00:00",
+        "lastAttemptAt": "2026-11-06T17:24:13.702387+00:00",
+        "error": "Direct RSS returned HTTP 202 with an empty body. Initial article titles, URLs and publication dates verified through web reader."
+      }
+    },
+    "microsoft": {
+      "name": "微软安全博客",
+      "kind": "安全研究与资讯 · 中文机译",
+      "url": "https://www.microsoft.com/en-us/security/blog/",
+      "icon": "https://www.microsoft.com/favicon.ico",
+      "items": [
+        {
+          "title": "威胁行为者使用代理人工智能工具来查找和滥用暴露的秘密",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/",
+          "meta": "机器翻译 · 2026-11-05",
+          "originalTitle": "Threat actors use agentic AI tooling to find and abuse exposed secrets",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Microsoft 安全性的新增功能：2026 年 11 月",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/whats-new-in-microsoft-security-november-2026/",
+          "meta": "机器翻译 · 2026-11-05",
+          "originalTitle": "What’s new in Microsoft Security: November 2026",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "电子邮件威胁形势：2026 年第三季度趋势和见解",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/email-threat-landscape-q3-2026-trends-and-insights/",
+          "meta": "机器翻译 · 2026-11-05",
+          "originalTitle": "Email threat landscape: Q3 2026 trends and insights",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "虚假下载活动使用木马安装程序来提供货币化有效负载",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/03/fake-download-campaign-uses-trojanized-installers-deliver-monetization-payloads/",
+          "meta": "机器翻译 · 2026-11-03",
+          "originalTitle": "Fake-download campaign uses trojanized installers to deliver monetization payloads",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Microsoft 在 2026 年 Gartner AI 代理管理平台魔力象限中被评为领导者",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/03/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-ai-agent-management-platforms/",
+          "meta": "机器翻译 · 2026-11-03",
+          "originalTitle": "Microsoft named a Leader in the 2026 Gartner Magic Quadrant for AI Agent Management Platforms",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "恶意 Claude Code 品牌扩展及其持久 SSH 后门的内部",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor/",
+          "meta": "机器翻译 · 2026-10-30",
+          "originalTitle": "Inside a malicious Claude Code-branded extension and its persistent SSH backdoor",
+          "translationStatus": "translated"
+        }
+      ],
+      "updatedAt": "2026-11-06T17:28:14.547763+00:00",
+      "sourceUrlUsed": "https://www.microsoft.com/en-us/security/blog/",
+      "collection": {
+        "status": "stale",
+        "lastAttemptAt": "2026-11-06T17:28:14.547763+00:00",
+        "lastSuccessAt": "2026-11-06T17:28:14.547763+00:00",
+        "error": "Direct RSS returned HTTP 403; initial article titles, links and dates verified through web reader."
+      }
+    },
+    "seebug": {
+      "name": "Seebug 漏洞库",
+      "kind": "最新漏洞情报",
+      "url": "https://www.seebug.org/",
+      "icon": "https://www.seebug.org/favicon.ico",
+      "sourceUrlUsed": "https://www.seebug.org/",
+      "updatedAt": "2026-11-06T17:28:16.441482+00:00",
+      "items": [
+        {
+          "title": "Linux 内核提权 Dirty Frag(Dirty Frag)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99969",
+          "meta": "SSV-99969 · 最新漏洞"
+        },
+        {
+          "title": "Linux 内核提权 CVE-2026-31431(copy-fail)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99968",
+          "meta": "SSV-99968 · 最新漏洞"
+        },
+        {
+          "title": "Ivanti Endpoint Manager Mobile代码注入漏洞",
+          "url": "https://www.seebug.org/vuldb/ssvid-99967",
+          "meta": "SSV-99967 · 最新漏洞"
+        },
+        {
+          "title": "无人机开源飞控 PX4-Autopilot堆栈溢出漏洞 CVE-2025-15150",
+          "url": "https://www.seebug.org/vuldb/ssvid-99966",
+          "meta": "SSV-99966 · 最新漏洞"
+        },
+        {
+          "title": "MongoDB内存泄漏 CVE-2025-14847(MongoBleed)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99965",
+          "meta": "SSV-99965 · 最新漏洞"
+        },
+        {
+          "title": "1Panel 代理证书验证绕过导致任意命令执行漏洞(CVE-2025-54424)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99927",
+          "meta": "SSV-99927 · 最新漏洞"
+        },
+        {
+          "title": "Citrix NetScaler 内存泄漏(CVE-2025-5777)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99926",
+          "meta": "SSV-99926 · 最新漏洞"
+        },
+        {
+          "title": "ModelContext Inspector 未授权访问漏洞(CVE-2025-49596)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99925",
+          "meta": "SSV-99925 · 最新漏洞"
+        },
+        {
+          "title": "llamaindex SQL 注入漏洞(CVE-2025-1750)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99924",
+          "meta": "SSV-99924 · 最新漏洞"
+        },
+        {
+          "title": "Screen 本地权限提升漏洞(CVE-2025-23395)",
+          "url": "https://www.seebug.org/vuldb/ssvid-99923",
+          "meta": "SSV-99923 · 最新漏洞"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-06T17:28:16.441482+00:00",
+        "lastSuccessAt": "2026-11-06T17:28:16.441482+00:00",
+        "error": ""
+      }
+    },
+    "douban": {
+      "name": "豆瓣电影",
+      "kind": "热门电影 · 豆瓣评分",
+      "url": "https://movie.douban.com/explore",
+      "icon": "https://movie.douban.com/favicon.ico",
+      "sourceUrlUsed": "https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=24&page_start=0",
+      "updatedAt": "2026-11-06T17:33:16.507369+00:00",
+      "items": [
+        {
+          "title": "黑球",
+          "url": "https://movie.douban.com/subject/37215318/",
+          "meta": "豆瓣 8.7 分",
+          "cover": "source-covers/douban/98da40ee056b8933dc16432b.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2935652656.jpg"
+        },
+        {
+          "title": "空枪",
+          "url": "https://movie.douban.com/subject/37508847/",
+          "meta": "豆瓣 7.2 分",
+          "cover": "source-covers/douban/4552303c5476202d7d3d7c19.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2934946788.jpg"
+        },
+        {
+          "title": "血色机库",
+          "url": "https://movie.douban.com/subject/37293105/",
+          "meta": "豆瓣 6.5 分 · 新上榜",
+          "cover": "source-covers/douban/b59dabef264a8166086d8363.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2929674706.jpg"
+        },
+        {
+          "title": "敦煌英雄",
+          "url": "https://movie.douban.com/subject/35244246/",
+          "meta": "豆瓣 6.0 分",
+          "cover": "source-covers/douban/1096901945d913e76c5daec4.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2936069048.jpg"
+        },
+        {
+          "title": "不存在的罪人",
+          "url": "https://movie.douban.com/subject/37124892/",
+          "meta": "豆瓣 5.7 分",
+          "cover": "source-covers/douban/bef059747be980e6a694334e.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2934844988.jpg"
+        },
+        {
+          "title": "逃出布迪秀",
+          "url": "https://movie.douban.com/subject/37446297/",
+          "meta": "豆瓣 7.4 分",
+          "cover": "source-covers/douban/2cd67017b60d4c4f8be234d9.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2934286660.jpg"
+        },
+        {
+          "title": "杯雪·一战成名",
+          "url": "https://movie.douban.com/subject/37516455/",
+          "meta": "豆瓣 7.5 分",
+          "cover": "source-covers/douban/7bdc61126253e548a563945b.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2936719035.jpg"
+        },
+        {
+          "title": "突如其来",
+          "url": "https://movie.douban.com/subject/37342630/",
+          "meta": "豆瓣 7.7 分",
+          "cover": "source-covers/douban/a5927c10b16f3484b7773dc5.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2931445409.jpg"
+        },
+        {
+          "title": "生化危机：爆发夜",
+          "url": "https://movie.douban.com/subject/37068446/",
+          "meta": "豆瓣 7.3 分",
+          "cover": "source-covers/douban/26e43dfaa52b6538719f5dfe.jpg",
+          "originalCover": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2936442661.jpg"
+        },
+        {
+          "title": "可能的爱",
+          "url": "https://movie.douban.com/subject/36847425/",
+          "meta": "豆瓣 8.7 分",
+          "cover": "source-covers/douban/2fc7baf81572e5c35e8de1d9.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2935488630.jpg"
+        },
+        {
+          "title": "希望",
+          "url": "https://movie.douban.com/subject/36179101/",
+          "meta": "豆瓣 5.5 分",
+          "cover": "source-covers/douban/a3de1a1083f37749bee1547d.jpg",
+          "originalCover": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2933326871.jpg"
+        },
+        {
+          "title": "黄金时段",
+          "url": "https://movie.douban.com/subject/37087760/",
+          "meta": "豆瓣 6.2 分",
+          "cover": "source-covers/douban/01b0da693f0b84e4bc128e82.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2934707795.jpg"
+        },
+        {
+          "title": "燃烧吧！爸爸",
+          "url": "https://movie.douban.com/subject/36903929/",
+          "meta": "豆瓣 6.8 分",
+          "cover": "source-covers/douban/e3cf708c36b03e9966dd9a0e.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2935535832.jpg"
+        },
+        {
+          "title": "登峰传奇：丹增诺盖",
+          "url": "https://movie.douban.com/subject/36887293/",
+          "meta": "豆瓣 7.7 分",
+          "cover": "source-covers/douban/705d00a4055a2c8186cafaff.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2935498318.jpg"
+        },
+        {
+          "title": "罗斯",
+          "url": "https://movie.douban.com/subject/35322132/",
+          "meta": "豆瓣 8.5 分",
+          "cover": "source-covers/douban/1bb1ceaa96953f824832f5b9.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2935294362.jpg"
+        },
+        {
+          "title": "茫然女王",
+          "url": "https://movie.douban.com/subject/35765242/",
+          "meta": "豆瓣 7.9 分",
+          "cover": "source-covers/douban/19cf817e1a44b5977bd1db25.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2930593644.jpg"
+        },
+        {
+          "title": "实习生",
+          "url": "https://movie.douban.com/subject/36944373/",
+          "meta": "豆瓣 6.8 分",
+          "cover": "source-covers/douban/b67623dfd6166eb61d170b9e.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2934654245.jpg"
+        },
+        {
+          "title": "理智与情感",
+          "url": "https://movie.douban.com/subject/37247236/",
+          "meta": "豆瓣 6.5 分",
+          "cover": "source-covers/douban/d39dadbe7987cf02be7ea54f.jpg",
+          "originalCover": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2936957901.jpg"
+        },
+        {
+          "title": "忘却之岛",
+          "url": "https://movie.douban.com/subject/37317906/",
+          "meta": "豆瓣 7.5 分",
+          "cover": "source-covers/douban/a736fff012ef22739f4ea9a4.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2931045520.jpg"
+        },
+        {
+          "title": "一个部门的诞生",
+          "url": "https://movie.douban.com/subject/36937765/",
+          "meta": "豆瓣 7.2 分",
+          "cover": "source-covers/douban/c0020f4f3d3fda68e94c39e4.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2933113603.jpg"
+        },
+        {
+          "title": "野兽之心",
+          "url": "https://movie.douban.com/subject/36828393/",
+          "meta": "豆瓣 7.3 分",
+          "cover": "source-covers/douban/8fbccabf2a79f935d290015a.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2933185536.jpg"
+        },
+        {
+          "title": "潜伏6",
+          "url": "https://movie.douban.com/subject/37525017/",
+          "meta": "豆瓣 6.6 分",
+          "cover": "source-covers/douban/03822c7dab7b827f9eed041d.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2931576822.jpg"
+        },
+        {
+          "title": "瘴气营地的青春性事与死亡",
+          "url": "https://movie.douban.com/subject/36801617/",
+          "meta": "豆瓣 6.7 分",
+          "cover": "source-covers/douban/a0df800a6d139da4bbe65fef.jpg",
+          "originalCover": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2932757705.jpg"
+        },
+        {
+          "title": "大濛",
+          "url": "https://movie.douban.com/subject/36680492/",
+          "meta": "豆瓣 8.2 分",
+          "cover": "source-covers/douban/cc04456ab61cfe4d1907bb2a.jpg",
+          "originalCover": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2925804842.jpg"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-06T17:33:16.507369+00:00",
+        "lastSuccessAt": "2026-11-06T17:33:16.507369+00:00",
+        "error": ""
+      }
     }
   }
 }

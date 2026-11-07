@@ -28,6 +28,7 @@ jobs:
             github-trending.json
             v2ex-hot.json
             weibo-hot.json
+            hacker-news.json
             markets.json
             exchange-rates.json
             extra-hotspots.json
@@ -59,6 +60,7 @@ jobs:
             github-trending.json
             v2ex-hot.json
             weibo-hot.json
+            hacker-news.json
             markets.json
             exchange-rates.json
             extra-hotspots.json
@@ -89,7 +91,7 @@ jobs:
         run: |
           mkdir -p _site
           for f in index.html favicon.ico status.json news.json github-trending.json \
-                   v2ex-hot.json weibo-hot.json markets.json \
+                   v2ex-hot.json weibo-hot.json hacker-news.json markets.json \
                    exchange-rates.json extra-hotspots.json history-today.json \
                    x-global.json x-hot.json x-words.json x-articles.json collection-health.json og-image.jpg; do
             if [ -f "$f" ]; then cp "$f" _site/; fi
@@ -100,6 +102,19 @@ jobs:
             if [ -d "$dir" ]; then cp -R "$dir" _site/; fi
           done
           touch _site/.nojekyll
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          site = Path('_site')
+          size = sum(p.stat().st_size for p in site.rglob('*') if p.is_file())
+          total = size
+          while True:
+              manifest = json.dumps({'deployedBytes': total}, separators=(',', ':')) + '\n'
+              if total == size + len(manifest):
+                  break
+              total = size + len(manifest)
+          (site / 'pages-usage.json').write_bytes(manifest.encode('utf-8'))
+          PY
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site

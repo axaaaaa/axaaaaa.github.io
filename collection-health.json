@@ -1,0 +1,423 @@
+{
+  "generatedAt": "2026-11-07T11:33:56.086084+00:00",
+  "sources": [
+    {
+      "key": "news",
+      "name": "资讯 RSS",
+      "file": "news.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:32:49.008296+00:00"
+    },
+    {
+      "key": "github",
+      "name": "GitHub Trending",
+      "file": "github-trending.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:32:55.421596+00:00"
+    },
+    {
+      "key": "v2ex",
+      "name": "V2EX",
+      "file": "v2ex-hot.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:32:55.745332+00:00"
+    },
+    {
+      "key": "weibo",
+      "name": "微博",
+      "file": "weibo-hot.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:32:56.916868+00:00"
+    },
+    {
+      "key": "exchange-rates",
+      "name": "汇率",
+      "file": "exchange-rates.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:32:58.199709+00:00"
+    },
+    {
+      "key": "markets",
+      "name": "市场行情与市值",
+      "file": "markets.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:33:01.490946+00:00",
+      "marketCapCoverage": {
+        "available": 38,
+        "total": 39
+      }
+    },
+    {
+      "key": "extra",
+      "name": "扩展资讯",
+      "file": "extra-hotspots.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:33:53.504482+00:00",
+      "sources": {
+        "dongchedi": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.516350+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:24.774233+00:00",
+          "error": ""
+        },
+        "autohome": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.518289+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:24.065147+00:00",
+          "error": ""
+        },
+        "pcauto": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.518939+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.974901+00:00",
+          "error": ""
+        },
+        "reuters": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.519883+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:23.091624+00:00",
+          "error": ""
+        },
+        "ap": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.522247+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:23.089276+00:00",
+          "error": ""
+        },
+        "bbc": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.535259+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:22.656815+00:00",
+          "error": ""
+        },
+        "aljazeera": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.537323+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:22.703076+00:00",
+          "error": ""
+        },
+        "guardian": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.658482+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:22.903171+00:00",
+          "error": ""
+        },
+        "nhk": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:22.903982+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:23.279453+00:00",
+          "error": ""
+        },
+        "globaltimes": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:23.094715+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:24.408772+00:00",
+          "error": ""
+        },
+        "nytimes": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:23.145903+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:23.349994+00:00",
+          "error": ""
+        },
+        "wsj": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:23.280648+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:23.560167+00:00",
+          "error": ""
+        },
+        "maoyan": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:23.351644+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:46.845629+00:00",
+          "error": ""
+        },
+        "douban_book": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:23.396502+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:26.256595+00:00",
+          "error": ""
+        },
+        "douban": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:24.065187+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:26.188030+00:00",
+          "error": ""
+        },
+        "microsoft": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:24.069378+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.229520+00:00",
+          "error": ""
+        },
+        "seebug": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:24.409830+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.521386+00:00",
+          "error": ""
+        },
+        "securelist": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:24.774286+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:26.958997+00:00",
+          "error": ""
+        },
+        "checkpoint": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.230481+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.790482+00:00",
+          "error": ""
+        },
+        "sentinellabs": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.521420+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.731315+00:00",
+          "error": ""
+        },
+        "elastic": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.733005+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.955478+00:00",
+          "error": ""
+        },
+        "eset": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.792162+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:25.949138+00:00",
+          "error": ""
+        },
+        "thehackernews": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.956728+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:26.200990+00:00",
+          "error": ""
+        },
+        "baidu": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.957925+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:30.720056+00:00",
+          "error": ""
+        },
+        "pojie52_new": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:25.974934+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:29.511572+00:00",
+          "error": ""
+        },
+        "pojie52_tech": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:26.191379+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:29.967585+00:00",
+          "error": ""
+        },
+        "pojie52_digest": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:26.202192+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:29.658993+00:00",
+          "error": ""
+        },
+        "ijingyi_new": {
+          "status": "stale",
+          "lastAttemptAt": "2026-11-07T11:33:26.259515+00:00",
+          "lastSuccessAt": "2026-11-07T11:03:03.205825+00:00",
+          "error": "HTTP Error 301: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Permanently"
+        },
+        "ijingyi_hot": {
+          "status": "stale",
+          "lastAttemptAt": "2026-11-07T11:33:26.959975+00:00",
+          "lastSuccessAt": "2026-11-07T11:03:02.312425+00:00",
+          "error": "HTTP Error 301: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nMoved Permanently"
+        },
+        "bilibili": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:29.511608+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:29.869559+00:00",
+          "error": ""
+        },
+        "tieba": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:29.659028+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:31.364027+00:00",
+          "error": ""
+        },
+        "woshipm": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:29.869592+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:31.568046+00:00",
+          "error": ""
+        },
+        "csdn": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:29.967616+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:36.863618+00:00",
+          "error": ""
+        },
+        "oschina": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:30.499838+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:40.301712+00:00",
+          "error": ""
+        },
+        "zcool": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:30.720097+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:36.642155+00:00",
+          "error": ""
+        },
+        "xz": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:31.364064+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:37.708845+00:00",
+          "error": ""
+        },
+        "anquanke": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:31.395826+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:43.601720+00:00",
+          "error": ""
+        },
+        "freebuf": {
+          "status": "stale",
+          "lastAttemptAt": "2026-11-07T11:33:31.568072+00:00",
+          "lastSuccessAt": "2026-11-07T11:03:05.888789+00:00",
+          "error": "Locator.wait_for: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href*=\\\"/articles/\\\"][href*=\\\".html\\\"], a[href*=\\\"/news/\\\"][href*=\\\".html\\\"]\").first to be visible\n"
+        },
+        "yicai": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:36.642181+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:45.218913+00:00",
+          "error": ""
+        },
+        "sinafinance": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:36.863674+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:41.108304+00:00",
+          "error": ""
+        },
+        "pojie52": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:37.708887+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:40.913924+00:00",
+          "error": ""
+        },
+        "kanxue": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:40.301739+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:46.229336+00:00",
+          "error": ""
+        },
+        "ruanyifeng": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:40.913959+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:41.220358+00:00",
+          "error": ""
+        },
+        "uisdc": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:41.108338+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:43.416799+00:00",
+          "error": ""
+        },
+        "geekpark": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:41.220383+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:49.297146+00:00",
+          "error": ""
+        },
+        "qbitai": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:43.416833+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:47.968642+00:00",
+          "error": ""
+        },
+        "sspai": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:43.601750+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:51.691032+00:00",
+          "error": ""
+        },
+        "juejin": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:45.218944+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:48.595866+00:00",
+          "error": ""
+        },
+        "toutiao": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:46.229364+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:48.832881+00:00",
+          "error": ""
+        },
+        "qq": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:46.845663+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:48.860649+00:00",
+          "error": ""
+        },
+        "netease": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:47.968669+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:53.504482+00:00",
+          "error": ""
+        },
+        "hellogithub": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:48.595895+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:52.835434+00:00",
+          "error": ""
+        },
+        "gamersky": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T11:33:48.832909+00:00",
+          "lastSuccessAt": "2026-11-07T11:33:50.601562+00:00",
+          "error": ""
+        }
+      }
+    },
+    {
+      "key": "history",
+      "name": "历史上的今天",
+      "file": "history-today.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:08:52.327234+00:00"
+    },
+    {
+      "key": "x-hot",
+      "name": "X 热门",
+      "file": "x-hot.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:30:02+00:00"
+    },
+    {
+      "key": "x-global",
+      "name": "X 海外",
+      "file": "x-global.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-11-06T01:53:26+00:00",
+      "errors": [
+        "snapshot older than 4 hours"
+      ]
+    },
+    {
+      "key": "x-words",
+      "name": "X 热词",
+      "file": "x-words.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:33:54.673288+00:00"
+    },
+    {
+      "key": "x-articles",
+      "name": "X 长文",
+      "file": "x-articles.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:33:55.849511+00:00"
+    },
+    {
+      "key": "hacker-news",
+      "name": "Hacker News",
+      "file": "hacker-news.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T11:32:58.025247+00:00"
+    }
+  ]
+}

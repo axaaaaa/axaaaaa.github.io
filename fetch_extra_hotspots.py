@@ -35,7 +35,7 @@ SOURCES={
  'elastic':{'name': 'Elastic Security Labs', 'kind': '检测与研究 · 中文机译', 'url': 'https://www.elastic.co/security-labs', 'endpoint': 'https://www.elastic.co/security-labs/rss/feed.xml', 'icon': 'https://www.elastic.co/favicon.ico'},
  'eset':{'name': 'ESET · WeLiveSecurity', 'kind': '威胁研究与资讯 · 中文机译', 'url': 'https://www.welivesecurity.com/en/', 'endpoint': 'https://www.welivesecurity.com/en/rss/feed/', 'icon': 'https://www.welivesecurity.com/favicon.ico'},
 
- 'bleepingcomputer':{'name':'BleepingComputer','kind':'国际安全资讯 · 中文机译','url':'https://www.bleepingcomputer.com/','endpoint':'https://www.bleepingcomputer.com/feed/','icon':'https://www.bleepingcomputer.com/favicon.ico'},
+ 'thehackernews':{'name':'The Hacker News','kind':'国际安全资讯 · 中文机译','url':'https://thehackernews.com/','endpoint':'https://feeds.feedburner.com/TheHackersNews','icon':'https://thehackernews.com/favicon.ico'},
  'baidu':{'name':'百度热搜','kind':'实时热搜榜','url':'https://top.baidu.com/board?tab=realtime','endpoint':'https://top.baidu.com/board?tab=realtime','icon':'https://www.baidu.com/favicon.ico'},
  'pojie52_new':{'name':'吾爱破解 · 新鲜出炉','kind':'新鲜出炉','url':'https://www.52pojie.cn/forum.php?mod=guide&view=newthread','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_tech':{'name':'吾爱破解 · 技术分享','kind':'技术分享','url':'https://www.52pojie.cn/forum.php?mod=guide&view=tech','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
@@ -396,11 +396,11 @@ def parse_source(key,body):
    meta='热议话题'
    if isinstance(heat,int) and not isinstance(heat,bool) and heat>=0:meta+=f' · 热度 {heat:,}'
    add(title,'https://tieba.baidu.com/hottopic/browse/hottopic?topic_id='+str(int(id)),meta)
- elif key=='bleepingcomputer':
+ elif key=='thehackernews':
   root=ET.fromstring(body)
   for item in root.findall('.//item'):
    url=clean(item.findtext('link'))
-   if not re.fullmatch(r'https://www\.bleepingcomputer\.com/news/security/[a-zA-Z0-9_-]+/',url):continue
+   if not re.fullmatch(r'https://thehackernews\.com/\d{4}/\d{2}/[a-zA-Z0-9_%-]+\.html',url):continue
    add(item.findtext('title'),url,item.findtext('pubDate') or '')
  elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
   root=ET.fromstring(body)
@@ -490,7 +490,7 @@ FREEBUF_FEED = 'https://www.freebuf.com/rss'
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
 def request_body(url):
- req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8'})
+ req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
  with urllib.request.urlopen(req,timeout=25) as r:body=r.read(12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
@@ -581,7 +581,7 @@ def fetch(key):
  except Exception:
   if key!='ruanyifeng':raise
   body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
- if key=='bleepingcomputer' or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
+ if key=='thehackernews' or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
   previous={}
   try:previous=json.loads((public_directory()/'extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
   except (OSError,ValueError):pass

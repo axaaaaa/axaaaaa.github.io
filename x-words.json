@@ -1,12 +1,16 @@
 {
   "source": "X榜单话题榜",
   "sourceUrl": "https://xbangdan.com/words/",
-  "fetchedAt": "2026-11-07T11:33:54.673288+00:00",
-  "sourceUpdatedText": "11-07 18:34",
+  "fetchedAt": "2026-10-31T13:57:31.855196+00:00",
+  "sourceUpdatedText": "10-31 21:01",
   "categories": [
     {
       "key": "society",
       "label": "社会民生"
+    },
+    {
+      "key": "ent",
+      "label": "娱乐八卦"
     },
     {
       "key": "ai",
@@ -24,201 +28,190 @@
   "items": [
     {
       "rank": 1,
-      "title": "民主党在中期选举多地获胜引发热议",
-      "summary": "美国国会中期选举民主党夺得参议院五十六席并掌控两院，特朗普相关概念股开盘领跌。",
+      "title": "巴基斯坦军方介入斡旋美伊局势",
+      "summary": "巴基斯坦陆军参谋长向伊朗官员提交调解方案，该提案已获美国批准并得伊朗初步同意。",
       "category": "society",
       "categoryLabel": "社会民生",
       "trend": "down",
-      "viewsText": "414.7万",
-      "meta": "社会民生 · 790 帖 · 359 人在说 · 07:21 首发",
-      "url": "https://x.com/i/status/2118195036697637176"
+      "viewsText": "196.0万",
+      "meta": "社会民生 · 26 帖 · 24 人在说 · 13:46 首发",
+      "url": "https://x.com/i/status/2112420242660147537"
     },
     {
       "rank": 2,
-      "title": "GCSA合作研发AI反黑客技术",
-      "summary": "华润隆地旗下网络安全公司与ＧＣＳＡ合作成立中心，研究利用人工智能技术主动欺骗反制黑客。",
-      "category": "ai",
-      "categoryLabel": "AI",
+      "title": "网传太原出租车侵犯女乘客视频流出",
+      "summary": "网络流传一段太原出租车内监控录像，疑似司机侵犯醉酒女乘客，真实性引发大量讨论。",
+      "category": "society",
+      "categoryLabel": "社会民生",
       "trend": "down",
-      "viewsText": "132.2万",
-      "meta": "AI 科技 · 26 帖 · 25 人在说 · 16:15 首发",
-      "url": "https://x.com/i/status/2118275946667004209"
+      "viewsText": "152.7万",
+      "meta": "社会民生 · 49 帖 · 35 人在说 · 11:05 首发",
+      "url": "https://x.com/i/status/2112381932055171194"
     },
     {
       "rank": 3,
-      "title": "Cat Wu跳槽加入OpenAI",
-      "summary": "Anthropic代码产品负责人CatWu在公司冲刺上市前夕正式离职，并宣布加入竞争对手OpenAI。",
-      "category": "ai",
-      "categoryLabel": "AI",
+      "title": "网友八卦范冰冰早期电影与明星旧闻",
+      "summary": "部分网民重新翻出范冰冰早期电影《苹果》的激情戏片段，发帖议论其当年拍摄细节及明星旧闻。",
+      "category": "ent",
+      "categoryLabel": "娱乐八卦",
       "trend": "down",
-      "viewsText": "69.9万",
-      "meta": "AI 科技 · 120 帖 · 96 人在说 · 08:34 首发",
-      "url": "https://x.com/i/status/2118151045058568464"
+      "viewsText": "105.3万",
+      "meta": "娱乐八卦 · 19 帖 · 16 人在说 · 11:08 首发",
+      "url": "https://x.com/i/status/2112514180054155357"
     },
     {
       "rank": 4,
-      "title": "加州西好莱坞正式承认多伴侣制度",
-      "summary": "美国加州西好莱坞正式通过新规，允许三名及以上成年人在自愿前提下合法登记多伴侣关系。",
-      "category": "society",
-      "categoryLabel": "社会民生",
+      "title": "开源DeepInfer推理框架",
+      "summary": "深度求索团队以开源协议正式开源生产级推理框架，公布了单集群吞吐性能数据。",
+      "category": "ai",
+      "categoryLabel": "AI",
       "trend": "down",
-      "viewsText": "68.6万",
-      "meta": "社会民生 · 80 帖 · 69 人在说 · 07:33 首发",
-      "url": "https://x.com/i/status/2118284688536011004"
+      "viewsText": "98.3万",
+      "meta": "AI 科技 · 115 帖 · 99 人在说 · 17:04 首发",
+      "url": "https://x.com/i/status/2112471106426900677"
     },
     {
       "rank": 5,
-      "title": "OpenAI生图模型支持导出GIF",
-      "summary": "OpenAI推出图像模型二点六版本，支持直接生成矢量图与动图，出图速度提升一半。",
-      "category": "ai",
-      "categoryLabel": "AI",
-      "trend": "down",
-      "viewsText": "49.8万",
-      "meta": "AI 科技 · 222 帖 · 165 人在说 · 07:41 首发",
-      "url": "https://x.com/i/status/2118127825186177270"
+      "title": "SpaceX发布财报业绩大超预期",
+      "summary": "SpaceX公布最新季度财报，每股收益达到预期的百分之二百三十以上，营收同比增长百分之一百六十一。",
+      "category": "money",
+      "categoryLabel": "财经币圈",
+      "trend": "up",
+      "viewsText": "53.0万",
+      "meta": "财经币圈 · 114 帖 · 74 人在说 · 10:58 首发",
+      "url": "https://x.com/i/status/2112431631537770786"
     },
     {
       "rank": 6,
-      "title": "美光等存储芯片股回调引发估值热议",
-      "summary": "美光科技等存储芯片股从高点回撤达百分之四十五，机构披露其远期市盈率降至约三点六倍。",
+      "title": "传字节阿里腾讯向英伟达大批订购芯片",
+      "summary": "传路透社称字节、阿里与腾讯向英伟达订购逾三百万块显卡，总金额超三百五十亿美元。",
       "category": "ai",
       "categoryLabel": "AI",
-      "trend": "down",
-      "viewsText": "44.0万",
-      "meta": "AI 科技 · 109 帖 · 73 人在说 · 07:42 首发",
-      "url": "https://x.com/i/status/2118239455689818213"
+      "trend": "up",
+      "viewsText": "36.6万",
+      "meta": "AI 科技 · 19 帖 · 17 人在说 · 10:44 首发",
+      "url": "https://x.com/i/status/2112473587080958429"
     },
     {
       "rank": 7,
-      "title": "AI生成古代历史监控录像引发热议",
-      "summary": "多位创作者利用人工智能工具制作司马光砸缸与曹冲称象等古代历史伪监控视频引发热议。",
-      "category": "ai",
-      "categoryLabel": "AI",
+      "title": "主流第三方MC启动器停用国内下载",
+      "summary": "因合规要求与家长举报，包括PCL在内的国内主流我的世界第三方启动器相继停用下载功能。",
+      "category": "society",
+      "categoryLabel": "社会民生",
       "trend": "down",
-      "viewsText": "32.9万",
-      "meta": "AI 科技 · 8 帖 · 7 人在说 · 08:57 首发",
-      "url": "https://x.com/i/status/2118162217447403703"
+      "viewsText": "33.3万",
+      "meta": "社会民生 · 23 帖 · 21 人在说 · 12:01 首发",
+      "url": "https://x.com/i/status/2112466601660293552"
     },
     {
       "rank": 8,
-      "title": "推友热议富豪婚姻与家庭赡养费争议",
-      "summary": "推特多条贴文围绕郑中基每月八千港币赡养费争议以及大卫格芬等富豪婚配财产分配展开热议。",
-      "category": "society",
-      "categoryLabel": "社会民生",
+      "title": "投资者讨论奈飞财报与高管人事",
+      "summary": "奈飞发布季度财报实现净利润三十七亿美元，同时被曝裁员千人后主导高管亦遭免职。",
+      "category": "money",
+      "categoryLabel": "财经币圈",
       "trend": "peak",
-      "viewsText": "29.6万",
-      "meta": "社会民生 · 8 帖 · 7 人在说 · 08:05 首发",
-      "url": "https://x.com/i/status/2118284688536011004"
+      "viewsText": "23.5万",
+      "meta": "财经币圈 · 52 帖 · 45 人在说 · 10:58 首发",
+      "url": "https://x.com/i/status/2112494329444941963"
     },
     {
       "rank": 9,
-      "title": "美股台股全线重挫引发投资者股灾恐慌",
-      "summary": "美股主要科技指数与台湾股市出现全线下挫，杠杆基金剧烈回撤引发多方投资者恐慌讨论。",
-      "category": "money",
-      "categoryLabel": "财经币圈",
-      "trend": "down",
-      "viewsText": "23.4万",
-      "meta": "财经币圈 · 44 帖 · 37 人在说 · 09:58 首发",
-      "url": "https://x.com/i/status/2118360793100267858"
+      "title": "网友热议中东宗教鄙视链与外籍劳工",
+      "summary": "推特网民热议沙特于十月十四日因清真寺亲吻处决孟加拉夫妇的传闻，探讨劳工阶层待遇。",
+      "category": "society",
+      "categoryLabel": "社会民生",
+      "trend": "peak",
+      "viewsText": "21.0万",
+      "meta": "社会民生 · 9 帖 · 9 人在说 · 13:03 首发",
+      "url": "https://x.com/i/status/2112484034324652110"
     },
     {
       "rank": 10,
-      "title": "A股光伏板块大涨引散户热议主线",
-      "summary": "全市场超四千七百只个股上涨带动下，光伏与电池板块爆发且多股涨幅达百分之二十以上。",
-      "category": "money",
-      "categoryLabel": "财经币圈",
+      "title": "网传程序员大V用AI洗稿遭封号",
+      "summary": "网传知名程序员博主因使用人工智能工具在社交平台洗稿搬运内容，被多名用户投诉后遭到封禁。",
+      "category": "xcircle",
+      "categoryLabel": "X",
       "trend": "down",
-      "viewsText": "21.5万",
-      "meta": "财经币圈 · 54 帖 · 27 人在说 · 07:37 首发",
-      "url": "https://x.com/i/status/2118225001019301970"
+      "viewsText": "19.4万",
+      "meta": "X 圈内 · 16 帖 · 16 人在说 · 13:28 首发",
+      "url": "https://x.com/i/status/2112530807437111615"
     },
     {
       "rank": 11,
-      "title": "推友讨论网络黑产与账号安全风险",
-      "summary": "网络曝光女厕偷拍黑产致超十万女性受害，引发推友对日常改装设备与个人隐私安全讨论。",
+      "title": "电视去广告CleanYourTV走红",
+      "summary": "开源工具走红网络，支持用户通过局域网清理安卓系统电视开机广告并精简系统桌面。",
       "category": "ai",
       "categoryLabel": "AI",
       "trend": "down",
-      "viewsText": "21.4万",
-      "meta": "AI 科技 · 14 帖 · 14 人在说 · 10:44 首发",
-      "url": "https://x.com/i/status/2118279219922731452"
+      "viewsText": "19.0万",
+      "meta": "AI 科技 · 11 帖 · 10 人在说 · 11:43 首发",
+      "url": "https://x.com/i/status/2112425816688562215"
     },
     {
       "rank": 12,
-      "title": "OpenAI发现Linux提权漏洞",
-      "summary": "OpenAI耗费一百二十万美元算力成本，利用自动化智能体在Linux内核中查出九百四十八个本地提权漏洞。",
-      "category": "ai",
-      "categoryLabel": "AI",
-      "trend": "peak",
-      "viewsText": "20.8万",
-      "meta": "AI 科技 · 33 帖 · 32 人在说 · 07:52 首发",
-      "url": "https://x.com/i/status/2118266447361183893"
+      "title": "网友热议科普博主小Lin说视频风格",
+      "summary": "网友围绕科普博主小Lin说的视频风格展开热议，重点讨论其团队专业打磨与IP符号的不可替代性。",
+      "category": "xcircle",
+      "categoryLabel": "X",
+      "trend": "down",
+      "viewsText": "18.8万",
+      "meta": "X 圈内 · 10 帖 · 3 人在说 · 12:00 首发",
+      "url": "https://x.com/i/status/2112421104824570048"
     },
     {
       "rank": 13,
-      "title": "推友杂谈主机逆向越狱与开源工具",
-      "summary": "推友集中讨论游戏主机相继被逆向破解，以及视频复刻等开源项目在短时间内斩获上万星标。",
+      "title": "MiniMax发布M3.1系列模型",
+      "summary": "MiniMax正式发布M3.1系列模型，不仅揭晓此前霸榜的匿名模型身份还展示了七万张算力储备。",
       "category": "ai",
       "categoryLabel": "AI",
-      "trend": "peak",
-      "viewsText": "20.1万",
-      "meta": "AI 科技 · 7 帖 · 6 人在说 · 17:18 首发",
-      "url": "https://x.com/i/status/2118279219922731452"
+      "trend": "down",
+      "viewsText": "18.4万",
+      "meta": "AI 科技 · 68 帖 · 58 人在说 · 10:40 首发",
+      "url": "https://x.com/i/status/2112395852253962304"
     },
     {
       "rank": 14,
-      "title": "苹果被曝审查iCloud公开分享",
-      "summary": "网传苹果将自新版本起审查任何人可见的云端公开分享，发现有害内容将封号并通报执法机构。",
-      "category": "ai",
-      "categoryLabel": "AI",
-      "trend": "down",
-      "viewsText": "20.1万",
-      "meta": "AI 科技 · 17 帖 · 17 人在说 · 08:25 首发",
-      "url": "https://x.com/i/status/2118261603867259386"
-    },
-    {
-      "rank": 15,
-      "title": "网易AI语音输入法叭哥说获推友体验",
-      "summary": "网易有道推出具备过滤口头禅与改口识别功能的语音输入法叭哥说，引发多位推友试用与好评。",
-      "category": "ai",
-      "categoryLabel": "AI",
-      "trend": "peak",
-      "viewsText": "14.5万",
-      "meta": "AI 科技 · 9 帖 · 9 人在说 · 09:40 首发",
-      "url": "https://x.com/i/status/2118188301123514550"
-    },
-    {
-      "rank": 16,
-      "title": "币安学习营何一演讲内容曝光引关注",
-      "summary": "币安联合创始人何一在学习营晚宴进行二十三分钟演讲，针对宏观定价与近期被盗传闻发声。",
+      "title": "币安钱包上线AgentID域名抢注",
+      "summary": "币安钱包上线不可转让的智能体域名功能，用户充值少量币安币支付燃气费可抢注三位靓号。",
       "category": "money",
       "categoryLabel": "财经币圈",
       "trend": "down",
-      "viewsText": "14.3万",
-      "meta": "财经币圈 · 20 帖 · 15 人在说 · 08:04 首发",
-      "url": "https://x.com/i/status/2118196375888543971"
+      "viewsText": "17.8万",
+      "meta": "财经币圈 · 38 帖 · 37 人在说 · 11:29 首发",
+      "url": "https://x.com/i/status/2112479869884088808"
+    },
+    {
+      "rank": 15,
+      "title": "网友分享GamsGo低价合租AI订阅",
+      "summary": "多位网友分享在合租平台低价订阅智能工具，月费降至五美元左右且支持支付宝付款。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "down",
+      "viewsText": "10.2万",
+      "meta": "AI 科技 · 24 帖 · 16 人在说 · 17:12 首发",
+      "url": "https://x.com/i/status/2112472092193312923"
+    },
+    {
+      "rank": 16,
+      "title": "陆奇旗下奇绩创坛遭美国政府制裁",
+      "summary": "美国财政部与国务院将陆奇创办的奇绩创坛列入制裁名单，起因涉前谷歌员工窃密事件。",
+      "category": "ai",
+      "categoryLabel": "AI",
+      "trend": "peak",
+      "viewsText": "9.8万",
+      "meta": "AI 科技 · 8 帖 · 7 人在说 · 11:03 首发",
+      "url": "https://x.com/i/status/2112404685998960760"
     },
     {
       "rank": 17,
-      "title": "推友热议奥巴马执政风格并对比特朗普",
-      "summary": "中期选举后推友对比奥巴马净失六十三席与特朗普净失二十五席，热议两人历史战绩。",
-      "category": "society",
-      "categoryLabel": "社会民生",
-      "trend": "down",
-      "viewsText": "13.7万",
-      "meta": "社会民生 · 46 帖 · 43 人在说 · 07:46 首发",
-      "url": "https://x.com/i/status/2118212470888403245"
-    },
-    {
-      "rank": 18,
-      "title": "博主郭宇开放式婚姻观引发推友热议",
-      "summary": "博主郭宇公开践行开放式婚姻与亲密关系细节，甚至分享伴侣照片，引发推友广泛讨论。",
-      "category": "xcircle",
-      "categoryLabel": "X",
+      "title": "开发者热议个人Agent部署方案",
+      "summary": "多位开发者围绕个人智能体主机选型与部署方案展开讨论，争论权限全开与硬件配置的安全性。",
+      "category": "ai",
+      "categoryLabel": "AI",
       "trend": "",
-      "viewsText": "8.1万",
-      "meta": "X 圈内 · 5 帖 · 5 人在说 · 09:41 首发",
-      "url": "https://x.com/i/status/2118156742240702975"
+      "viewsText": "6.4万",
+      "meta": "AI 科技 · 3 帖 · 3 人在说 · 14:04 首发",
+      "url": "https://x.com/i/status/2112527334561718352"
     }
   ]
 }

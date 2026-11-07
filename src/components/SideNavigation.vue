@@ -6,34 +6,20 @@
       @click="toggleMenu"
     ></div>
 
-    <!-- 收缩/展开按钮 -->
-    <div 
-      class="collapse-toggle" 
-      :class="{ 'collapse-toggle-dark': isDarkTheme, 'toggle-collapsed': isCollapsed }" 
-      @click="toggleMenu"
-    >
-      <el-icon size="18">
-        <Expand v-if="isCollapsed" />
-        <Fold v-else />
-      </el-icon>
-    </div>
     
     <div 
       class="side-navigation" 
       :class="{ 
         'side-navigation-dark': isDarkTheme, 
         'mobile-visible': isMobileMenuVisible,
-        'nav-collapsed': isCollapsed 
+        'nav-collapsed': isCollapsed && !isMobile 
       }"
     >
 
+      <button v-if="isCollapsed && !isMobile" class="rail-expand" type="button" title="展开侧栏" aria-label="展开侧栏" @click="toggleMenu">☰</button>
       <div class="nav-header">
-        <div class="ascii-brand" role="img" aria-label="AI NAV">
-          <pre class="ascii-logo" aria-hidden="true"> ███  ███   █   █  ███  █   █
-█   █  █    ██  █ █   █ █   █
-█████  █    █ █ █ █████ █   █
-█   █  █    █  ██ █   █  █ █ 
-█   █ ███   █   █ █   █   █  </pre>
+        <div class="ascii-brand" role="img" aria-label="0 1">
+          <pre class="ascii-logo" aria-hidden="true"><template v-for="(row, rowIndex) in logoRows" :key="rowIndex"><span v-for="(char, column) in row" :key="column" :class="{ 'logo-scan-glyph': isDarkTheme || (logoScanStart !== null && column >= logoScanStart && column < logoScanStart + 4) }">{{ char }}</span><template v-if="rowIndex < logoRows.length - 1">{{ '\n' }}</template></template></pre>
         </div>
         <el-input
           v-model="searchText"
@@ -42,7 +28,23 @@
           prefix-icon="Search"
           @input="handleSearchInput"
           class="search-input"
-        />
+          :class="{ 'has-search-illustration': !searchText }"
+        >
+          <template #suffix>
+            <button
+              type="button"
+              class="collapse-toggle"
+              :class="{ 'collapse-toggle-dark': isDarkTheme }"
+              :title="isMobile ? '关闭分类菜单' : '收起侧栏'"
+              :aria-label="isMobile ? '关闭分类菜单' : '收起侧栏'"
+              @click.stop="toggleMenu"
+            >
+              <el-icon size="18"><Fold /></el-icon>
+            </button>
+          </template>
+        </el-input>
+        <button type="button" class="collapse-all-button" aria-label="全部收缩" title="收起分类、模块和详情，保留输入内容" @click="collapseAll"><el-icon aria-hidden="true"><Fold /></el-icon><span>全部收缩</span></button>
+        <p v-if="collapseFeedback" class="collapse-all-feedback" role="status">{{collapseFeedback}}</p>
         <div class="statistics-info">
           <span>分类: {{ filteredCategories.length }}</span>
           <span>链接: {{ totalLinksCount }}</span>
@@ -55,14 +57,28 @@
             v-for="(groupItems, groupName) in displayedGroupedCategories" 
             :key="groupName"
             class="category-group"
+            :class="{ 'standalone-category-group': ['💳金融支付', '🎮游戏相关', '🎨 设计资源', '✨ 本地地址'].includes(groupName) }"
           >
             <div 
-              v-if="groupName !== 'default_ungrouped'" 
+              v-if="groupName !== 'default_ungrouped' && !['💳金融支付', '🎮游戏相关', '🎨 设计资源', '✨ 本地地址'].includes(groupName)" 
               class="group-title"
               @click="handleGroupClick(groupItems)"
             >
               {{ groupName }}
             </div>
+            
+              
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <div 
               v-for="category in groupItems" 
               :key="category.name" 
@@ -70,11 +86,16 @@
             >
               <div 
                 class="menu-item"
-                :class="{ 'is-active': activeIndex === category.name }"
+                role="button" tabindex="0"
+                :title="isCollapsed && !isMobile ? category.name : undefined"
+                :aria-label="category.name"
+                @keydown.enter.prevent="handleSelect(category.name)"
+                @keydown.space.prevent="handleSelect(category.name)"
+                :class="{ 'is-active': activeIndex === category.name, 'has-active-child': category.subCategories?.some(sub => sub.name === activeIndex) }"
                 @click="handleSelect(category.name)"
               >
-                <span v-if="category.emoji" class="emoji-icon">{{ category.emoji }}</span>
-                <span class="category-name">{{ category.name }}</span>
+                <span class="emoji-icon" aria-hidden="true">{{ category.emoji || category.name.slice(0, 1) }}</span>
+                <span class="category-name"><HighlightText :text="category.name" :query="searchText" /></span>
                 <span class="item-count">{{ getCategoryCount(category) }}</span>
                 <el-icon 
                   v-if="category.subCategories && category.subCategories.length" 
@@ -86,6 +107,7 @@
                 </el-icon>
               </div>
               <!-- 子分类列表 -->
+              <Transition name="sidebar-children">
               <div 
                 v-if="category.subCategories && category.subCategories.length && expandedCategories[category.name]" 
                 class="sub-categories"
@@ -98,23 +120,12 @@
                   @click="handleSubSelect(category.name, sub.name)"
                 >
                   <span v-if="sub.emoji" class="sub-emoji-icon">{{ sub.emoji }}</span>
-                  <span class="sub-category-name">{{ sub.name }}</span>
+                  <span class="sub-category-name"><HighlightText :text="sub.name" :query="searchText" /></span>
                   <span class="item-count">{{ sub.links ? sub.links.length : 0 }}</span>
                 </div>
               </div>
+              </Transition>
             </div>
-          </div>
-
-          <!-- 显示更多按钮 -->
-          <div v-if="hasMoreCategories && !isExpanded" class="show-more-btn" @click="expandCategories">
-            <el-icon><ArrowDownBold /></el-icon>
-            <span>显示更多 ({{ remainingCount }}个)</span>
-          </div>
-          
-          <!-- 收起按钮 -->
-          <div v-if="isExpanded && totalCategoriesCount > displayLimit" class="show-more-btn" @click="collapseCategories">
-            <el-icon><ArrowUpBold /></el-icon>
-            <span>收起</span>
           </div>
 
           <div v-if="filteredCategories.length === 0" class="empty-state">
@@ -136,15 +147,18 @@
 </template>
 
 <script>
-import { Expand, Fold, ArrowUpBold, ArrowDownBold, ArrowRight } from '@element-plus/icons-vue'
+import HighlightText from "./HighlightText.vue";
+import { Fold, ArrowUpBold, ArrowDownBold, ArrowRight } from '@element-plus/icons-vue'
 import { navData } from "../nav-data.js"
 import { nextTick } from 'vue'
 import { matchPinyin } from "../utils/pinyin.js"
 
+const ORIGINAL_LOGO = " ████        ██    \n██  ██      ███    \n██  ██       ██    \n██  ██       ██    \n██  ██       ██    \n ████      ██████  ";
+
 export default {
   name: 'SideNavigation',
-  components: {
-    Expand, Fold, ArrowUpBold, ArrowDownBold, ArrowRight
+  components: { HighlightText,
+    Fold, ArrowUpBold, ArrowDownBold, ArrowRight
   },
   props: {
     isDarkTheme: { type: Boolean, default: false },
@@ -153,6 +167,12 @@ export default {
   },
   data() {
     return {
+      logoDisplay: ORIGINAL_LOGO,
+      logoScanStart: null,
+      logoDecodeTimer: null,
+      logoMotionQuery: null,
+      logoEnvironmentChange: null,
+      collapseFeedback: '',
       activeIndex: '',
       categories: navData,
       searchText: '',
@@ -160,37 +180,33 @@ export default {
       isMobile: window.innerWidth <= 768,
       resizeTimer: null,
       searchTimer: null,
-      isExpanded: false, // 是否展开显示所有分类
-      displayLimit: 15, // 默认显示15个分类
-      expandedCategories: {} // 记录哪些分类展开了子分类
+      expandedCategories: {}
     }
   },
   computed: {
+    logoRows() {
+      return this.logoDisplay.split('\n').map(row => Array.from(row));
+    },
     totalLinksCount() {
       return this.filteredCategories.reduce((total, category) => total + this.getCategoryCount(category), 0);
     },
-    totalCategoriesCount() {
-      return this.filteredCategories.length;
-    },
-    hasMoreCategories() {
-      return this.totalCategoriesCount > this.displayLimit;
-    },
-    remainingCount() {
-      return this.totalCategoriesCount - this.displayLimit;
-    },
     displayedCategories() {
-      // 搜索时显示全部，否则根据展开状态决定
-      if (this.isExpanded || this.searchText) {
-        return this.filteredCategories;
-      }
-      return this.filteredCategories.slice(0, this.displayLimit);
+      return this.filteredCategories;
     },
     // 分组后的显示分类
     displayedGroupedCategories() {
       return this.groupCategories(this.displayedCategories);
     }
   },
+  watch: {
+    isDarkTheme() { this.startLogoCycle(); },
+    isCollapsed() { this.startLogoCycle(); },
+    isMobile() { this.startLogoCycle(); }
+  },
   beforeUnmount() {
+    this.stopLogoCycle();
+    this.logoMotionQuery?.removeEventListener?.('change', this.logoEnvironmentChange);
+    document.removeEventListener('visibilitychange', this.logoEnvironmentChange);
     window.removeEventListener('resize', this.handleResize);
     if (this.resizeTimer) clearTimeout(this.resizeTimer);
     if (this.searchTimer) clearTimeout(this.searchTimer);
@@ -198,8 +214,52 @@ export default {
   mounted() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
+    this.logoMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this.logoEnvironmentChange = () => this.startLogoCycle();
+    this.logoMotionQuery.addEventListener?.('change', this.logoEnvironmentChange);
+    document.addEventListener('visibilitychange', this.logoEnvironmentChange);
+    this.startLogoCycle();
   },
   methods: {
+    collapseAll() {
+      this.expandedCategories = {};
+      this.$emit('collapse-all');
+      this.collapseFeedback = '已收起全部展开内容';
+    },
+    stopLogoCycle() {
+      if (this.logoDecodeTimer !== null) clearTimeout(this.logoDecodeTimer);
+      this.logoDecodeTimer = null;
+      this.logoDisplay = ORIGINAL_LOGO;
+      this.logoScanStart = null;
+    },
+    startLogoCycle() {
+      this.stopLogoCycle();
+      if (this.logoMotionQuery?.matches || document.hidden || (this.isCollapsed && !this.isMobile)) return;
+      const rows = ORIGINAL_LOGO.split('\n');
+      const columns = Math.max(...rows.map(row => row.length));
+      const bandWidth = 4;
+      const stepMs = 110;
+      let bandLeft = 1 - bandWidth;
+      let direction = 1;
+      const symbols = '01<>/+#%*░▒▓';
+      const tick = () => {
+        if (this.logoMotionQuery?.matches || document.hidden || (this.isCollapsed && !this.isMobile)) {
+          this.stopLogoCycle();
+          return;
+        }
+        // Keep at least one band column inside the logo, reversing without a blank frame.
+        this.logoScanStart = this.isDarkTheme ? null : bandLeft;
+        this.logoDisplay = rows.map(row => Array.from(row).map((char, col) =>
+          char !== ' ' && (this.isDarkTheme || (col >= bandLeft && col < bandLeft + bandWidth))
+            ? symbols[Math.floor(Math.random() * symbols.length)] : char
+        ).join('')).join('\n');
+        if (bandLeft >= columns - 1) direction = -1;
+        else if (bandLeft <= 1 - bandWidth) direction = 1;
+        bandLeft += direction;
+        this.logoDecodeTimer = setTimeout(tick, stepMs);
+      };
+      tick();
+    },
     handleResize() {
       if (this.resizeTimer) clearTimeout(this.resizeTimer);
       this.resizeTimer = setTimeout(() => {
@@ -307,16 +367,6 @@ export default {
     },
     scrollToBottom() {
       this.$refs.scrollContainer?.scrollTo({ top: this.$refs.scrollContainer.scrollHeight, behavior: 'auto' });
-    },
-    expandCategories() {
-      this.isExpanded = true; // 展开显示所有分类
-    },
-    collapseCategories() {
-      this.isExpanded = false; // 收起只显示15个分类
-      // 收起后滚动到顶部
-      this.$nextTick(() => {
-        this.$refs.scrollContainer?.scrollTo({ top: 0, behavior: 'smooth' });
-      });
     }
   }
 }
@@ -344,18 +394,13 @@ export default {
 
 /* 收缩按钮 */
 .collapse-toggle {
-  position: fixed;
-  left: 280px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1001;
-  width: 16px;
-  height: 40px;
-  background: #fff;
-  border: 1px solid #e4e7ed;
-  border-left: none;
-  border-radius: 0 4px 4px 0;
-  display: flex;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -366,17 +411,13 @@ export default {
   color: #409eff;
 }
 
-.collapse-toggle.toggle-collapsed {
-  left: 0;
-}
-
 .collapse-toggle-dark {
   background: #0a0a0a;
   border-color: rgba(0, 255, 65, 0.2);
 }
 
 .collapse-toggle-dark:hover {
-  color: #00ff41;
+  color: var(--dark-text-primary);
 }
 
 .nav-header {
@@ -392,9 +433,16 @@ export default {
 
 .ascii-logo {
   margin: 0;
-  color: #2563b0;
+  color: #727ce8;
+  --logo-colors: linear-gradient(110deg, #25b9cd 0%, #6689ed 30%, #ac70da 56%, #e47dac 78%, #e8b35d 100%);
+  background-image: var(--logo-colors);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 2px rgba(104, 106, 192, 0.16));
   font-family: Consolas, "Courier New", monospace;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: 0;
@@ -402,7 +450,16 @@ export default {
 }
 
 .side-navigation-dark .ascii-logo {
-  color: var(--dark-text-primary, #00ff41);
+  color: #a69cf6;
+  --logo-colors: linear-gradient(110deg, #65dce7 0%, #8faaff 30%, #c69af2 56%, #f2a4cb 78%, #f3cf88 100%);
+  text-shadow: none;
+  filter: drop-shadow(0 2px 3px rgba(123, 112, 216, 0.24));
+}
+
+/* Light: moving glyph band. Dark: continuously changing glyphs across the full logo. */
+.ascii-logo .logo-scan-glyph {
+  color: var(--dark-text-primary, #355c46);
+  -webkit-text-fill-color: currentColor;
   text-shadow: none;
 }
 
@@ -452,6 +509,14 @@ export default {
   gap: 4px;
 }
 
+.standalone-category-group {
+  margin-top: 14px;
+  padding-top: 12px;
+}
+.standalone-category-group > .category-wrapper > .menu-item {
+  padding-left: 4px;
+}
+
 .group-title {
   font-size: 12px;
   color: #909399;
@@ -459,9 +524,6 @@ export default {
   font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
-}
-.group-title:hover {
-  color: #409eff;
 }
 
 .menu-item {
@@ -473,14 +535,7 @@ export default {
   transition: background 0.2s;
 }
 
-.menu-item:hover {
-  background: #f5f7fa;
-}
 
-.menu-item.is-active {
-  background: #ecf5ff;
-  color: #409eff;
-}
 
 .category-wrapper {
   display: flex;
@@ -514,14 +569,7 @@ export default {
   font-size: 12px;
 }
 
-.sub-menu-item:hover {
-  background: #f5f7fa;
-}
 
-.sub-menu-item.is-active {
-  background: #ecf5ff;
-  color: #409eff;
-}
 
 .sub-category-name {
   flex: 1;
@@ -596,7 +644,6 @@ export default {
 
 /* 响应式 */
 @media screen and (max-width: 768px) {
-  .collapse-toggle { display: none; }
   .side-navigation { 
     top: 60px; 
     left: -100%; 
@@ -623,14 +670,7 @@ export default {
   color: var(--dark-text-muted, #008822);
 }
 
-.side-navigation-dark .menu-item:hover {
-  background: rgba(0, 255, 65, 0.05);
-}
 
-.side-navigation-dark .menu-item.is-active {
-  background: rgba(0, 255, 65, 0.1);
-  color: var(--dark-text-link, #39ff14);
-}
 
 .side-navigation-dark .category-name {
   color: var(--dark-text-primary, #00ff41);
@@ -655,16 +695,60 @@ export default {
   border-left-color: rgba(0, 255, 65, 0.2);
 }
 
-.side-navigation-dark .sub-menu-item:hover {
-  background: rgba(0, 255, 65, 0.05);
-}
 
-.side-navigation-dark .sub-menu-item.is-active {
-  background: rgba(0, 255, 65, 0.1);
-  color: var(--dark-text-link, #39ff14);
-}
 
 .side-navigation-dark .sub-category-name {
   color: var(--dark-text-secondary, #00cc33);
 }
+
+/* Match the main search artwork, scaled for the narrower category input. */
+.search-input.has-search-illustration :deep(.el-input__wrapper) {
+  background-image: url('../assets/search-orbit.svg');
+  background-repeat: no-repeat;
+  background-position: right 44px center;
+  background-size: 76px 24px;
+}
+.search-input.has-search-illustration :deep(.el-input__wrapper:focus-within) {
+  background-image: none;
+}
+
+/* Unified sidebar hierarchy and quiet green interaction states. */
+.side-navigation { --nav-accent: #386a50; --nav-hover: rgba(56,106,80,.055); --nav-selected: rgba(56,106,80,.10); }
+.side-navigation-dark { --nav-accent: var(--dark-text-primary, #b0d4ba); --nav-hover: rgba(176,212,186,.055); --nav-selected: rgba(176,212,186,.10); }
+.groups-container { gap: 12px; }
+.group-title { padding: 12px 10px 5px; font-size: 11px; font-weight: 400; letter-spacing: .04em; }
+.group-title:hover { color: var(--nav-accent); }
+.menu-item, .standalone-category-group > .category-wrapper > .menu-item { position: relative; min-height: 38px; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; gap: 8px; font-size: 13px; font-weight: 400; transition: background-color 160ms ease, color 160ms ease; }
+.emoji-icon { width: 20px; margin-right: 0; text-align: center; font-size: 15px; flex-shrink: 0; }
+.category-name { flex: 1; min-width: 0; }
+.item-count { margin-left: auto; min-width: 24px; text-align: right; font-size: 10px; font-weight: 400; font-variant-numeric: tabular-nums; opacity: .55; }
+.expand-icon { margin-left: 2px; width: 14px; flex-shrink: 0; transition: transform 180ms ease; }
+.menu-item:not(:has(.expand-icon)) { padding-right: 26px; }
+.sub-categories { margin: 3px 0 3px 20px; padding-left: 8px; border-left: none; }
+.sub-menu-item { position: relative; min-height: 32px; padding: 7px 10px; gap: 6px; border-radius: 7px; font-size: 12px; font-weight: 400; }
+.sub-emoji-icon { width: 16px; margin-right: 0; text-align: center; flex-shrink: 0; }
+.menu-item:hover, .sub-menu-item:hover, .side-navigation-dark .menu-item:hover, .side-navigation-dark .sub-menu-item:hover { background: var(--nav-hover); }
+.menu-item.is-active, .sub-menu-item.is-active, .side-navigation-dark .menu-item.is-active, .side-navigation-dark .sub-menu-item.is-active { background: var(--nav-selected); color: var(--nav-accent); }
+.menu-item.is-active::before, .sub-menu-item.is-active::before { content: ''; position: absolute; left: 0; top: 28%; bottom: 28%; width: 2px; border-radius: 2px; background: var(--nav-accent); }
+.menu-item.has-active-child { background: var(--nav-hover); }
+.sidebar-children-enter-active, .sidebar-children-leave-active { transition: opacity 160ms ease, transform 160ms ease; }
+.sidebar-children-enter-from, .sidebar-children-leave-to { opacity: 0; transform: translateY(-4px); }
+@media (prefers-reduced-motion: reduce) { .sidebar-children-enter-active, .sidebar-children-leave-active, .expand-icon, .menu-item, .sub-menu-item { transition: none; } }
+
+
+/* Desktop icon rail; mobile keeps its drawer navigation. */
+.rail-expand { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin: 14px auto; flex-shrink: 0; border: 0; border-radius: 8px; background: transparent; color: var(--nav-accent); font-size: 20px; cursor: pointer; }
+.rail-expand:hover { background: var(--nav-hover); }
+.rail-expand:focus-visible, .menu-item:focus-visible { outline: 2px solid var(--nav-accent); outline-offset: -2px; }
+@media screen and (min-width: 769px) {
+  .side-navigation.nav-collapsed { width: 64px; overflow: hidden; }
+  .nav-collapsed .nav-header, .nav-collapsed .group-title, .nav-collapsed .category-name, .nav-collapsed .item-count, .nav-collapsed .expand-icon, .nav-collapsed .sub-categories, .nav-collapsed .nav-footer { display: none; }
+  .nav-collapsed .side-nav-content { padding: 0 8px 12px; }
+  .nav-collapsed .groups-container { gap: 8px; }
+  .nav-collapsed .standalone-category-group { margin-top: 4px; padding-top: 0; }
+  .nav-collapsed .menu-item, .nav-collapsed .standalone-category-group > .category-wrapper > .menu-item, .nav-collapsed .menu-item:not(:has(.expand-icon)) { justify-content: center; width: 46px; min-height: 42px; padding: 8px; gap: 0; }
+  .nav-collapsed .emoji-icon { width: 24px; font-size: 18px; }
+}
+.command-library-entry { border: 0; background: transparent; color: inherit; width: 100%; text-align: left; font: inherit; }
+.collapse-all-button {display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:10px;padding:7px 10px;border:1px solid #d7e4dc;border-radius:5px;background:transparent;color:inherit;font:inherit;font-size:12px;cursor:pointer;}.collapse-all-button:hover {background:rgba(90,140,110,.1);}.collapse-all-button:focus-visible{outline:2px solid var(--ui-accent,#386a50);outline-offset:2px;}.side-navigation-dark .collapse-all-button {border-color:#344b3d;color:#b0d4ba;}.collapse-all-feedback{font-size:11px;line-height:1.5;margin:5px 0;color:var(--ui-accent,#386a50);}
 </style>

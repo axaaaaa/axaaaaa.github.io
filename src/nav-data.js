@@ -6,10 +6,8 @@ import { designResources } from './data/design-resources';
 import { a } from './data/a';
 import { b } from './data/b';
 import { c } from './data/c';
-import { d } from './data/d';
 import { e } from './data/e.js';
 import { f } from './data/f';
-import { g } from './data/g';
 import { h } from './data/h';
 import { i } from './data/i';
 import { j } from './data/j';
@@ -24,10 +22,8 @@ export const navData = [
   ...a,
   ...b,
   ...c,
-  ...d,
   ...e, // 添加e.js数据
   ...f,
-  ...g,
   ...h,
   ...i,
   ...j,

@@ -1,0 +1,19 @@
+export function estimatePower(input){const limits={cpu:1000,gpu:1500,board:300,ram:16,ssd:24,hdd:24,fans:32,other:1000,margin:100};for(const [key,max] of Object.entries(limits)){if(input[key]===''||!Number.isFinite(Number(input[key]))||Number(input[key])<0||Number(input[key])>max)return {error:'请填写范围内的非负数值'};if(['ram','ssd','hdd','fans'].includes(key)&&!Number.isInteger(Number(input[key])))return {error:'配件数量请填写整数'};}const base=+input.cpu + +input.gpu + +input.board + input.ram*5 + input.ssd*8 + input.hdd*12 + input.fans*4 + +input.other;const target=Math.ceil(base*(1+input.margin/100));return {base,target,recommended:Math.max(300,Math.ceil(target/50)*50)};}
+export const firmwareRows=[['启动方式','通过 EFI 引导程序、NVRAM 启动项启动','传统 BIOS 引导代码；UEFI 的 CSM 可提供兼容模式'],['Windows 系统盘','通常采用 GPT，配有 EFI 系统分区','通常采用 MBR'],['安全启动','平台与系统支持时可启用 Secure Boot','传统启动路径不支持 Secure Boot'],['界面','可以是图形或文本界面，鼠标支持取决于固件','常见文本界面；外观不是判断标准'],['查看当前模式','Win + R → msinfo32 → BIOS 模式','同一位置查看“传统”或 Legacy'],['安装提示','从启动菜单选择 UEFI: 安装介质','切换模式可能使已有系统失去启动路径，先记录原设置']];
+export const partitionRows=[['容量','支持大容量磁盘；上限受扇区大小及系统限制','512 字节逻辑扇区时约 2 TiB（约 2.2 TB）'],['分区数量','Windows 通常支持 128 个分区','最多 4 个主分区；可用扩展分区容纳逻辑分区'],['结构','包含备份分区表和校验信息','分区表主要位于磁盘起始位置'],['Windows 启动','现代 Windows 通常配合 UEFI','传统 BIOS 模式通常配合 MBR'],['数据盘','与系统启动模式不是同一概念','数据盘的可用性还取决于操作系统'],['查看方式','磁盘管理 → 磁盘属性 → 卷 → 分区形式','此对照不执行初始化或转换；操作前先备份']];
+export const bootKeys=[
+ ['华硕 ASUS 桌面主板','Del / F2','F8（也可进入 BIOS 后选择 Boot Menu）','https://www.asus.com/global/support/faq/1013017/'],
+ ['微星 MSI 桌面主板','Del','F11','https://download.msi.com/archive/mnu_exe/mb/E7C71v1.1.pdf'],
+ ['技嘉 GIGABYTE 常见主板','Del','F12','https://download.gigabyte.com/FileList/Manual/desktop_pc_manual_AMS2051_211206_e.pdf'],
+ ['华擎 ASRock 常见主板','F2 / Del','F11','https://www.asrock.com/support/faq.asp?id=181']
+];
+export const terms=[['Boot Priority','启动优先级','指定启动项顺序；Windows Boot Manager 通常代表已有 UEFI Windows 引导。'],['CSM / Legacy','传统兼容启动','兼容旧式启动方式；与 Secure Boot、显卡固件和系统盘启动方式有关。'],['Secure Boot','安全启动','验证受信任的启动程序；变更前保留原设置并确认恢复方式。'],['TPM / Intel PTT / AMD fTPM','可信平台模块','用于密钥保护和系统功能；清除 TPM 前先处理设备加密恢复信息。'],['XMP / EXPO','内存配置档','读取内存频率和时序配置；属于超出基础规格的设置，稳定性取决于整个平台。'],['AHCI / RAID / VMD','存储控制模式','影响驱动和磁盘识别；已装系统直接切换可能导致启动失败。'],['VT-x / AMD SVM','CPU 虚拟化','为虚拟机提供硬件虚拟化支持。'],['VT-d / IOMMU','设备 I/O 虚拟化','设备映射与隔离相关，区别于 CPU 虚拟化。'],['Fast Boot','快速启动','缩短部分硬件初始化，可能影响热键和 USB 设备识别。'],['Above 4G / Re-Size BAR','PCIe 地址与显存映射','依赖主板、显卡固件和驱动支持，按具体平台说明配置。'],['Q-Fan / Smart Fan','风扇控制','设置温度曲线；区分 PWM 与 DC 风扇。'],['Load Optimized Defaults','载入默认值','会重置多项配置；先记录启动和存储设置，不等于清除磁盘数据。']];
+export const leds=[['CPU','CPU 初始化阶段','断电后核对 CPU 供电、主板支持列表和 BIOS 版本；不直接判定 CPU 损坏。'],['DRAM','内存初始化或训练阶段','首次训练可能较久；按手册等待，断电后检查安装与建议插槽，单条按默认参数排查。'],['VGA','显示设备初始化阶段','核对显示线连接、显卡供电与安装；仅在 CPU 具备核显时尝试主板显示接口。'],['BOOT','启动设备或引导阶段','新装机无系统时可能亮起；检查磁盘识别、启动模式和 Windows Boot Manager。']];
+export const repairs=[
+ {title:'检查组件存储状态',command:'DISM /Online /Cleanup-Image /CheckHealth',effect:'读取已记录的损坏标志，不进行完整扫描或修复。'},
+ {title:'扫描组件存储',command:'DISM /Online /Cleanup-Image /ScanHealth',effect:'扫描组件存储，耗时可能较长，不执行修复。'},
+ {title:'修复组件存储',command:'DISM /Online /Cleanup-Image /RestoreHealth',effect:'修改并修复组件存储，默认可能通过 Windows Update 获取文件；完成后再运行 SFC。'},
+ {title:'扫描并修复系统文件',command:'sfc /scannow',effect:'扫描受保护系统文件并尝试修复；可能要求重启，结束后阅读实际结果。'},
+ {title:'仅验证系统文件',command:'sfc /verifyonly',effect:'验证受保护系统文件，不执行文件修复。'}
+];
+export const systemSources=[['UEFI / Legacy 官方说明','https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-uefi-mode-or-legacy-bios-mode'],['GPT / MBR 官方说明','https://learn.microsoft.com/en-us/troubleshoot/windows-server/backup-and-storage/support-for-hard-disks-exceeding-2-tb'],['自检灯官方排查','https://www.msi.com/support/technical_details/MB_Boot_No_Display'],['DISM / SFC 官方步骤','https://support.microsoft.com/en-us/windows/experience/backup-recovery/using-system-file-checker-in-windows']];

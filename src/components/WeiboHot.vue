@@ -1,0 +1,30 @@
+<template>
+  <section class="weibo-card" :class="{ 'weibo-dark': dark }" aria-labelledby="weibo-title">
+    <header class="weibo-heading"><div><h2 id="weibo-title"><span class="weibo-logo" aria-hidden="true"><img :src="sourceIcon" width="26" height="26" alt="" referrerpolicy="no-referrer" /></span>微博热搜</h2><p>发现正在发生的热门话题</p></div></header>
+      <div class="weibo-toolbar"><span role="status">{{ status }}</span><a href="https://s.weibo.com/top/summary" target="_blank" rel="noopener noreferrer">查看原榜 ↗</a></div>
+      <ol v-if="visible.length" class="weibo-list"><li v-for="(topic,index) in visible" :key="topic.url"><a :href="topic.url" target="_blank" rel="noopener noreferrer"><span class="weibo-rank" :class="{ top:index<3 }">{{ topic.rank }}</span><div class="weibo-copy"><h3>{{ topic.title }}</h3><div class="weibo-meta"><span v-if="topic.tag" class="weibo-node">{{ topic.tag }}</span><span>热度 {{ formatHeat(topic.heat) }}</span></div></div><span class="weibo-arrow" aria-hidden="true">↗</span></a></li></ol>
+      <div v-else class="weibo-empty">{{ loading ? '正在加载 微博热搜…' : '热门话题暂未更新，请稍后重试。' }}<button v-if="!loading" type="button" @click="load">重试</button></div>
+      <footer class="weibo-footer"><span>来自微博热搜榜 · 每3小时更新</span><button v-if="items.length>6" type="button" data-source-more :aria-expanded="showAll" @click="showAll=!showAll">{{ showAll ? '收起话题 ↑' : '更多话题 ↓' }}</button></footer>
+    </section>
+</template>
+<script>
+import { officialSourceIcon } from "../utils/source-icons.mjs";
+export default {
+  name:'WeiboHot', props:{dark:Boolean},
+  data:()=>({sourceIcon:officialSourceIcon('weibo'),items:[],updatedAt:'',loading:false,error:false,showAll:false,controller:null}),
+  computed:{
+    visible(){return this.items.slice(0,this.showAll?30:6);},
+    status(){if(this.error&&this.items.length)return '刷新失败 · 显示缓存';const d=new Date(this.updatedAt);if(!Number.isFinite(d.getTime()))return '等待更新';return `${Date.now()-d.getTime()>21600000?'上次更新':'更新于'} ${d.toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}`;}
+  },
+  mounted(){this.load();},beforeUnmount(){this.controller?.abort();},
+  methods:{
+    validUrl(topic){try{const url=new URL(topic.url);return url.origin==='https://s.weibo.com'&&url.pathname==='/weibo'&&url.searchParams.get('q')===topic.title;}catch{return false;}},
+    formatHeat(value){return Number(value)>=10000?`${(Number(value)/10000).toFixed(1)}万`:String(value||0);},
+    accept(data){if(!Array.isArray(data?.items)||!Number.isFinite(Date.parse(data.updatedAt)))throw Error('invalid data');const items=data.items.filter(t=>Number.isInteger(t.rank)&&t.rank>0&&typeof t.title==='string'&&this.validUrl(t)).slice(0,30);if(!items.length)throw Error('empty data');this.items=items;this.updatedAt=data.updatedAt;},
+    async load(){this.loading=true;this.error=false;try{const data=JSON.parse(localStorage.getItem('navigation-weibo-v1'));if(data)this.accept(data);}catch{/* optional cache */}this.controller=new AbortController();const timeout=setTimeout(()=>this.controller.abort(),12000);try{const r=await fetch(`${process.env.BASE_URL}weibo-hot.json`,{cache:'no-cache',signal:this.controller.signal});if(!r.ok)throw Error('request failed');const data=await r.json();this.accept(data);try{localStorage.setItem('navigation-weibo-v1',JSON.stringify(data));}catch{/* optional storage */}}catch{this.error=true;}finally{clearTimeout(timeout);this.loading=false;}}
+  }
+};
+</script>
+<style scoped>
+.weibo-card{--v-text:#26364c;--v-muted:#7b8799;--v-line:rgba(105,128,160,.15);border:1px solid var(--v-line);border-radius:18px;background:rgba(255,255,255,.86);color:var(--v-text);padding:20px 20px 0;box-sizing:border-box;overflow:hidden;box-shadow:0 6px 24px rgba(37,68,109,.04)}.weibo-dark{--v-text:#e2e9f4;--v-muted:#95a3b9;--v-line:rgba(145,164,194,.17);background:rgba(24,31,45,.92)}.weibo-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:18px}.weibo-heading h2{display:flex;align-items:center;gap:8px;margin:0;font-size:18px;line-height:1.5}.weibo-logo{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#f0f0f0;overflow:hidden}.weibo-logo img{display:block}.weibo-heading p{font-size:12px;line-height:1.6;color:var(--v-muted);margin:6px 0 0}.weibo-card button{font:inherit;font-size:12px;border:0;background:transparent;color:var(--v-muted);padding:6px 9px;border-radius:7px;cursor:pointer;flex-shrink:0}.weibo-card button:hover{color:#e6764f;background:rgba(241,118,77,.08)}.weibo-card a:focus-visible,.weibo-card button:focus-visible{outline:2px solid #ec7957;outline-offset:2px}.weibo-toolbar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--v-line);font-size:10px;color:var(--v-muted)}.weibo-toolbar a{color:inherit;text-decoration:none}.weibo-list{list-style:none;padding:0;margin:0}.weibo-list li{min-width:0}.weibo-list a{display:flex;align-items:center;gap:10px;padding:16px 3px;text-decoration:none;color:inherit;border-bottom:1px solid var(--v-line);border-radius:7px;min-height:88px;box-sizing:border-box}.weibo-list a:hover{background:rgba(127,145,171,.06)}.weibo-rank{font-size:17px;font-weight:700;color:#a3adbb}.weibo-rank.top{color:#ef805a}.weibo-copy{min-width:0;flex:1}.weibo-copy h3{font-size:13px;line-height:1.65;font-weight:500;margin:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.weibo-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;color:var(--v-muted);margin-top:8px;align-items:center;overflow-wrap:anywhere}.weibo-node{padding:2px 5px;background:rgba(127,145,171,.09);border-radius:4px}.weibo-arrow{font-size:14px;color:var(--v-muted)}.weibo-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;font-size:10px;color:var(--v-muted);line-height:1.7}.weibo-empty{text-align:center;color:var(--v-muted);padding:24px 0;font-size:12px}@media(max-width:700px){.weibo-card{padding:16px 16px 0}}
+</style>

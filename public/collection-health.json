@@ -1,0 +1,348 @@
+{
+  "generatedAt": "2026-11-07T10:25:47.644781+00:00",
+  "sources": [
+    {
+      "key": "news",
+      "name": "资讯 RSS",
+      "file": "news.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T14:31:02.727582+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "github",
+      "name": "GitHub Trending",
+      "file": "github-trending.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T14:31:22.584343+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "v2ex",
+      "name": "V2EX",
+      "file": "v2ex-hot.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T14:31:05.277080+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "weibo",
+      "name": "微博",
+      "file": "weibo-hot.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T06:11:03.741101+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "exchange-rates",
+      "name": "汇率",
+      "file": "exchange-rates.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T06:37:34.853200+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "markets",
+      "name": "市场行情与市值",
+      "file": "markets.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T15:23:23.076643+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ],
+      "marketCapCoverage": {
+        "available": 38,
+        "total": 39
+      }
+    },
+    {
+      "key": "extra",
+      "name": "扩展资讯",
+      "file": "extra-hotspots.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T09:59:27.469583+00:00",
+      "sources": {
+        "woshipm": {},
+        "csdn": {},
+        "oschina": {},
+        "zcool": {},
+        "xz": {},
+        "anquanke": {},
+        "freebuf": {},
+        "yicai": {},
+        "sinafinance": {},
+        "pojie52": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+          "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+          "error": ""
+        },
+        "kanxue": {},
+        "ruanyifeng": {},
+        "uisdc": {},
+        "geekpark": {},
+        "qbitai": {},
+        "sspai": {},
+        "juejin": {},
+        "toutiao": {},
+        "qq": {},
+        "netease": {},
+        "hellogithub": {},
+        "gamersky": {},
+        "tieba": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-02T15:49:10.503633+00:00",
+          "lastSuccessAt": "2026-11-02T15:49:10.503633+00:00",
+          "error": ""
+        },
+        "bilibili": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T10:49:43.242317+00:00",
+          "lastSuccessAt": "2026-11-03T10:49:43.242303+00:00",
+          "error": ""
+        },
+        "ijingyi_new": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T12:51:01.703016+00:00",
+          "lastSuccessAt": "2026-11-03T12:51:01.703016+00:00",
+          "error": ""
+        },
+        "ijingyi_hot": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T12:51:03.023886+00:00",
+          "lastSuccessAt": "2026-11-03T12:51:03.023886+00:00",
+          "error": ""
+        },
+        "pojie52_new": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+          "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+          "error": ""
+        },
+        "pojie52_tech": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+          "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+          "error": ""
+        },
+        "pojie52_digest": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-03T12:57:11.107867+00:00",
+          "lastSuccessAt": "2026-11-03T12:57:11.107867+00:00",
+          "error": ""
+        },
+        "baidu": {
+          "status": "ok",
+          "lastSuccessAt": "2026-11-06T17:05:29.496652+00:00",
+          "lastAttemptAt": "2026-11-06T17:05:29.496652+00:00",
+          "error": ""
+        },
+        "bleepingcomputer": {
+          "status": "stale",
+          "lastSuccessAt": "2026-11-06T17:16:58.261227+00:00",
+          "lastAttemptAt": "2026-11-06T17:16:58.261227+00:00",
+          "error": "Direct RSS fetch returned HTTP 403; initial headlines verified through web reader."
+        },
+        "securelist": {
+          "status": "ok",
+          "lastSuccessAt": "2026-11-06T17:24:07.702094+00:00",
+          "lastAttemptAt": "2026-11-06T17:24:07.702094+00:00",
+          "error": ""
+        },
+        "sentinellabs": {
+          "status": "ok",
+          "lastSuccessAt": "2026-11-06T17:24:05.744548+00:00",
+          "lastAttemptAt": "2026-11-06T17:24:05.744548+00:00",
+          "error": ""
+        },
+        "elastic": {
+          "status": "ok",
+          "lastSuccessAt": "2026-11-06T17:24:06.227033+00:00",
+          "lastAttemptAt": "2026-11-06T17:24:06.227033+00:00",
+          "error": ""
+        },
+        "eset": {
+          "status": "ok",
+          "lastSuccessAt": "2026-11-06T17:24:05.713641+00:00",
+          "lastAttemptAt": "2026-11-06T17:24:05.713641+00:00",
+          "error": ""
+        },
+        "checkpoint": {
+          "status": "stale",
+          "lastSuccessAt": "2026-11-06T17:24:13.702387+00:00",
+          "lastAttemptAt": "2026-11-06T17:24:13.702387+00:00",
+          "error": "Direct RSS returned HTTP 202 with an empty body. Initial article titles, URLs and publication dates verified through web reader."
+        },
+        "microsoft": {
+          "status": "stale",
+          "lastAttemptAt": "2026-11-06T17:28:14.547763+00:00",
+          "lastSuccessAt": "2026-11-06T17:28:14.547763+00:00",
+          "error": "Direct RSS returned HTTP 403; initial article titles, links and dates verified through web reader."
+        },
+        "seebug": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-06T17:28:16.441482+00:00",
+          "lastSuccessAt": "2026-11-06T17:28:16.441482+00:00",
+          "error": ""
+        },
+        "douban": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-06T17:33:16.507369+00:00",
+          "lastSuccessAt": "2026-11-06T17:33:16.507369+00:00",
+          "error": ""
+        },
+        "douban_book": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:04:58.956310+00:00",
+          "lastSuccessAt": "2026-11-07T09:04:58.956310+00:00",
+          "error": ""
+        },
+        "maoyan": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:17:15.077833+00:00",
+          "lastSuccessAt": "2026-11-07T09:17:15.077833+00:00",
+          "error": ""
+        },
+        "globaltimes": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:18:54.652708+00:00",
+          "lastSuccessAt": "2026-11-07T09:18:54.652708+00:00",
+          "error": ""
+        },
+        "nytimes": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:18:54.946674+00:00",
+          "lastSuccessAt": "2026-11-07T09:18:54.946674+00:00",
+          "error": ""
+        },
+        "wsj": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:18:55.323440+00:00",
+          "lastSuccessAt": "2026-11-07T09:18:55.323440+00:00",
+          "error": ""
+        },
+        "reuters": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:46:32.926572+00:00",
+          "lastSuccessAt": "2026-11-07T09:46:32.926572+00:00",
+          "error": ""
+        },
+        "ap": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:46:32.975466+00:00",
+          "lastSuccessAt": "2026-11-07T09:46:32.975466+00:00",
+          "error": ""
+        },
+        "bbc": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:46:33.924309+00:00",
+          "lastSuccessAt": "2026-11-07T09:46:33.924309+00:00",
+          "error": ""
+        },
+        "aljazeera": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:46:32.371139+00:00",
+          "lastSuccessAt": "2026-11-07T09:46:32.371139+00:00",
+          "error": ""
+        },
+        "guardian": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:46:33.712771+00:00",
+          "lastSuccessAt": "2026-11-07T09:46:33.712771+00:00",
+          "error": ""
+        },
+        "nhk": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:46:34.519568+00:00",
+          "lastSuccessAt": "2026-11-07T09:46:34.519568+00:00",
+          "error": ""
+        },
+        "dongchedi": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:58:23.081659+00:00",
+          "lastSuccessAt": "2026-11-07T09:58:23.081659+00:00",
+          "error": ""
+        },
+        "autohome": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:59:27.469583+00:00",
+          "lastSuccessAt": "2026-11-07T09:59:27.469583+00:00",
+          "error": ""
+        },
+        "pcauto": {
+          "status": "ok",
+          "lastAttemptAt": "2026-11-07T09:58:22.836792+00:00",
+          "lastSuccessAt": "2026-11-07T09:58:22.836792+00:00",
+          "error": ""
+        }
+      }
+    },
+    {
+      "key": "history",
+      "name": "历史上的今天",
+      "file": "history-today.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T10:19:47.732233+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "x-hot",
+      "name": "X 热门",
+      "file": "x-hot.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T13:36:02+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "x-global",
+      "name": "X 海外",
+      "file": "x-global.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-11-01T01:16:55+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "x-words",
+      "name": "X 热词",
+      "file": "x-words.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T13:57:31.855196+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "x-articles",
+      "name": "X 长文",
+      "file": "x-articles.json",
+      "status": "degraded",
+      "lastAttemptAt": "2026-10-31T14:11:29.109609+00:00",
+      "errors": [
+        "snapshot older than 2 hours"
+      ]
+    },
+    {
+      "key": "hacker-news",
+      "name": "Hacker News",
+      "file": "hacker-news.json",
+      "status": "ok",
+      "lastAttemptAt": "2026-11-07T10:25:11.945406+00:00"
+    }
+  ]
+}

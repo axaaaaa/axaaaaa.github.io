@@ -1,5 +1,5 @@
 <template>
-  <div class="site-health" :class="'health-' + info.state">
+  <div v-if="info.label !== '未检测' && info.time !== '暂无检测记录'" class="site-health" :class="'health-' + info.state">
     <span class="health-label"><span class="health-dot" aria-hidden="true"></span>{{ info.label }}</span>
     <span class="health-time" :title="info.checkedAt ? 'GitHub 检测节点 · ' + info.checkedAt : info.time">{{ info.time }}</span>
   </div>

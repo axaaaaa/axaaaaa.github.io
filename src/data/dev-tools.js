@@ -127,6 +127,8 @@ export const devTools = [
       name: '云存储网盘',
       emoji: '☁️',
       links: [
+        { name: 'PikPak', url: 'https://mypikpak.com/', description: '私人云盘，支持云端下载、文件存储与视频在线播放', tags: ['云盘', '云下载'] },
+        { name: '腾讯网盘', url: 'https://drive.tencent.com/', description: '腾讯 AI 网盘，连接 AI 应用，支持文件存储与智能整理', tags: ['云盘', 'AI'] },
         { name: 'Google Drive', url: 'https://drive.google.com/', description: '谷歌云端硬盘，生态整合好', tags: ['谷歌'] },
         { name: 'OneDrive', url: 'https://onedrive.live.com/', description: '微软云存储，Office 必备', tags: ['微软'] },
         { name: 'Dropbox', url: 'https://www.dropbox.com/', description: '同步体验优秀', tags: ['同步'] },

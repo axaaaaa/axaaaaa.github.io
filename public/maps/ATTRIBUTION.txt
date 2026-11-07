@@ -1,0 +1,9 @@
+Natural Earth ne_110m_land.geojson (public domain)
+Downloaded 2026-11-02 from:
+https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson
+https://www.naturalearthdata.com/about/terms-of-use/
+Cable lines are original schematic straight-line connections between approximate city-level coordinates, not TeleGeography route geometries. Seven curated examples are not a full inventory and do not describe current operating conditions. Each example links to a TeleGeography cable profile for further research.
+
+Province boundaries: Alibaba Cloud DataV GeoAtlas, 100000_full.json, downloaded 2026-11-02.
+https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json
+Names follow source; shapes are used as a geographic browsing layer, not surveyed boundaries.

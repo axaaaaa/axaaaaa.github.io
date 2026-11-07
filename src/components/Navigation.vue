@@ -5,9 +5,9 @@
       :is-dark-theme="currentTheme === 'dark'"
       :isCollapsed="isSidebarCollapsed"
       :isMobileMenuVisible="isMobileMenuVisible"
+      @collapse-all="collapseAllContent"
       @category-selected="scrollToCategory"
       @sub-category-selected="scrollToSubCategory"
-      @clear-top-search="clearTopSearch"
       @update:isCollapsed="isSidebarCollapsed = $event"
       @update:isMobileMenuVisible="isMobileMenuVisible = $event"
     />
@@ -16,34 +16,57 @@
       class="main-content" 
       ref="scrollContainer"
       :class="{ 'menu-visible': isMenuVisible, 'dark-theme': currentTheme === 'dark' }" 
-      :style="{ 'margin-left': isSidebarCollapsed ? '0px' : '280px' }"
+      :style="{ 'margin-left': isSidebarCollapsed ? '64px' : '280px' }"
     >
       <NavigationHeader
         ref="navHeader"
         class="navigation-header"
+        :weather-location="weatherLocation"
         :active-index="activeIndex"
         :current-theme="currentTheme"
-        @show-donate="donateDialogVisible = true"
+      @open-commands="scrollToCommands"
+      @open-shortcuts="scrollToShortcuts"
+      @open-network="scrollToNetworkReference"
+        @open-fundamentals="scrollToComputerFundamentals"
+      @open-installation="scrollToSystemInstallation"
+      @open-tools="scrollToUtilityTools" @open-image-tools="scrollToToolModule('imageTools','image-tools')" @open-text-tools="scrollToToolModule('textTools','text-tools')"
+        @open-system="scrollToSystemTools"
+      @open-electricity="scrollToElectricity"
+      @open-food="scrollToDailyFood"
+      @open-reverse="scrollToReverseHandbook"
+      @open-terminal="scrollToLinuxTerminal"
         @toggle-theme="toggleTheme"
         @toggle-mobile-menu="toggleSidebar"
       />
 
- 
-      
       <NavigationLinks
         ref="navLinks"
+        @located="weatherLocation = $event"
         :categories="categories"
         :current-theme="currentTheme"
-        :target-category="selectedCategory"
       />
+
+      <div class="module-collapse-bar"><button type="button" class="collapse-all-modules" @click="collapseAllContent"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m7 8 5-5 5 5M7 16l5 5 5-5M4 12h16"/></svg>全部收缩</button><span>收起各模块内容，保留输入与收藏</span></div>
+      <CryptoPlayground ref="cryptoPlayground" />
+      <CommandLibrary ref="commandLibrary" />
+      <ShortcutLibrary ref="shortcutLibrary" />
+      <NetworkReference ref="networkReference" />
+        <ComputerFundamentals ref="computerFundamentals" />
+      <SystemInstallation ref="systemInstallation" />
+      <UtilityToolbox ref="imageTools" group="image" />
+      <UtilityToolbox ref="textTools" group="text" />
+      <UtilityToolbox ref="utilityToolbox" />
+        <SystemTools ref="systemTools" />
+        <ElectricityLibrary ref="electricityLibrary" />
+        <DailyFoodHandbook ref="dailyFood" />
+        <ReverseHandbook ref="reverseHandbook" />
+        <LinuxTerminal ref="linuxTerminal" />
 
       <NavigationFooter 
         ref="footer"
         :current-theme="currentTheme"
-        @show-donate="donateDialogVisible = true"
       />
 
-      <DonateDialog v-model="donateDialogVisible" />
 
       <el-dialog
         v-model="randomDialogVisible"
@@ -84,6 +107,7 @@
 
 
       <div class="floating-tools">
+        <CommandPalette @action="handlePaletteAction" />
         <transition name="fade">
           <div
             class="tool-btn"
@@ -130,20 +154,35 @@
 </template>
 
 <script>
+import CryptoPlayground from './CryptoPlayground.vue';
+import CommandPalette from './CommandPalette.vue';
+
+
+import { nextTick, defineAsyncComponent } from 'vue';
+import { revealTheme } from '../utils/theme-ripple.mjs';
 import { navData } from "../nav-data.js"
 import NavigationHeader from './NavigationHeader.vue'
 import NavigationLinks from './NavigationLinks.vue'
 import NavigationFooter from './NavigationFooter.vue'
 import SideNavigation from './SideNavigation.vue'
-import DonateDialog from './DonateDialog.vue'
 
 
 
 export default {
   name: 'MainNavigation',
-  components: {
+  components: { CryptoPlayground, CommandPalette,
+    LinuxTerminal: defineAsyncComponent(() => import('./LinuxTerminal.vue')),
+    ReverseHandbook: defineAsyncComponent(() => import('./ReverseHandbook.vue')),
+    DailyFoodHandbook: defineAsyncComponent(() => import('./DailyFoodHandbook.vue')),
+    ElectricityLibrary: defineAsyncComponent(() => import('./ElectricityLibrary.vue')),
+    SystemTools: defineAsyncComponent(() => import('./SystemTools.vue')),
+    UtilityToolbox: defineAsyncComponent(() => import('./UtilityToolbox.vue')),
+    SystemInstallation: defineAsyncComponent(() => import('./SystemInstallation.vue')),
+    ComputerFundamentals: defineAsyncComponent(() => import('./ComputerFundamentals.vue')),
+      NetworkReference: defineAsyncComponent(() => import('./NetworkReference.vue')),
+    ShortcutLibrary: defineAsyncComponent(() => import('./ShortcutLibrary.vue')),
+    CommandLibrary: defineAsyncComponent(() => import('./CommandLibrary.vue')),
     NavigationHeader,
-    DonateDialog,
     NavigationLinks,
     NavigationFooter,
     SideNavigation,
@@ -152,9 +191,9 @@ export default {
 
   data() {
     return {
+      weatherLocation: null,
       activeIndex: 'home',
       isMenuVisible: false,
-      donateDialogVisible: false,
       randomDialogVisible: false,
       randomLink: null,
       randomCategoryName: '',
@@ -163,6 +202,7 @@ export default {
       isSidebarCollapsed: false,
     isMobileMenuVisible: false,
       currentTheme: localStorage.getItem('theme') || 'light',
+      themeTransitioning: false,
       selectedCategory: '',
       categories: navData,
       // 按钮显示状态
@@ -171,60 +211,113 @@ export default {
       scrollTimer: null, // 滚动节流定时器
     }
   },
+
   methods: {
-    scrollToCategory(categoryName) {
-      // 清空站内搜索，确保分类可以正常显示
+    async handlePaletteAction(action) {
+      if (action === 'crypto') { this.$refs.cryptoPlayground.opened = true; await this.$nextTick(); this.$refs.cryptoPlayground.$el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      else if (action === 'theme') this.toggleTheme();
+      else if (action === 'tools') this.scrollToUtilityTools();
+      else if (action === 'installation') this.scrollToSystemInstallation();
+      else if (action === 'fundamentals') this.scrollToComputerFundamentals();
+      else if (action === 'terminal') this.scrollToLinuxTerminal();
+      else if (action === 'radio') { const button = document.querySelector('.radio-trigger'); if (button?.getAttribute('aria-expanded') !== 'true') button?.click(); button?.focus(); }
+      else if (action === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); this.$refs.scrollContainer?.scrollTo({ top: 0, behavior: 'smooth' }); }
+    },
+    async scrollToLinuxTerminal() { return this.scrollToModule('LinuxTerminal','linuxTerminal','linux-terminal','opened');
+    },
+    async scrollToReverseHandbook() { return this.scrollToModule('ReverseHandbook','reverseHandbook','reverse-handbook','opened');
+    },
+    collapseAllContent() {
       if (this.$refs.navLinks) {
-        this.$refs.navLinks.clearSearch();
-        // 直接调用子组件的滚动方法，确保每次都能滚动
-        this.$refs.navLinks.scrollToCategory(categoryName);
-      }
-      this.selectedCategory = categoryName;
-      const categoryElement = document.querySelector(`[data-category="${categoryName}"]`);
-      const container = this.$refs.scrollContainer;
-      
-      if (categoryElement && container) {
-        const elementTop = categoryElement.getBoundingClientRect().top;
-        const containerTop = container.getBoundingClientRect().top;
-        const currentScroll = container.scrollTop;
-        const headerOffset = 80;
-
-        const targetPosition = elementTop - containerTop + currentScroll - headerOffset;
-
-        container.scrollTo({
-          top: targetPosition,
-          behavior: "auto"
-        });
-      }
-    },
-    
-    // 滚动到子分类
-    scrollToSubCategory({ categoryName, subName }) {
-      // 搜索结果和分页会影响目标节点是否存在，先恢复完整列表。
-      this.$refs.navLinks?.clearSearch();
-      this.selectedCategory = categoryName;
-      this.$nextTick(() => {
-        if (this.$refs.navLinks) {
-          this.$refs.navLinks.expandCategory(categoryName);
-          this.$refs.navLinks.scrollToSubCategory(categoryName, subName);
+        this.$refs.navLinks.expandedCategories = {};
+        this.$refs.navLinks.hotspotsExpanded = false;
+        for (const name of ['marketOverview','currencyConverter','chinaCalendar','worldTime','historyToday']) {
+          const panel=this.$refs.navLinks.$refs[name];
+          if(panel)panel.expanded=false;
         }
-      });
+      }
+      const commands = this.$refs.commandLibrary;
+      if (commands) { commands.libraryExpanded = false; commands.expanded = {}; }
+      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','dailyFood','reverseHandbook','linuxTerminal']) {
+        if (this.$refs[refName]) this.$refs[refName].opened = false;
+      }
+      // Native details can live under v-show panels; close without clearing inputs.
+      this.$el.querySelectorAll('.main-content details[open]').forEach(detail => { detail.open = false; });
     },
-    
-    toggleTheme() {
-      this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', this.currentTheme);
-      document.body.classList.toggle('dark', this.currentTheme === 'dark');
-      document.documentElement.classList.toggle('dark', this.currentTheme === 'dark');
+    async scrollToDailyFood() { return this.scrollToModule('DailyFoodHandbook','dailyFood','daily-food','opened');
+    },
+    async scrollToElectricity() { return this.scrollToModule('ElectricityLibrary','electricityLibrary','electricity-library','opened');
+    },
+    async scrollToSystemTools() { return this.scrollToModule('SystemTools','systemTools','system-tools','opened');
+    },
+    async scrollToToolModule(refName,id) { return this.scrollToModule('UtilityToolbox',refName,id,'opened');
+    },
+    async scrollToUtilityTools() { return this.scrollToModule('UtilityToolbox','utilityToolbox','utility-toolbox','opened');
+    },
+    async scrollToSystemInstallation() { return this.scrollToModule('SystemInstallation','systemInstallation','system-installation','opened'); },
+    async scrollToComputerFundamentals() { return this.scrollToModule('ComputerFundamentals','computerFundamentals','computer-fundamentals','opened'); },
+      async scrollToNetworkReference() { return this.scrollToModule('NetworkReference','networkReference','network-reference','opened');
+    },
+    async scrollToShortcuts() { return this.scrollToModule('ShortcutLibrary','shortcutLibrary','shortcut-library','opened');
+    },
+    async scrollToModule(componentName, refName, id, field = 'opened') {
+      const sequence = this._moduleJumpSequence = (this._moduleJumpSequence || 0) + 1;
+      this.isMobileMenuVisible = false;
+      const component = this.$options.components[componentName];
+      if (component?.__asyncLoader) await component.__asyncLoader();
+      for (let attempt = 0; attempt < 60 && !this.$refs[refName]; attempt++) {
+        await nextTick();
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        if (sequence !== this._moduleJumpSequence) return;
+      }
+      if (sequence !== this._moduleJumpSequence) return;
+      const panel = this.$refs[refName];
+      if (!panel) return;
+      panel[field] = true;
+      await nextTick();
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      if (sequence !== this._moduleJumpSequence) return;
+      const target = document.getElementById(id);
+      const container = this.$refs.scrollContainer;
+      if (!target || !container) return;
+      const header = this.$refs.navHeader?.$el;
+      const offset = header?.getBoundingClientRect().height || 0;
+      const top = container.scrollTop + target.getBoundingClientRect().top - container.getBoundingClientRect().top - offset - 16;
+      container.scrollTo({top:Math.max(0,top),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      await new Promise(resolve=>setTimeout(resolve,700));
+      if(sequence!==this._moduleJumpSequence)return;
+      const corrected=container.scrollTop+target.getBoundingClientRect().top-container.getBoundingClientRect().top-offset-16;
+      container.scrollTo({top:Math.max(0,corrected),behavior:'instant'});
+    },
+    async scrollToCommands() { return this.scrollToModule('CommandLibrary','commandLibrary','command-library','libraryExpanded');
+    },
+    scrollToCategory(categoryName) {
+      this.selectedCategory = categoryName;
+      return this.$refs.navLinks?.scrollToCategory(categoryName);
+    },
+    scrollToSubCategory({ categoryName, subName }) {
+      this.selectedCategory = categoryName;
+      return this.$refs.navLinks?.scrollToSubCategory(categoryName, subName);
     },
 
-    clearTopSearch() {
-      if (this.$refs.navHeader) {
-        this.$refs.navHeader.clearSearch();
+    async toggleTheme(event) {
+      if (this.themeTransitioning) return;
+      this.themeTransitioning = true;
+      try {
+        await revealTheme(async () => {
+          this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+          const dark = this.currentTheme === 'dark';
+          document.body.classList.toggle('dark', dark);
+          document.documentElement.classList.toggle('dark', dark);
+          try { localStorage.setItem('theme', this.currentTheme); } catch { /* Storage may be unavailable. */ }
+          await nextTick();
+        }, event);
+      } finally {
+        this.themeTransitioning = false;
       }
     },
 
-    // 滚动监听：同时控制两个按钮的显示（添加节流优化）
+// 滚动监听：同时控制两个按钮的显示（添加节流优化）
     handleScroll() {
       // 节流：如果已有定时器在等待，直接返回
       if (this.scrollTimer) return;
@@ -397,7 +490,7 @@ body:not(.dark) {
 
 .dark-theme {
   background-color: #0a0a0a !important; /* 黑客帝国暗黑模式背景 */
-  color: #00ff41;
+  color: var(--dark-text-primary);
 }
 
 .navigation-header {
@@ -411,8 +504,8 @@ body:not(.dark) {
   transition: left 0.3s;
 }
 
-.main-content[style*="margin-left: 0px"] .navigation-header {
-    left: 0px !important;
+.main-content[style*="margin-left: 64px"] .navigation-header {
+    left: 64px !important;
 }
 
 /* 悬浮工具栏 */
@@ -451,11 +544,11 @@ body:not(.dark) {
 .tool-btn.dark-theme {
   background-color: #0f0f0f;
   border-color: rgba(0, 255, 65, 0.3);
-  color: #00cc33;
+  color: var(--dark-text-secondary);
 }
 
 .tool-btn.dark-theme:hover {
-  color: #00ff41;
+  color: var(--dark-text-primary);
   border-color: rgba(0, 255, 65, 0.5);
 }
 
@@ -494,19 +587,19 @@ body:not(.dark) {
 }
 
 .dark-dialog .el-dialog__title {
-  color: #00ff41 !important;
+  color: var(--dark-text-primary) !important;
 }
 
 .dark-dialog .el-dialog__headerbtn .el-dialog__close {
-  color: #008822 !important;
+  color: var(--dark-text-muted) !important;
 }
 
 .dark-dialog .el-dialog__headerbtn:hover .el-dialog__close {
-  color: #00ff41 !important;
+  color: var(--dark-text-primary) !important;
 }
 
 .dark-dialog .el-dialog__body {
-  color: #00cc33 !important;
+  color: var(--dark-text-secondary) !important;
 }
 </style>
 
@@ -610,16 +703,16 @@ body:not(.dark) {
 }
 
 .random-discover-content.dark-theme .random-name {
-  color: #00ff41;
+  color: var(--dark-text-primary);
 }
 
 .random-discover-content.dark-theme .random-desc {
-  color: #00cc33;
+  color: var(--dark-text-secondary);
 }
 
 .random-discover-content.dark-theme .random-category {
   background: rgba(0, 255, 65, 0.1);
-  color: #008822;
+  color: var(--dark-text-muted);
 }
 
 .random-discover-content.dark-theme .random-favicon {
@@ -628,12 +721,12 @@ body:not(.dark) {
 
 .random-discover-content.dark-theme .random-visit-btn {
   background: rgba(0, 255, 65, 0.15);
-  color: #00ff41;
+  color: var(--dark-text-primary);
 }
 
 .random-discover-content.dark-theme .random-visit-btn:hover {
   background: rgba(0, 255, 65, 0.25);
-  color: #39ff14;
+  color: var(--dark-text-link);
 }
 
 .random-discover-content.dark-theme :deep(.el-tag) {
@@ -642,7 +735,7 @@ body:not(.dark) {
 
 .random-discover-content.dark-theme :deep(.el-tag--success) {
   border-color: #00ff41 !important;
-  color: #00ff41 !important;
+  color: var(--dark-text-primary) !important;
 }
 
 .random-discover-content.dark-theme :deep(.el-tag--warning) {
@@ -657,12 +750,29 @@ body:not(.dark) {
 
 .random-discover-content.dark-theme :deep(.el-tag:not([class*='el-tag--'])) {
   border-color: #00ff41 !important;
-  color: #00ff41 !important;
+  color: var(--dark-text-primary) !important;
 }
 
 @media (max-width: 768px) {
   .random-discover-dialog .el-dialog {
     width: 90% !important;
   }
+}
+</style>
+
+
+
+
+
+<style scoped>
+.module-collapse-bar{display:flex;align-items:center;gap:12px;margin:18px 20px 10px;flex-wrap:wrap}.collapse-all-modules{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12px;border:1px solid var(--el-border-color-light);border-radius:7px;background:var(--el-bg-color);color:var(--ui-accent,var(--el-text-color-primary));padding:8px 12px;cursor:pointer}.collapse-all-modules:focus-visible{outline:2px solid var(--ui-accent);outline-offset:2px}.module-collapse-bar>span{font-size:11px;color:var(--el-text-color-secondary)}
+.main-content :deep(section > header h2),.main-content :deep(.category-title){font-size:15px!important;line-height:1.5}
+</style>
+
+<style scoped>
+/* Keep the original single-column flow; tighten only outer module spacing. */
+.main-content > .module-collapse-bar ~ section {
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
 }
 </style>

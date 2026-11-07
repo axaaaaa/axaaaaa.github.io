@@ -9,6 +9,10 @@ status.json
 *.pyc
 *.bak
 
+# 本地构建产物与浏览器缓存（Actions 会自行 build）
+output/
+.playwright-cli/
+
 
 # local env files
 .env.local

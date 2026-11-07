@@ -1,0 +1,307 @@
+<template>
+  <section id="command-library" class="command-library-panel hacker-console" aria-labelledby="command-library-title">
+    <div class="hacker-console-heading"><h2 id="command-library-title"><button type="button" class="module-title-toggle" :aria-expanded="libraryExpanded" aria-controls="command-library-content" @click="libraryExpanded = !libraryExpanded" style="border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;padding:0;text-align:left;cursor:pointer"><svg class="module-heading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:19px;height:19px;vertical-align:-3px;margin-right:7px"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></svg> 命令速查<span class="console-cursor" aria-hidden="true">▌</span><svg class="module-heading-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" :style="{transform: libraryExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}" style="width:14px;height:14px;vertical-align:-2px;margin-left:8px"><path d="m9 5 7 7-7 7"/></svg></button></h2><div class="console-heading-actions"><span class="console-mode">{{ commands.length }} 条命令</span><button type="button" class="console-expand-toggle" :aria-expanded="libraryExpanded" aria-controls="command-library-content" @click="libraryExpanded = !libraryExpanded">{{ libraryExpanded ? '收起 ▴' : '展开 ▾' }}</button></div></div>
+    <div v-if="libraryExpanded" id="command-library-content">
+    <section ref="library" class="command-library" aria-label="命令工具箱">
+      <p v-if="category === 'Windows' && topic === '运行快捷命令'" class="command-feedback">按 Win + R 打开运行对话框，粘贴命令后按 Enter。例如：calc 打开计算器，mspaint 打开画图，services.msc 打开服务。</p>
+      <div class="command-search-row">
+        <input v-model="query" type="search" placeholder="search --query  命令 / 用途 / 参数" aria-label="搜索命令" />
+        <button type="button" :aria-pressed="favoritesOnly" @click="favoritesOnly = !favoritesOnly">{{ favoritesOnly ? '★ 只看收藏' : '☆ 我的收藏' }}</button>
+      </div>
+      <nav class="command-filters" aria-label="命令系统分类">
+        <button v-for="name in categories" :key="name" type="button" :aria-pressed="category === name" @click="selectCategory(name)"><component :is="systemIcons[name]" class="command-label-icon" aria-hidden="true" />{{ name }} <small>{{ commands.filter(c => !name || c.category === name).length }}</small></button>
+      </nav>
+      <div v-if="category === 'Windows'" class="command-environment-section"><span class="command-filter-label">命令环境</span><nav class="command-environments" aria-label="Windows 命令环境"><button v-for="name in windowsEnvironments" :key="name" type="button" :aria-pressed="environment === name" @click="selectEnvironment(name)">{{name}} <small>{{environmentCounts[name] || 0}}</small></button></nav><p class="command-environment-note">运行窗口使用 Win + R；CMD 与 PowerShell 的同名命令可能语法不同。“通用”仅表示本条原生命令适用于两者，不代表所有脚本语法通用。</p></div>
+      <div class="command-topics">
+        <nav class="command-topic-tabs" aria-label="按用途筛选命令">
+          <button v-for="name in topics" :key="name" type="button" class="command-topic-tab" :class="{ 'is-selected': topic === name }" :aria-pressed="topic === name" @click="topic = name"><component :is="topicIcons[name] || topicIcons['']" class="command-label-icon" aria-hidden="true" />{{ name }} <small>{{ topicCounts[name] || 0 }}</small></button>
+        </nav>
+        <span>{{ filtered.length }} 条命令 · 收藏保存在此浏览器</span>
+      </div>
+      <p class="command-feedback" role="status" aria-live="polite">{{ feedback }}</p>
+      <div class="command-list command-card-grid">
+        <article v-for="entry in filtered" :key="entry.id" class="command-row">
+          <div class="command-line">
+            <header><h3><component :is="topicIcons[entry.topic] || topicIcons['']" class="command-label-icon" aria-hidden="true" />{{ entry.title }}</h3><small>{{ entry.category }} · {{ entry.topic }}</small><span class="command-environment-badge">{{entry.environment || entry.shell}}</span></header>
+            <pre tabindex="0" :aria-label="entry.title + '命令'"><kbd class="command-keycap"><code>{{ generated(entry).error || generated(entry).command }}</code></kbd></pre>
+            <div class="command-card-meta"><small>权限：{{entry.permission}}</small><small :class="{'command-impact':entry.danger}">影响：{{entry.impact}}</small></div>
+            <div class="command-row-actions">
+              <button type="button" :aria-label="(favorites.includes(entry.id) ? '取消收藏：' : '收藏：') + entry.title" :aria-pressed="favorites.includes(entry.id)" @click="toggleFavorite(entry.id)">{{ favorites.includes(entry.id) ? '★' : '☆' }}</button>
+              <button type="button" :disabled="!!generated(entry).error || copying === entry.id" @click="copyCommand(entry)">{{ copying === entry.id ? '复制中…' : '复制' }}</button>
+              <button type="button" :aria-expanded="!!expanded[entry.id]" :aria-controls="'command-detail-' + entry.id" :aria-label="entry.title + '详情'" @click="expanded[entry.id] = !expanded[entry.id]">{{ expanded[entry.id] ? '收起 ▴' : '详情 ▾' }}</button>
+            </div>
+          </div>
+          <div v-if="expanded[entry.id]" :id="'command-detail-' + entry.id" class="command-row-detail">
+            <p class="command-shell">终端：{{ entry.shell }}</p>
+            <div v-if="entry.params.length" class="command-params">
+              <label v-for="param in entry.params" :key="param.key">{{ param.label }}<input :value="valueFor(entry, param)" :placeholder="param.default" autocomplete="off" spellcheck="false" @input="setValue(entry.id, param.key, $event.target.value)" /></label>
+            </div>
+            <p>{{ entry.explanation }}</p>
+            <dl><dt>前置条件</dt><dd>{{ entry.requirement }}</dd><dt>执行结果</dt><dd>{{ entry.result }}</dd><dt>操作影响</dt><dd :class="{ 'command-impact': entry.danger }">{{ entry.impact }}</dd></dl>
+            <a :href="entry.source" target="_blank" rel="noopener noreferrer">查阅官方 / 项目文档 ↗</a>
+          </div>
+        </article>
+      </div>
+      <p v-if="!filtered.length" class="command-empty">没有匹配命令。<button type="button" @click="resetFilters">清除筛选</button></p>
+    </section>
+    </div>
+  </section>
+</template>
+<script>
+import {windowsEnvironments,environmentCommands} from '../data/command-environments.mjs';
+import { commands } from '../data/commands.mjs';
+import { categories, renderCommand, filterCommands, readFavorites } from '../utils/command-library.mjs';
+import { Grid, Monitor, Cpu, Collection, Box, Folder, Document, Connection, Lock, User, Clock, Setting, Coin, Download, Delete, Files, Tools, DataAnalysis, Link, Refresh, QuestionFilled, Key, Calendar, Tickets } from '@element-plus/icons-vue';
+const systemIcons = Object.freeze({ '': Grid, Windows: Monitor, Linux: Cpu, Anaconda: Collection, Docker: Box, '路由器': Connection, Git: Files });
+const topicIcons = Object.freeze({
+  'Cisco IOS / IOS XE': Connection, '华为 VRP': Connection, OpenWrt: Connection, 'MikroTik RouterOS': Connection,
+  仓库: Folder, 提交: Document, 差异: Files, 历史: Clock, 分支: Collection, 远程同步: Refresh, 暂存工作: Box, 撤销: Refresh,
+  '': Grid, 文件: Folder, 文件操作: Folder, 文本处理: Document, 数据转换: Refresh,
+  进程: Cpu, 进程管理: Cpu, 系统: Monitor, 系统信息: Monitor,
+  网络: Connection, 网络诊断: Connection, HTTP: Link, DNS: Connection, 远程连接: Monitor,
+  磁盘: Coin, 磁盘存储: Coin, 数据卷: Coin, 环境: Collection,
+  包管理: Box, 软件管理: Download, 导入导出: Refresh, 同步备份: Refresh,
+  清理: Delete, 容器: Box, 镜像: Files, Compose: Collection,
+  日志: Tickets, 日志审计: Tickets, 监控: DataAnalysis,
+  运行快捷命令: Monitor, 帮助: QuestionFilled, 服务: Tools, 服务管理: Tools, 配置: Setting,
+  压缩归档: Box, 时间日期: Clock, 终端操作: Monitor, 脚本基础: Document,
+  防火墙: Lock, 计划任务: Calendar, 权限: Key, 用户与组: User,
+  脚本策略: Lock, 注册表: Setting,
+});
+export default {
+  name: 'CommandLibrary',
+  data() {
+    let favorites = [];
+    try { favorites = readFavorites(window.localStorage); } catch { /* Storage can be disabled. */ }
+    return { systemIcons, topicIcons, libraryExpanded: false, windowsEnvironments, environment: windowsEnvironments[0] || '', commands, categories, query: '', category: 'Windows', topic: environmentCommands(commands, 'Windows', windowsEnvironments[0])[0]?.topic || '', favoritesOnly: false, favorites, values: {}, expanded: {}, feedback: '', copying: '' };
+  },
+  computed: {
+    scopedCommands() { return environmentCommands(commands, this.category, this.environment); },
+    environmentCounts() { const counts = {'': 0}; for (const c of commands.filter(c => c.category === 'Windows')) { counts['']++; counts[c.environment] = (counts[c.environment] || 0) + 1; } return counts; },
+    topicCounts() {
+      const counts = { '': 0 };
+      for (const entry of this.scopedCommands) { counts['']++; counts[entry.topic] = (counts[entry.topic] || 0) + 1; }
+      return counts;
+    },
+    topics() { return [...new Set(this.scopedCommands.map(c => c.topic))]; },
+    filtered() { return filterCommands(this.scopedCommands, this.query, this.category, this.favoritesOnly, this.favorites).filter(c => !this.topic || c.topic === this.topic); },
+  },
+  methods: {
+    selectCategory(name) { this.category = name; this.environment = name === 'Windows' ? this.windowsEnvironments[0] || '' : ''; this.topic = this.topics[0] || ''; },
+    selectEnvironment(name) { this.environment = name; this.topic = this.topics[0] || ''; },
+    valueFor(entry, param) { return this.values[entry.id]?.[param.key] ?? param.default; },
+    setValue(id, key, value) { this.values[id] = { ...this.values[id], [key]: value }; },
+    generated(entry) { return renderCommand(entry, this.values[entry.id]); },
+    resetFilters() { this.query = ''; this.selectCategory('Windows'); this.favoritesOnly = false; },
+    toggleFavorite(id) {
+      this.favorites = this.favorites.includes(id) ? this.favorites.filter(x => x !== id) : [...this.favorites, id];
+      try { localStorage.setItem('nax-command-favorites', JSON.stringify(this.favorites)); this.feedback = '收藏已更新'; }
+      catch { this.feedback = '当前会话收藏已更新，浏览器未保存'; }
+    },
+    async copyCommand(entry) {
+      const result = this.generated(entry);
+      if (result.error) { this.feedback = result.error; return; }
+      if (entry.command.startsWith('conda env remove') && this.values[entry.id]?.env?.toLowerCase() === 'base') { this.feedback = 'base 是基础环境，请填写其他目标环境'; return; }
+      this.copying = entry.id;
+      let textarea;
+      const previousFocus = document.activeElement;
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) await navigator.clipboard.writeText(result.command);
+        else {
+          textarea = document.createElement('textarea'); textarea.value = result.command;
+          textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+          this.$refs.library.appendChild(textarea); textarea.select();
+          if (!document.execCommand('copy')) throw Error('copy failed');
+        }
+        this.feedback = `已复制：${entry.title}`;
+      } catch { this.feedback = '复制未完成，请选择命令文本手动复制'; }
+      finally { textarea?.remove(); previousFocus?.focus?.(); this.copying = ''; }
+    },
+  },
+};
+</script>
+<style>
+ .command-library-panel { margin: 32px 20px; padding: 20px; border: 1px solid var(--el-border-color-light); border-radius: 14px; scroll-margin-top: 80px; }
+.command-library-panel h2 { margin: 0 0 16px; font-size: 20px; font-weight: 500; }
+body.dark .command-library-panel {
+  --el-text-color-primary: #b0d4ba; --el-text-color-regular: #b0d4ba;
+  --el-text-color-secondary: #8ca995; --el-bg-color: #151d18; --el-bg-color-overlay: #151d18;
+  --el-fill-color-blank: #101612; --el-fill-color-light: #1b2921;
+  --el-border-color: #34473b; --el-border-color-light: #293a30;
+  --el-color-primary-light-9: #1b2921;
+  background: #151d18; color: #b0d4ba;
+}
+.command-library { color: var(--el-text-color-primary); font-size: 15px; }
+.command-intro { margin: 0 0 16px; color: var(--el-text-color-secondary); line-height: 1.7; }
+.command-library button, .command-library input, .command-library select { font: inherit; color: inherit; border: 1px solid var(--el-border-color); background: var(--el-fill-color-blank); border-radius: 7px; padding: 8px 10px; box-sizing: border-box; }
+.command-library button { cursor: pointer; }
+.command-library button:hover, .command-library button[aria-pressed="true"] { background: var(--el-color-primary-light-9); color: var(--ui-accent); border-color: var(--ui-accent); }
+.command-library button:disabled { opacity: .5; cursor: default; }
+.command-search-row { display: flex; gap: 8px; }
+.command-search-row input { flex: 1; min-width: 0; }
+.command-search-row button { flex-shrink: 0; }
+.command-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.command-filters small { opacity: .65; margin-left: 4px; }
+.command-topics { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; color: var(--el-text-color-secondary); font-size: 14px; }
+.command-feedback { min-height: 18px; color: var(--ui-accent); }
+
+.command-list { border-top: 1px solid var(--el-border-color-light); }
+.command-row { border-bottom: 1px solid var(--el-border-color-light); min-width: 0; }
+.command-line { display: grid; grid-template-columns: minmax(140px, .8fr) minmax(0, 2fr) auto; align-items: center; gap: 12px; padding: 9px 4px; }
+.command-line:hover { background: var(--el-fill-color-light); }
+.command-line header { min-width: 0; }
+.command-line h3 { margin: 0 0 3px; font-size: 14px; font-weight: 400; line-height: 1.5; }
+.command-line small { font-size: 12px; color: var(--el-text-color-secondary); }
+.command-line pre { margin: 0; min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.6; color: var(--ui-accent); }
+.command-row-actions { display: flex; gap: 4px; align-items: center; }
+.command-row-actions button { padding: 5px 7px; min-height: 30px; font-size: 13px; white-space: nowrap; }
+.command-row-detail { padding: 10px 12px 14px; background: var(--el-fill-color-light); font-size: 14px; line-height: 1.7; }
+.command-row-detail p { margin: 6px 0 10px; }
+.command-shell { font-size: 13px; color: var(--el-text-color-secondary); }
+.command-params { display: flex; flex-wrap: wrap; gap: 8px; max-width: 540px; }
+.command-params label { flex: 1; min-width: 110px; font-size: 13px; }
+.command-params input { display: block; width: 100%; margin-top: 3px; padding: 6px 8px; }
+.command-row-detail dl { display: grid; grid-template-columns: 74px minmax(0,1fr); gap: 6px 10px; }
+.command-row-detail dt { color: var(--el-text-color-secondary); }
+.command-row-detail dd { margin: 0; overflow-wrap: anywhere; }
+.command-row-detail a { color: var(--ui-accent); }
+.command-impact { color: var(--el-color-warning); }
+.command-empty { padding: 30px 0; text-align: center; }
+@media (max-width: 680px) {
+ .command-library-panel { margin: 24px 8px; padding: 12px; }
+ .command-line { grid-template-columns: minmax(0,1fr) auto; gap: 7px; padding: 10px 0; }
+ .command-line pre { grid-column: 1 / -1; grid-row: 2; }
+ .command-row-actions button { min-height: 34px; }
+}
+/* Terminal preview, with native controls and selectable command text. */
+.command-terminal { --el-border-color-light: #2a3b31; --el-border-color: #3a5042; --el-fill-color-light: #15251c; --el-fill-color-blank: #101b14; --el-text-color-secondary: #93aa9b; --ui-accent: #b0d4ba; --el-color-warning: #e4bd76; background: #0d1711; color: #b0d4ba; border: 1px solid #2a3b31; border-radius: 9px; overflow: hidden; font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace; }
+.terminal-titlebar { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: #1a2920; border-bottom: 1px solid #2a3b31; font-size: 13px; color: #a1b8a8; }
+.terminal-titlebar small { margin-left: auto; font-size: 12px; }
+.terminal-dots { display: inline-flex; gap: 5px; flex-shrink: 0; }
+.terminal-dots i { width: 7px; height: 7px; border-radius: 50%; background: #bc7975; }
+.terminal-dots i:nth-child(2) { background: #c5ad72; }
+.terminal-dots i:nth-child(3) { background: #80ac8c; }
+.command-terminal .command-line { padding: 10px 14px; }
+.command-terminal .command-row:last-child { border-bottom: 0; }
+.command-terminal .command-line h3 { color: #b0d4ba; }
+.command-terminal .command-line pre { display: flex; align-items: baseline; gap: 9px; }
+.command-terminal .command-line code { min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.terminal-prompt { color: #80ac8c; flex-shrink: 0; user-select: none; }
+.command-terminal .command-row-actions button { background: transparent; border-color: #344b3d; color: #a9c8b3; }
+.command-terminal .command-row-actions button:hover, .command-terminal button[aria-pressed="true"] { background: #243c2d; border-color: #7fa48c; }
+.command-terminal .command-row-detail { border-top: 1px dashed #2a3b31; padding: 12px 16px; }
+.command-terminal input { color: #b0d4ba; }
+@media (max-width: 680px) { .terminal-titlebar { gap: 8px; padding: 10px; font-size: 12px; flex-wrap: wrap; } .terminal-titlebar small { display: none; } .command-terminal .command-line { padding: 10px; } }
+
+/* Whole-region hacker console: static texture, no continuous JS effects. */
+body .command-library-panel.hacker-console {
+ --el-text-color-primary: #b0d4ba; --el-text-color-secondary: #8ca995;
+ --el-border-color: #344b3d; --el-border-color-light: #263c2e;
+ --el-fill-color-blank: #0b140e; --el-fill-color-light: #14251b;
+ --el-color-primary-light-9: #183222; --ui-accent: #b0d4ba; --ui-focus: #95b9a0;
+ background: linear-gradient(rgba(176,212,186,.015) 1px, transparent 1px), #080f0b;
+ background-size: 100% 4px; color: #b0d4ba; border: 1px solid #3c5946;
+ border-radius: 6px; box-shadow: 0 8px 28px rgba(0,0,0,.15); padding: 20px;
+ font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+}
+.hacker-console .command-library { color: #b0d4ba; }
+.hacker-console-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.hacker-console-heading h2 { margin: 0; font-family: inherit; font-size: 18px; font-weight: 400; letter-spacing: .04em; }
+.hacker-console-heading h2 > span:first-child { color: #7f9e88; font-size: 14px; }
+.console-mode { color: #8ca995; font-size: 12px; letter-spacing: .1em; }
+.console-cursor { margin-left: 6px; color: #b0d4ba; animation: console-blink 1.2s steps(1,end) 5; }
+@keyframes console-blink { 50% { opacity: 0; } }
+.console-session { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin: 14px 0 10px; padding: 10px 0; border-top: 1px dashed #2c4434; border-bottom: 1px dashed #2c4434; font-size: 13px; color: #8ca995; }
+.console-session strong { color: #b0d4ba; font-weight: 400; }
+.hacker-console .command-intro { font-size: 13px; color: #8ca995; }
+.hacker-console .command-search-row { position: relative; }
+.hacker-console .command-search-row::before { content: '>'; position: absolute; left: 10px; top: 9px; color: #8ca995; pointer-events: none; }
+.hacker-console .command-search-row input { padding-left: 26px; background: #0b140e; color: #b0d4ba; }
+.hacker-console input::placeholder { color: #7c9685; opacity: 1; }
+.hacker-console .command-library :is(button,input,select) { border-radius: 3px; font-family: inherit; }
+.hacker-console .command-library button { font-size: 13px; background: #0b140e; color: #a4c5af; }
+.hacker-console .command-library button:hover, .hacker-console .command-library button[aria-pressed="true"] { border-color: #83a88f; background: #183222; color: #d0e7d7; }
+.hacker-console .command-filters button::before { content: './'; opacity: .55; margin-right: 3px; }
+.hacker-console .command-filters button[aria-pressed="true"]::before { content: '> '; opacity: 1; }
+.hacker-console select { color-scheme: dark; color: #b0d4ba; }
+.hacker-console .command-feedback { margin: 8px 0; font-size: 13px; }
+.hacker-console .command-terminal { background: #09110c; border-color: #2c4434; border-radius: 3px; }
+.hacker-console .terminal-titlebar { background: #132019; color: #91b09a; }
+.hacker-console .terminal-dots i { background: #52735d; }
+.hacker-console .terminal-dots i:nth-child(2) { background: #73947e; }
+.hacker-console .terminal-dots i:nth-child(3) { background: #9fc1aa; }
+.hacker-console .command-line:hover { background: #12251a; }
+.hacker-console .command-row-detail { background: #101e15; }
+.hacker-console .command-row-detail p { color: #b0d4ba; }
+.hacker-console .command-empty { color: #8ca995; }
+@media (prefers-reduced-motion: reduce) { .console-cursor { animation: none; } }
+@media (max-width: 680px) { body .command-library-panel.hacker-console { padding: 12px; } .console-mode { font-size: 11px; } .hacker-console-heading h2 { font-size: 16px; } }
+
+
+/* Follow the site's existing body.dark switch; preserve terminal typography. */
+body:not(.dark) .command-library-panel.hacker-console,
+body:not(.dark) .hacker-console .command-terminal {
+ --el-text-color-primary: #294c38; --el-text-color-secondary: #5e7567;
+ --el-border-color: #b9cfc1; --el-border-color-light: #d4e1d9;
+ --el-fill-color-blank: #ffffff; --el-fill-color-light: #edf4ef;
+ --el-color-primary-light-9: #e1eee5; --ui-accent: #386a50; --ui-focus: #527d63;
+ --el-color-warning: #8a580c; color: #294c38; border-color: #c6d8cd;
+}
+body:not(.dark) .command-library-panel.hacker-console { background: linear-gradient(rgba(56,106,80,.025) 1px, transparent 1px), #f7faf8; background-size: 100% 4px; box-shadow: 0 8px 24px rgba(40,75,53,.05); }
+body:not(.dark) .hacker-console .command-library,
+body:not(.dark) .hacker-console .command-line h3,
+body:not(.dark) .hacker-console .command-row-detail p { color: #294c38; }
+body:not(.dark) .hacker-console :is(.console-mode,.console-session,.command-intro,.command-empty,.hacker-console-heading h2 > span:first-child) { color: #5e7567; }
+body:not(.dark) .hacker-console .console-session { border-color: #c6d8cd; }
+body:not(.dark) .hacker-console :is(.console-session strong,.console-cursor,.terminal-prompt) { color: #386a50; }
+body:not(.dark) .hacker-console .command-terminal { background: #fff; }
+body:not(.dark) .hacker-console .terminal-titlebar { background: #eaf2ed; color: #466953; border-color: #c6d8cd; }
+body:not(.dark) .hacker-console .command-search-row input,
+body:not(.dark) .hacker-console .command-library button,
+body:not(.dark) .hacker-console .command-terminal input { background: #fff; color: #294c38; }
+body:not(.dark) .hacker-console .command-search-row::before,
+body:not(.dark) .hacker-console input::placeholder { color: #667e6f; }
+body:not(.dark) .hacker-console select { color-scheme: light; color: #294c38; }
+body:not(.dark) .hacker-console .command-library button:hover,
+body:not(.dark) .hacker-console .command-library button[aria-pressed="true"] { background: #e1eee5; color: #294c38; border-color: #7f9f8a; }
+body:not(.dark) .hacker-console .command-row-actions button { border-color: #b9cfc1; }
+body:not(.dark) .hacker-console :is(.command-line:hover,.command-row-detail) { background: #edf4ef; }
+body:not(.dark) .hacker-console .command-row-detail { border-color: #c6d8cd; }
+
+.console-heading-actions { display: flex; align-items: center; gap: 12px; }
+.console-expand-toggle { background: transparent; color: inherit; border: 1px solid var(--el-border-color); border-radius: 4px; padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }
+.console-expand-toggle:hover { background: var(--el-fill-color-light); }
+
+.command-topic-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; width: 100%; min-width: 0; }
+.command-library .command-topic-tab { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; padding: 6px 9px; border-radius: 6px; font-size: 13px; white-space: normal; overflow-wrap: anywhere; text-align: left; }
+.command-topic-tab small { opacity: .65; font-size: 12px; }
+.command-library .command-topic-tab.is-selected { border-color: var(--ui-accent); background: var(--el-color-primary-light-9); color: var(--ui-accent); }
+.command-topics > span { font-size: 13px; margin-top: 4px; }
+.command-label-icon { width: 14px; height: 14px; flex: 0 0 14px; display: inline-block; vertical-align: -.15em; color: inherit; }
+.command-filters button { display: inline-flex; align-items: center; gap: 6px; }
+.command-line h3 .command-label-icon { margin-right: 6px; width: 12px; height: 12px; }
+.hacker-console .command-filters button::before { content: none; }
+
+/* Command cards retain all existing parameter, copy and favorite controls. */
+.command-library-panel .command-card-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; border:0; align-items:start; }
+.command-library-panel .command-card-grid .command-row { border:1px solid var(--el-border-color-light); border-radius:4px; background:var(--el-fill-color-blank); min-width:0; overflow:hidden; }
+.command-library-panel .command-card-grid .command-line { display:flex; flex-direction:column; align-items:stretch; gap:10px; padding:14px; }
+.command-library-panel .command-card-grid .command-line header { min-width:0; overflow-wrap:anywhere; }
+.command-library-panel .command-card-grid .command-line h3 { font-size:14px; font-weight:500; }
+.command-library-panel .command-card-grid .command-line pre { display:flex; gap:7px; padding:9px; background:var(--el-fill-color-light); border:1px solid var(--el-border-color-light); border-radius:3px; font-size:12px; }
+.command-library-panel .command-card-grid code { min-width:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.command-library-panel .command-card-grid .command-row-actions { justify-content:flex-end; flex-wrap:wrap; }
+.command-library-panel .command-card-grid .command-row-detail { border-top:1px dashed var(--el-border-color); padding:12px; overflow-wrap:anywhere; }
+.command-library-panel .command-card-grid .command-params label { min-width:0; flex:1 1 100%; }
+.command-library-panel .command-card-grid .command-params input { box-sizing:border-box; max-width:100%; }
+.command-library-panel .command-card-grid .command-row-detail dl { grid-template-columns:60px minmax(0,1fr); gap:6px; }
+@media(max-width:1100px){.command-library-panel .command-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }}
+@media(max-width:680px){.command-library-panel .command-card-grid { grid-template-columns:minmax(0,1fr); }.command-library-panel .command-card-grid .command-line {padding:12px;}}
+
+/* Match shortcut keycaps while retaining the exact command text. */
+.command-library-panel .command-card-grid .command-line pre { display:block; padding:0; border:0; border-radius:0; background:transparent; }
+.command-library-panel .command-card-grid .command-keycap { display:inline-block; box-sizing:border-box; max-width:100%; padding:2px 6px; border:1px solid var(--el-border-color); border-bottom-width:3px; border-radius:3px; background:var(--el-fill-color-light); color:var(--el-text-color-primary); font:600 12px/1.5 Consolas,monospace; white-space:pre-wrap; overflow-wrap:anywhere; vertical-align:top; }
+.command-library-panel .command-card-grid .command-keycap code { font:inherit; color:inherit; }
+.command-environments{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}.command-filter-label{font-size:13px;color:var(--el-text-color-secondary);}.command-environment-note{font-size:12px;line-height:1.7;color:var(--el-text-color-secondary);}.command-environment-badge{display:inline-block;margin-top:7px;padding:2px 6px;border:1px solid var(--el-border-color);border-radius:3px;font-size:11px;color:var(--ui-accent);background:var(--el-fill-color-light);overflow-wrap:anywhere;}.command-card-meta{display:flex;flex-direction:column;gap:5px;font-size:11px;line-height:1.6;overflow-wrap:anywhere;}
+</style>
+

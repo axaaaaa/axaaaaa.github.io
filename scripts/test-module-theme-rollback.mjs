@@ -1,0 +1,4 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {spawnSync} from 'node:child_process';
+const d='output/module-theme',f=d+'/rollback-copy';fs.mkdirSync(f+'/src/styles',{recursive:true});fs.mkdirSync(f+'/output/module-theme',{recursive:true});
+fs.copyFileSync('src/styles/reference-console.css',f+'/src/styles/reference-console.css');for(const n of ['reference-console.css.original','ROLLBACK.sh'])fs.copyFileSync(d+'/'+n,f+'/output/module-theme/'+n);
+const r=spawnSync('C:/Program Files/Git/bin/bash.exe',[f+'/output/module-theme/ROLLBACK.sh'],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);assert.deepEqual(fs.readFileSync(f+'/src/styles/reference-console.css'),fs.readFileSync(d+'/reference-console.css.original'));console.log('PASS: rollback exit 0; original CSS restored byte-for-byte on copy; working CSS remains modified');

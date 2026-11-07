@@ -3,7 +3,8 @@
     :model-value="modelValue"
     @update:model-value="$emit('update:modelValue', $event)"
     title="支持我们"
-    width="500px"
+    width="min(500px, calc(100vw - 32px))"
+    append-to-body
     :destroy-on-close="true"
   >
     <div class="donate-content">
@@ -71,4 +72,8 @@ export default {
   font-size: 13px;
   color: #909399;
 }
+</style>
+
+<style scoped>
+@media(max-width:500px){.qr-grid{gap:12px}.qr-code{width:100%;max-width:160px;height:auto;aspect-ratio:1;object-fit:contain}.qr-container{min-width:0}.qr-container h3{font-size:13px}}
 </style>

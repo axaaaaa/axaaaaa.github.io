@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '17,47 * * * *' # retry opportunity twice hourly; GitHub scheduling is best-effort
 permissions:
   contents: read
 concurrency:
@@ -19,6 +19,57 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Restore previous headlines
+        if: github.event_name != 'push'
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            news.json
+            github-trending.json
+            v2ex-hot.json
+            weibo-hot.json
+            markets.json
+            exchange-rates.json
+            extra-hotspots.json
+            history-today.json
+            x-hot.json
+            x-global.json
+            x-words.json
+            x-articles.json
+            collection-health.json
+            source-covers/
+          key: news-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: news-
+      - name: Install Playwright for FreeBuf scraping
+        if: github.event_name != 'push'
+        run: |
+          python -m pip install playwright==1.64.1
+          python -m playwright install --with-deps chromium
+      - name: Test collectors
+        run: python -m unittest discover -s scripts -p "test_*.py"
+      - name: Refresh independent sources and record health
+        if: github.event_name != 'push'
+        run: xvfb-run -a python scripts/refresh_sources.py
+      - name: Save headlines
+        if: github.event_name != 'push'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            news.json
+            github-trending.json
+            v2ex-hot.json
+            weibo-hot.json
+            markets.json
+            exchange-rates.json
+            extra-hotspots.json
+            history-today.json
+            x-hot.json
+            x-global.json
+            x-words.json
+            x-articles.json
+            collection-health.json
+            source-covers/
+          key: news-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Restore previous status
         uses: actions/cache/restore@v4
         with:
@@ -37,10 +88,17 @@ jobs:
       - name: Package existing static website
         run: |
           mkdir -p _site
-          cp index.html favicon.ico status.json _site/
+          for f in index.html favicon.ico status.json news.json github-trending.json \
+                   v2ex-hot.json weibo-hot.json markets.json \
+                   exchange-rates.json extra-hotspots.json history-today.json \
+                   x-global.json x-hot.json x-words.json x-articles.json collection-health.json og-image.jpg; do
+            if [ -f "$f" ]; then cp "$f" _site/; fi
+          done
           cp -R css img js _site/
-          if [ -f og-image.jpg ]; then cp og-image.jpg _site/; fi
           if [ -f CNAME ]; then cp CNAME _site/; fi
+          for dir in country-flags engine-icons fingerprint-lab source-covers source-icons; do
+            if [ -d "$dir" ]; then cp -R "$dir" _site/; fi
+          done
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v4
         with:

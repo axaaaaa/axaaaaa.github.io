@@ -8,7 +8,7 @@
  *
  * 用法：npm run build:deploy
  */
-import { cp, rm, mkdir, stat } from 'node:fs/promises';
+import { cp, rm, mkdir, stat, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,6 +19,21 @@ const dist = path.join(root, 'dist');
 
 const items = [
   { from: path.join(src, 'scripts'), to: path.join(dist, 'scripts'), label: '巡检脚本' },
+  ...['hot','global','words','articles'].map(name => ({ from: path.join(root, 'scripts', `fetch_x_${name}.py`), to: path.join(dist, `fetch_x_${name}.py`), label: `X ${name} 采集脚本` })),
+  { from: path.join(root, 'scripts', 'refresh_sources.py'), to: path.join(dist, 'scripts', 'refresh_sources.py'), label: '采集执行与健康状态' },
+  ...(await readdir(path.join(root, 'scripts'))).filter(name => /^test_.*\.py$/.test(name)).map(name => ({ from: path.join(root, 'scripts', name), to: path.join(dist, 'scripts', name), label: `采集测试 ${name}` })),
+  { from: path.join(root, 'scripts', 'fetch_history_today.py'), to: path.join(dist, 'fetch_history_today.py'), label: '历史上的今天脚本' },
+  { from: path.join(root, 'scripts', 'fetch_extra_hotspots.py'), to: path.join(dist, 'fetch_extra_hotspots.py'), label: '扩展热点来源脚本' },
+  { from: path.join(root, 'scripts', 'source_images.py'), to: path.join(dist, 'source_images.py'), label: '来源封面采集模块' },
+  { from: path.join(root, 'scripts', 'fetch_exchange_rates.py'), to: path.join(dist, 'fetch_exchange_rates.py'), label: '多币种汇率脚本' },
+  { from: path.join(root, 'scripts', 'fetch_markets.py'), to: path.join(dist, 'fetch_markets.py'), label: '市场行情脚本' },
+  { from: path.join(root, 'scripts', 'market_caps.py'), to: path.join(dist, 'market_caps.py'), label: '市值采集模块' },
+  { from: path.join(root, 'scripts', 'fetch_weibo.py'), to: path.join(dist, 'fetch_weibo.py'), label: '微博热搜脚本' },
+  { from: path.join(root, 'scripts', 'fetch_v2ex.py'), to: path.join(dist, 'fetch_v2ex.py'), label: 'V2EX 热门脚本' },
+  { from: path.join(root, 'scripts', 'fetch_github_trending.py'), to: path.join(dist, 'fetch_github_trending.py'), label: 'GitHub 热点脚本' },
+  { from: path.join(root, 'scripts', 'fetch_hacker_news.py'), to: path.join(dist, 'fetch_hacker_news.py'), label: 'Hacker News 采集脚本' },
+  { from: path.join(root, 'scripts', 'fetch_news.py'), to: path.join(dist, 'fetch_news.py'), label: '热点采集脚本' },
+
   { from: path.join(src, 'sites-to-check.json'), to: path.join(dist, 'sites-to-check.json'), label: '待检清单' },
   { from: path.join(src, '.github'), to: path.join(dist, '.github'), label: 'Actions 工作流' },
 ];

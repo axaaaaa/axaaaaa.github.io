@@ -1,0 +1,129 @@
+name: Build and Deploy to axaaaaa.github.io
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+  schedule:
+    - cron: '23 */3 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: pages-news
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/news.json
+            public/github-trending.json
+            public/v2ex-hot.json
+            public/weibo-hot.json
+            public/hacker-news.json
+            public/x-hot.json
+            public/x-global.json
+            public/x-words.json
+            public/x-articles.json
+            public/markets.json
+            public/exchange-rates.json
+            public/extra-hotspots.json
+            public/source-covers/
+            public/history-today.json
+          key: news-source-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: news-source-
+      - run: python -m unittest discover -s scripts -p test_news.py
+      - run: python -m unittest discover -s scripts -p test_github_trending.py
+      - run: python -m unittest discover -s scripts -p test_v2ex.py
+      - run: python -m unittest discover -s scripts -p test_weibo.py
+      - run: python -m unittest discover -s scripts -p test_x_hot.py
+      - run: python -m unittest discover -s scripts -p test_x_global.py
+      - run: python -m unittest discover -s scripts -p test_x_words.py
+      - run: python -m unittest discover -s scripts -p test_x_articles.py
+      - run: python -m unittest discover -s scripts -p test_markets.py
+      - run: python -m unittest discover -s scripts -p test_market_caps.py
+      - run: node scripts/test-market-heatmap.mjs
+      - run: python -m unittest discover -s scripts -p test_auto_news.py
+      - run: python -m unittest discover -s scripts -p test_world_news.py
+      - run: python -m unittest discover -s scripts -p test_maoyan_international.py
+      - run: python -m unittest discover -s scripts -p test_douban_book.py
+      - run: python -m unittest discover -s scripts -p test_douban_covers.py
+      - run: python -m unittest discover -s scripts -p test_douban_source.py
+      - run: python -m unittest discover -s scripts -p test_microsoft_seebug.py
+      - run: python -m unittest discover -s scripts -p test_security_research.py
+      - run: python -m unittest discover -s scripts -p test_thehackernews.py
+      - run: node scripts/test-source-tabs.cjs
+      - run: python -m unittest discover -s scripts -p test_extra_hotspots.py
+      - run: python -m unittest discover -s scripts -p test_bilibili_source.py
+      - run: python -m unittest discover -s scripts -p test_source_images.py
+      - run: python -m unittest discover -s scripts -p test_image_expansion.py
+      - run: python -m unittest discover -s scripts -p test_history_today.py
+      - run: python -m unittest discover -s scripts -p test_hacker_news.py
+      - run: python -m unittest discover -s scripts -p test_refresh_sources.py
+      - run: python scripts/fetch_news.py
+      - run: python scripts/fetch_github_trending.py
+      - run: python scripts/fetch_v2ex.py
+      - run: python scripts/fetch_weibo.py
+      - run: python scripts/fetch_hacker_news.py
+      - run: python scripts/fetch_exchange_rates.py
+      - run: python scripts/fetch_markets.py
+      - run: python -m pip install playwright==1.64.1
+      - run: python -m playwright install --with-deps chromium
+      - run: xvfb-run -a python scripts/fetch_extra_hotspots.py
+      - run: xvfb-run -a python scripts/fetch_x_hot.py
+      - run: xvfb-run -a python scripts/fetch_x_global.py
+      - run: xvfb-run -a python scripts/fetch_x_words.py
+      - run: xvfb-run -a python scripts/fetch_x_articles.py
+      - run: python scripts/fetch_history_today.py
+      - run: python scripts/refresh_sources.py --summarize
+      - run: python -c "from scripts.source_images import prune_all_covers; prune_all_covers()"
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            public/news.json
+            public/github-trending.json
+            public/v2ex-hot.json
+            public/weibo-hot.json
+            public/hacker-news.json
+            public/x-hot.json
+            public/x-global.json
+            public/x-words.json
+            public/x-articles.json
+            public/markets.json
+            public/exchange-rates.json
+            public/extra-hotspots.json
+            public/source-covers/
+            public/history-today.json
+          key: news-source-${{ github.run_id }}-${{ github.run_attempt }}
+      - run: npm ci
+      - run: npm run build:deploy
+      - name: Push dist to axaaaaa/axaaaaa.github.io
+        env:
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+        run: |
+          if [ -z "$PAGES_TOKEN" ]; then
+            echo "::warning::Secret PAGES_TOKEN 未配置，跳过用户主页部署"
+            exit 0
+          fi
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git clone --depth 1 "https://x-access-token:${PAGES_TOKEN}@github.com/axaaaaa/axaaaaa.github.io.git" user-site
+          cd user-site
+          # 清空旧产物，但保留 .nojekyll 和 CNAME（自定义域名）
+          find . -mindepth 1 -maxdepth 1 ! -name '.nojekyll' ! -name 'CNAME' ! -name '.git' -exec rm -rf {} +
+          cp -r ../dist/. .
+          touch .nojekyll
+          git add -A
+          git commit -m "Deploy from axaaaaa/mydaohang@${GITHUB_SHA::7}" || { echo "无变更，跳过推送"; exit 0; }
+          git push
+

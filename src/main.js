@@ -1,21 +1,31 @@
-// main.js
+import { sourceAutoRefreshMixin } from './utils/source-auto-refresh.mjs';
+import './styles/reference-console.css';
 import { createApp } from 'vue';
 import App from './App.vue';
+import CategoryIcon from './components/CategoryIcon.vue';
 import router from './router';
-import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
-import 'element-plus/theme-chalk/dark/css-vars.css';  // 引入暗黑模式样式
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'; // 引入所有ElementPlus的图标
-
-
+import { ElAutocomplete, ElButton, ElDialog, ElEmpty, ElIcon, ElInput, ElMenu, ElMenuItem, ElOption, ElPagination, ElPopover, ElSelect, ElTag } from 'element-plus';
+import { ArrowDownBold, ArrowRight, ArrowUpBold, Check, Close, DocumentCopy, Expand, Fold, HomeFilled, Link, Moon, Search, Sunny } from '@element-plus/icons-vue';
+import 'element-plus/theme-chalk/base.css';
+import 'element-plus/theme-chalk/dark/css-vars.css';
+import 'element-plus/es/components/autocomplete/style/css.mjs';
+import 'element-plus/es/components/button/style/css.mjs';
+import 'element-plus/es/components/dialog/style/css.mjs';
+import 'element-plus/es/components/empty/style/css.mjs';
+import 'element-plus/es/components/icon/style/css.mjs';
+import 'element-plus/es/components/input/style/css.mjs';
+import 'element-plus/es/components/menu/style/css.mjs';
+import 'element-plus/es/components/menu-item/style/css.mjs';
+import 'element-plus/es/components/option/style/css.mjs';
+import 'element-plus/es/components/pagination/style/css.mjs';
+import 'element-plus/es/components/popover/style/css.mjs';
+import 'element-plus/es/components/select/style/css.mjs';
+import 'element-plus/es/components/tag/style/css.mjs';
+import 'element-plus/es/components/message/style/css.mjs';
 const app = createApp(App);
-
+app.mixin(sourceAutoRefreshMixin());
+app.component('CategoryIcon', CategoryIcon);
 app.use(router);
-app.use(ElementPlus);
-
-// 全局注册所有图标组件
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component);
-}
-
+for (const component of [ElAutocomplete, ElButton, ElDialog, ElEmpty, ElIcon, ElInput, ElMenu, ElMenuItem, ElOption, ElPagination, ElPopover, ElSelect, ElTag]) app.component(component.name, component);
+for (const [name, icon] of Object.entries({ ArrowDownBold, ArrowRight, ArrowUpBold, Check, Close, DocumentCopy, Expand, Fold, HomeFilled, Link, Moon, Search, Sunny })) app.component(name, icon);
 app.mount('#app');

@@ -1,3 +1,6 @@
+// Vue CLI 将此值固化进构建产物；部署静态文件后不会随访问日期变化。
+process.env.VUE_APP_BUILD_TIME = new Date().toISOString()
+
 const { defineConfig } = require('@vue/cli-service')
 const CompressionPlugin = require('compression-webpack-plugin')  // Gzip 压缩插件
 

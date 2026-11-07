@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { parse, compileScript, compileTemplate } = require('@vue/compiler-sfc');
+const file = process.argv[2] || 'src/components/Navigation.vue';
+const source = fs.readFileSync(file, 'utf8');
+const { descriptor, errors } = parse(source); assert.equal(errors.length,0); compileScript(descriptor,{id:'verify'});
+assert.equal(compileTemplate({source:descriptor.template.content,filename:file,id:'verify'}).errors.length,0);
+const modified = source.includes('<CommandPalette');
+assert.equal(source.includes('<CryptoPlayground'),modified);
+if(modified) assert.match(source,/handlePaletteAction/);
+console.log(modified ? 'MODIFIED PASS: both components mounted and action handler present; Vue compilation passed' : 'BASELINE PASS: Vue compilation passed; new components absent');

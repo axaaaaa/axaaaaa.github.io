@@ -9,127 +9,106 @@
     >
       <el-menu-item index="toggle-menu" @click="$emit('toggle-mobile-menu')" class="mobile-menu-toggle">
         <el-icon>
-          <Expand />
+          <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
         </el-icon>
       </el-menu-item>
 
-      <el-menu-item index="home" @click="handleHome" class="home-menu-item">
-        <el-icon><HomeFilled /></el-icon>
+      <el-menu-item index="home" @click="handleHome" class="home-menu-item" title="主页" aria-label="主页">
+        <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9" /></svg>
       </el-menu-item>
       
-      <el-menu-item index="donate" @click="$emit('show-donate')" title="捐赠" class="hidden-xs-only">
-        <el-icon><Coffee /></el-icon>
-      </el-menu-item>
 
-      <el-menu-item index="theme" @click="$emit('toggle-theme')" class="theme-switch-item">
-        <el-icon>
-          <Sunny v-if="currentTheme === 'dark'" />
-          <Moon v-else />
-        </el-icon>
-      </el-menu-item>
     </el-menu>
 
-    <!-- 搜索框移出 el-menu -->
-    <div class="search-wrapper">
-      <el-select
-        v-model="selectedEngine"
-        class="search-engine-select"
-        :popper-class="currentTheme === 'dark' ? 'dark-dropdown' : ''"
-        :style="{ width: isMobile ? 'auto' : '160px', minWidth: isMobile ? '60px' : '160px' }"
-      >
-        <template #prefix>
-          <el-icon class="search-engine-icon">
-            <component :is="currentEngineIcon" />
-          </el-icon>
-        </template>
 
-        <el-option
-          v-for="engine in searchEngines"
-          :key="engine.value"
-          :label="engine.label"
-          :value="engine.value"
-        >
-          <div class="search-engine-option-content">
-            <el-icon class="search-engine-icon" style="margin-right: 8px; vertical-align: middle;">
-              <component :is="engine.icon" />
-            </el-icon>
-            <span>{{ engine.label }}</span>
-          </div>
-        </el-option>
-      </el-select>
 
-      <el-input
-        ref="searchInput"
-        v-model="searchText"
-        @keyup.enter="handleSearch"
-        class="search-input"
-        placeholder="">
-        <template #append>
-          <el-button @click="handleSearch" class="search-btn-append">
-            <el-icon><Search /></el-icon>
-          </el-button>
-        </template>
-      </el-input>
-      
-      <el-button 
-        @click="pasteFromClipboard" 
-        circle
-        size="small"
-        class="paste-button"
-        :class="{ 'dark-theme': currentTheme === 'dark' }"
-        title="粘贴"
-      >
-        <el-icon><DocumentCopy /></el-icon>
-      </el-button>
-      
-      <el-button 
-        v-if="searchText"
-        @click="clearSearch" 
-        circle
-        size="small"
-        class="clear-button"
-        :class="{ 'dark-theme': currentTheme === 'dark' }"
-      >
-        <el-icon><Close /></el-icon>
-      </el-button>
+
+    <a class="header-contact" href="https://t.me/lslkenmq" target="_blank" rel="noopener noreferrer" aria-label="联系我（Telegram，新窗口打开）" title="联系我 · Telegram">
+      <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 3-6 18-4-8-8-4L21 3Z"/><path d="m11 13 10-10"/></svg>
+    </a>
+
+    <BookmarkSite />
+    <SponsorButton />
+    <el-dropdown class="header-tools" trigger="click" placement="bottom-start" :max-height="420" @command="$emit($event)">
+      <button type="button" class="header-tools-trigger" aria-label="工具菜单">
+        <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/></svg>
+        <span>工具</span>
+      </button>
+      <template #dropdown><el-dropdown-menu :class="{'site-tools-menu-dark':currentTheme==='dark'}">
+        <el-dropdown-item command="open-fundamentals"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg><span>计算机底层知识</span></el-dropdown-item>
+        <el-dropdown-item command="open-installation"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H4zM8 20h8M12 16v4M12 7v6M9 10l3 3 3-3"/></svg><span>系统安装</span></el-dropdown-item>
+        <el-dropdown-item command="open-commands"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4zM7 9l3 3-3 3M13 15h4"/></svg><span>命令速查</span></el-dropdown-item>
+        <el-dropdown-item command="open-shortcuts"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3zM6 9h1M10 9h1M14 9h1M18 9h0M6 12h1M10 12h1M14 12h1M18 12h0M7 15h10"/></svg><span>快捷键速查</span></el-dropdown-item>
+        <el-dropdown-item command="open-network"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v5H9zM3 16h6v5H3zM15 16h6v5h-6zM12 8v4M6 16v-4h12v4"/></svg><span>网络知识速查</span></el-dropdown-item>
+        <el-dropdown-item command="open-image-tools"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h18v18H3zM3 16l6-6 5 5 3-3 4 4M15 7h1"/></svg><span>图片工具</span></el-dropdown-item>
+        <el-dropdown-item command="open-text-tools"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M12 5v15M8 20h8M4 5v3M20 5v3"/></svg><span>文字工具</span></el-dropdown-item>
+        <el-dropdown-item command="open-tools"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v14H3zM8 7V3h8v4M3 12h18M10 12v3h4v-3"/></svg><span>实用工具箱</span></el-dropdown-item>
+        <el-dropdown-item command="open-system"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4zM7 7h10M7 11h10M8 17h1M15 17h1"/></svg><span>装机与系统工具</span></el-dropdown-item>
+        <el-dropdown-item command="open-electricity"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 10-13h-8l1-7"/></svg><span>电学知识与用电工具</span></el-dropdown-item>
+        <el-dropdown-item command="open-food"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18M17 3c-3 4-3 9 1 9V3M18 12v9"/></svg><span>日常饮食手册</span></el-dropdown-item>
+        <el-dropdown-item command="open-reverse"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H4v4M16 4h4v4M4 16v4h4M20 16v4h-4M9 9l-3 3 3 3M15 9l3 3-3 3M13 8l-2 8"/></svg><span>软件逆向分析手册</span></el-dropdown-item>
+        <el-dropdown-item command="open-terminal"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v16H3zM6 8l4 4-4 4M13 16h5"/></svg><span>Linux 终端练习室</span></el-dropdown-item>
+      </el-dropdown-menu></template>
+    </el-dropdown>
+
+    <div v-if="!isMobile" class="header-status">
+      <HeaderWeather :dark="currentTheme === 'dark'" :auto-location="weatherLocation" />
+      <div class="clock-and-fingerprint">
+        <FlipClock :dark="currentTheme === 'dark'" />
+      </div>
     </div>
+    <PersonalGreeting />
+    <LocalMusicPlayer ref="localMusic" @request-play="$refs.headerRadio?.stop()" />
+    <HeaderRadio ref="headerRadio" @request-play="$refs.localMusic?.pauseLocal()" />
+    <InteractionSoundToggle />
+    <button
+      type="button"
+      class="header-theme-toggle"
+      :class="{ 'is-dark': currentTheme === 'dark' }"
+      role="switch"
+      :aria-checked="currentTheme === 'dark'"
+      :aria-label="currentTheme === 'dark' ? '切换浅色模式' : '切换暗黑模式'"
+      :title="currentTheme === 'dark' ? '切换浅色模式' : '切换暗黑模式'"
+      @click="$emit('toggle-theme', $event)"
+    >
+      <span class="theme-toggle-thumb" aria-hidden="true"></span>
+      <el-icon class="theme-toggle-icon theme-toggle-sun" aria-hidden="true"><Sunny /></el-icon>
+      <el-icon class="theme-toggle-icon theme-toggle-moon" aria-hidden="true"><Moon /></el-icon>
+    </button>
   </div>
 </template>
 
 <script>
-import { HomeFilled, Coffee, Search, Close, Expand, Sunny, Moon, DocumentCopy } from '@element-plus/icons-vue'
+import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus';
+import 'element-plus/es/components/dropdown/style/css.mjs';
+import 'element-plus/es/components/dropdown-menu/style/css.mjs';
+import 'element-plus/es/components/dropdown-item/style/css.mjs';
+import SponsorButton from './SponsorButton.vue';
+import BookmarkSite from './BookmarkSite.vue';
+import PersonalGreeting from './PersonalGreeting.vue';
+import HeaderRadio from './HeaderRadio.vue';
+import LocalMusicPlayer from './LocalMusicPlayer.vue';
+import InteractionSoundToggle from './InteractionSoundToggle.vue';
+import HeaderWeather from "./HeaderWeather.vue";
+import FlipClock from "./FlipClock.vue";
+import { Sunny, Moon } from '@element-plus/icons-vue'
 
 export default {
   name: 'NavigationHeader',
-  components: { HomeFilled, Coffee, Search, Close, Expand, Sunny, Moon, DocumentCopy },
+  components: { ElDropdown, ElDropdownMenu, ElDropdownItem, SponsorButton, BookmarkSite, HeaderRadio, PersonalGreeting, LocalMusicPlayer, InteractionSoundToggle, HeaderWeather, FlipClock, Sunny, Moon },
 
   props: {
     activeIndex: { type: String, default: '' },
-    currentTheme: { type: String, required: true }
+    currentTheme: { type: String, required: true },
+    weatherLocation: { type: Object, default: null }
   },
 
-  emits: ['show-donate', 'toggle-theme', 'toggle-mobile-menu'],
+  emits: ['toggle-theme', 'toggle-mobile-menu', 'open-fundamentals', 'open-installation', 'open-commands', 'open-shortcuts', 'open-network', 'open-image-tools', 'open-text-tools', 'open-tools', 'open-system', 'open-electricity', 'open-food', 'open-reverse', 'open-terminal'],
 
   data() {
     return {
-      searchText: '',
-      selectedEngine: 'google',
-      searchEngines: [
-        { label: 'Google', value: 'google', url: 'https://www.google.com/search?q=%s', icon: 'ChromeFilled' },
-        { label: 'Bing', value: 'bing', url: 'https://www.bing.com/search?q=%s', icon: 'Search' },
-        { label: '百度', value: 'baidu', url: 'https://www.baidu.com/s?wd=%s', icon: 'Search' },
-        { label: 'B站', value: 'bilibili', url: 'https://www.bilibili.com/search?keyword=%s', icon: 'VideoPlay' },
-        { label: 'GitHub', value: 'github', url: 'https://github.com/search?q=%s', icon: 'Search' },
-        { label: 'Youtube', value: 'youtube', url: 'https://www.youtube.com/results?search_query=%s', icon: 'VideoPlay' },
-      ],
       isMobile: window.innerWidth <= 768,
       resizeTimer: null
-    }
-  },
-
-  computed: {
-    currentEngineIcon() {
-      return this.searchEngines.find(engine => engine.value === this.selectedEngine)?.icon || 'Search'
     }
   },
 
@@ -159,30 +138,7 @@ export default {
       window.location.href = '/';
     },
 
-    handleSearch() {
-      if (!this.searchText) return;
-      const searchUrl = this.searchEngines.find(engine => engine.value === this.selectedEngine)?.url;
-      if (searchUrl) {
-        window.open(searchUrl.replace('%s', encodeURIComponent(this.searchText)), '_blank');
-      }
-    },
 
-    clearSearch() {
-      this.searchText = '';
-      this.$nextTick(() => this.$refs.searchInput?.focus());
-    },
-    
-    async pasteFromClipboard() {
-      try {
-        const text = await navigator.clipboard.readText();
-        if (text) {
-          this.searchText = text;
-          this.$nextTick(() => this.$refs.searchInput?.focus());
-        }
-      } catch (err) {
-        console.error('Failed to read clipboard:', err);
-      }
-    }
   }
 }
 </script>
@@ -199,16 +155,30 @@ export default {
   border: 1px solid rgba(0, 255, 65, 0.3) !important;
 }
 .dark-dropdown .el-select-dropdown__item {
-  color: #00cc33 !important; 
+  color: var(--dark-text-secondary) !important; 
   font-family: monospace;
 }
 .dark-dropdown .el-select-dropdown__item.selected,
 .dark-dropdown .el-select-dropdown__item.hover,
 .dark-dropdown .el-select-dropdown__item:hover {
   background-color: rgba(0, 255, 65, 0.1) !important;
-  color: #00ff41 !important; 
+  color: var(--dark-text-primary) !important; 
   font-weight: bold;
 }
+.search-engine-brand-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+.search-engine-option-icon { margin-right: 8px; }
+@media (max-width: 768px) {
+  .header-theme-toggle { width: 68px; flex-basis: 68px; flex-shrink: 0; }
+  .header-theme-toggle.is-dark .theme-toggle-thumb { transform: translateX(32px); }
+}
+@media (max-width: 768px) { .header-status { display: none; } }
 </style>
 
 <style scoped>
@@ -227,6 +197,7 @@ export default {
   border-bottom: none !important;
   height: 50px;
   flex-shrink: 0;
+  margin-left: 0;
 }
 
 .el-menu-item {
@@ -240,7 +211,8 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
+  margin-left: 0;
+  order: 0;
 }
 
 .search-engine-select {
@@ -294,7 +266,7 @@ export default {
 
 .clear-button.dark-theme:hover {
   background: rgba(0, 255, 65, 0.2);
-  color: #00ff41;
+  color: var(--dark-text-primary);
   border-color: #00ff41;
 }
 
@@ -315,6 +287,21 @@ export default {
 .dark-theme .el-menu-item.is-active {
   background-color: rgba(0, 255, 65, 0.1) !important;
   color: var(--dark-text-link, #39ff14) !important;
+}
+
+/* Home stays an unfilled icon, including selected and hovered states. */
+.header-wrapper .el-menu-demo .home-menu-item,
+.header-wrapper .el-menu-demo .home-menu-item:hover,
+.header-wrapper .el-menu-demo .home-menu-item:focus,
+.header-wrapper .el-menu-demo .home-menu-item.is-active {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.header-wrapper .el-menu-demo .home-menu-item:focus-visible {
+  outline: 2px solid #7c9b88;
+  outline-offset: -8px;
+  border-radius: 50%;
 }
 
 .dark-theme.header-wrapper {
@@ -350,6 +337,137 @@ export default {
   .hidden-xs-only { display: none !important; }
   .mobile-menu-toggle { display: block; }
   .search-engine-select { width: 80px !important; }
-  .search-input { width: 120px; }
+  .header-wrapper { padding: 0 6px; gap: 4px; }
+  .search-engine-select :deep(.el-select__selected-item:not(.el-select__placeholder)) { font-size: 0; }
+  .el-menu-demo { width: 36px; flex: 0 0 36px; overflow: hidden; }
+  .home-menu-item { display: none !important; }
+  .el-menu-item { padding: 0 8px; }
+  .search-wrapper { flex: 1 1 0; min-width: 0; gap: 4px; }
+  .search-engine-select { flex: 0 0 44px; width: 44px !important; min-width: 44px !important; }
+  .search-input { flex: 1 1 0; min-width: 0; width: 0; }
+  .search-input :deep(.el-input__wrapper) { flex: 1 1 0; width: 0; min-width: 0; padding: 1px 6px; box-sizing: border-box; }
+  .search-input :deep(.el-input__inner) { min-width: 0; }
+  .search-input :deep(.el-input__suffix) { display: none; }
+  .search-input :deep(.el-input-group__append) { flex: 0 0 30px; width: 30px; padding: 0; box-sizing: border-box; }
+  .search-input :deep(.search-btn-append) { width: 30px; margin: 0; padding: 0; }
+  .clear-button { flex: 0 0 26px; width: 26px; height: 26px; margin: 0; }
+  .header-theme-toggle { margin-left: 0; }
 }
+</style>
+<style scoped>
+.header-theme-toggle {
+  view-transition-name: theme-switch;
+  position: relative;
+  margin-left: 0;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 36px;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: 999px;
+  background: #e8ece9;
+  color: #89928e;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 200ms ease;
+}
+.theme-toggle-thumb {
+  view-transition-name: theme-thumb;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(36, 49, 42, 0.14);
+  transition: transform 450ms cubic-bezier(.22,.8,.25,1), background-color 450ms ease;
+}
+.theme-toggle-icon {
+  flex: 0 0 28px;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  transition: color 200ms ease;
+}
+.theme-toggle-sun { color: #47544d; }
+.header-theme-toggle.is-dark .theme-toggle-thumb { transform: translateX(32px); background: #48534d; }
+.header-theme-toggle.is-dark { background: #29332d; color: #8b9890; }
+.header-theme-toggle.is-dark .theme-toggle-sun { color: #8b9890; }
+.header-theme-toggle.is-dark .theme-toggle-moon { color: #f0f4f1; }
+.header-theme-toggle:hover { background: #dfe5e1; }
+.header-theme-toggle.is-dark:hover { background: #344139; }
+.header-theme-toggle:focus-visible { outline: 2px solid #7c9b88; outline-offset: 3px; }
+@media (max-width: 768px) {
+  .header-theme-toggle { width: 68px; flex-basis: 68px; flex-shrink: 0; }
+  .header-theme-toggle.is-dark .theme-toggle-thumb { transform: translateX(32px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-theme-toggle, .theme-toggle-thumb, .theme-toggle-icon { transition: none; }
+}
+
+</style>
+
+<style scoped>
+.header-status { display: flex; align-items: center; gap: 12px; margin-left: auto; min-width: 0; }
+.header-status :deep(.flip-clock) { margin-left: 0; }
+@media (max-width: 768px) { .header-status { gap: 5px; margin-left: 0; flex-shrink: 0; } }
+</style>
+
+<style scoped>
+.clock-and-fingerprint { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; gap: 1px; margin-right: 10px; }
+.clock-and-fingerprint :deep(.flip-clock) { margin: 0; }
+@media (max-width: 768px) { .clock-and-fingerprint { margin-right: 0; } }
+</style>
+
+<style scoped>
+.header-contact { display: inline-flex; align-items: center; justify-content: center; gap: 0; flex: 0 0 auto; width: 32px; margin-right: 12px; min-height: 32px; padding: 0; border-radius: 8px; color: #2588b9; text-decoration: none; white-space: nowrap; font-size: 12px; }
+.header-contact:hover { background: rgba(37,136,185,.1); }
+.header-contact:focus-visible { outline: 2px solid #2588b9; outline-offset: 2px; }
+.dark-theme .header-contact { color: #79c8ed; }
+@media (max-width: 768px) { .header-contact { width: 28px; margin-right: 6px; padding: 0; } .header-contact span { display: none; } }
+</style>
+
+<style scoped>
+/* Shared toolbar tokens override the individual widget trigger styles, never their panels. */
+.header-wrapper { --toolbar-icon-color: var(--ui-accent, #386a50); --toolbar-icon-hover: var(--ui-accent-soft, #edf4ef); }
+.header-wrapper.dark-theme { --toolbar-icon-color: #94bca4; --toolbar-icon-hover: rgba(148,188,164,.12); }
+.header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger), .header-wrapper :deep(.interaction-sound-toggle) {
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 32px; width: 32px; height: 32px; min-height: 32px; padding: 6px; box-sizing: border-box; border: 0; border-radius: 8px; background: transparent; color: var(--toolbar-icon-color); cursor: pointer; line-height: 1;
+}
+.header-wrapper :deep(.header-contact:hover), .header-wrapper :deep(.bookmark-site-button:hover), .header-wrapper :deep(.sponsor-button:hover), .header-wrapper :deep(.header-music-button:hover), .header-wrapper :deep(.radio-trigger:hover), .header-wrapper :deep(.interaction-sound-toggle:hover) { background: var(--toolbar-icon-hover); }
+.header-wrapper :deep(.header-contact:focus-visible), .header-wrapper :deep(.bookmark-site-button:focus-visible), .header-wrapper :deep(.sponsor-button:focus-visible), .header-wrapper :deep(.header-music-button:focus-visible), .header-wrapper :deep(.radio-trigger:focus-visible), .header-wrapper :deep(.interaction-sound-toggle:focus-visible) { outline: 2px solid var(--toolbar-icon-color); outline-offset: 2px; }
+.toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg), .header-wrapper :deep(.interaction-sound-toggle > svg) { display: block; width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.header-wrapper :deep(.home-menu-item), .header-wrapper :deep(.mobile-menu-toggle) { color: var(--toolbar-icon-color); }
+.header-wrapper :deep(.home-menu-item:hover), .header-wrapper :deep(.mobile-menu-toggle:hover) { background: var(--toolbar-icon-hover); }
+@media(max-width:768px) {
+ .header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger), .header-wrapper :deep(.interaction-sound-toggle) { flex-basis: 26px; width: 26px; height: 30px; min-height: 30px; padding: 4px; }
+ .toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg), .header-wrapper :deep(.interaction-sound-toggle > svg) { width: 18px; height: 18px; }
+}
+</style>
+
+<style scoped>
+@media(max-width:768px){.header-theme-toggle{margin-left:auto}}
+</style>
+
+<style scoped>
+.header-tools{flex-shrink:0;margin:0 6px}
+.header-tools-trigger{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 9px;border:1px solid var(--ui-border,#d8e4dc);border-radius:6px;background:transparent;color:var(--toolbar-icon-color,#386a50);font:inherit;font-size:12px;white-space:nowrap;cursor:pointer}
+.header-tools-trigger:hover{background:var(--toolbar-icon-hover,#edf4ef)}
+.header-tools-trigger:focus-visible{outline:2px solid var(--toolbar-icon-color,#386a50);outline-offset:2px}
+.header-tools-trigger svg{width:17px;height:17px}
+@media(max-width:768px){.header-tools{margin:0 2px}.header-tools-trigger{gap:3px;padding:0 5px;font-size:11px}.header-tools-trigger svg{width:15px;height:15px}}
+</style>
+<style>
+.site-tools-menu-dark.el-dropdown-menu{background:#182420}
+.site-tools-menu-dark .el-dropdown-menu__item{color:#c4d9cc}
+.site-tools-menu-dark .el-dropdown-menu__item:not(.is-disabled):hover,.site-tools-menu-dark .el-dropdown-menu__item:not(.is-disabled):focus{color:#d9eddf;background:#263d30}
+</style>
+
+<style>
+.site-tool-item-icon{display:block;flex:0 0 18px;width:18px;height:18px;margin-right:9px;color:inherit;opacity:.85}
 </style>

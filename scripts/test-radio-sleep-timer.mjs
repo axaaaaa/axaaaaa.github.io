@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const file = process.argv[2] || 'src/components/OnlineRadio.vue';
+const source = fs.readFileSync(file, 'utf8');
+const script = source.match(/<script>([\s\S]*?)<\/script>/)[1].replace(/^import .*;$/gm, '').replace('export default', 'globalThis.component =');
+let now = 100000; let next = 0; const intervals = new Map();
+const context = { STATIONS: [], mergeRadioDirectory: () => [], directory: { stations: [] }, Date: { now: () => now }, setInterval: fn => { intervals.set(++next, fn); return next; }, clearInterval: id => intervals.delete(id), clearTimeout() {}, setTimeout() {}, document: { removeEventListener() {} } };
+vm.createContext(context); vm.runInContext(script, context);
+const c = context.component; let paused = 0; let removed = 0;
+const state = { ...c.data(), $refs: { radioAudio: { pause() { paused++; }, removeAttribute() { removed++; }, load() {} } }, $emit() {} };
+for (const [name, fn] of Object.entries(c.methods)) state[name] = fn.bind(state);
+state.playing = true; state.stop(); assert.equal(state.playing, false); assert.equal(state.status, 'stopped'); assert.equal(paused, 1); assert.equal(removed, 1);
+if (!state.setSleepTimer) { console.log('BASELINE PASS: stop releases audio; sleep timer absent'); process.exit(0); }
+state.sleepMinutes = 15; state.setSleepTimer(); assert.equal(state.sleepRemaining, 900); assert.equal(intervals.size, 1);
+const deadline = state.sleepDeadline;
+state.stop(false); assert.equal(state.sleepDeadline, deadline);
+now += 1000; state.updateSleepTimer(); assert.equal(state.sleepRemaining, 899); assert.equal(c.computed.sleepRemainingText.call(state), '14:59');
+state.sleepMinutes = 30; state.setSleepTimer(); assert.equal(intervals.size, 1); assert.equal(state.sleepRemaining, 1800);
+state.cancelSleepTimer(); assert.equal(intervals.size, 0); assert.equal(state.sleepDeadline, 0);
+state.sleepMinutes = 15; state.setSleepTimer(); state.playing = true; now += 900001; state.updateSleepTimer();
+assert.equal(state.playing, false); assert.equal(state.status, 'stopped'); assert.equal(state.sleepDeadline, 0); assert.equal(intervals.size, 0); assert.match(state.sleepMessage, /电台已关闭/);
+state.sleepMinutes = 60; state.setSleepTimer(); state.stop(); assert.equal(intervals.size, 0);
+state.sleepMinutes = 45; state.setSleepTimer(); c.beforeUnmount.call(state); assert.equal(intervals.size, 0);
+console.log('MODIFIED PASS: countdown, reschedule, cancel, station-switch preservation, expiry, stop and unmount cleanup');

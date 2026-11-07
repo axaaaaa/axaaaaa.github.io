@@ -1,84 +1,485 @@
 export const a = [
   {
-    name: '编程工具',
-    group: '💻 编程与开发', // ✅ 新增分组
-    icon: 'Tools',
-    emoji: '🛠️',
-    subCategories: [
-      {
-        name: '文本编辑器',
-        emoji: '📝',
-        links: [
-          { name: 'Visual Studio Code', url: 'https://code.visualstudio.com/', description: '目前最流行的开源代码编辑器，插件生态丰富' },
-          { name: 'Sublime Text', url: 'https://www.sublimetext.com/', description: '轻量级、超快速的文本编辑器' },
-          { name: 'Notepad++', url: 'https://notepad-plus-plus.org/', description: '经典的 Windows 免费文本编辑器' },
-          { name: 'Vim', url: 'https://www.vim.org/', description: '高度可配置的编辑器，Linux 标配' },
-          { name: 'Emacs', url: 'https://www.gnu.org/software/emacs/', description: '极其强大的可扩展编辑器' },
-          { name: 'Atom', url: 'https://atom.io/', description: 'GitHub 开发的开源编辑器（已停止维护，建议转 VSCode）' },
-          { name: 'EditPlus', url: 'https://www.editplus.com/', description: '功能强大的文本编辑器，支持多种语言', tags: ["收费"] },
-          { name: 'Notepad2', url: 'https://notepad2.com/', description: '轻量级文本编辑器' },
-          { name: 'Geany', url: 'https://www.geany.org/', description: '轻量级的跨平台集成开发环境' },
-          { name: 'Brackets', url: 'https://brackets.io/', description: '专注于 Web 设计的开源编辑器' },
-          { name: 'Positron', url: 'https://posit.co/', description: 'Posit 开发的面向数据科学的 IDE' },
-        ]
-      },
-      {
-        name: '集成开发环境 (IDE)',
-        emoji: '🖥️',
-        links: [
-          { name: 'Visual Studio', url: 'https://visualstudio.microsoft.com/', description: '微软出品，宇宙第一 IDE，C#/.NET/C++ 首选' },
-          { name: 'IntelliJ IDEA', url: 'https://www.jetbrains.com/idea/', description: '功能最强大的 Java IDE' },
-          { name: 'PyCharm', url: 'https://www.jetbrains.com/pycharm/', description: '专业的 Python IDE' },
-          { name: 'WebStorm', url: 'https://www.jetbrains.com/webstorm/', description: '最强大的前端开发 IDE' },
-          { name: 'CLion', url: 'https://www.jetbrains.com/clion/', description: 'JetBrains 出品的 C/C++ IDE' },
-          { name: 'Android Studio', url: 'https://developer.android.com/', description: 'Google 官方 Android 开发工具' },
-          { name: 'Xcode', url: 'https://developer.apple.com/xcode/', description: 'macOS/iOS 开发必备工具' },
-          { name: 'Eclipse', url: 'https://www.eclipse.org', description: '老牌开源 IDE，Java 开发常用' },
-          { name: 'Dev-C++', url: 'https://www.bloodshed.net/', description: '轻量级 C/C++ 开发环境', tags: ["免费"] },
-          { name: 'Anaconda', url: 'https://www.anaconda.com/', description: 'Python 数据科学全家桶' },
-          { name: 'Lazarus', url: 'https://www.lazarus-ide.org/', description: '兼容 Delphi 的跨平台集成开发环境', tags: ["免费"] },
-          { name: 'VB6.0', url: 'https://www.onlinedown.net/soft/19976.htm', description: 'VB6.0 开发环境', tags: ["免费"] },
-          { name: 'MASM32', url: 'https://www.masm32.com/', description: 'MASM32 是一个免费的汇编语言开发环境', tags: ["免费"] },
-        ]
-      },
-      {
-        name: '运维与自动化',
-        emoji: '⚙️',
-        links: [
-          { name: 'Git', url: 'https://git-scm.com/', description: '分布式版本控制系统', tags: ["免费"] },
-          { name: 'Docker', url: 'https://www.docker.com/', description: '应用容器引擎' },
-          { name: 'Vmware', url: 'https://www.vmware.com/', description: '强大的虚拟机软件' },
-          { name: 'Postman', url: 'https://www.postman.com/', description: 'API 开发与测试神器' },
-
-          { name: 'Appium', url: 'https://appium.io/', description: 'Android 与 iOS 应用自动化测试框架', tags: ['开源'] },
-           { name: 'Scrcpy', url: 'https://github.com/Genymobile/scrcpy', description: '电脑控制 Android 手机的开源工具', tags: ['免费', '开源'] },
-           { name: 'ADB', url: 'https://developer.android.com/tools/adb', description: 'Android 调试、设备控制与自动化命令行工具' },
-          { name: 'AutoX.js', url: 'https://github.com/aiselp/AutoX', description: '安卓平台上的JavaScript自动化工具' },
-          { name: 'AutoHotkey', url: 'https://www.autohotkey.com/', description: 'Windows 自动化脚本工具' },
-          { name: '按键精灵', url: 'https://www.anjian.com/', description: '国产自动化脚本工具' },
-          { name: '懒人精灵', url: 'http://www.lrappsoft.com/', description: '基于 Lua 的移动端自动化开发工具' },
-          { name: '大漠插件', url: 'http://www.dmwebsite.net/', description: '知名的图色模拟插件', tags: ['收费'] },
-          { name: '火山软件开发', url: 'https://www.voldp.com/', description: '中文编程软件开发平台' },
-          { name: 'Arduino', url: 'https://www.arduino.cc/', description: '开源电子原型平台' },
-
-           // ===== 浏览器自动化 =====
-          { name: 'Playwright', url: 'https://playwright.dev/', description: '现代浏览器自动化与测试框架', tags: ['开源'] },
-          { name: 'Selenium', url: 'https://www.selenium.dev/', description: '经典 Web 浏览器自动化框架', tags: ['开源'] },
-          { name: 'Puppeteer', url: 'https://pptr.dev/', description: '基于 JavaScript 的 Chrome 浏览器自动化工具', tags: ['开源'] },
-
-
-          // ===== 监控 / 日志 =====
-          { name: 'Prometheus', url: 'https://prometheus.io/', description: '服务器与应用指标监控系统', tags: ['开源'] },
-          { name: 'Grafana', url: 'https://grafana.com/', description: '监控数据可视化与仪表盘平台' },
-          { name: 'Zabbix', url: 'https://www.zabbix.com/', description: '企业级服务器、网络与服务监控平台', tags: ['开源'] },
-
-
-
-
-        ]
-      }
-    ]
-  },
+  "name": "编程工具",
+  "group": "💻 编程与开发",
+  "icon": "Tools",
+  "emoji": "🛠️",
+  "subCategories": [
+    {
+      "name": "文本编辑器",
+      "emoji": "📝",
+      "links": [
+        {
+          "name": "Visual Studio Code",
+          "url": "https://code.visualstudio.com/",
+          "description": "目前最流行的开源代码编辑器，插件生态丰富"
+        },
+        {
+          "name": "Sublime Text",
+          "url": "https://www.sublimetext.com/",
+          "description": "轻量级、超快速的文本编辑器"
+        },
+        {
+          "name": "Notepad++",
+          "url": "https://notepad-plus-plus.org/",
+          "description": "经典的 Windows 免费文本编辑器"
+        },
+        {
+          "name": "Vim",
+          "url": "https://www.vim.org/",
+          "description": "高度可配置的编辑器，Linux 标配"
+        },
+        {
+          "name": "Emacs",
+          "url": "https://www.gnu.org/software/emacs/",
+          "description": "极其强大的可扩展编辑器"
+        },
+        {
+          "name": "Atom",
+          "url": "https://atom.io/",
+          "description": "GitHub 开发的开源编辑器（已停止维护，建议转 VSCode）"
+        },
+        {
+          "name": "EditPlus",
+          "url": "https://www.editplus.com/",
+          "description": "功能强大的文本编辑器，支持多种语言",
+          "tags": [
+            "收费"
+          ]
+        },
+        {
+          "name": "Notepad2",
+          "url": "https://notepad2.com/",
+          "description": "轻量级文本编辑器"
+        },
+        {
+          "name": "Geany",
+          "url": "https://www.geany.org/",
+          "description": "轻量级的跨平台集成开发环境"
+        },
+        {
+          "name": "Brackets",
+          "url": "https://brackets.io/",
+          "description": "专注于 Web 设计的开源编辑器"
+        },
+        {
+          "name": "Positron",
+          "url": "https://posit.co/",
+          "description": "Posit 开发的面向数据科学的 IDE"
+        }
+      ]
+    },
+    {
+      "name": "集成开发环境 (IDE)",
+      "emoji": "🖥️",
+      "links": [
+        {
+          "name": "Visual Studio",
+          "url": "https://visualstudio.microsoft.com/",
+          "description": "微软出品，宇宙第一 IDE，C#/.NET/C++ 首选"
+        },
+        {
+          "name": "IntelliJ IDEA",
+          "url": "https://www.jetbrains.com/idea/",
+          "description": "功能最强大的 Java IDE"
+        },
+        {
+          "name": "PyCharm",
+          "url": "https://www.jetbrains.com/pycharm/",
+          "description": "专业的 Python IDE"
+        },
+        {
+          "name": "WebStorm",
+          "url": "https://www.jetbrains.com/webstorm/",
+          "description": "最强大的前端开发 IDE"
+        },
+        {
+          "name": "CLion",
+          "url": "https://www.jetbrains.com/clion/",
+          "description": "JetBrains 出品的 C/C++ IDE"
+        },
+        {
+          "name": "Android Studio",
+          "url": "https://developer.android.com/",
+          "description": "Google 官方 Android 开发工具"
+        },
+        {
+          "name": "Xcode",
+          "url": "https://developer.apple.com/xcode/",
+          "description": "macOS/iOS 开发必备工具"
+        },
+        {
+          "name": "Eclipse",
+          "url": "https://www.eclipse.org",
+          "description": "老牌开源 IDE，Java 开发常用"
+        },
+        {
+          "name": "Dev-C++",
+          "url": "https://www.bloodshed.net/",
+          "description": "轻量级 C/C++ 开发环境",
+          "tags": [
+            "免费"
+          ]
+        },
+        {
+          "name": "Anaconda",
+          "url": "https://www.anaconda.com/",
+          "description": "Python 数据科学全家桶"
+        },
+        {
+          "name": "Lazarus",
+          "url": "https://www.lazarus-ide.org/",
+          "description": "兼容 Delphi 的跨平台集成开发环境",
+          "tags": [
+            "免费"
+          ]
+        },
+        {
+          "name": "VB6.0",
+          "url": "https://www.onlinedown.net/soft/19976.htm",
+          "description": "VB6.0 开发环境",
+          "tags": [
+            "免费"
+          ]
+        },
+        {
+          "name": "MASM32",
+          "url": "https://www.masm32.com/",
+          "description": "MASM32 是一个免费的汇编语言开发环境",
+          "tags": [
+            "免费"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "运维与自动化",
+      "emoji": "⚙️",
+      "links": [
+        {
+          "name": "Git",
+          "url": "https://git-scm.com/",
+          "description": "分布式版本控制系统",
+          "tags": [
+            "免费"
+          ]
+        },
+        {
+          "name": "Vmware",
+          "url": "https://www.vmware.com/",
+          "description": "强大的虚拟机软件"
+        },
+        {
+          "name": "Postman",
+          "url": "https://www.postman.com/",
+          "description": "API 开发与测试神器"
+        },
+        {
+          "name": "Appium",
+          "url": "https://appium.io/",
+          "description": "Android 与 iOS 应用自动化测试框架",
+          "tags": [
+            "开源"
+          ]
+        },
+        {
+          "name": "Scrcpy",
+          "url": "https://github.com/Genymobile/scrcpy",
+          "description": "电脑控制 Android 手机的开源工具",
+          "tags": [
+            "免费",
+            "开源"
+          ]
+        },
+        {
+          "name": "ADB",
+          "url": "https://developer.android.com/tools/adb",
+          "description": "Android 调试、设备控制与自动化命令行工具"
+        },
+        {
+          "name": "AutoX.js",
+          "url": "https://github.com/aiselp/AutoX",
+          "description": "安卓平台上的JavaScript自动化工具"
+        },
+        {
+          "name": "AutoHotkey",
+          "url": "https://www.autohotkey.com/",
+          "description": "Windows 自动化脚本工具"
+        },
+        {
+          "name": "按键精灵",
+          "url": "https://www.anjian.com/",
+          "description": "国产自动化脚本工具"
+        },
+        {
+          "name": "懒人精灵",
+          "url": "http://www.lrappsoft.com/",
+          "description": "基于 Lua 的移动端自动化开发工具"
+        },
+        {
+          "name": "大漠插件",
+          "url": "http://www.dmwebsite.net/",
+          "description": "知名的图色模拟插件",
+          "tags": [
+            "收费"
+          ]
+        },
+        {
+          "name": "火山软件开发",
+          "url": "https://www.voldp.com/",
+          "description": "中文编程软件开发平台"
+        },
+        {
+          "name": "Arduino",
+          "url": "https://www.arduino.cc/",
+          "description": "开源电子原型平台"
+        },
+        {
+          "name": "Playwright",
+          "url": "https://playwright.dev/",
+          "description": "现代浏览器自动化与测试框架",
+          "tags": [
+            "开源"
+          ]
+        },
+        {
+          "name": "Selenium",
+          "url": "https://www.selenium.dev/",
+          "description": "经典 Web 浏览器自动化框架",
+          "tags": [
+            "开源"
+          ]
+        },
+        {
+          "name": "Puppeteer",
+          "url": "https://pptr.dev/",
+          "description": "基于 JavaScript 的 Chrome 浏览器自动化工具",
+          "tags": [
+            "开源"
+          ]
+        },
+        {
+          "name": "Prometheus",
+          "url": "https://prometheus.io/",
+          "description": "服务器与应用指标监控系统",
+          "tags": [
+            "开源"
+          ]
+        },
+        {
+          "name": "Grafana",
+          "url": "https://grafana.com/",
+          "description": "监控数据可视化与仪表盘平台"
+        },
+        {
+          "name": "Zabbix",
+          "url": "https://www.zabbix.com/",
+          "description": "企业级服务器、网络与服务监控平台",
+          "tags": [
+            "开源"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "开发神器",
+      "emoji": "🛠️",
+      "description": "开发者与黑客的在线瑞士军刀",
+      "links": [
+        {
+          "name": "GitHub Desktop",
+          "url": "https://desktop.github.com/download/",
+          "description": "GitHub 官方桌面客户端"
+        },
+        {
+          "name": "CyberChef",
+          "url": "https://gchq.github.io/CyberChef/",
+          "description": "GCHQ 出品的网络瑞士军刀，加解密/编码全能工具",
+          "tags": [
+            "必备",
+            "开源"
+          ]
+        },
+        {
+          "name": "Regex101",
+          "url": "https://regex101.com/",
+          "description": "最好的正则表达式在线测试与调试工具",
+          "tags": [
+            "正则"
+          ]
+        },
+        {
+          "name": "JSON Crack",
+          "url": "https://jsoncrack.com/",
+          "description": "将 JSON 数据可视化为思维导图",
+          "tags": [
+            "可视化"
+          ]
+        },
+        {
+          "name": "Carbon",
+          "url": "https://carbon.now.sh/",
+          "description": "生成漂亮的代码片段图片"
+        },
+        {
+          "name": "Excalidraw",
+          "url": "https://excalidraw.com/",
+          "description": "手绘风格的虚拟白板，画架构图神器",
+          "tags": [
+            "开源"
+          ]
+        },
+        {
+          "name": "Crontab Guru",
+          "url": "https://crontab.guru/",
+          "description": "Linux Crontab 表达式在线生成与解释"
+        },
+        {
+          "name": "Diffchecker",
+          "url": "https://www.diffchecker.com/",
+          "description": "在线文本、文件差异对比工具"
+        },
+        {
+          "name": "JSFiddle",
+          "url": "https://jsfiddle.net/",
+          "description": "在线 JavaScript/CSS/HTML 编辑器",
+          "tags": [
+            "前端"
+          ]
+        },
+        {
+          "name": "StackBlitz",
+          "url": "https://stackblitz.com/",
+          "description": "在线 IDE，支持 VS Code 扩展",
+          "tags": [
+            "在线"
+          ]
+        },
+        {
+          "name": "Replit",
+          "url": "https://replit.com/",
+          "description": "在线编程平台，支持多种语言",
+          "tags": [
+            "在线"
+          ]
+        },
+        {
+          "name": "GitHub Codespaces",
+          "url": "https://github.com/features/codespaces",
+          "description": "GitHub 在浏览器中的开发环境",
+          "tags": [
+            "在线"
+          ]
+        },
+        {
+          "name": "Cloudflare Workers",
+          "url": "https://workers.cloudflare.com/",
+          "description": "边缘计算平台，可部署无服务器函数",
+          "tags": [
+            "Serverless"
+          ]
+        },
+        {
+          "name": "Shields.io",
+          "url": "https://shields.io/",
+          "description": "开源项目徽章生成器",
+          "tags": [
+            "徽章"
+          ]
+        },
+        {
+          "name": "Readme.so",
+          "url": "https://readme.so/",
+          "description": "快速生成 GitHub README 文件",
+          "tags": [
+            "README"
+          ]
+        },
+        {
+          "name": "tldr.sh",
+          "url": "https://tldr.sh/",
+          "description": "简化的 man 手册页面",
+          "tags": [
+            "文档"
+          ]
+        },
+        {
+          "name": "ExplainShell",
+          "url": "https://explainshell.com/",
+          "description": "在线解析 Linux 命令含义",
+          "tags": [
+            "命令"
+          ]
+        },
+        {
+          "name": "ShellCheck",
+          "url": "https://www.shellcheck.net/",
+          "description": "在线 Shell 脚本静态分析工具",
+          "tags": [
+            "脚本"
+          ]
+        },
+        {
+          "name": "Docker Playground",
+          "url": "https://labs.play-with-docker.com/",
+          "description": "在线 Docker 实验环境",
+          "tags": [
+            "Docker"
+          ]
+        },
+        {
+          "name": "Kubernetes Playground",
+          "url": "https://labs.play-with-k8s.com/",
+          "description": "在线 Kubernetes 实验环境",
+          "tags": [
+            "K8s"
+          ]
+        },
+        {
+          "name": "Can I Use",
+          "url": "https://caniuse.com/",
+          "description": "前端兼容性查询工具",
+          "tags": [
+            "前端"
+          ]
+        },
+        {
+          "name": "Bundlephobia",
+          "url": "https://bundlephobia.com/",
+          "description": "查看 npm 包体积大小",
+          "tags": [
+            "前端"
+          ]
+        },
+        {
+          "name": "NPM Trends",
+          "url": "https://npmtrends.com/",
+          "description": "npm 包下载趋势对比",
+          "tags": [
+            "前端"
+          ]
+        },
+        {
+          "name": "Hoppscotch",
+          "url": "https://hoppscotch.io/",
+          "description": "开源 API 调试工具（Postman 替代）",
+          "tags": [
+            "API",
+            "开源"
+          ]
+        },
+        {
+          "name": "Insomnia",
+          "url": "https://insomnia.rest/",
+          "description": "优秀的 API 客户端",
+          "tags": [
+            "API"
+          ]
+        }
+      ]
+    }
+  ]
+},
   {
     name: '编程语言',
     group: '💻 编程与开发', // ✅ 新增分组
@@ -189,8 +590,8 @@ export const a = [
           { name: 'Vala', url: 'https://wiki.gnome.org/Projects/Vala', description: 'GNOME 开发语言' },
           { name: 'Hack', url: 'https://hacklang.org/', description: 'Facebook 开发的 PHP 衍生语言' },
           { name: 'Flask', url: 'https://flask.palletsprojects.com/', description: '轻量级 Python Web 框架' },
-          { name: 'Django', url: 'https://www.djangoproject.com/', description: '全功能 Python Web 框架' },
-          { name: 'Laravel', url: 'https://laravel.com/', description: 'PHP Web 框架' },
+          
+          
           { name: 'Symfony', url: 'https://symfony.com/', description: 'PHP Web 框架' },
           { name: 'CakePHP', url: 'https://cakephp.org/', description: 'PHP Web 框架' }
         ]
@@ -227,25 +628,5 @@ export const a = [
       }
     ]
   },
-  {
-    name: '浏览器',
-    group: '🛠️ 常用与生活', // ✅ 新增分组
-    icon: 'ChromeFilled',
-    emoji: '🌐',
-    links: [
-      { name: 'Chrome', url: 'https://www.google.com/chrome/', description: 'Google 开发的全球最流行浏览器' },
-      { name: 'Edge', url: 'https://www.microsoft.com/en-us/edge', description: '微软出品，兼容 Chrome 插件' },
-      { name: 'Firefox', url: 'https://www.mozilla.org/en-US/firefox/new/', description: '注重隐私的开源浏览器' },
-      { name: 'Safari', url: 'https://www.apple.com/safari/', description: 'Apple 设备默认浏览器' },
-      { name: 'Brave', url: 'https://brave.com/', description: '主打隐私保护与广告拦截' },
-      { name: 'Opera', url: 'https://www.opera.com/', description: '特色功能丰富的浏览器' },
-      { name: 'Vivaldi', url: 'https://vivaldi.com/', description: '高度可定制的极客浏览器' },
-      { name: 'Tor Browser', url: 'https://www.torproject.org/', description: '洋葱路由，匿名上网' },
-      { name: 'DuckDuckGo', url: 'https://duckduckgo.com/', description: '隐私保护浏览器' },
-      { name: '360安全浏览器', url: 'https://browser.360.cn/', description: '国内用户量较大的双核浏览器' },
-      { name: 'QQ浏览器', url: 'https://browser.qq.com/', description: '腾讯出品，整合微信生态' },
-      { name: '傲游浏览器', url: 'https://www.maxthon.com/', description: '老牌国产浏览器' },
-      { name: 'Chrome 应用商店', url: 'https://chromewebstore.google.com/', description: '浏览器插件下载中心', tags: ["插件"] }
-    ]
-  }
+  
 ];

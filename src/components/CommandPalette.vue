@@ -1,0 +1,32 @@
+<template>
+  <button type="button" class="launcher" aria-label="打开命令面板" aria-keyshortcuts="Control+K Meta+K" title="打开命令面板 Ctrl + K / ⌘ K" @click="show"><span aria-hidden="true">⌘</span></button>
+  <Teleport to="body"><div v-if="opened" class="command-backdrop" @click.self="close"><section ref="dialog" class="command-dialog" role="dialog" aria-modal="true" aria-label="全站命令面板" @keydown="onDialogKey">
+    <header><span>COMMAND CENTER</span><button aria-label="关闭命令面板" @click="close">Esc</button></header>
+    <input ref="search" v-model="query" placeholder="搜索功能、栏目或网站…" aria-label="搜索命令" @input="selected = 0" @keydown.down.prevent="move(1)" @keydown.up.prevent="move(-1)" @keydown.enter.prevent="execute(filtered[selected])" />
+    <div class="command-results"><button v-for="(item, index) in filtered" :key="item.id" :class="{ selected: selected === index }" @focus="selected = index" @click="execute(item)"><span>{{ item.label }}</span><small>{{ item.hint }}</small></button><p v-if="!filtered.length">没有匹配的命令，试试“密码”“电台”或“工具”。</p></div>
+    <footer>↑ ↓ 选择 · Enter 执行 · Esc 关闭 · Ctrl / ⌘ K 唤起</footer>
+  </section></div></Teleport>
+</template>
+<script>
+export default {
+  name: 'CommandPalette', emits: ['action'],
+  data: () => ({ opened: false, query: '', selected: 0, previousFocus: null, destinations: [] }),
+  computed: { filtered() { const q = this.query.trim().toLowerCase(); return [...[{ id: 'crypto', label: '密码学游乐场', hint: '哈希 · 编码 · 签名', keywords: 'crypto hash sha256' }, { id: 'radio', label: '打开在线电台', hint: '直播与定时关闭', keywords: 'radio music' }, { id: 'theme', label: '切换明暗主题', hint: '浅色 / 深色', keywords: 'dark light theme' }, { id: 'tools', label: '实用工具箱', hint: '打开工具模块', keywords: 'tool' }, { id: 'installation', label: '系统安装', hint: 'Windows · Linux · 虚拟机 · 分区教学', keywords: 'install setup ubuntu windows linux 系统安装 装机 重装 启动盘' }, { id: 'fundamentals', label: '计算机底层知识', hint: 'CPU · 内存 · 操作系统 · 字节实验', keywords: 'computer cpu memory binary 操作系统 编译 底层' }, { id: 'terminal', label: 'Linux 终端', hint: '打开终端', keywords: 'shell terminal' }, { id: 'top', label: '回到顶部', hint: '导航首页', keywords: 'home top' }], ...this.destinations].filter(item => `${item.label} ${item.hint} ${item.keywords || ''}`.toLowerCase().includes(q)).slice(0, 60); } },
+  mounted() { window.addEventListener('keydown', this.onGlobalKey); },
+  beforeUnmount() { window.removeEventListener('keydown', this.onGlobalKey); if (this.opened) this.close(); },
+  methods: {
+    onGlobalKey(event) { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k' && !event.altKey && !event.isComposing) { event.preventDefault(); if (this.opened) this.close(); else this.show(); } },
+    show() { this.previousFocus = document.activeElement; this.query = ''; this.selected = 0; this.destinations = Array.from(document.querySelectorAll('.navigation-container a[href]')).filter(a => a.textContent.trim() && a.getClientRects().length).map((a, index) => ({ id: `link-${index}`, label: a.textContent.trim().slice(0, 100), hint: '网站 / 导航链接', element: a })); this.opened = true; this.$nextTick(() => this.$refs.search?.focus()); },
+    close() { this.opened = false; this.previousFocus?.focus?.(); },
+    move(delta) { if (!this.filtered.length) return; this.selected = (this.selected + delta + this.filtered.length) % this.filtered.length; this.$nextTick(() => this.$refs.dialog?.querySelectorAll('.command-results button')[this.selected]?.scrollIntoView({ block: 'nearest' })); },
+    execute(item) { if (!item) return; this.close(); if (item.element) item.element.click(); else this.$emit('action', item.id); },
+    onDialogKey(event) { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); this.close(); } if (event.key === 'Tab') { const nodes = Array.from(this.$refs.dialog.querySelectorAll('button,input')); const first = nodes[0], last = nodes[nodes.length - 1]; if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } }
+  }
+};
+</script>
+<style scoped>
+button,input{font:inherit}button{cursor:pointer;border:1px solid var(--el-border-color,#d7e4dc);background:var(--el-bg-color,#fff);color:var(--el-text-color-primary,#273b30);padding:9px 12px;border-radius:8px}.command-backdrop{position:fixed;inset:0;background:#07150e88;backdrop-filter:blur(5px);z-index:30000;display:flex;justify-content:center;align-items:flex-start;padding:15vh 16px 24px;box-sizing:border-box}.command-dialog{width:600px;max-width:100%;max-height:75vh;display:flex;flex-direction:column;border:1px solid var(--el-border-color,#d7e4dc);background:var(--el-bg-color,#fff);color:var(--el-text-color-primary,#273b30);border-radius:16px;box-shadow:0 20px 90px #0005;overflow:hidden}.command-dialog header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;font:11px Consolas,monospace;letter-spacing:2px}.command-dialog input{margin:0 16px 12px;padding:14px;border:1px solid var(--el-border-color,#d7e4dc);border-radius:8px;background:var(--el-fill-color-blank,#fff);color:inherit;min-width:0;font-size:16px}.command-results{overflow:auto;padding:0 10px 10px}.command-results button{display:flex;width:100%;text-align:left;justify-content:space-between;align-items:center;gap:10px;border:0;margin:3px 0;padding:13px}.command-results .selected,.command-results button:hover{background:var(--ui-accent-soft,#e9f5ec)}small{opacity:.65;font-size:11px;flex-shrink:0}footer{font-size:11px;padding:12px 18px;border-top:1px solid var(--el-border-color,#d7e4dc);opacity:.7}button:focus-visible,input:focus-visible{outline:2px solid var(--ui-accent,#398c5a);outline-offset:2px}@media(max-width:600px){.command-backdrop{padding-top:10vh}small{max-width:40%}}
+.launcher{box-sizing:content-box;width:40px;height:40px;padding:0;display:grid;place-items:center;border-radius:4px;font-size:21px;line-height:1}
+.launcher:hover{color:var(--ui-accent,#398c5a);border-color:currentColor}
+@media(max-width:768px){.launcher{width:36px;height:36px}}
+</style>

@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {worldClock} from '../src/utils/world-time.mjs';
+import {normalizeWhoisInput as n,summarizeRdap} from '../src/utils/whois-query.mjs';
+assert.equal(n('https://Example.com/path').value,'example.com');
+assert.equal(n('1.1.1.1').type,'ip');
+assert.equal(n('[2001:db8::1]').value,'2001:db8::1');
+assert.throws(()=>n('999.1.1.1'));
+assert.throws(()=>n('bad domain'));
+assert.throws(()=>n('javascript:alert(1)'));
+assert.equal(n('例子.中国').value,'xn--fsqu00a.xn--fiqs8s');
+const rows=summarizeRdap({objectClassName:'domain',ldhName:'EXAMPLE.COM',events:[{eventAction:'registration',eventDate:'2000-01-01T00:00:00Z'}],entities:[{roles:['registrar'],vcardArray:['vcard',[['fn',{},'text','Example Registrar']]]}],nameservers:[{ldhName:'NS.EXAMPLE.COM'}]});
+assert(rows.some(r=>r[1]==='Example Registrar'));
+assert(rows.some(r=>r[0]==='注册日期'));
+assert(rows.some(r=>r[1]==='NS.EXAMPLE.COM'));
+assert.equal(worldClock(new Date('2026-07-01T12:00:00Z'),'America/New_York').offset,'GMT-4');
+assert.equal(worldClock(new Date('2026-01-01T12:00:00Z'),'America/New_York').offset,'GMT-5');
+assert.equal(worldClock(new Date('2026-10-31T23:30:00Z'),'Asia/Shanghai').date.slice(0,10),'2026-11-01');
+console.log('EXPANSION_TEST_OK domain/IDN/IP/invalid/registrar/events/DST/date-rollover');

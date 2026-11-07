@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {groupRadioRegions,stationForPlayer,regionCenters} from '../src/utils/radio-map.mjs';
+import {filterRadioDirectory,mergeRadioDirectory} from '../src/utils/radio-directory.mjs';
+const directory=JSON.parse(fs.readFileSync('src/data/china-radio-directory.json','utf8'));
+const stations=mergeRadioDirectory([],directory.stations);const regions=groupRadioRegions(stations);
+assert.ok(regions.length>=30);assert.ok(regions.every(r=>r.count>0));
+const bj=filterRadioDirectory(stations,{region:'北京'});assert.ok(bj.length>0);assert.ok(bj.every(s=>s.region==='北京'));
+assert.equal(filterRadioDirectory(stations,{query:'not-a-station-xyz'}).length,0);
+const original={id:'preset',url:bj[0].url};assert.equal(stationForPlayer([original],bj[0]),original);assert.equal(stationForPlayer([],bj[0]),undefined);
+assert.equal(regions.reduce((n,r)=>n+r.count,0)+stations.filter(s=>!regionCenters[s.region]).length,stations.length);
+console.log(`PASS: ${stations.length} stations, ${regions.length} map regions, search, region filter, unlocated accounting, existing player URL mapping`);

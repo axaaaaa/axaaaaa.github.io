@@ -7,6 +7,7 @@ import urllib.request
 from html.parser import HTMLParser
 from datetime import datetime, timezone
 from pathlib import Path
+from fetch_extra_hotspots import translate_title
 from source_images import attach_covers,cache_source_covers
 
 class Node:
@@ -74,6 +75,30 @@ def fetch(period):
         body=response.read(4_000_000)
         return cache_source_covers('github',attach_covers('github',parse_trending(body.decode('utf-8')),body,'https://github.com/'))
 
+def localize_periods(periods, cached_periods=None):
+    rows = [row for period in periods.values() for row in period.get('items', [])]
+    cache = {row['description']: row['descriptionZh']
+             for period in (cached_periods or {}).values() for row in period.get('items', [])
+             if row.get('description') and row.get('descriptionZh')}
+    pending = dict.fromkeys(row['description'] for row in rows
+                            if row.get('description') and not re.search(r'[\u4e00-\u9fff]', row['description'])
+                            and row['description'] not in cache)
+    def translate(text):
+        try:
+            return translate_title(text)
+        except Exception:
+            return ''
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        cache.update(zip(pending, pool.map(translate, pending)))
+    growth = {'today':'今日', 'this week':'本周', 'this month':'本月'}
+    for row in rows:
+        translated = cache.get(row.get('description'))
+        if translated:
+            row['descriptionZh'] = translated
+        match = re.fullmatch(r'([\d,]+) stars? (today|this week|this month)', row.get('growth') or '')
+        if match:
+            row['growthZh'] = f'{growth[match[2]]}新增 {match[1]} 星'
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', default='public/github-trending.json')
@@ -85,6 +110,7 @@ def main():
             data = json.loads(output.read_text(encoding='utf-8-sig'))
         except (ValueError, OSError):
             pass
+    previous = dict(data['periods'])
     updated = 0
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         futures = {pool.submit(fetch, period): period for period in ['daily','weekly','monthly']}
@@ -98,6 +124,7 @@ def main():
             except Exception as error:
                 print(f'TRENDING_PRESERVED {period}: {error}')
     if updated:
+        localize_periods(data['periods'], previous)
         output.parent.mkdir(parents=True, exist_ok=True)
         temp = output.with_suffix('.tmp')
         temp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

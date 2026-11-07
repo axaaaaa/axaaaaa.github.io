@@ -23,10 +23,28 @@ class Tests(unittest.TestCase):
             def fetch(period):
                 if period=='weekly': raise OSError('offline')
                 return trending.parse_trending(HTML)
-            with patch('sys.argv',['fetch','--output',str(p)]),patch.object(trending,'fetch',side_effect=fetch): trending.main()
-            data=json.loads(p.read_text())
+            with patch('sys.argv',['fetch','--output',str(p)]),patch.object(trending,'fetch',side_effect=fetch),patch.object(trending,'translate_title',return_value='中文简介'): trending.main()
+            data=json.loads(p.read_text(encoding='utf8'))
             self.assertEqual(data['periods']['weekly'],prior)
             self.assertEqual(len(data['periods']['monthly']['items']),1)
+    def test_localize_cache_and_failure(self):
+        rows=[{'description':'Cached','growth':'1,234 stars this week'},
+              {'description':'Fresh'},{'description':'Fresh'},
+              {'description':'Unavailable'},{'description':'中文原文'}]
+        previous={'weekly':{'items':[{'description':'Cached','descriptionZh':'缓存译文'}]}}
+        def translate(text):
+            if text=='Unavailable':raise OSError('offline')
+            return '新译文'
+        with patch.object(trending,'translate_title',side_effect=translate) as translator:
+            trending.localize_periods({'daily':{'items':rows}},previous)
+        self.assertEqual(translator.call_count,2)
+        self.assertEqual(rows[0]['growthZh'],'本周新增 1,234 星')
+        self.assertEqual(rows[0]['descriptionZh'],'缓存译文')
+        self.assertEqual(rows[1]['descriptionZh'],rows[2]['descriptionZh'])
+        self.assertNotIn('descriptionZh',rows[3])
+        self.assertEqual(rows[3]['description'],'Unavailable')
+        self.assertNotIn('descriptionZh',rows[4])
+
     def test_total_outage(self):
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)/'trending.json'; before=json.dumps({'periods':{'daily':{'items':[{'name':'old/repo'}]}}});p.write_text(before)

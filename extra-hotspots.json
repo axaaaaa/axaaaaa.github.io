@@ -4721,6 +4721,1375 @@
         "lastSuccessAt": "2026-11-06T17:33:16.507369+00:00",
         "error": ""
       }
+    },
+    "douban_book": {
+      "name": "豆瓣读书",
+      "kind": "新书速递",
+      "url": "https://book.douban.com/latest",
+      "icon": "https://img3.doubanio.com/favicon.ico",
+      "sourceUrlUsed": "https://book.douban.com/",
+      "updatedAt": "2026-11-07T09:04:58.956310+00:00",
+      "items": [
+        {
+          "title": "相对于国家的社会：政治人类学研究",
+          "url": "https://book.douban.com/subject/38395837/",
+          "meta": "[法]皮埃尔·克拉斯特 · 2026-10 · 商务印书馆",
+          "cover": "source-covers/douban_book/35449a871c0f60aafd776d16.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35688818.jpg"
+        },
+        {
+          "title": "共鸣：一种世界关系的社会学",
+          "url": "https://book.douban.com/subject/38490032/",
+          "meta": "[德] 哈特穆特·罗萨 · 2026-9 · 上海人民出版社",
+          "cover": "source-covers/douban_book/95a096c4241a8fc0401d8c55.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35639838.jpg"
+        },
+        {
+          "title": "人间谜底：那时候我们这样破案",
+          "url": "https://book.douban.com/subject/38501247/",
+          "meta": "闻道 口述 / 雨非 整理 · 2026-9 · 浙江文艺出版社",
+          "cover": "source-covers/douban_book/3749eae77d17bb3aaf09b9ac.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35619524.jpg"
+        },
+        {
+          "title": "什么都不是的人才是快乐的：九读·心理与成长003",
+          "url": "https://book.douban.com/subject/38635468/",
+          "meta": "[印度] 克里希那穆提 · 2026-10-1 · 陕西师范大学出版总社有限公司",
+          "cover": "source-covers/douban_book/4530cad508ea1944f50f0fc8.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35612078.jpg"
+        },
+        {
+          "title": "空地",
+          "url": "https://book.douban.com/subject/38613720/",
+          "meta": "李颖迪 · 2026-10 · 文汇出版社",
+          "cover": "source-covers/douban_book/4f16e51fdc2d3713c8502d6e.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35635029.jpg"
+        },
+        {
+          "title": "漂浮",
+          "url": "https://book.douban.com/subject/37488725/",
+          "meta": "[加]安妮·卡森 · 2026-11 · 花城出版社",
+          "cover": "source-covers/douban_book/2546349fa168f30a67d1d297.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35682749.jpg"
+        },
+        {
+          "title": "哲学如何让人获得快乐：斯宾诺莎思想传记",
+          "url": "https://book.douban.com/subject/38465261/",
+          "meta": "[法] 弗雷德里克·勒努瓦 · 2026-10-1 · 上海文艺出版社",
+          "cover": "source-covers/douban_book/92b473eb9c119b386cb333bf.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35629787.jpg"
+        },
+        {
+          "title": "布莱希特戏剧选",
+          "url": "https://book.douban.com/subject/38553181/",
+          "meta": "[德] 贝尔托特·布莱希特 · 2026-10 · 商务印书馆",
+          "cover": "source-covers/douban_book/b0c4b948bafa00246f01c011.jpg",
+          "originalCover": "https://img2.doubanio.com/view/subject/s/public/s35681011.jpg"
+        },
+        {
+          "title": "凝神时刻",
+          "url": "https://book.douban.com/subject/38593398/",
+          "meta": "邓安庆 · 2026-10 · 浙江文艺出版社",
+          "cover": "source-covers/douban_book/a12f091c9c803b527e8b2ddd.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35589654.jpg"
+        },
+        {
+          "title": "造神之后",
+          "url": "https://book.douban.com/subject/38902153/",
+          "meta": "[美] 罗伯特·赖特 · 2026-10-15 · 北京联合出版公司",
+          "cover": "source-covers/douban_book/44f56ed0096b4441d2a752bc.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35655018.jpg"
+        },
+        {
+          "title": "永恒森林之狼",
+          "url": "https://book.douban.com/subject/38560469/",
+          "meta": "[挪威] 卡尔·奥韦·克瑙斯高 · 2026-10 · 上海三联书店",
+          "cover": "source-covers/douban_book/a3bf4c044a66e2e8f7545f9d.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35660764.jpg"
+        },
+        {
+          "title": "神圣是什么颜色的：一部别样的色彩殖民史",
+          "url": "https://book.douban.com/subject/38547000/",
+          "meta": "[美] 迈克尔·陶西格 · 2026-9 · 北京大学出版社",
+          "cover": "source-covers/douban_book/a81ec6b5231bdfe4d4fec107.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35575337.jpg"
+        },
+        {
+          "title": "拼凑小说",
+          "url": "https://book.douban.com/subject/37455864/",
+          "meta": "[荷] 杜布拉夫卡·乌格雷西奇 · 2026-11 · 云南人民出版社",
+          "cover": "source-covers/douban_book/badd88835eeec1797141110c.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35656783.jpg"
+        },
+        {
+          "title": "生于女人：母亲身份作为经验与规制",
+          "url": "https://book.douban.com/subject/38617182/",
+          "meta": "[美]艾德里安·里奇 · 2026-10-1 · 人民文学出版社",
+          "cover": "source-covers/douban_book/0771930a79e15a51bae3182a.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35609118.jpg"
+        },
+        {
+          "title": "乌云之下",
+          "url": "https://book.douban.com/subject/38369053/",
+          "meta": "赵婧怡 · 2026-10 · 新星出版社",
+          "cover": "source-covers/douban_book/023ea9ff2c117b45142be918.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35659677.jpg"
+        },
+        {
+          "title": "四大门",
+          "url": "https://book.douban.com/subject/38594511/",
+          "meta": "李慰祖 著 / 周星 补编 · 2026-9 · 崇文书局",
+          "cover": "source-covers/douban_book/d8f0e881fcc1e52f311be88e.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35646386.jpg"
+        },
+        {
+          "title": "特洛伊妇女",
+          "url": "https://book.douban.com/subject/38999492/",
+          "meta": "[加] 安妮·卡森 · 2026-11 · 四川人民出版社",
+          "cover": "source-covers/douban_book/39f42754a17fe85bd4d5f330.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35671195.jpg"
+        },
+        {
+          "title": "Protocols：An Operating Manual for the Human Body",
+          "url": "https://book.douban.com/subject/36941359/",
+          "meta": "Andrew D. Huberman · 2026-9-15 · S&S/Simon Element",
+          "cover": "source-covers/douban_book/1ad14305c9b00bdede7bf5c8.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s34895132.jpg"
+        },
+        {
+          "title": "真实的事物：对文学形式的思考",
+          "url": "https://book.douban.com/subject/38553866/",
+          "meta": "[英] 特里·伊格尔顿 · 2026-9 · 广西师范大学出版社",
+          "cover": "source-covers/douban_book/865cb6fb42034c1c38c05b01.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35600844.jpg"
+        },
+        {
+          "title": "洛夫戴先生的小出游",
+          "url": "https://book.douban.com/subject/38567087/",
+          "meta": "[英] 伊夫林·沃 · 2026-9 · 海峡文艺出版社",
+          "cover": "source-covers/douban_book/608761e2447f655a0a1fe634.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35616554.jpg"
+        },
+        {
+          "title": "斩生活记",
+          "url": "https://book.douban.com/subject/38935273/",
+          "meta": "殳俏 · 2026-10 · 湖南文艺出版社",
+          "cover": "source-covers/douban_book/6663e09365f8f327abcce8a6.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35658327.jpg"
+        },
+        {
+          "title": "我的老台北",
+          "url": "https://book.douban.com/subject/38594734/",
+          "meta": "张大春 · 2026-11 · 台海出版社",
+          "cover": "source-covers/douban_book/b722ef9001253feac344a9af.jpg",
+          "originalCover": "https://img9.doubanio.com/view/subject/s/public/s35654664.jpg"
+        },
+        {
+          "title": "李光耀回憶錄1965～2000",
+          "url": "https://book.douban.com/subject/1419544/",
+          "meta": "李光耀 · 2000-9-11 · 世界書局",
+          "cover": "source-covers/douban_book/a4d3ab969ffe19f148a276dc.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s27443060.jpg"
+        },
+        {
+          "title": "码头上的异乡人：一个家族肖像画",
+          "url": "https://book.douban.com/subject/38541645/",
+          "meta": "[英] 欧大旭 · 2026-9 · 上海译文出版社",
+          "cover": "source-covers/douban_book/99bc46097dcbd15ba06a8c27.jpg",
+          "originalCover": "https://img3.doubanio.com/view/subject/s/public/s35604859.jpg"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:04:58.956310+00:00",
+        "lastSuccessAt": "2026-11-07T09:04:58.956310+00:00",
+        "error": ""
+      }
+    },
+    "maoyan": {
+      "name": "猫眼",
+      "kind": "国内票房榜",
+      "url": "https://www.maoyan.com/board/1",
+      "icon": "https://www.maoyan.com/favicon.ico",
+      "sourceUrlUsed": "https://www.maoyan.com/board/1",
+      "updatedAt": "2026-11-07T09:17:15.077833+00:00",
+      "items": [
+        {
+          "title": "神探之痕迹",
+          "url": "https://www.maoyan.com/films/1552906",
+          "meta": "上映时间：2026-10-01",
+          "cover": "source-covers/maoyan/7e453eb41653c71d3ff8e53d.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429589aea4b81e327392a78653c491a0764b.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "68,494 万元",
+          "rating": "9.6"
+        },
+        {
+          "title": "生化危机：爆发夜",
+          "url": "https://www.maoyan.com/films/1586199",
+          "meta": "上映时间：2026-10-05",
+          "cover": "source-covers/maoyan/c1e5c37b6c373d2dc5698529.png",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429586e3d6c8b5294fa46776d99a3218655e.png?imageView2/1/w/160/h/220",
+          "boxOffice": "49,996 万元"
+        },
+        {
+          "title": "什么意思夫妇",
+          "url": "https://www.maoyan.com/films/1604748",
+          "meta": "上映时间：2026-10-01",
+          "cover": "source-covers/maoyan/0702060cd9e47604129ef842.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429586ebf83cb5c296cb42d58b63c2824575.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "40,747 万元"
+        },
+        {
+          "title": "疾速追杀",
+          "url": "https://www.maoyan.com/films/246966",
+          "meta": "上映时间：2026-10-30",
+          "cover": "source-covers/maoyan/bbe699ddbe8556ec18067940.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429585c5295c2e3273f67efa701014bd6ec9.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "2,296 万元"
+        },
+        {
+          "title": "戴帽子的猫",
+          "url": "https://www.maoyan.com/films/1256044",
+          "meta": "上映时间：2026-11-06",
+          "cover": "source-covers/maoyan/0992c1e2c22cc937bbb8fec3.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429586e6e39a15be76b1b83e232d399e2b51.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "242 万元"
+        },
+        {
+          "title": "珠穆朗玛：云中彼岸",
+          "url": "https://www.maoyan.com/films/1855087",
+          "meta": "上映时间：2026-11-06",
+          "cover": "source-covers/maoyan/4a922778ac30718badff7d6a.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429586ec8b5c214dcd818c55251c01538e75.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "148 万元"
+        },
+        {
+          "title": "民宿惊魂",
+          "url": "https://www.maoyan.com/films/1511601",
+          "meta": "上映时间：2026-10-31",
+          "cover": "source-covers/maoyan/fa9757250c23a6fc55385e71.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429585c4ea5c2392a93b679e070660816918.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "680 万元"
+        },
+        {
+          "title": "小羊肖恩3：怪兽来袭",
+          "url": "https://www.maoyan.com/films/1608027",
+          "meta": "上映时间：2026-10-24",
+          "cover": "source-covers/maoyan/647b073028811a7bac089fc1.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429585cfcfc8b09c325cba2718f6e6a6d9ac.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "995 万元"
+        },
+        {
+          "title": "重生2",
+          "url": "https://www.maoyan.com/films/1578266",
+          "meta": "上映时间：2026-10-03",
+          "cover": "source-covers/maoyan/c1ca02c431c49e7ccbf48b9e.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429586e3d615d25cbd7e47d1aa21ac248692.jpeg?imageView2/1/w/160/h/220",
+          "boxOffice": "7,205 万元"
+        },
+        {
+          "title": "阴阳路惊魂",
+          "url": "https://www.maoyan.com/films/1599810",
+          "meta": "上映时间：2026-10-30",
+          "cover": "source-covers/maoyan/5e53dcc529ff423bb8d958fe.jpg",
+          "originalCover": "https://p0.pipi.cn/mediaplus/friday_image_fe/e429589a3e7ea401e88b07ad026bfea82ca43.jpg?imageView2/1/w/160/h/220",
+          "boxOffice": "335 万元"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:17:15.077833+00:00",
+        "lastSuccessAt": "2026-11-07T09:17:15.077833+00:00",
+        "error": ""
+      }
+    },
+    "globaltimes": {
+      "name": "环球时报（英文版）",
+      "kind": "国际资讯 · 中文机译",
+      "url": "https://www.globaltimes.cn/",
+      "icon": "https://www.globaltimes.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.globaltimes.cn/",
+      "updatedAt": "2026-11-07T09:18:54.652708+00:00",
+      "items": [
+        {
+          "title": "中国和美国高级贸易官员举行视频通话，北京方面对限制措施表示严重担忧；华盛顿敦促尊重领导人共识",
+          "url": "https://www.globaltimes.cn/page/202611/1373839.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "China, US top trade officials hold video call as Beijing raises serious concerns over restrictions; Washington urged to honor leaders' consensus",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "大熊猫萍萍和福双的首次亮相使它们成为亚特兰大动物园的最新明星",
+          "url": "https://www.globaltimes.cn/page/202611/1373840.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "Debut of giant pandas Ping Ping and Fu Shuang makes them latest stars at Zoo Atlanta",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "中国空间站迎来首位外国宇航员：CMSA",
+          "url": "https://www.globaltimes.cn/page/202611/1373834.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "China's space station to welcome first-ever foreign astronaut: CMSA",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新疆克拉美丽气田产量突破10亿立方米，年产量有望再创新高",
+          "url": "https://www.globaltimes.cn/page/202611/1373841.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "Xinjiang's Kelameili gas field tops 1 billion cubic meters in output, eyes record annual production",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "《环球时报》社论：美国民主党中期选举获胜后，台湾当局争先恐后地撬开新一届国会的大门",
+          "url": "https://www.globaltimes.cn/page/202611/1373827.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "After US Democrats' midterm win, Taiwan authorities scramble for cracks in new Congress' door: Global Times editorial",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "一年过去了，高一的错误言论仍未得到纠正，日本的獠牙又重新长出来了",
+          "url": "https://www.globaltimes.cn/page/202611/1373844.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "One year on, Takaichi's erroneous remark remains uncorrected, and Japan's fangs are growing back",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "中国“不会购买”英伟达芯片。为什么一些美国人如此不安？",
+          "url": "https://www.globaltimes.cn/page/202611/1373811.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "China 'isn't buying' Nvidia chips. Why are some Americans so rattled?",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "从义乌到非洲：中国市场开放如何创造新机遇",
+          "url": "https://www.globaltimes.cn/page/202611/1373830.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "From Yiwu to Africa: How China's market opening is creating new opportunities",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "人工智能帮助追踪中国的老虎、长臂猿和大象，将发现转化为保护",
+          "url": "https://www.globaltimes.cn/page/202611/1373822.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "AI helps track tigers, gibbons and elephants to turn sightings into protection in China",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "经过15年的寻找，毛里求斯学者梦想成真",
+          "url": "https://www.globaltimes.cn/page/202611/1373757.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "After 15 years of searching, Mauritian scholar's dream comes true",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "驻荷兰使馆发言人：中方对荷兰有关中国网络攻击的报告表示强烈反对",
+          "url": "https://www.globaltimes.cn/page/202611/1373832.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "China expresses strong opposition to Dutch report alleging Chinese cyberattacks: embassy spokesperson",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "博物馆展出 3000 年前的蛋壳，其中一个完整",
+          "url": "https://www.globaltimes.cn/page/202611/1373747.shtml",
+          "meta": "机器翻译",
+          "originalTitle": "Museum displays 3,000-year-old eggshells, one remaining whole",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:18:54.652708+00:00",
+        "lastSuccessAt": "2026-11-07T09:18:54.652708+00:00",
+        "error": ""
+      }
+    },
+    "nytimes": {
+      "name": "纽约时报",
+      "kind": "国际新闻 · 中文机译",
+      "url": "https://www.nytimes.com/section/world",
+      "icon": "https://www.nytimes.com/favicon.ico",
+      "sourceUrlUsed": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+      "updatedAt": "2026-11-07T09:18:54.946674+00:00",
+      "items": [
+        {
+          "title": "查尔斯国王在加勒比海之旅中不带雨伞但很自在",
+          "url": "https://www.nytimes.com/2026/11/07/world/europe/king-charles-chogm-umbrella-rain-diplomacy.html",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "King Charles Was Umbrella-Less but in His Element on Caribbean Tour",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新西兰会加入选民对成本飙升的全球反抗吗？",
+          "url": "https://www.nytimes.com/2026/11/06/world/asia/new-zealand-election-vote.html",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Will New Zealand Join Voters’ Global Revolt Over Soaring Costs?",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "巴拉圭总统因金融危机被免职并被捕",
+          "url": "https://www.nytimes.com/2026/11/06/world/americas/paraguay-president-removed-ueno.html",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Paraguay’s President Removed and Arrested Over Financial Crisis",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "乌克兰对特朗普中期选举的失败表现出谨慎的乐观态度和一些笑话",
+          "url": "https://www.nytimes.com/2026/11/06/world/europe/russia-ukraine-trump-midterms.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Guarded Optimism, and Some Jokes, in Ukraine Over Trump’s Midterm Wipeout",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "以色列大选后，谁将首先获得组建政府的机会？",
+          "url": "https://www.nytimes.com/2026/11/06/world/middleeast/israel-election-government-herzog.html",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "After Israel’s Election, Who Will Get the First Chance to Form a Government?",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "12 天内搭乘 12 架飞机：手术几周后，教皇开始拉丁美洲主要之旅",
+          "url": "https://www.nytimes.com/2026/11/06/world/europe/pope-leo-visit-uruguay-argentina-peru.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "12 Planes in 12 Days: Pope Begins Major Latin America Tour, Weeks After Surgery",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "亲属称，沙特领导的部队轰炸也门住宅，炸死九名家庭成员",
+          "url": "https://www.nytimes.com/2026/11/06/world/middleeast/saudi-arabia-bombing-yemen-civilians-houthi-war.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Saudi-Led Forces Bombed Yemeni Home, Killing Nine Family Members, Relatives Say",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "爱尔兰称欧洲的炸弹威胁可能是一场协调一致的行动",
+          "url": "https://www.nytimes.com/2026/11/06/world/europe/bomb-threats-flights-campaign-ireland.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Bomb Threats in Europe Probably a Coordinated Campaign, Ireland Says",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "坦桑尼亚反对党领袖被判四年徒刑",
+          "url": "https://www.nytimes.com/2026/11/06/world/africa/tanzanias-opposition-leader-gets-a-four-year-sentence.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Tanzania’s Opposition Leader Gets a Four-Year Sentence",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "欧洲航班遭遇恶作剧炸弹威胁，旅客感到沮丧",
+          "url": "https://www.nytimes.com/2026/11/06/world/europe/bomb-threats-planes-flights-europe-travel.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Wave of Hoax Bomb Threats to Flights in Europe Leaves Travelers Frustrated",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "教皇利奥的拉丁美洲之行：需要了解什么",
+          "url": "https://www.nytimes.com/2026/11/06/world/americas/pope-leo-uruguay-argentina-peru.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Pope Leo’s Trip to Latin America: What to Know",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "肯尼亚邪教领袖因大规模谋杀被判 200 年监禁",
+          "url": "https://www.nytimes.com/2026/11/06/world/africa/kenya-cult-leader-prison-sentence-mass-murder-paul-mackenzie.html",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Kenya Cult Leader Handed 200 Year Prison Sentence for Mass Murder",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:18:54.946674+00:00",
+        "lastSuccessAt": "2026-11-07T09:18:54.946674+00:00",
+        "error": ""
+      }
+    },
+    "wsj": {
+      "name": "华尔街日报",
+      "kind": "国际新闻 · 中文机译",
+      "url": "https://www.wsj.com/world",
+      "icon": "https://www.wsj.com/favicon.ico",
+      "sourceUrlUsed": "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
+      "updatedAt": "2026-11-07T09:18:55.323440+00:00",
+      "items": [
+        {
+          "title": "十个月战争夺取46平方英里：俄罗斯在战场上的失败",
+          "url": "https://www.wsj.com/world/russia/ten-months-of-war-to-gain-46-square-miles-how-russia-is-failing-on-the-battlefield-3184ae10?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Ten Months of War to Gain 46 Square Miles: How Russia Is Failing on the Battlefield",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "特朗普的顾问们相互冲突，迫使他做出伊朗战争决定",
+          "url": "https://www.wsj.com/world/middle-east/trumps-clashing-advisers-press-him-to-make-iran-war-decision-758c1e55?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Trump’s Clashing Advisers Press Him to Make Iran War Decision",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "教皇利奥访问正在失去宗教的拉丁美洲",
+          "url": "https://www.wsj.com/world/americas/pope-leo-visits-a-latin-america-thats-losing-its-religion-b1007bbc?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Pope Leo Visits a Latin America That’s Losing Its Religion",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "以色列经济经受住了三年战争的考验。现在账单到期了。",
+          "url": "https://www.wsj.com/world/middle-east/israels-economy-defied-three-years-of-war-now-the-bill-is-coming-due-49d171e1?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Israel’s Economy Defied Three Years of War. Now the Bill Is Coming Due.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "中期选举后伊朗和谈的下一步是什么",
+          "url": "https://www.wsj.com/world/middle-east/whats-next-for-iran-peace-talks-after-the-midterms-a031003c?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "What’s Next for Iran Peace Talks After the Midterms",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "以色列最重要的联盟正面临数十年来最大的考验",
+          "url": "https://www.wsj.com/world/middle-east/israels-most-important-alliance-is-confronting-its-biggest-test-in-decades-a7c019ae?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Israel’s Most Important Alliance Is Confronting Its Biggest Test in Decades",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "为了穿越红海，托运人向胡塞叛军发送电子邮件。阅读他们的收件箱。",
+          "url": "https://www.wsj.com/world/middle-east/to-cross-the-red-sea-shippers-email-houthi-rebels-read-their-inbox-5ecace40?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "To Cross the Red Sea, Shippers Email Houthi Rebels. Read Their Inbox.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "为连接世界而建造的海湾机场现已成为焦点",
+          "url": "https://www.wsj.com/world/middle-east/gulf-airports-built-to-connect-the-world-are-now-in-the-crosshairs-9213d66a?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Gulf Airports Built to Connect the World Are Now in the Crosshairs",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "沙特阿拉伯在权衡如何应对胡塞威胁时没有轻松的选择",
+          "url": "https://www.wsj.com/world/middle-east/saudi-arabia-has-no-easy-choices-as-it-weighs-how-to-combat-houthi-threat-a4adc358?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-05",
+          "originalTitle": "Saudi Arabia Has No Easy Choices as It Weighs How to Combat Houthi Threat",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "数十亿美元的订单使美国终止对以色列的援助变得更加复杂",
+          "url": "https://www.wsj.com/world/middle-east/the-billions-of-dollars-in-orders-complicating-an-end-to-u-s-aid-to-israel-7e0b5fba?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-05",
+          "originalTitle": "The Billions of Dollars in Orders Complicating an End to U.S. Aid to Israel",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "伊朗转向游击战术以重新控制霍尔木兹海峡",
+          "url": "https://www.wsj.com/world/middle-east/iran-turns-to-guerrilla-tactics-in-bid-to-reassert-grip-on-strait-of-hormuz-f10da428?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-04",
+          "originalTitle": "Iran Turns to Guerrilla Tactics in Bid to Reassert Grip on Strait of Hormuz",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "台湾启动市场稳定措施以阻止人工智能出血",
+          "url": "https://www.wsj.com/finance/commodities-futures/taiwan-activates-market-stabilization-measures-to-stem-ai-bleeding-169e36e1?mod=rss_worldnews",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Taiwan Activates Market-Stabilization Measures to Stem AI Bleeding",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:18:55.323440+00:00",
+        "lastSuccessAt": "2026-11-07T09:18:55.323440+00:00",
+        "error": ""
+      }
+    },
+    "reuters": {
+      "name": "路透社",
+      "kind": "国际新闻 · Google 新闻索引 · 中文机译",
+      "url": "https://www.reuters.com/world/",
+      "icon": "https://reutersagency.com/hubfs/Favicon-1.png",
+      "sourceUrlUsed": "https://news.google.com/rss/search?q=site:reuters.com/world+when:3d&hl=en-US&gl=US&ceid=US:en",
+      "updatedAt": "2026-11-07T09:46:32.926572+00:00",
+      "items": [
+        {
+          "title": "克里姆林宫表示，俄罗斯外交官和军事官员将参加与美国和乌克兰的会谈",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPckRkTENydGpmMGpDbWpfYVhKemxXQnRLcWVIU05MdHZMS2Nma2Z3UlRONVpMWkg0bFh2N2J5STdSRVRPVUZNdWQ3eTRGWVZoTm90LW9acDZaOUNLYU0xQ2FubkxtbGVDc3NidWtNbkFMM0VOQ1BPS2Nfa2ptLXBGN1NKQXlIZ0F6RE5lSWtjb0dQZHFva3N5SzM2WWZnNWIwOXZlZDhTekpIMy1pQnBpZFpQbFk4VkxOc05IWU40NFR6RS0z?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "Russian diplomats and military officials to join talks with US and Ukraine, Kremlin says",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "俄罗斯称在夜间大规模袭击中击中了基辅及其周边地区的目标",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOVkpxUWQ1cUFXSEJhbTI5OFNqVGZNOUFIb3ZoY3lZWmdEUHNYMHYwWXowdnNQZ1dlcWJ3dDF5engyV0VaaG1XUEVia2oyTjNJTEgwYUI3VHhCaml6RTdZMEQwbm9YZ1BTcUZjekdhOHhwQ2gwcFI5YkpJcTV2YUQ3WjVWampRdS1SZk5JQXA0WW04OV9ZMzNQcklSTDhIS2IxT3I4OE14VkRBN0huQzhmdktR?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "Russia says it hit targets in and around Kyiv in massive overnight strike",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "卡塔尔表示美国和伊朗之间的调解努力继续防止局势升级",
+          "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOWnBiR0l0NVE4d1Rpd2xSTmFvVGtGSTU2SDJmZXRndk9yS2Z0TlhsUW1ZNldhRnZtOGs0UUhJZWt0VFYzNEtrV1FJMW9QU05BMl94azJLZkZNNTNDWm9TbDFualhlV0VBbHJyQzdnZEJOVnd5Z0pMNzJUZkQ1dF82TU83MkNJbkxsRlhkRVVCYWxxbXF0SlhGaGdvcEhYdVFRQm05bVM4b1BHZzlhcEEta21QQzZRZUl6NUtQZ0o4ajVTTzJxV3lEdVhB?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "Qatar says its mediation efforts between US and Iran continue to prevent escalation",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "马来西亚国王警告不要质疑他允许软禁前总理纳吉布的命令",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNVmhJT1FjMmprRFN3MXVHQnFZWXJMNjhRc2JROUJTZ05vWnpLMTdjOWFwbzUwMTF1dlg1YWY5YWlObGtzVFpFSU1INFdwZFBOT1NtcnpDZURIZF8zX2laNjFjazNPczJ3dmI2YVJPMGx5VWIwemxZN1dyLXdWajY3UG44Zzg2T3hmMTdVM1VCSFJpNm91ZjhwUGtUUWVzbjRCcG1VWkdueFFSRm1uSmg0NU9tdGRrUmNMcmV4NU1JMW9UQk12V2lDNTBCaDhUdw?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "Malaysia's king warns against challenging his order allowing house arrest for ex-PM Najib",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "俄罗斯的袭击袭击了基辅周围的电力设施，损坏了主要桥梁",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPVGhCNTc0bjdqTkxuZDdtOFpCZVd1TEdDQnpURXNYeGY1ZG9saHUyZGFBbTMzWF8zbzBmOHQyeERTMTlWaUo1eUVXdjAyUENTaEkwbGNsb2xteDdxWXFybS1GcjlKWWl4VU4xUGdVdk9wSE1PM3NSTktvYWRINUpESnp4bDJqMkhzR21ySDZKWVVBbzJ5NHpDeDJFNFh5MDdGcEpWbEkzU2dFWFZBVWhxR0pR?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "Russian strikes hit power facilities around Kyiv, damage major bridge",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "海地总理称黑帮头目马蒂亚斯·桑蒂尔已死",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOUkdOZEEtMTQ5NzlLdWRCRUlzdVFsWkFoR0xPOTdIV2szN1hTWmNLQTBHejRjVUI0YTU1bDJpUXdONl9VSlQtZU9iLVRTWFhEbi1RLTZuNEJGQTFxZ1JXWVBBRk43Rjl0VXJrTnF5MXNONkM2TFRYRUM3QXVqTVBOR0R0a1o4NkNsZDhUVVNYTzRkTWNvYm4yRFpEWmVfUQ?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "Haiti PM says gang leader Mathias Saintil is dead",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "塔斯尼姆通讯社称，两枚导弹袭击了伊朗格什姆岛",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNSVljNk9VX0xKSElKQjgwMVhnLVpzdmZMTE9YMW5Eb0FpdFpkb0tkczBNZkh1eWFyLU5VanpKU3VGd21EUk52bGc3ZDN4UVd2UFhHM3VReWVUa2kxTVQ3TlJ5UkRFbmdYQzAxTVF0bldhS1BIYjhIOWx4RVU3UnZiMkRORW5nUHJERUQzeTdoSE1kRzlmYVduLVhUbzkzMVFNX1pqb0I2YXZpT1FJRW00alBCWXQydmc?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Two missiles strike Iran's Qeshm Island, Tasnim news agency says",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "美国财政部因伊朗相关交易制裁加拿大货币服务公司",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQanB1RlNfclNuTUN5SEpJTjFWWUM1UVR2V2xLclNnTjhfNnp0VjNGZE5qeDBiekZXOFpLR2hOTnFud1ZKYlgzaFF6dGpwbkdENXF5VldQSEl0MEE1X0dHbWMyWHFvOU82WC01SjNSamFuSFQtY1M4VHJMN1VEMzlyQnN3UkotaXhiTm4taGdud2w5Wnk0cmtVQlp1MjRvNEJreERfdzZZbmtRQWo5d3NTYnVpOThYRjUwU3BJSGRFSEE?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "US Treasury sanctions Canadian money services firms over Iran-related transactions",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "巴拉圭参议院投票弹劾总统佩尼亚",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOTEZGTXdqZzI2U0M5aVZQb2FnNXk0VS1tWFlfci1fd1AyYnRYOUxQSElRUkxnM0RsNl9HZWkwb2pla2FxMXBRWF9zZ2o4amgwcGZrWnZxaHpvd0VBUDlSWk9tU1NfNTdFb0t5WVF4Q0pvZFZZdkRUcmh6ZEJXMmtnb2gzYVEwVXl6dWVQZDB1UVdfd2JDSXoxMWpR?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Paraguay Senate votes to impeach President Peña",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "特朗普在中期失败后任命强硬派斯蒂芬·米勒为幕僚长",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPRW9VOFJHVC05elRKeHJYaUVfalhSNTJYS0dhNkJobGVIaGU1ZVlLaUNlakI2SURhTHNqc2c2ODFYcWpVaE5uUXpoNEI1d1h3MjFxbTlqNHQwVVJmNEFyUl9uRWktTWdRMGs1Z05GUXRxU2FwVC0wV19JSExCbi1DM1pPNHZVUzFZcVB3ak93TWM4MUk?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Trump makes hardliner Stephen Miller his chief of staff after midterm defeat",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "白宫将特朗普拱门改造成军事致敬",
+          "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNTnNTOVhpTWZhSUtoZWVGZGlzMGlrVVQ5ek5GT2pPajJ2N2YycUxVRkh5RFNFb1pQYmZFRVdpaWxZVHp3ckRMaWZjenlXbld0Rk02WUYyVEVnZUVRX3h6Q0VtQ1lhRWRoSGp4ektMdFVJUzhHQ1ZoaVYyZHl2Y0RxLWJYQmVGNVcycFlPWlc0cmdLOVhReW5V?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "White House recasts Trump arch as military tribute",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "教皇利奥在美国中期选举中投票，因为“我为自己是美国人而感到自豪”",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOX0FvZXNaNFI4TGtadFQ4NkF6bGc4SjQyQWtTQmZXN3lvQ3piVUNmeDFkb0JlZE9WZEZrbjBSTzB5MzIxbHRLaS1UalhfdEYyTi1Ja3UzMmtpZTZackc0VzI0R3VHMFdydWVJRVdaN0ZzR0Z5ZGdFaWtNaDRCdE44OElqZ1RtMjEzOE91WWljTDRDMG1EMnBDcUVCR293MHVaWGc?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Pope Leo voted in US midterms because 'I'm proud to be an American'",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:46:32.926572+00:00",
+        "lastSuccessAt": "2026-11-07T09:46:32.926572+00:00",
+        "error": ""
+      }
+    },
+    "ap": {
+      "name": "美联社 AP",
+      "kind": "国际新闻 · Google 新闻索引 · 中文机译",
+      "url": "https://apnews.com/world-news",
+      "icon": "https://apnews.com/favicon.ico",
+      "sourceUrlUsed": "https://news.google.com/rss/search?q=site:apnews.com/article+world+when:3d&hl=en-US&gl=US&ceid=US:en",
+      "updatedAt": "2026-11-07T09:46:32.975466+00:00",
+      "items": [
+        {
+          "title": "美国中期选举中特朗普主义惨败后，世界很难再次信任美国",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQcXNYQ2lKWTBvdUM0cEp2ekZuSkxnUWYxRFJHSXEwaXpNaFRMM09BQjhteF9sZGZraDVKY1l2djlmZnByeWlONWZxZ3lZdWVlSFVsaFFUMjRhNEF6WWlGUXRiUmIwOUFYLXROVTBXZHE0eHZXTFhEaGhjRVExcW1tVkJfX2pSY21OZ0Z3bE5rWDJYOEhndGFLbVczYw?oc=5",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
+          "originalTitle": "After the US midterm rout of Trumpism, the world struggles to trust America again",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "经过多年的炒作和分裂，特斯拉的 Cyber​​truck 即将退出",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOYkdNclU1NURkXzBzcmRNRDZKSDdGaDZTdC1aSThJc09TM2pPcEJTZktIQllOV1ZrX0N6QXk4eEhHR0prbE03QlJjS28wMWp2VVYzMVhUeTlKYzBuRWtiazFEaThCNUhLNUQzUG9rb0xPaEQ1bF9KcFo4dzQ0a2FxSWNEM2JYWEkwQTRLQ2ZCSkk3c2luaWhqUERaZUhkLUVsdFpaQlFR?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Tesla’s Cybertruck heads for an exit after years of hype and division",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "与特朗普发生争执的世界领导人对共和党大选溃败表示宽慰与谨慎",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNRDdmZlBILWxyZVlDUVZCUmFQc1Z4U2s1R3U4Z3R5WlhvWldSZFJjNGM1bXU0QXcxMlUwSENUc3RYZnczSmhCX05KNUd6bXVUMnZ2NUFIeVZzSTh0d3VnRHVBcElkTmxqTG9rQ1lrY0M2LUd3NmdMWHRpc1JJUWtMQU5zZWRkeFFBblB2OUE2ckMxZzBxU29rUA?oc=5",
+          "meta": "机器翻译 · 2026-11-04 · 经 Google 新闻跳转",
+          "originalTitle": "World leaders who sparred with Trump express relief mixed with caution at Republican election rout",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "1980 年与威廉姆斯一起赢得 F1 世界冠军的澳大利亚人艾伦·琼斯去世，享年 80 岁",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOdVdIZFpFOUNBaW9MYkhyYUJiVzkyWjRkdVlmSmUyZ01Nc1pnQ1J5Y2ZhZkpYOFZISWxxaXVXUmpoTDdzUEdScWo3WFFkTzV0UXlTOE5iTmtoS1lJZGpUX0hTMUFMdWh3bkkzMUxUTUdLb0oxUGJkaVNwRHNsTFd0SzlQYndoUQ?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "Alan Jones, the Australian who won the 1980 F1 world title with Williams, has died at 80",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "冰球世锦赛赞助商因俄罗斯回归而加大对国际冰联的压力",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNTTJvWmh1RWZtQ0UzMTJ2LTJVeC1saU82NWxJRWVSdElzNnNhODNLMlhhWTNMejJNVXFWUnpBVjZsV1JMeTlYMUV0SlFkcWZBV1lLODBtLWo4SnBOWE1uVE5kbXV6MUV1UzI0UU94V2U3M3hlT2NLMFFYTDB3VlZQX1FIb0RhNVY3TVdObFdnU0cxa3QzS0Q4cg?oc=5",
+          "meta": "机器翻译 · 2026-11-04 · 经 Google 新闻跳转",
+          "originalTitle": "Ice hockey world championship sponsors increase pressure on IIHF over Russia’s return",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "德国政府希望保留冰球世界，因为俄罗斯的回归导致抵制",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPT3J4bTlJNW50ckNwU2kybWVGQVNEQlhMZVdEUUYzeWZPV3ZmUWRqVU43SzdIZWNQS2hfR0NaZ3NXZWxwSFd5T3N1aHE2cFB5cG15Y2FsQWh2ZmxiRFBmQ1QyaFdmeEswY3I2Y0lZZnYwRHJ6dHk3QnctMENFTmVjVVhsX2l1SXk2UW1WMVozRHBNM1ZvQ2IzT2lIWlY?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "German government wants to keep hockey worlds as Russia’s return leads to boycott",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "美国中期选举后油价暴跌，股市飙升道指飙升1,500点",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPSEtETVdDVnpDVFhqVmpJNTdBUURHcFg0YkhsOVdwcFo2YzNqSTl5Q18zUXVZV1Vrck8tLTFtcEYtOEFOX2hMMUo1UXJyMDRPQWp2Qld4Yk9iSWszUEtuMkc0dUo4d003eTN5V0VnRmEwVG9VUjBiMGVxVlc3SWg2TC1YdGFmb0FMMlFuVlVJOE1BalE?oc=5",
+          "meta": "机器翻译 · 2026-11-04 · 经 Google 新闻跳转",
+          "originalTitle": "Stocks surge, and the Dow soars 1,500 points as oil prices tumble following the US midterm elections",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "《野马九》中厌世的中央情报局人员约翰·马尔科维奇更喜欢路上的生活",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPdUJJMjV5cEg3RXNCZnFrRFg4bFVvN1BodzBpdm42V1NmWHhtWEl3T01PaWJVZnNwLW1UeEc3VGcyWDlZZTZaODdteEhUR0plRG9UcWYzVDhZdFJtS1lXb2ZuaUtBYWQxR0tmdl82REEwaWFHYkpFaXNMVlFvWjlkaDctcXJ2OGhjMXFZZGJpeWxIUFcxVjUtMjhKd2FJdVl6dnc?oc=5",
+          "meta": "机器翻译 · 2026-11-04 · 经 Google 新闻跳转",
+          "originalTitle": "John Malkovich, a world-weary CIA man in ‘Wild Horse Nine,’ prefers life on the road",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "人工智能股票惨遭抛售令华尔街震惊，标普 500 指数暴跌 4.4%",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPcE43QWpUdHk2WE5qUmd4Z0hjYlBqQ3FGLUVoRlBTbmN4c1JJbWZpeUJmTXhpalZzaTNGMzVweE5wNDRJdnRSMzRENURHaGRIejdqbnVObV9KNEp6R0p0ZnAzT3Y5WGVYejV6VWc0dGZheFVWdG9IVDljNjMxVmVDVGpYZlpwN19nVzBibDdqVmRJOXV3Vk9YdFRiSQ?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "A brutal sell-off for AI stocks sends Wall Street reeling, and the S&P 500 tumbles 4.4%",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新西兰警方驳回对佛得角足球队长和指控者的强奸指控",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNanV0NHQ2dWhIdTdVaGplMF9uQWkxOGZqYXVyUGozZnZTYklrcTIwY3hqMkJuYW0xLXFRTzBSNzcyejl1MllET0E1RkhhYjZRRGwzSDdNa1hMN0d0UVpvSm1sRHJ1eUZjVzJfd0liY3BHNXJJc3VuZnVHb0RNX0JRdVNGLU1kT3VkSFlXb2NDRWtaM1N4RGdOQlZUWXF3MmtQRjJR?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "New Zealand police dismiss rape allegation against Cape Verde soccer captain and charge accuser",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "“JD，habibi。”阿拉伯人庆祝埃尔赛义德在胜利演讲中使用了一个充满感情的词语",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNVHlhTHhrNHJwUm5aZmhnMHRzVTJUeXhXR3BPR0laLUFTTi11cjdRZmdseEFBdkhmaFVMNVlpb3o2OGdfTjFJMUpLZlNCc1NpU1MwZ0dZRXFWZ21hUngxQ2pTZ3lEQzBCbUJsSEp2TXdIaVRnbnQtckNfU2pTcklVdmlDWjJVR0N1bkE0Rngtb2pDVmhiSHhBSjBmV3VGcWxOR2ZTM29MRFkzcTA?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "‘JD, habibi.’ Arabs celebrate El-Sayed’s use of a term of affection in his victory speech",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "猎鹰队开始在足球强队皇家马德里的主场为西班牙 NFL 比赛做准备",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPenl1b2VRTTVVQi1xRTVuQjg5cmttUldMTXliOW5lNE1CWi0wS2trNzN4WVc1dWliY3pLV0hUYWN0ejVqTmJHMHRyRGZtNFo2eTBkR2xRSThEaEFHQzNucjRwQTlHREZhaG5BaDhsUkpKZXZMNVhtOG1acEktRzlLVzMybjhSNUxVVnc0UTc1M3VrTm9tRnlRZlpKSEJRSG1kR0RZR1ZQcXE?oc=5",
+          "meta": "机器翻译 · 2026-11-04 · 经 Google 新闻跳转",
+          "originalTitle": "Falcons start preparations for NFL game in Spain at home of soccer powerhouse Real Madrid",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:46:32.975466+00:00",
+        "lastSuccessAt": "2026-11-07T09:46:32.975466+00:00",
+        "error": ""
+      }
+    },
+    "bbc": {
+      "name": "BBC 国际新闻",
+      "kind": "国际新闻 · 中文机译",
+      "url": "https://www.bbc.com/news/world",
+      "icon": "https://www.bbc.com/favicon.ico",
+      "sourceUrlUsed": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "updatedAt": "2026-11-07T09:46:33.924309+00:00",
+      "items": [
+        {
+          "title": "巴拉圭总统在银行倒闭后被弹劾并软禁",
+          "url": "https://www.bbc.co.uk/news/articles/c68jzzvjgdy9o?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Paraguay's president impeached and under house arrest after bank collapse",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "市值蒸发数万亿美元后，人工智能股票攀升",
+          "url": "https://www.bbc.co.uk/news/articles/c35ynnpzdq51o?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "AI stocks climb after trillions wiped from market values",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "2028 年白宫竞选的四个中期要点",
+          "url": "https://www.bbc.co.uk/news/articles/cq1m41n3v7mmo?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Four midterms takeaways for 2028 White House race",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "教皇开始拉丁美洲之行时“健康状况良好”",
+          "url": "https://www.bbc.co.uk/news/articles/c60e0001ve9wo?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Pope in 'pretty good health' as he starts Latin America tour",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新一波炸弹威胁袭击欧洲航空公司",
+          "url": "https://www.bbc.co.uk/news/articles/cq62yy064vjpo?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "New wave of bomb threats hit European airlines",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "肯尼亚末日邪教头目因谋杀191人被判无期徒刑",
+          "url": "https://www.bbc.co.uk/news/articles/cm5yne5984l0o?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Kenyan doomsday cult leader given life sentence for murdering 191 people",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "乌尔达铁路灾难后，西班牙铁路当局面临欧洲欺诈调查",
+          "url": "https://www.bbc.co.uk/news/articles/c6x2wwnz5445o?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Spain's rail authorities face European fraud probe after Urda rail disaster",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "官员称法国巴士相撞事故造成两人死亡",
+          "url": "https://www.bbc.co.uk/news/articles/cmly00l4p3lwo?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Two dead after bus crashes in France, officials say",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "康奈尔大学教职人员对领导层对无名氏指控的处理方式进行了不信任投票",
+          "url": "https://www.bbc.co.uk/news/articles/c933xxl8yv0go?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Cornell faculty pass no-confidence vote over leadership's handling of Jane Doe allegations",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "联邦机构批准后，法官阻止建造特朗普的巨型拱门",
+          "url": "https://www.bbc.co.uk/news/articles/cq99zd93ryvko?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Judge blocks construction of Trump's massive arch after federal agency approval",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "俄罗斯极端组织否认发送恶作剧炸弹威胁",
+          "url": "https://www.bbc.co.uk/news/articles/cm2d66n0lx1yo?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Russian extremist group denies sending hoax bomb threats",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "肺癌手术几周后，教皇开始了漫长的拉丁美洲之行",
+          "url": "https://www.bbc.co.uk/news/articles/cqn06j0y61k6o?at_medium=RSS&at_campaign=rss",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Pope begins lengthy trip to Latin America weeks after lung cancer surgery",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:46:33.924309+00:00",
+        "lastSuccessAt": "2026-11-07T09:46:33.924309+00:00",
+        "error": ""
+      }
+    },
+    "aljazeera": {
+      "name": "半岛电视台英文版",
+      "kind": "国际新闻 · 中文机译",
+      "url": "https://www.aljazeera.com/",
+      "icon": "https://www.aljazeera.com/favicon_aje.ico",
+      "sourceUrlUsed": "https://www.aljazeera.com/xml/rss/all.xml",
+      "updatedAt": "2026-11-07T09:46:32.371139+00:00",
+      "items": [
+        {
+          "title": "随着燃油价格上涨，中国电动自行车蓬勃发展",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/11/7/chinas-e-bikes-boom-as-fuel-prices-rise?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "China’s e-bikes boom as fuel prices rise",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "美国参议员阿卜杜勒·赛义德成立“哈比比”政治行动委员会",
+          "url": "https://www.aljazeera.com/news/2026/11/7/el-sayed-launches-habibi-pac-days-after-historic-michigan-senate-win?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "US Senator Abdul El-Sayed launches ‘Habibi’ political action committee",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "当伊朗发动“认知战”时，特朗普会再次袭击核设施吗？",
+          "url": "https://www.aljazeera.com/news/2026/11/7/will-trump-strike-nuclear-sites-again-as-iran-engages-cognitive?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Will Trump strike nuclear sites again as Iran engages ‘cognitive warfare’?",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "勒布朗·詹姆斯回归后，东契奇拿下 53 分，湖人队带领骑士队夺得 76 人队榜首",
+          "url": "https://www.aljazeera.com/sports/2026/11/7/doncic-lakers-lebron-cavaliers-sixers-nba-cup-basketball?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Doncic’s 53 points lift Lakers as Cavs top Sixers in LeBron James’s return",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "休斯顿市长限制美国城市警察与 ICE 的合作",
+          "url": "https://www.aljazeera.com/news/2026/11/7/houston-mayor-curbs-cooperation-of-us-citys-police-with-ice?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Houston mayor curbs cooperation of US city’s police with ICE",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "卡塔尔总理表示美国愿意寻求解决与伊朗的战争",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/11/7/qatari-pm-says-us-willing-to-seek-solution-to-war-with-iran?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Qatari PM says US willing to seek solution to war with Iran",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "WTA就安德烈娃的“天后”评论向佩古拉道歉",
+          "url": "https://www.aljazeera.com/sports/2026/11/7/jessica-pegula-mirra-andreeva-diva-comment-wta-finals-tennis?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "WTA apologises to Pegula for broadcast of ‘diva’ comment about Andreeva",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "特朗普确认美国对伊朗发动袭击，坚称“这不是一场战争”",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/11/7/trump-confirms-us-strikes-in-iran-insists-its-not-a?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Trump confirms US strikes in Iran, insists ‘it’s not a war’",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "“每个人都有自己的运气”：摩洛哥海滩金属探测器",
+          "url": "https://www.aljazeera.com/news/2026/11/7/beachcombers-in-morocco-hunt-for-hidden-treasure?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "‘Every person has their luck’: Morocco’s beach metal detectorists",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "在特朗普卸任之前不要调查他的企业盟友",
+          "url": "https://www.aljazeera.com/opinions/2026/11/7/do-not-investigate-trumps-corporate-allies-until-he-leaves-office?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Do not investigate Trump’s corporate allies until he leaves office",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "伊朗战争如何帮助民主党赢得中期选举",
+          "url": "https://www.aljazeera.com/opinions/2026/11/7/how-the-iran-war-helped-democrats-win-the-midterms?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "How the Iran war helped Democrats win the midterms",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "卡洛斯·阿尔卡拉斯挽救赛点晋级巴黎大师赛半决赛",
+          "url": "https://www.aljazeera.com/sports/2026/11/7/carlos-alcaraz-match-point-paris-masters-semifinals-tennis?traffic_source=rss",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Carlos Alcaraz saves match points to reach Paris Masters semifinals",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:46:32.371139+00:00",
+        "lastSuccessAt": "2026-11-07T09:46:32.371139+00:00",
+        "error": ""
+      }
+    },
+    "guardian": {
+      "name": "卫报国际版",
+      "kind": "国际新闻 · 中文机译",
+      "url": "https://www.theguardian.com/world",
+      "icon": "https://www.theguardian.com/favicon.ico",
+      "sourceUrlUsed": "https://www.theguardian.com/world/rss",
+      "updatedAt": "2026-11-07T09:46:33.712771+00:00",
+      "items": [
+        {
+          "title": "肯尼亚末日教头目因谋杀190名儿童被判入狱200年",
+          "url": "https://www.theguardian.com/world/2026/nov/06/kenyan-doomsday-sect-leader-jailed-murders-paul-mackenzie",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Kenyan doomsday sect leader jailed for 200 years for murder of 190 children",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "南非地方选举80%选票已清点 非国大面临惨败",
+          "url": "https://www.theguardian.com/world/2026/nov/06/anc-faces-defeat-south-african-local-elections",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "ANC faces bruising defeat in South African local elections with 80% of ballots counted",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "感染埃博拉病毒的英国医护人员从刚果民主共和国撤离到英国",
+          "url": "https://www.theguardian.com/world/2026/nov/04/british-healthcare-worker-ebola-evacuated-drc-to-uk-document-shows",
+          "meta": "机器翻译 · 2026-11-04",
+          "originalTitle": "British healthcare worker with Ebola evacuated from DR Congo to UK",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "南非人在地方选举中投票，非国大面临着对糟糕服务的愤怒",
+          "url": "https://www.theguardian.com/world/2026/nov/04/anc-south-africa-local-elections-water-outages-power-cuts",
+          "meta": "机器翻译 · 2026-11-04",
+          "originalTitle": "ANC faces anger over poor services as South Africans vote in local elections",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "天坑、伤痕累累的土地和替罪羊：约翰内斯堡非法金矿开采的祸害",
+          "url": "https://www.theguardian.com/business/2026/oct/30/sinkholes-scarred-land-scapegoats-illegal-gold-mining-johannesburg",
+          "meta": "机器翻译 · 2026-10-30",
+          "originalTitle": "Sinkholes, scarred land and scapegoats: the scourge of illegal gold mining in Johannesburg",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "银行业危机导致巴拉圭 60% 的地区无法访问账户，被罢黜的巴拉圭总统被软禁",
+          "url": "https://www.theguardian.com/world/2026/nov/07/ousted-paraguay-president-under-house-arrest-after-banking-crisis-leaves-60-of-country-unable-to-access-accounts",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "Ousted Paraguay president under house arrest after banking crisis leaves 60% of country unable to access accounts",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "《神奇女人》和《格洛丽亚》的导演塞巴斯蒂安·莱利奥去世，享年 52 岁",
+          "url": "https://www.theguardian.com/film/2026/nov/06/sebastian-lelio-chilean-director-dies",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Sebastián Lelio, director of A Fantastic Woman and Gloria, dies aged 52",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "弗拉维奥·博尔索纳罗在海湖庄园右翼会议上发表讲话时努力保持影响力",
+          "url": "https://www.theguardian.com/world/2026/nov/06/flavio-bolsonaro-upbeat-brazil-election-us",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Flávio Bolsonaro battles to remain relevant as he speaks at rightwing conference at Mar-a-Lago",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "美国中西部低压给纽约和波士顿带来不合时宜的炎热天气",
+          "url": "https://www.theguardian.com/environment/2026/nov/06/new-york-boston-us-weather-tracker",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Low pressure in US midwest brings unseasonable heat to New York and Boston",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "巴拉圭总统因银行危机冻结数百万人的储蓄而辞职",
+          "url": "https://www.theguardian.com/world/2026/nov/05/paraguay-president-santiago-pena-resigns",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Paraguay’s president quits after millions of people’s savings frozen in bank crisis",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新西兰 2026 年大选实时结果：国家党和工党势均力敌，小党着眼“拥王者”角色",
+          "url": "https://www.theguardian.com/world/live/2026/nov/07/nz-general-election-2026-live-updates-results-new-zealand-polls",
+          "meta": "机器翻译 · 2026-11-07",
+          "originalTitle": "New Zealand election 2026 live results: National and Labour neck-and-neck as minor party eyes kingmaker role",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "民主党中期选举获胜后，全球股市因“对人工智能的巨大担忧”而下跌",
+          "url": "https://www.theguardian.com/business/2026/nov/06/global-stocks-plunge-amid-ai-slowdown-fears-after-democrats-midterm-triumph",
+          "meta": "机器翻译 · 2026-11-06",
+          "originalTitle": "Global stocks fall amid ‘big worries over AI’ after Democrats’ midterms triumph",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:46:33.712771+00:00",
+        "lastSuccessAt": "2026-11-07T09:46:33.712771+00:00",
+        "error": ""
+      }
+    },
+    "nhk": {
+      "name": "NHK WORLD-JAPAN",
+      "kind": "国际新闻 · Google 新闻索引 · 中文机译",
+      "url": "https://www3.nhk.or.jp/nhkworld/news/",
+      "icon": "https://www3.nhk.or.jp/nhkworld/common/site_images/nw_webapp_news_192x192.png",
+      "sourceUrlUsed": "https://news.google.com/rss/search?q=site:nhk.or.jp/nhkworld+when:3d&hl=en-US&gl=US&ceid=US:en",
+      "updatedAt": "2026-11-07T09:46:34.519568+00:00",
+      "items": [
+        {
+          "title": "黑客组织：日本公司未修复漏洞NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5fRlJvb0tRTVBTX2tIN3lPMGhHMlI3SUZtNTlXTi1XV0ZBUGhENUFpaTh3aXlfX0luY3pseUhFZExXWXZDQU4yNlk5M2xvTUlzRVloQTBFSW01VDVMd25hLVFvSQ?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "Hacker group: Japan firms leave vulnerabilities unfixed | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "日本抗议俄罗斯烟草决定，要求撤回",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE51NlQyZ1hIWUtURVpYNGtQZ2NEdUhLU3R1MWRXcmRmV0tpMHd5bGpsZ2FJOWJsaURXOHpJRVZacWtqaU9vcHB4RHcwWDgtNlgwTnJvM3UwZWVuV3pwbmhfUDZYdw?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "Japan protests Russia tobacco decision, demands withdrawal",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "政府要求遏制日本人在海外过度劳累死亡NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE8tdzBFaU9URkptY0xvOXA0SFdRbEVIbU51blpVd2dPemNwSlVGUi1XZm9GdS1PdVJyTDlOMTBoS1VmazBpVTVyRmU4Yl9YYnp5SVpwb3JCMUdBaHZJeE8tSmpzcw?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Government asked to curb Japanese overwork deaths abroad | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "日本一些信用金银行的ATM服务中断| NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5vWUFxNlB4MWtlUVVKZ2dKbDhyeDZET3JwYXlWZkxoWmljdWNXNUJYWGhBd1FPelhxNWVIZGZHREg1eE5paDZBbzhFelljSjVlVUR4M3B6Mm9SNkJpVXFSZHl6Yw?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "ATM services at some Japan shinkin banks disrupted | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新西兰大选仍是一场激烈的角逐NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1UWUd4eFV4MG1DRk9DbVRQZl93TE10cVVJdGpoVFp4STJ3TTVSbmI3TjFBZmpGM3NrbFdSdWFZb3k2RDgzRlk3VjVMd3RfbHRMU3JHdk1tUFdtMmExa3YzbFM5QQ?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "New Zealand election remains a tight race | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "自规则改变以来，日本自行车手共被罚款 16,000 起",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBmaWloWEp0MjJ2bGpvZ1QwN1oyZDhyQ25vQ05EWjIzMmNHY3NpX2hJOHA5Qk5ucWx6STRrQTZzempFaE1vaC1VZUo0eGRWaldiX2hOVmVDN0ZJcXYtZGV3WUNBbw?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "Japan cyclists fined in 16,000 cases since rule change",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新羽田机场铁路建设工地开工 | NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBJN2pfWXRlbUdNdEdCa2ozNE9aRnZabmEyY1BmLUtpaGZFaG5HMlJSeHd1SFNKaVlsU2JydVI4QXRhdnd1MDhhREEtXzVlN3JQdUs1d1lxN04zbjRqZmExR2p2aw?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "Construction site opens for new Haneda Airport railway | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "一家日本制造商应对美国贸易政策的转变",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5WQWNIbzI0M283aXZmQTBZaDlaZDg0VVdjR1l0dF9vblRwc0ZSUm5aTGZFRlN0MDlGVkVEOWpKNHdwc1FBT0FjQVVVb0RWWVpMTHk3WExBZlBzRE9LY1lGTXRPVQ?oc=5",
+          "meta": "机器翻译 · 2026-11-06 · 经 Google 新闻跳转",
+          "originalTitle": "A Japanese manufacturer navigates US trade policy shifts",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "普京将4家日本工厂置于俄罗斯管理之下NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9fQ3VrNWU4WWM3ck5DWFNabGVYb3ppRHU1b0t2WTY1TTBKV2FFTUVIMjB5bG1maTFEd1UtWUpyMGtPdUZibU1vbnVkVFRZWE16NkhjcnliTEZQQTVncUk1dUtDZw?oc=5",
+          "meta": "机器翻译 · 2026-11-04 · 经 Google 新闻跳转",
+          "originalTitle": "Putin puts 4 Japanese factories under Russian management | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "蓝色浪潮席卷美国 | NHK WORLD-日本新闻",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9leUx3Q2llWkdGdjd6MXBoZm5TSGtFSDdXUGVZd2RBUUxGNjc0LVNMeHZqRzk3djdZMldOSDVIOE56QkpnTzloUnlBVFlVN0JfWFZzcTQ3RzE1S3U2ZTZLZWd1WQ?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "Blue wave sweeps across US | NHK WORLD-JAPAN News",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "东京大石井步道 | NHK WORLD-日本",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBDWkRDSmtSQVZXelJjMUEwVmlLS0J2QzhIQkFzQkV6cnZ5ZUxEUElWUnVULWc0YWNHVFB3VDlzT2ZMSEtXM2tfMEVlVVVxdC02bG96TzM5a084YmNY?oc=5",
+          "meta": "机器翻译 · 2024-03-21 · 经 Google 新闻跳转",
+          "originalTitle": "Trails to Oishii Tokyo | NHK WORLD-JAPAN",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "美国中期结果可能给韩国带来麻烦",
+          "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9LMGxSdmNwX2hwN0Roa2ExTFFJR1NUaV9ma1h2TUJVUHJsdVJMWUxJT0V1NjJDUnpBczU2LVBHb2EwRmRYaWdXQ3BmQ0s2S3lvdWROTnhqNG9ZbXR5Q2N0N1VCV0JmU2pHUFNGZnVn?oc=5",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
+          "originalTitle": "US midterm results could spell trouble for South Korea",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:46:34.519568+00:00",
+        "lastSuccessAt": "2026-11-07T09:46:34.519568+00:00",
+        "error": ""
+      }
+    },
+    "dongchedi": {
+      "name": "懂车帝",
+      "kind": "汽车资讯",
+      "url": "https://www.dongchedi.com/",
+      "icon": "https://www.dongchedi.com/favicon.ico",
+      "sourceUrlUsed": "https://www.dongchedi.com/",
+      "updatedAt": "2026-11-07T09:58:23.081659+00:00",
+      "items": [
+        {
+          "title": "2026比亚迪海豹08EV新车",
+          "url": "https://www.dongchedi.com/article/7704988404593639961",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "路虎揽胜威斯敏斯特版中国上市",
+          "url": "https://www.dongchedi.com/article/7704691282223989273",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "第二代海豹07上市",
+          "url": "https://www.dongchedi.com/article/7704651515256341017",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "一汽丰田RAV4荣放探野版上市",
+          "url": "https://www.dongchedi.com/article/7687963893502837272",
+          "meta": "汽车资讯"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:58:23.081659+00:00",
+        "lastSuccessAt": "2026-11-07T09:58:23.081659+00:00",
+        "error": ""
+      }
+    },
+    "autohome": {
+      "name": "汽车之家",
+      "kind": "汽车资讯",
+      "url": "https://www.autohome.com.cn/news/",
+      "icon": "https://www.autohome.com.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.autohome.com.cn/news/",
+      "updatedAt": "2026-11-07T09:59:27.469583+00:00",
+      "items": [
+        {
+          "title": "沃尔沃声明：网传“气囊召回”通知系假冒，切勿点击不明链接",
+          "url": "https://www.autohome.com.cn/news/202611/1318230.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "定位插混中型SUV 东风日产NX7将于11月13日正式发布",
+          "url": "https://www.autohome.com.cn/news/202611/1318229.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "长城欧拉7车尾官图发布 轿跑/旅行两种形态 展车已陆续到店",
+          "url": "https://www.autohome.com.cn/news/202611/1318228.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "马斯克：明年逐步停产Cybertruck 产线让位于Cybercab",
+          "url": "https://www.autohome.com.cn/news/202611/1318227.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "预售价13.99万起 高颜值方盒子SUV 北汽星钽5X将于11月12日上市",
+          "url": "https://www.autohome.com.cn/news/202611/1318226.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "售8.88万元 新增电动前备厢/EVA机器人 吉利星愿STAR限定系列上市",
+          "url": "https://www.autohome.com.cn/news/202611/1318224.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "超18万台 可能动力中断/驻车功能无法启动 奔驰召回国产/进口车型",
+          "url": "https://www.autohome.com.cn/news/202611/1318223.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "泊车辅助系统软件存在偏差 保时捷召回18274辆Cayenne",
+          "url": "https://www.autohome.com.cn/news/202611/1318221.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "后轴因焊接不良导致脱开 奇瑞召回超5万辆瑞虎5x/欧萌达系列",
+          "url": "https://www.autohome.com.cn/news/202611/1318220.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "森林人、BRZ等多款车型/共计196494辆 斯巴鲁召回旗下多款车型",
+          "url": "https://www.autohome.com.cn/news/202611/1318219.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "泰国大幅上调进口电车消费税 中国车企或加大在泰投产",
+          "url": "https://www.autohome.com.cn/news/202611/1318218.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "科幻感十足 方盒子硬派造型 奇瑞纵横R700将于广州车展亮相",
+          "url": "https://www.autohome.com.cn/news/202611/1318216.html",
+          "meta": "汽车资讯"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:59:27.469583+00:00",
+        "lastSuccessAt": "2026-11-07T09:59:27.469583+00:00",
+        "error": ""
+      }
+    },
+    "pcauto": {
+      "name": "太平洋汽车",
+      "kind": "汽车资讯",
+      "url": "https://www.pcauto.com.cn/news/",
+      "icon": "https://www.pcauto.com.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.pcauto.com.cn/news/",
+      "updatedAt": "2026-11-07T09:58:22.836792+00:00",
+      "items": [
+        {
+          "title": "打通车端气象感知能力 吉利与气象中心签署合作协议",
+          "url": "https://www.pcauto.com.cn/news/5191/51912512.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "不止整车：EZI在EICMA 2026展示“产品+生态+服务”全球轻出行方案",
+          "url": "https://www.pcauto.com.cn/news/5191/51912508.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "全球首个机场L4规模化运营项目在新疆投运",
+          "url": "https://www.pcauto.com.cn/news/5191/51912492.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "警惕气囊召回短信！ 多家车企紧急辟谣，谨防被骗！",
+          "url": "https://www.pcauto.com.cn/news/5191/51912462.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "2026超长续航轻客推荐 纯电和混动两条路线怎么选",
+          "url": "https://www.pcauto.com.cn/news/5191/51912006.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "2026年末充电快续航好的纯电SUV怎么选？从800V和5C说起",
+          "url": "https://www.pcauto.com.cn/news/5191/51912004.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "让AI更懂真实世界 百度地图提出时空智能产业共建路径",
+          "url": "https://www.pcauto.com.cn/news/5191/51912001.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "上汽与Momenta拟共建智驾合资公司，中国车企迎来\"AI合伙人\"时刻",
+          "url": "https://www.pcauto.com.cn/news/5191/51911963.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "30万级混动轿车空间实测：岚图追光L、汉DM-i、领克10 EM-P谁更宽敞？",
+          "url": "https://www.pcauto.com.cn/news/5191/51911681.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "20-30万纯电SUV怎么选？市区代步+全家露营的空间账与用电账",
+          "url": "https://www.pcauto.com.cn/news/5191/51911679.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "25万级充电快续航好的纯电SUV？五款车过三道硬线，岚图追光S全过",
+          "url": "https://www.pcauto.com.cn/news/5191/51911677.html",
+          "meta": "汽车资讯"
+        },
+        {
+          "title": "全球纯汽油车新车销量占比首次跌破50%",
+          "url": "https://www.pcauto.com.cn/news/5185/51856902.html",
+          "meta": "汽车资讯"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-07T09:58:22.836792+00:00",
+        "lastSuccessAt": "2026-11-07T09:58:22.836792+00:00",
+        "error": ""
+      }
     }
   }
 }

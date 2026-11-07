@@ -11,7 +11,9 @@
           "stars": "54,839",
           "growth": "30,721 stars this month",
           "cover": "source-covers/github/556268cddaa0567389bb62c4.png",
-          "originalCover": "https://opengraph.githubassets.com/736038ef36e0d87fe09f8bc8be4e844ce7b207016cf9373fef6f08c7c3eba6d4/cloudflare/security-audit-skill"
+          "originalCover": "https://opengraph.githubassets.com/736038ef36e0d87fe09f8bc8be4e844ce7b207016cf9373fef6f08c7c3eba6d4/cloudflare/security-audit-skill",
+          "descriptionZh": "用于多阶段安全审计的编码代理技能，具有独立验证的机器可读结果",
+          "growthZh": "本月新增 30,721 星"
         },
         {
           "name": "heygen-com/hyperframes",
@@ -21,7 +23,9 @@
           "stars": "76,358",
           "growth": "22,149 stars this month",
           "cover": "source-covers/github/4d7f3e81049b35872c4fe0cd.png",
-          "originalCover": "https://opengraph.githubassets.com/270385cc0f6cf8bf8a21d4bd0cd1ac7d71e7ec86266e1a1c8b2098972a7b9ef5/heygen-com/hyperframes"
+          "originalCover": "https://opengraph.githubassets.com/270385cc0f6cf8bf8a21d4bd0cd1ac7d71e7ec86266e1a1c8b2098972a7b9ef5/heygen-com/hyperframes",
+          "descriptionZh": "编写 HTML。渲染视频。专为代理商打造。",
+          "growthZh": "本月新增 22,149 星"
         },
         {
           "name": "Nutlope/hallmark",
@@ -31,7 +35,9 @@
           "stars": "43,536",
           "growth": "13,397 stars this month",
           "cover": "source-covers/github/fdc027bac2d38ae7af4482f8.png",
-          "originalCover": "https://opengraph.githubassets.com/9b7829b13d6a4a7235ba308c80af19e669fd1a2eb630e1e05e60a41c773a42ff/Nutlope/hallmark"
+          "originalCover": "https://opengraph.githubassets.com/9b7829b13d6a4a7235ba308c80af19e669fd1a2eb630e1e05e60a41c773a42ff/Nutlope/hallmark",
+          "descriptionZh": "Claude Code、Cursor、Codex 的防 AI 设计技巧。",
+          "growthZh": "本月新增 13,397 星"
         },
         {
           "name": "anthropics/knowledge-work-plugins",
@@ -41,7 +47,9 @@
           "stars": "34,134",
           "growth": "8,279 stars this month",
           "cover": "source-covers/github/c6daa5d6e50bb629c073bcec.png",
-          "originalCover": "https://opengraph.githubassets.com/a38ce08718698ec72db91b438269abfa3ffa4860e9ea7c28fe86fd13e43e203c/anthropics/knowledge-work-plugins"
+          "originalCover": "https://opengraph.githubassets.com/a38ce08718698ec72db91b438269abfa3ffa4860e9ea7c28fe86fd13e43e203c/anthropics/knowledge-work-plugins",
+          "descriptionZh": "主要供知识工作者在 Claude Cowork 中使用的开源插件存储库",
+          "growthZh": "本月新增 8,279 星"
         },
         {
           "name": "debpalash/VoiceStudio",
@@ -51,7 +59,9 @@
           "stars": "96,402",
           "growth": "49,116 stars this month",
           "cover": "source-covers/github/60778197d87e9bf897de36d3.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1206390571/fd6851a0-4e36-4541-a76c-2ad84935d0bc"
+          "originalCover": "https://repository-images.githubusercontent.com/1206390571/fd6851a0-4e36-4541-a76c-2ad84935d0bc",
+          "descriptionZh": "VoiceStudio 是 ElevenLabs 的开源、完全本地化替代方案 — 提供 646 种语言的语音克隆、语音设计、视频配音、听写、转录和有声读物创建。",
+          "growthZh": "本月新增 49,116 星"
         },
         {
           "name": "pbakaus/impeccable",
@@ -61,7 +71,9 @@
           "stars": "97,800",
           "growth": "24,624 stars this month",
           "cover": "source-covers/github/6a7996849525f232ecef1ec3.png",
-          "originalCover": "https://opengraph.githubassets.com/8bcf89563559554db490d6355d438d855523a8d076a8c303f75beaba75eb5669/pbakaus/impeccable"
+          "originalCover": "https://opengraph.githubassets.com/8bcf89563559554db490d6355d438d855523a8d076a8c303f75beaba75eb5669/pbakaus/impeccable",
+          "descriptionZh": "编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。",
+          "growthZh": "本月新增 24,624 星"
         },
         {
           "name": "earthtojake/text-to-cad",
@@ -71,7 +83,9 @@
           "stars": "24,445",
           "growth": "7,976 stars this month",
           "cover": "source-covers/github/bf446d22bc50a478eaf1ffbe.png",
-          "originalCover": "https://opengraph.githubassets.com/ba09d52dc68a4d08a7bdc35ae3af1c71dd142da73167772d4f5d899da532db06/earthtojake/text-to-cad"
+          "originalCover": "https://opengraph.githubassets.com/ba09d52dc68a4d08a7bdc35ae3af1c71dd142da73167772d4f5d899da532db06/earthtojake/text-to-cad",
+          "descriptionZh": "利用人工智能设计实体产品",
+          "growthZh": "本月新增 7,976 星"
         },
         {
           "name": "NationalSecurityAgency/ghidra",
@@ -81,7 +95,9 @@
           "stars": "96,366",
           "growth": "16,470 stars this month",
           "cover": "source-covers/github/aacd4c5c5b670aa0aa38d8e7.png",
-          "originalCover": "https://opengraph.githubassets.com/f51019a2392e0acdf96428bac2b355899cb307bce5581ea426b9b202de4995b8/NationalSecurityAgency/ghidra"
+          "originalCover": "https://opengraph.githubassets.com/f51019a2392e0acdf96428bac2b355899cb307bce5581ea426b9b202de4995b8/NationalSecurityAgency/ghidra",
+          "descriptionZh": "Ghidra 是一个软件逆向工程 (SRE) 框架",
+          "growthZh": "本月新增 16,470 星"
         },
         {
           "name": "pingdotgg/t3code",
@@ -91,7 +107,8 @@
           "stars": "34,001",
           "growth": "8,676 stars this month",
           "cover": "source-covers/github/79fd126bb58222771b493cdf.png",
-          "originalCover": "https://opengraph.githubassets.com/ef449733cd35f2259f3a2ac23c60da1c997008cb805b2d9ab99bee8541206f31/pingdotgg/t3code"
+          "originalCover": "https://opengraph.githubassets.com/ef449733cd35f2259f3a2ac23c60da1c997008cb805b2d9ab99bee8541206f31/pingdotgg/t3code",
+          "growthZh": "本月新增 8,676 星"
         },
         {
           "name": "thedotmack/claude-mem",
@@ -101,7 +118,9 @@
           "stars": "107,192",
           "growth": "11,124 stars this month",
           "cover": "source-covers/github/cea0afa8354061d5151833ca.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1048065319/62ccff98-4c97-4bab-97b7-ed6e1995cfba"
+          "originalCover": "https://repository-images.githubusercontent.com/1048065319/62ccff98-4c97-4bab-97b7-ed6e1995cfba",
+          "descriptionZh": "每个座席跨会话的持久上下文 – 捕获座席在会话期间所做的所有操作，使用 AI 对其进行压缩，并将相关上下文注入到未来的会话中。适用于 Claude Code、OpenClaw、Codex、Gemini、Hermes、Copilot、OpenCode 等",
+          "growthZh": "本月新增 11,124 星"
         },
         {
           "name": "anthropics/claude-plugins-official",
@@ -111,7 +130,9 @@
           "stars": "45,515",
           "growth": "8,442 stars this month",
           "cover": "source-covers/github/5a30df9a83c8666db5dcc1b0.png",
-          "originalCover": "https://opengraph.githubassets.com/14955a5fb281f24cff04d6e48a22fcd36037f5c41cc8d97fc8b54a21a0298f61/anthropics/claude-plugins-official"
+          "originalCover": "https://opengraph.githubassets.com/14955a5fb281f24cff04d6e48a22fcd36037f5c41cc8d97fc8b54a21a0298f61/anthropics/claude-plugins-official",
+          "descriptionZh": "由 Anthropic 管理的官方高品质 Claude 代码插件目录。",
+          "growthZh": "本月新增 8,442 星"
         },
         {
           "name": "mksglu/context-mode",
@@ -121,7 +142,9 @@
           "stars": "32,997",
           "growth": "8,913 stars this month",
           "cover": "source-covers/github/bec39de0c2a358da33d50d43.png",
-          "originalCover": "https://opengraph.githubassets.com/471ee8c4053d8b726e6c0ce4f53d4bf6f9cd78dc50a6e2924c8a1230451e7d12/mksglu/context-mode"
+          "originalCover": "https://opengraph.githubassets.com/471ee8c4053d8b726e6c0ce4f53d4bf6f9cd78dc50a6e2924c8a1230451e7d12/mksglu/context-mode",
+          "descriptionZh": "AI 编码代理的上下文窗口优化。沙箱工具输出（减少 98%）、保留会话内存，并通过 MCP + 挂钩强制跨 17 个平台进行路由。",
+          "growthZh": "本月新增 8,913 星"
         },
         {
           "name": "mvschwarz/openrig",
@@ -131,7 +154,9 @@
           "stars": "8,437",
           "growth": "6,245 stars this month",
           "cover": "source-covers/github/5b3e1a2ff09a29bdcb1ef07b.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1198124295/1af4015a-ccfc-48e2-9d75-81ff3f15e3a1"
+          "originalCover": "https://repository-images.githubusercontent.com/1198124295/1af4015a-ccfc-48e2-9d75-81ff3f15e3a1",
+          "descriptionZh": "从 Claude Code、Codex 和 Pi 构建您自己的代理网络：具有角色、共享上下文和拥有工作的持久团队。",
+          "growthZh": "本月新增 6,245 星"
         },
         {
           "name": "cursor/plugins",
@@ -141,7 +166,9 @@
           "stars": "14,809",
           "growth": "5,817 stars this month",
           "cover": "source-covers/github/062dd431984c78f8b6ebc3e3.png",
-          "originalCover": "https://avatars.githubusercontent.com/u/126759922?s=400&v=4"
+          "originalCover": "https://avatars.githubusercontent.com/u/126759922?s=400&v=4",
+          "descriptionZh": "光标插件规范和官方插件",
+          "growthZh": "本月新增 5,817 星"
         },
         {
           "name": "Leonxlnx/taste-skill",
@@ -151,7 +178,9 @@
           "stars": "106,725",
           "growth": "15,496 stars this month",
           "cover": "source-covers/github/7563b7481335e10535f08c16.jpg",
-          "originalCover": "https://repository-images.githubusercontent.com/1162099055/0a968964-fdca-4781-853b-84afc2bc2d31"
+          "originalCover": "https://repository-images.githubusercontent.com/1162099055/0a968964-fdca-4781-853b-84afc2bc2d31",
+          "descriptionZh": "赋予编码代理品味的代理技能：艺术指导、参考图像和浏览器检查，而不是通用的 AI 页面",
+          "growthZh": "本月新增 15,496 星"
         },
         {
           "name": "flutter/flutter",
@@ -161,7 +190,9 @@
           "stars": "180,796",
           "growth": "2,145 stars this month",
           "cover": "source-covers/github/f684611d0025c51323817bdc.png",
-          "originalCover": "https://repository-images.githubusercontent.com/31792824/fb7e5700-6ccc-11e9-83fe-f602e1e1a9f1"
+          "originalCover": "https://repository-images.githubusercontent.com/31792824/fb7e5700-6ccc-11e9-83fe-f602e1e1a9f1",
+          "descriptionZh": "Flutter 让您可以轻松快速地为移动设备及其他领域构建精美的应用程序",
+          "growthZh": "本月新增 2,145 星"
         },
         {
           "name": "android/skills",
@@ -171,7 +202,8 @@
           "stars": "10,140",
           "growth": "2,506 stars this month",
           "cover": "source-covers/github/93e454da5ee42456b139429f.png",
-          "originalCover": "https://opengraph.githubassets.com/c085515b4c90d6180c758ae9a6df3f1e4052599ed31f64ef6cbb8ee48f43d8ab/android/skills"
+          "originalCover": "https://opengraph.githubassets.com/c085515b4c90d6180c758ae9a6df3f1e4052599ed31f64ef6cbb8ee48f43d8ab/android/skills",
+          "growthZh": "本月新增 2,506 星"
         },
         {
           "name": "affaan-m/ECC",
@@ -181,7 +213,9 @@
           "stars": "293,756",
           "growth": "25,494 stars this month",
           "cover": "source-covers/github/8e91a314a61047effcf11c17.png",
-          "originalCover": "https://opengraph.githubassets.com/8730d333760ff13bd185dae4690dd3f9ebbcfeda54dd03f1d26f9c3c2e89c537/affaan-m/ECC"
+          "originalCover": "https://opengraph.githubassets.com/8730d333760ff13bd185dae4690dd3f9ebbcfeda54dd03f1d26f9c3c2e89c537/affaan-m/ECC",
+          "descriptionZh": "代理利用性能优化系统。 Claude Code、Codex、Opencode、Cursor 等的技能、直觉、记忆、安全性和研究优先的开发。",
+          "growthZh": "本月新增 25,494 星"
         },
         {
           "name": "AgriciDaniel/claude-seo",
@@ -191,7 +225,9 @@
           "stars": "24,827",
           "growth": "6,415 stars this month",
           "cover": "source-covers/github/55d3d7fbeb1ea5fabeb9b63c.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1152014594/0e048e51-24ae-435b-9b32-cc6b3def5356"
+          "originalCover": "https://repository-images.githubusercontent.com/1152014594/0e048e51-24ae-435b-9b32-cc6b3def5356",
+          "descriptionZh": "Claude Code 的通用 SEO 技能。 26 个子技能 + 19 个子代理，涵盖技术 SEO、E-E-A-T、模式、GEO/AEO、代理准备情况（Lighthouse Agentic Browsing、WebMCP、llms.txt）、反向链接、本地 SEO、电子商务、国际 SEO、Google API 和 PDF/Excel 报告。实时 SEO 数据的 9 种可选扩展。",
+          "growthZh": "本月新增 6,415 星"
         }
       ]
     },
@@ -206,7 +242,9 @@
           "stars": "43,536",
           "growth": "11,766 stars this week",
           "cover": "source-covers/github/fdc027bac2d38ae7af4482f8.png",
-          "originalCover": "https://opengraph.githubassets.com/9b7829b13d6a4a7235ba308c80af19e669fd1a2eb630e1e05e60a41c773a42ff/Nutlope/hallmark"
+          "originalCover": "https://opengraph.githubassets.com/9b7829b13d6a4a7235ba308c80af19e669fd1a2eb630e1e05e60a41c773a42ff/Nutlope/hallmark",
+          "descriptionZh": "Claude Code、Cursor、Codex 的防 AI 设计技巧。",
+          "growthZh": "本周新增 11,766 星"
         },
         {
           "name": "cloudflare/security-audit-skill",
@@ -216,7 +254,9 @@
           "stars": "54,839",
           "growth": "12,838 stars this week",
           "cover": "source-covers/github/556268cddaa0567389bb62c4.png",
-          "originalCover": "https://opengraph.githubassets.com/736038ef36e0d87fe09f8bc8be4e844ce7b207016cf9373fef6f08c7c3eba6d4/cloudflare/security-audit-skill"
+          "originalCover": "https://opengraph.githubassets.com/736038ef36e0d87fe09f8bc8be4e844ce7b207016cf9373fef6f08c7c3eba6d4/cloudflare/security-audit-skill",
+          "descriptionZh": "用于多阶段安全审计的编码代理技能，具有独立验证的机器可读结果",
+          "growthZh": "本周新增 12,838 星"
         },
         {
           "name": "AgriciDaniel/claude-seo",
@@ -226,7 +266,9 @@
           "stars": "24,827",
           "growth": "4,478 stars this week",
           "cover": "source-covers/github/55d3d7fbeb1ea5fabeb9b63c.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1152014594/0e048e51-24ae-435b-9b32-cc6b3def5356"
+          "originalCover": "https://repository-images.githubusercontent.com/1152014594/0e048e51-24ae-435b-9b32-cc6b3def5356",
+          "descriptionZh": "Claude Code 的通用 SEO 技能。 26 个子技能 + 19 个子代理，涵盖技术 SEO、E-E-A-T、模式、GEO/AEO、代理准备情况（Lighthouse Agentic Browsing、WebMCP、llms.txt）、反向链接、本地 SEO、电子商务、国际 SEO、Google API 和 PDF/Excel 报告。实时 SEO 数据的 9 种可选扩展。",
+          "growthZh": "本周新增 4,478 星"
         },
         {
           "name": "pbakaus/impeccable",
@@ -236,7 +278,9 @@
           "stars": "97,800",
           "growth": "11,323 stars this week",
           "cover": "source-covers/github/6a7996849525f232ecef1ec3.png",
-          "originalCover": "https://opengraph.githubassets.com/8bcf89563559554db490d6355d438d855523a8d076a8c303f75beaba75eb5669/pbakaus/impeccable"
+          "originalCover": "https://opengraph.githubassets.com/8bcf89563559554db490d6355d438d855523a8d076a8c303f75beaba75eb5669/pbakaus/impeccable",
+          "descriptionZh": "编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。",
+          "growthZh": "本周新增 11,323 星"
         },
         {
           "name": "obra/superpowers",
@@ -246,7 +290,9 @@
           "stars": "309,794",
           "growth": "5,474 stars this week",
           "cover": "source-covers/github/1ef0e23bf08c087c88875be3.png",
-          "originalCover": "https://opengraph.githubassets.com/8365da1a31ad8e61dae46134692f2049847eea36a2628f73101269356ab7f5b0/obra/superpowers"
+          "originalCover": "https://opengraph.githubassets.com/8365da1a31ad8e61dae46134692f2049847eea36a2628f73101269356ab7f5b0/obra/superpowers",
+          "descriptionZh": "有效的代理技能框架和软件开发方法。",
+          "growthZh": "本周新增 5,474 星"
         },
         {
           "name": "multica-ai/andrej-karpathy-skills",
@@ -256,7 +302,9 @@
           "stars": "227,246",
           "growth": "4,178 stars this week",
           "cover": "source-covers/github/a1e2aaf4755391e158ca7ff3.png",
-          "originalCover": "https://opengraph.githubassets.com/6471337dc662cdc100f88ab6929383171bd5c0751c28294c426e67837328993d/multica-ai/andrej-karpathy-skills"
+          "originalCover": "https://opengraph.githubassets.com/6471337dc662cdc100f88ab6929383171bd5c0751c28294c426e67837328993d/multica-ai/andrej-karpathy-skills",
+          "descriptionZh": "用于改进 Claude 代码行为的单个 CLAUDE.md 文件，源自 Andrej Karpathy 对 LLM 编码陷阱的观察。",
+          "growthZh": "本周新增 4,178 星"
         },
         {
           "name": "TauricResearch/TradingAgents",
@@ -266,7 +314,9 @@
           "stars": "118,902",
           "growth": "5,490 stars this week",
           "cover": "source-covers/github/ab10eb6c13b21d45d1ed4a31.png",
-          "originalCover": "https://repository-images.githubusercontent.com/909213664/8cfc671d-b54b-400e-beab-8ef0bbf39aa1"
+          "originalCover": "https://repository-images.githubusercontent.com/909213664/8cfc671d-b54b-400e-beab-8ef0bbf39aa1",
+          "descriptionZh": "TradingAgents：多代理LLM金融交易框架",
+          "growthZh": "本周新增 5,490 星"
         },
         {
           "name": "jakubkrehel/skills",
@@ -276,7 +326,9 @@
           "stars": "9,502",
           "growth": "1,107 stars this week",
           "cover": "source-covers/github/31da91de18578c4e12977766.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1296300799/604a8cf6-9e66-4c34-bb2b-d583e3907e05"
+          "originalCover": "https://repository-images.githubusercontent.com/1296300799/604a8cf6-9e66-4c34-bb2b-d583e3907e05",
+          "descriptionZh": "一系列代理技能可帮助您构建出色的界面。",
+          "growthZh": "本周新增 1,107 星"
         },
         {
           "name": "Leonxlnx/taste-skill",
@@ -286,7 +338,9 @@
           "stars": "106,725",
           "growth": "4,712 stars this week",
           "cover": "source-covers/github/7563b7481335e10535f08c16.jpg",
-          "originalCover": "https://repository-images.githubusercontent.com/1162099055/0a968964-fdca-4781-853b-84afc2bc2d31"
+          "originalCover": "https://repository-images.githubusercontent.com/1162099055/0a968964-fdca-4781-853b-84afc2bc2d31",
+          "descriptionZh": "赋予编码代理品味的代理技能：艺术指导、参考图像和浏览器检查，而不是通用的 AI 页面",
+          "growthZh": "本周新增 4,712 星"
         },
         {
           "name": "pingdotgg/t3code",
@@ -296,7 +350,8 @@
           "stars": "34,001",
           "growth": "2,775 stars this week",
           "cover": "source-covers/github/79fd126bb58222771b493cdf.png",
-          "originalCover": "https://opengraph.githubassets.com/ef449733cd35f2259f3a2ac23c60da1c997008cb805b2d9ab99bee8541206f31/pingdotgg/t3code"
+          "originalCover": "https://opengraph.githubassets.com/ef449733cd35f2259f3a2ac23c60da1c997008cb805b2d9ab99bee8541206f31/pingdotgg/t3code",
+          "growthZh": "本周新增 2,775 星"
         },
         {
           "name": "thedotmack/claude-mem",
@@ -306,7 +361,9 @@
           "stars": "107,192",
           "growth": "3,518 stars this week",
           "cover": "source-covers/github/cea0afa8354061d5151833ca.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1048065319/62ccff98-4c97-4bab-97b7-ed6e1995cfba"
+          "originalCover": "https://repository-images.githubusercontent.com/1048065319/62ccff98-4c97-4bab-97b7-ed6e1995cfba",
+          "descriptionZh": "每个座席跨会话的持久上下文 – 捕获座席在会话期间所做的所有操作，使用 AI 对其进行压缩，并将相关上下文注入到未来的会话中。适用于 Claude Code、OpenClaw、Codex、Gemini、Hermes、Copilot、OpenCode 等",
+          "growthZh": "本周新增 3,518 星"
         },
         {
           "name": "anthropics/skills",
@@ -316,7 +373,9 @@
           "stars": "185,736",
           "growth": "1,888 stars this week",
           "cover": "source-covers/github/c2e3b8b75bd404424a1fc893.png",
-          "originalCover": "https://opengraph.githubassets.com/9b7829b13d6a4a7235ba308c80af19e669fd1a2eb630e1e05e60a41c773a42ff/anthropics/skills"
+          "originalCover": "https://opengraph.githubassets.com/9b7829b13d6a4a7235ba308c80af19e669fd1a2eb630e1e05e60a41c773a42ff/anthropics/skills",
+          "descriptionZh": "代理技能的公共存储库",
+          "growthZh": "本周新增 1,888 星"
         },
         {
           "name": "affaan-m/ECC",
@@ -326,7 +385,9 @@
           "stars": "293,756",
           "growth": "6,506 stars this week",
           "cover": "source-covers/github/8e91a314a61047effcf11c17.png",
-          "originalCover": "https://opengraph.githubassets.com/8730d333760ff13bd185dae4690dd3f9ebbcfeda54dd03f1d26f9c3c2e89c537/affaan-m/ECC"
+          "originalCover": "https://opengraph.githubassets.com/8730d333760ff13bd185dae4690dd3f9ebbcfeda54dd03f1d26f9c3c2e89c537/affaan-m/ECC",
+          "descriptionZh": "代理利用性能优化系统。 Claude Code、Codex、Opencode、Cursor 等的技能、直觉、记忆、安全性和研究优先的开发。",
+          "growthZh": "本周新增 6,506 星"
         },
         {
           "name": "YuJunZhiXue/dsh-purge",
@@ -336,7 +397,8 @@
           "stars": "14,343",
           "growth": "6,665 stars this week",
           "cover": "source-covers/github/61104a2a85f2648f872a7814.png",
-          "originalCover": "https://opengraph.githubassets.com/32b2cda7090dca7c5197ddf602fccba2086a6b62ae452ec08a59d3ab36682109/YuJunZhiXue/dsh-purge"
+          "originalCover": "https://opengraph.githubassets.com/32b2cda7090dca7c5197ddf602fccba2086a6b62ae452ec08a59d3ab36682109/YuJunZhiXue/dsh-purge",
+          "growthZh": "本周新增 6,665 星"
         },
         {
           "name": "AstrBotDevs/AstrBot",
@@ -346,7 +408,9 @@
           "stars": "45,246",
           "growth": "2,133 stars this week",
           "cover": "source-covers/github/c9ec76cdb03f3391cc315b33.png",
-          "originalCover": "https://opengraph.githubassets.com/c236c9a5be1c1b3fad37d27420c2cac1c64d560645edf03ddcbd360cd46b9f8b/AstrBotDevs/AstrBot"
+          "originalCover": "https://opengraph.githubassets.com/c236c9a5be1c1b3fad37d27420c2cac1c64d560645edf03ddcbd360cd46b9f8b/AstrBotDevs/AstrBot",
+          "descriptionZh": "AI Agent Assistant & 开发框架，集成了大量 IM 平台、LLM、插件和 AI 功能，可以成为您的 openclaw 替代方案。 ✨",
+          "growthZh": "本周新增 2,133 星"
         }
       ]
     },
@@ -361,7 +425,9 @@
           "stars": "107,192",
           "growth": "1,723 stars today",
           "cover": "source-covers/github/cea0afa8354061d5151833ca.png",
-          "originalCover": "https://repository-images.githubusercontent.com/1048065319/62ccff98-4c97-4bab-97b7-ed6e1995cfba"
+          "originalCover": "https://repository-images.githubusercontent.com/1048065319/62ccff98-4c97-4bab-97b7-ed6e1995cfba",
+          "descriptionZh": "每个座席跨会话的持久上下文 – 捕获座席在会话期间所做的所有操作，使用 AI 对其进行压缩，并将相关上下文注入到未来的会话中。适用于 Claude Code、OpenClaw、Codex、Gemini、Hermes、Copilot、OpenCode 等",
+          "growthZh": "今日新增 1,723 星"
         },
         {
           "name": "mattpocock/skills",
@@ -371,7 +437,9 @@
           "stars": "307,979",
           "growth": "882 stars today",
           "cover": "source-covers/github/f18f90ebe9b8fd1d7f18211c.png",
-          "originalCover": "https://opengraph.githubassets.com/990513df47362a7cc6395dc337c77a3ae308472c38bbbc0336e177c426588ac6/mattpocock/skills"
+          "originalCover": "https://opengraph.githubassets.com/990513df47362a7cc6395dc337c77a3ae308472c38bbbc0336e177c426588ac6/mattpocock/skills",
+          "descriptionZh": "真正工程师的技能。直接来自我的 .agents 目录。",
+          "growthZh": "今日新增 882 星"
         },
         {
           "name": "Donchitos/Claude-Code-Game-Studios",
@@ -381,7 +449,9 @@
           "stars": "30,781",
           "growth": "1,347 stars today",
           "cover": "source-covers/github/32d4b6867486e101e3b76a8f.png",
-          "originalCover": "https://opengraph.githubassets.com/80fe76680001eaca5e7c2bad5ab9405db0d8dedc4ba2401078bf9478a26f3cbf/Donchitos/Claude-Code-Game-Studios"
+          "originalCover": "https://opengraph.githubassets.com/80fe76680001eaca5e7c2bad5ab9405db0d8dedc4ba2401078bf9478a26f3cbf/Donchitos/Claude-Code-Game-Studios",
+          "descriptionZh": "将 Claude Code 转变为完整的游戏开发工作室 — 49 个 AI 代理、72 种工作流程技能以及反映真实工作室层次结构的完整协调系统。",
+          "growthZh": "今日新增 1,347 星"
         },
         {
           "name": "pingdotgg/t3code",
@@ -391,7 +461,8 @@
           "stars": "34,001",
           "growth": "1,148 stars today",
           "cover": "source-covers/github/79fd126bb58222771b493cdf.png",
-          "originalCover": "https://opengraph.githubassets.com/ef449733cd35f2259f3a2ac23c60da1c997008cb805b2d9ab99bee8541206f31/pingdotgg/t3code"
+          "originalCover": "https://opengraph.githubassets.com/ef449733cd35f2259f3a2ac23c60da1c997008cb805b2d9ab99bee8541206f31/pingdotgg/t3code",
+          "growthZh": "今日新增 1,148 星"
         },
         {
           "name": "Renhuai123/ziwei-doushu",
@@ -401,7 +472,8 @@
           "stars": "12,013",
           "growth": "1,093 stars today",
           "cover": "source-covers/github/729287e82df5a27ba36fccf7.png",
-          "originalCover": "https://opengraph.githubassets.com/dc2db46b0e08c6cdd1279967ef217bf7518942684c71df81400cf29bd6a53a34/Renhuai123/ziwei-doushu"
+          "originalCover": "https://opengraph.githubassets.com/dc2db46b0e08c6cdd1279967ef217bf7518942684c71df81400cf29bd6a53a34/Renhuai123/ziwei-doushu",
+          "growthZh": "今日新增 1,093 星"
         },
         {
           "name": "milind-soni/OpenMausBot",
@@ -411,7 +483,9 @@
           "stars": "9,279",
           "growth": "1,304 stars today",
           "cover": "source-covers/github/ca177d049d8934ab5aa4c668.png",
-          "originalCover": "https://opengraph.githubassets.com/d39e99036c511ec396641dcfd7974d8529ed157141bc02da56fb785664293a41/milind-soni/OpenMausBot"
+          "originalCover": "https://opengraph.githubassets.com/d39e99036c511ec396641dcfd7974d8529ed157141bc02da56fb785664293a41/milind-soni/OpenMausBot",
+          "descriptionZh": "开源 Grok Bot 替代品，带有机器人可以使用的虚拟机",
+          "growthZh": "今日新增 1,304 星"
         },
         {
           "name": "pbakaus/impeccable",
@@ -421,7 +495,9 @@
           "stars": "97,800",
           "growth": "1,339 stars today",
           "cover": "source-covers/github/6a7996849525f232ecef1ec3.png",
-          "originalCover": "https://opengraph.githubassets.com/8bcf89563559554db490d6355d438d855523a8d076a8c303f75beaba75eb5669/pbakaus/impeccable"
+          "originalCover": "https://opengraph.githubassets.com/8bcf89563559554db490d6355d438d855523a8d076a8c303f75beaba75eb5669/pbakaus/impeccable",
+          "descriptionZh": "编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。",
+          "growthZh": "今日新增 1,339 星"
         },
         {
           "name": "obra/superpowers",
@@ -431,7 +507,9 @@
           "stars": "309,794",
           "growth": "663 stars today",
           "cover": "source-covers/github/1ef0e23bf08c087c88875be3.png",
-          "originalCover": "https://opengraph.githubassets.com/8365da1a31ad8e61dae46134692f2049847eea36a2628f73101269356ab7f5b0/obra/superpowers"
+          "originalCover": "https://opengraph.githubassets.com/8365da1a31ad8e61dae46134692f2049847eea36a2628f73101269356ab7f5b0/obra/superpowers",
+          "descriptionZh": "有效的代理技能框架和软件开发方法。",
+          "growthZh": "今日新增 663 星"
         },
         {
           "name": "lightpanda-io/browser",
@@ -441,7 +519,9 @@
           "stars": "38,868",
           "growth": "929 stars today",
           "cover": "source-covers/github/82864bb5539898910e478147.png",
-          "originalCover": "https://opengraph.githubassets.com/0f0e2816086fcb905bf0bcc79514ddf624bc3477f52dac9d3337946328aa1229/lightpanda-io/browser"
+          "originalCover": "https://opengraph.githubassets.com/0f0e2816086fcb905bf0bcc79514ddf624bc3477f52dac9d3337946328aa1229/lightpanda-io/browser",
+          "descriptionZh": "Lightpanda：专为人工智能和自动化设计的无头浏览器",
+          "growthZh": "今日新增 929 星"
         },
         {
           "name": "HKUDS/DeepTutor",
@@ -451,7 +531,9 @@
           "stars": "52,392",
           "growth": "1,035 stars today",
           "cover": "source-covers/github/8c2620b3cff4e0657fb3caa1.png",
-          "originalCover": "https://opengraph.githubassets.com/782fc0ac7e18e30723aae848a988034dc4155a5fb4d20c6944a50878e6861f30/HKUDS/DeepTutor"
+          "originalCover": "https://opengraph.githubassets.com/782fc0ac7e18e30723aae848a988034dc4155a5fb4d20c6944a50878e6861f30/HKUDS/DeepTutor",
+          "descriptionZh": "DeepTutor：终身个性化辅导。 https://deeptutor.info/。",
+          "growthZh": "今日新增 1,035 星"
         },
         {
           "name": "Orkas-AI/Orkas",
@@ -461,7 +543,9 @@
           "stars": "5,923",
           "growth": "1,004 stars today",
           "cover": "source-covers/github/a3f4bf6ebc74e89384ab5055.png",
-          "originalCover": "https://opengraph.githubassets.com/79ef664b7b3175045f78281866b6ec7a487ecf818e7fc4fed11978ceb112eb9f/Orkas-AI/Orkas"
+          "originalCover": "https://opengraph.githubassets.com/79ef664b7b3175045f78281866b6ec7a487ecf818e7fc4fed11978ceb112eb9f/Orkas-AI/Orkas",
+          "descriptionZh": "Orkas 是一个开源 (MIT)、本地优先的桌面 AI 团队：指挥官将您的目标转化为待办事项，并通过项目、预定的自动化和连接器协调 16 个内置专家代理以及 Claude Code、Codex、OpenCode、OpenClaw 和 Hermes。适用于 macOS 和 Windows 的免费应用程序；内置模型或您自己的密钥。",
+          "growthZh": "今日新增 1,004 星"
         },
         {
           "name": "THU-MAIC/OpenMAIC",
@@ -471,7 +555,9 @@
           "stars": "42,037",
           "growth": "115 stars today",
           "cover": "source-covers/github/56332dfba2af282bb9ac5d45.png",
-          "originalCover": "https://opengraph.githubassets.com/383633214af1bc5fee827cf1b37bb528455ee5ed1b4011dfa3a5cc6cf0c22dab/THU-MAIC/OpenMAIC"
+          "originalCover": "https://opengraph.githubassets.com/383633214af1bc5fee827cf1b37bb528455ee5ed1b4011dfa3a5cc6cf0c22dab/THU-MAIC/OpenMAIC",
+          "descriptionZh": "开放式多智能体互动课堂——一键获得沉浸式多智能体学习体验",
+          "growthZh": "今日新增 115 星"
         },
         {
           "name": "bregman-arie/devops-exercises",
@@ -481,7 +567,9 @@
           "stars": "85,631",
           "growth": "341 stars today",
           "cover": "source-covers/github/34047ef081e6f5f17af76cc5.png",
-          "originalCover": "https://repository-images.githubusercontent.com/212639071/dc05f400-f0a1-11ea-92d7-163d68cdd605"
+          "originalCover": "https://repository-images.githubusercontent.com/212639071/dc05f400-f0a1-11ea-92d7-163d68cdd605",
+          "descriptionZh": "Linux、Jenkins、AWS、SRE、Prometheus、Docker、Python、Ansible、Git、Kubernetes、Terraform、OpenStack、SQL、NoSQL、Azure、GCP、DNS、弹性、网络、虚拟化。 DevOps 面试问题",
+          "growthZh": "今日新增 341 星"
         },
         {
           "name": "vorssaint/vorssaint-utils",
@@ -491,7 +579,9 @@
           "stars": "31,599",
           "growth": "499 stars today",
           "cover": "source-covers/github/bf9c14fb9f4a2d94c26ee224.png",
-          "originalCover": "https://opengraph.githubassets.com/9de9c0fa58adb12d560db092388e2366e19992abb586a05c8d257c46b61c3012/vorssaint/vorssaint-utils"
+          "originalCover": "https://opengraph.githubassets.com/9de9c0fa58adb12d560db092388e2366e19992abb586a05c8d257c46b61c3012/vorssaint/vorssaint-utils",
+          "descriptionZh": "免费开源 macOS 菜单栏工具包。",
+          "growthZh": "今日新增 499 星"
         }
       ]
     }

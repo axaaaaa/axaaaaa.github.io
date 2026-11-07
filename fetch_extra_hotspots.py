@@ -1,12 +1,30 @@
 """Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
 import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
+from html import unescape
+from email.utils import parsedate_to_datetime
 from urllib.parse import urljoin,urlparse,quote
 from datetime import datetime,timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers,cache_douban_posters
+from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers,cache_douban_posters,public_directory
 SOURCES={
+ 'dongchedi':{'name': '懂车帝', 'kind': '汽车资讯', 'url': 'https://www.dongchedi.com/', 'endpoint': 'https://www.dongchedi.com/', 'icon': 'https://www.dongchedi.com/favicon.ico'},
+ 'autohome':{'name': '汽车之家', 'kind': '汽车资讯', 'url': 'https://www.autohome.com.cn/news/', 'endpoint': 'https://www.autohome.com.cn/news/', 'icon': 'https://www.autohome.com.cn/favicon.ico'},
+ 'pcauto':{'name': '太平洋汽车', 'kind': '汽车资讯', 'url': 'https://www.pcauto.com.cn/news/', 'endpoint': 'https://www.pcauto.com.cn/news/', 'icon': 'https://www.pcauto.com.cn/favicon.ico'},
+
+ 'reuters':{'name': '路透社', 'kind': '国际新闻 · Google 新闻索引 · 中文机译', 'url': 'https://www.reuters.com/world/', 'endpoint': 'https://news.google.com/rss/search?q=site:reuters.com/world+when:3d&hl=en-US&gl=US&ceid=US:en', 'icon': 'https://reutersagency.com/hubfs/Favicon-1.png'},
+ 'ap':{'name': '美联社 AP', 'kind': '国际新闻 · Google 新闻索引 · 中文机译', 'url': 'https://apnews.com/world-news', 'endpoint': 'https://news.google.com/rss/search?q=site:apnews.com/article+world+when:3d&hl=en-US&gl=US&ceid=US:en', 'icon': 'https://apnews.com/favicon.ico'},
+ 'bbc':{'name': 'BBC 国际新闻', 'kind': '国际新闻 · 中文机译', 'url': 'https://www.bbc.com/news/world', 'endpoint': 'https://feeds.bbci.co.uk/news/world/rss.xml', 'icon': 'https://www.bbc.com/favicon.ico'},
+ 'aljazeera':{'name': '半岛电视台英文版', 'kind': '国际新闻 · 中文机译', 'url': 'https://www.aljazeera.com/', 'endpoint': 'https://www.aljazeera.com/xml/rss/all.xml', 'icon': 'https://www.aljazeera.com/favicon_aje.ico'},
+ 'guardian':{'name': '卫报国际版', 'kind': '国际新闻 · 中文机译', 'url': 'https://www.theguardian.com/world', 'endpoint': 'https://www.theguardian.com/world/rss', 'icon': 'https://www.theguardian.com/favicon.ico'},
+ 'nhk':{'name': 'NHK WORLD-JAPAN', 'kind': '国际新闻 · Google 新闻索引 · 中文机译', 'url': 'https://www3.nhk.or.jp/nhkworld/news/', 'endpoint': 'https://news.google.com/rss/search?q=site:nhk.or.jp/nhkworld+when:3d&hl=en-US&gl=US&ceid=US:en', 'icon': 'https://www3.nhk.or.jp/nhkworld/common/site_images/nw_webapp_news_192x192.png'},
+
+ 'globaltimes':{'name':'环球时报（英文版）','kind':'国际资讯 · 中文机译','url':'https://www.globaltimes.cn/','endpoint':'https://www.globaltimes.cn/','icon':'https://www.globaltimes.cn/favicon.ico'},
+ 'nytimes':{'name':'纽约时报','kind':'国际新闻 · 中文机译','url':'https://www.nytimes.com/section/world','endpoint':'https://rss.nytimes.com/services/xml/rss/nyt/World.xml','icon':'https://www.nytimes.com/favicon.ico'},
+ 'wsj':{'name':'华尔街日报','kind':'国际新闻 · 中文机译','url':'https://www.wsj.com/world','endpoint':'https://feeds.content.dowjones.io/public/rss/RSSWorldNews','icon':'https://www.wsj.com/favicon.ico'},
+ 'maoyan':{'name':'猫眼','kind':'国内票房榜','url':'https://www.maoyan.com/board/1','endpoint':'https://www.maoyan.com/board/1','icon':'https://www.maoyan.com/favicon.ico'},
+ 'douban_book':{'name':'豆瓣读书','kind':'新书速递','url':'https://book.douban.com/latest','endpoint':'https://book.douban.com/','icon':'https://img3.doubanio.com/favicon.ico'},
  'douban':{'name': '豆瓣电影', 'kind': '热门电影 · 豆瓣评分', 'url': 'https://movie.douban.com/explore', 'endpoint': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=24&page_start=0', 'icon': 'https://movie.douban.com/favicon.ico'},
  'microsoft':{'name': '微软安全博客', 'kind': '安全研究与资讯 · 中文机译', 'url': 'https://www.microsoft.com/en-us/security/blog/', 'endpoint': 'https://www.microsoft.com/en-us/security/blog/feed/', 'icon': 'https://www.microsoft.com/favicon.ico'},
  'seebug':{'name': 'Seebug 漏洞库', 'kind': '最新漏洞情报', 'url': 'https://www.seebug.org/', 'endpoint': 'https://www.seebug.org/', 'icon': 'https://www.seebug.org/favicon.ico'},
@@ -113,7 +131,166 @@ def parse_pojie_home(key,body):
  if len(items)<10:raise ValueError('Incomplete Pojie homepage top 10')
  return items[:10]
 
+def parse_douban_books(body):
+ text=body.decode('utf-8');rows=[];seen=set()
+ for shelf in re.findall(r'<ul\b[^>]*class=["\'][^"\']*\blist-express\b[^"\']*["\'][^>]*>(.*?)</ul>',text,re.S):
+  for block in re.findall(r'<li\b[^>]*>(.*?)</li>',shelf,re.S):
+   entry=re.search(r'<div class="title">\s*(<a\b.*?</a>)',block,re.S)
+   if not entry:continue
+   links=Links();links.feed(entry.group(1))
+   if not links.links:continue
+   url,title=links.links[0];url=url.split('?',1)[0].split('#',1)[0]
+   if not re.fullmatch(r'https://book\.douban\.com/subject/[0-9]+/',url) or not title or url in seen:continue
+   seen.add(url);meta=[]
+   for field in ('author','year','publisher'):
+    match=re.search(r'<span class="'+field+r'">\s*([^<]+?)\s*</span>',block)
+    if match:meta.append(clean(unescape(match.group(1))))
+   row={'title':title,'url':url,'meta':' · '.join(meta)}
+   cover=re.search(r'<img\b[^>]*\bsrc="([^"]+)"',block)
+   if cover:
+    image=clean_cover('douban_book',unescape(cover.group(1)))
+    if image:row['cover']=image
+   rows.append(row)
+   if len(rows)==24:return rows
+ if not rows:raise ValueError('No valid Douban new books')
+ return rows
+
+def parse_maoyan_board(body):
+ text=body.decode('utf8');rows={};seen=set()
+ for block in re.findall(r'<dd\b[^>]*>(.*?)</dd>',text,re.S):
+  rank=re.search(r'<i\b[^>]*class="[^"]*\bboard-index\b[^"]*"[^>]*>\s*(\d+)\s*</i>',block)
+  name=re.search(r'<p\s+class="name">\s*(<a\b.*?</a>)',block,re.S)
+  if not rank or not name:continue
+  links=Links();links.feed(name[1])
+  if not links.links:continue
+  path,title=links.links[0];r=int(rank[1])
+  if not re.fullmatch(r'/films/[0-9]+',path) or not title or path in seen or r in rows or not 1<=r<=10:continue
+  seen.add(path)
+  date=re.search(r'<p class="releasetime">([^<]+)</p>',block)
+  row={'title':title,'url':'https://www.maoyan.com'+path,'meta':clean(unescape(date[1])) if date else ''}
+  for attrs in re.findall(r'<img\b([^>]+)>',block):
+   if not re.search(r'\bclass="[^"]*\bboard-img\b',attrs):continue
+   for field in ('data-src','src'):
+    img=re.search(r'(?:^|\s)'+field+r'="([^"]+)"',attrs)
+    if img:
+     cover=clean_cover('maoyan',urljoin(SOURCES['maoyan']['url'],unescape(img[1])))
+     if cover:row['cover']=cover;break
+   break
+  rows[r]=row
+ if not rows or sorted(rows)!=list(range(1,len(rows)+1)):raise ValueError('No contiguous Maoyan ranking')
+ return [rows[r] for r in sorted(rows)]
+
+def parse_maoyan_metrics(body,movie_id):
+ text=body.decode('utf8')
+ match=re.search(r'\bvar\s+AppData\s*=\s*',text)
+ if not match:raise ValueError('No Maoyan movie details')
+ data=json.JSONDecoder().raw_decode(text[match.end():])[0]
+ movie=data.get('movie') or {}
+ if str(movie.get('id'))!=str(movie_id):raise ValueError('Maoyan movie ID mismatch')
+ box=((data.get('mbox') or {}).get('mbox') or {}).get('sumBox')
+ rating=movie.get('sc');out={}
+ if type(box) in (int,float) and 0<=box<1_000_000_000:
+  out['boxOffice']=f'{box:,.2f}'.rstrip('0').rstrip('.')+' 万元'
+ if type(rating) in (int,float) and 0<rating<=10:
+  out['rating']=f'{rating:.1f}'
+ return out
+
+def add_maoyan_metrics(items):
+ def enrich(row):
+  movie_id=row['url'].rsplit('/',1)[-1]
+  if not re.fullmatch(r'[0-9]+',movie_id):return row
+  try:return {**row,**parse_maoyan_metrics(request_body('https://m.maoyan.com/movie/'+movie_id),movie_id)}
+  except Exception as error:
+   print(f'MAOYAN_METRICS_PENDING {movie_id}: {type(error).__name__}')
+   return row
+ with ThreadPoolExecutor(max_workers=4) as pool:return list(pool.map(enrich,items))
+
+def fetch_maoyan_board():
+ from playwright.sync_api import sync_playwright
+ with sync_playwright() as playwright:
+  browser=playwright.chromium.launch(headless=True,channel=os.environ.get('MAOYAN_BROWSER_CHANNEL') or None)
+  try:
+   page=browser.new_page()
+   page.goto(SOURCES['maoyan']['endpoint'],wait_until='domcontentloaded',timeout=30000)
+   page.locator('.board-index').first.wait_for(timeout=15000)
+   body=page.content().encode('utf8')
+  finally:browser.close()
+ return parse_maoyan_board(body)
+
+INTERNATIONAL_NEWS = {'globaltimes','nytimes','wsj','reuters','ap','bbc','aljazeera','guardian','nhk'}
+INDEXED_NEWS = {'reuters':'reuters.com','ap':'apnews.com','nhk':'www3.nhk.or.jp'}
+NEWS_DOMAINS = {'globaltimes':('globaltimes.cn',),'nytimes':('nytimes.com',),'wsj':('wsj.com',),
+                'bbc':('bbc.co.uk','bbc.com'),'aljazeera':('aljazeera.com',),'guardian':('theguardian.com',)}
+
+def indexed_headlines(key,items):
+ domain=INDEXED_NEWS[key]
+ for item in items:
+  source=item.find('source')
+  if source is None or urlparse(source.get('url','')).hostname not in (domain,'www.'+domain):continue
+  title=clean(item.findtext('title') or '')
+  suffix=' - '+clean(source.text or '')
+  if source.text and title.endswith(suffix):title=title[:-len(suffix)]
+  yield title,item.findtext('link'),item.findtext('pubDate')
+
+
+def parse_international_news(key,body):
+ if key=='globaltimes':
+  links=Links();links.feed(body.decode('utf8'))
+  candidates=((title,url,'') for url,title in links.links if re.fullmatch(r'https://www\.globaltimes\.cn/page/\d{6}/\d+\.shtml',url))
+ else:
+  items=ET.fromstring(body).findall('./channel/item')
+  candidates=indexed_headlines(key,items) if key in INDEXED_NEWS else (
+   (item.findtext('title'),item.findtext('link'),item.findtext('pubDate')) for item in items)
+ rows=[];seen=set()
+ domains=NEWS_DOMAINS.get(key,())
+ pattern=(r'https://news\.google\.com/rss/articles/[^\s]+' if key in INDEXED_NEWS
+          else r'https://(?:www\.)?(?:'+'|'.join(map(re.escape,domains))+r')/[^\s]+')
+ for title,url,date in candidates:
+  title=clean(title or '');url=clean(url or '')
+  if not title or not re.fullmatch(pattern,url):continue
+  canonical=url.split('?',1)[0].split('#',1)[0]
+  if canonical in seen:continue
+  seen.add(canonical);meta=''
+  if date:
+   try:meta=parsedate_to_datetime(date).date().isoformat()
+   except (ValueError,TypeError):pass
+  if key in INDEXED_NEWS:meta=' · '.join(filter(None,[meta,'经 Google 新闻跳转']))
+  rows.append({'title':title,'url':url,'meta':meta})
+  if len(rows)==12:break
+ if not rows:raise ValueError(f'No articles for {key}')
+ return rows
+
+AUTO_NEWS = {'dongchedi','autohome','pcauto'}
+
+def parse_auto_news(key,body):
+ encoding='gb18030' if re.search(rb'charset\s*=\s*["\']?gb(?:2312|k|18030)',body[:4096],re.I) else 'utf8'
+ text=body.decode(encoding,errors='replace')
+ links=Links();links.feed(text)
+ headlines={}
+ if key=='autohome':
+  for match in re.finditer(r'<a\b[^>]*href="([^"]+)"[^>]*>(.*?)</a>',text,re.S):
+   heading=re.search(r'<h3\b[^>]*>(.*?)</h3>',match[2],re.S)
+   if heading:headlines[unescape(match[1])]=clean(unescape(re.sub(r'<[^>]*>','',heading[1])))
+ patterns={
+  'dongchedi':r'https://www\.dongchedi\.com/article/(\d+)',
+  'autohome':r'https://www\.autohome\.com\.cn/news/\d{6}/(\d+)\.html',
+  'pcauto':r'https://www\.pcauto\.com\.cn/news/\d+/(\d+)\.html',
+ }
+ rows={}
+ for href,title in links.links:
+  title=headlines.get(href,title)
+  if not title or len(title)<4 or (key=='autohome' and len(title)>90):continue
+  url=urljoin(SOURCES[key]['url'],href).split('#',1)[0].split('?',1)[0]
+  match=re.fullmatch(patterns[key],url)
+  if match and url not in rows:rows[url]=(int(match[1]),{'title':title,'url':url,'meta':'汽车资讯'})
+ if not rows:raise ValueError(f'No auto articles for {key}')
+ return [row for _,row in sorted(rows.values(),key=lambda x:x[0],reverse=True)[:12]]
+
 def parse_source(key,body):
+ if key in AUTO_NEWS:return parse_auto_news(key,body)
+ if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
+ if key=='maoyan':return parse_maoyan_board(body)
+ if key=='douban_book':return parse_douban_books(body)
  if key=='douban':
   data=json.loads(body)
   if not isinstance(data,dict) or not isinstance(data.get('subjects'),list):raise ValueError('Invalid Douban movie response')
@@ -388,6 +565,10 @@ def translate_security_titles(items,previous=None):
  with ThreadPoolExecutor(max_workers=4) as pool:return list(pool.map(translate,items))
 
 def fetch(key):
+ if key=='maoyan':
+  config=SOURCES[key]
+  items=cache_source_covers(key,add_maoyan_metrics(fetch_maoyan_board()))
+  return {**{k:v for k,v in config.items() if k!='endpoint'},'sourceUrlUsed':config['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  source=SOURCES[key]
  if key=='freebuf':
   try:items=parse_freebuf_feed(request_body(FREEBUF_FEED));used=FREEBUF_FEED
@@ -400,13 +581,13 @@ def fetch(key):
  except Exception:
   if key!='ruanyifeng':raise
   body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
- if key=='bleepingcomputer' or key in SECURITY_RESEARCH_SOURCES:
+ if key=='bleepingcomputer' or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
   previous={}
-  try:previous=json.loads((Path(__file__).resolve().parents[1]/'public/extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
+  try:previous=json.loads((public_directory()/'extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
   except (OSError,ValueError):pass
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items,previous)}
- if key=='douban':return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items)}
- if key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
+ if key in AUTO_NEWS or key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():

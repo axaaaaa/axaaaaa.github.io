@@ -4,7 +4,8 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin,urlparse
 from concurrent.futures import ThreadPoolExecutor
 DOMAINS={
-'douban':('doubanio.com',),
+'maoyan':('pipi.cn','meituan.net'),
+'douban':('doubanio.com',),'douban_book':('doubanio.com',),
 'sspai':('sspai.com',),'uisdc':('uisdc.com',),'zcool':('zcool.cn','zcool.com.cn'),'gamersky':('gamersky.com',),'freebuf':('3001.net','freebuf.com'),
 'woshipm':('woshipm.com','aixq.cc'),'csdn':('csdnimg.cn','csdn.net'),'oschina':('oschina.net','oscimg.net'),'xz':('aliyun.com','aliyuncs.com'),'anquanke':('qhimg.com','anquanke.com'),
 'yicai':('yicai.com','yicai.net'),'sinafinance':('sinaimg.cn','sina.com.cn'),'pojie52':('52pojie.cn',),'kanxue':('kanxue.com','kanxue.cn'),'ruanyifeng':('beekka.com','ruanyifeng.com'),
@@ -158,18 +159,18 @@ def prune_all_covers():
  print('SOURCE_COVERS_PRUNED referenced snapshots retained')
 
 
-def cache_douban_posters(items):
+def cache_douban_posters(items,key='douban'):
  """Read public posters in a browser, then serve validated image bytes locally."""
  import hashlib,os
  from pathlib import Path
- root=public_directory()/'source-covers'/'douban';results=[dict(row) for row in items];pending={}
+ root=public_directory()/'source-covers'/key;results=[dict(row) for row in items];pending={}
  for row in results:
-  original=clean_cover('douban',row.get('originalCover') or row.get('cover'))
+  original=clean_cover(key,row.get('originalCover') or row.get('cover'))
   if not original:continue
   token=hashlib.sha256(original.encode()).hexdigest()[:24]
   existing=next((path for path in root.glob(token+'.*') if path.suffix in ['.jpg','.png','.webp','.gif']),None) if root.exists() else None
   if existing:
-   row.update(originalCover=original,cover='source-covers/douban/'+existing.name);continue
+   row.update(originalCover=original,cover=f'source-covers/{key}/'+existing.name);continue
   # Douban's public image CDN shares poster identifiers across image nodes.
   u=urlparse(original);candidate=u._replace(netloc='img3.doubanio.com').geturl()
   pending.setdefault(candidate,[]).append((row,original,token))
@@ -181,7 +182,7 @@ def cache_douban_posters(items):
    try:
     page=browser.new_page();responses=[]
     page.on('response',lambda response:responses.append(response) if response.url in pending else None)
-    page.goto('https://movie.douban.com/',wait_until='domcontentloaded',timeout=30000)
+    page.goto('https://book.douban.com/' if key=='douban_book' else 'https://movie.douban.com/',wait_until='domcontentloaded',timeout=30000)
     page.evaluate("""async urls=>Promise.all(urls.map(src=>new Promise(resolve=>{
      const img=new Image();const timer=setTimeout(resolve,10000);
      img.onload=img.onerror=()=>{clearTimeout(timer);resolve()};img.src=src;document.body.append(img);
@@ -196,7 +197,7 @@ def cache_douban_posters(items):
       root.mkdir(parents=True,exist_ok=True)
       for row,original,token in pending[response.url]:
        target=root/(token+'.'+ext);temporary=target.with_suffix('.tmp');temporary.write_bytes(content);temporary.replace(target)
-       row.update(originalCover=original,cover='source-covers/douban/'+target.name)
+       row.update(originalCover=original,cover=f'source-covers/{key}/'+target.name)
      except Exception:continue
    finally:browser.close()
  except Exception as error:print('DOUBAN_POSTER_CACHE_PENDING '+type(error).__name__)

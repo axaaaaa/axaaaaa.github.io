@@ -87,4 +87,64 @@ class Tests(unittest.TestCase):
   self.assertEqual(data['sourceUrlUsed'],x.WEEKLY_BACKUP)
  def test_weekly_backup_rejects_empty(self):
   with self.assertRaises(ValueError):x.parse_weekly_backup(b'error page')
+
+class AddedSourcesTests(unittest.TestCase):
+ def test_arxiv_atom_and_deduplication(self):
+  entry='<entry><title> An AI paper </title><id>http://arxiv.org/abs/2611.12345v{}</id><published>2026-11-07T00:00:00Z</published></entry>'
+  body=('<feed xmlns="http://www.w3.org/2005/Atom">'+entry.format(2)+entry.format(1)+'</feed>').encode()
+  rows=x.parse_source('arxiv',body)
+  self.assertEqual(len(rows),1)
+  self.assertEqual(rows[0]['url'],'https://arxiv.org/abs/2611.12345')
+  with self.assertRaises(ValueError):x.parse_source('arxiv',b'<rss><channel/></rss>')
+
+ def test_kev_sorts_by_date_and_rejects_invalid_ids(self):
+  entries=[{'cveID':cve,'vulnerabilityName':'Example','dateAdded':day} for cve,day in
+           [('CVE-2026-1000','2026-11-01'),('CVE-2026-2000','2026-11-07'),('bad','2026-11-09')]]
+  rows=x.parse_source('cisa_kev',json.dumps({'vulnerabilities':entries}).encode())
+  self.assertEqual([row['url'].rsplit('/',1)[-1] for row in rows],['CVE-2026-2000','CVE-2026-1000'])
+  self.assertIn('CVE-2026-2000',rows[0]['meta'])
+
+ def test_cncert_publisher_link(self):
+  body=('<li><span>[2026-11-07]</span><a href="javascript:void(0)" '
+        'onclick=window.open("/publish/main/9/2026/123/123_.html")>中文<b>漏洞</b>公告</a></li>').encode()
+  row,=x.parse_source('cncert',body)
+  self.assertEqual(row['title'],'中文漏洞公告')
+  self.assertEqual(row['url'],'https://www.cert.org.cn/publish/main/9/2026/123/123_.html')
+
+ def test_translation_keeps_original_and_uses_seeded_cache(self):
+  items=[{'title':'AI study','meta':'arXiv:2611.12345'}]
+  previous={'items':[{'title':'人工智能研究','originalTitle':'AI study',
+                      'translationStatus':'translated','translationMethod':'editor'}]}
+  with patch.object(x,'translate_title',side_effect=OSError('offline')) as translate:
+   row,=x.translate_security_titles(items,previous)
+   translate.assert_not_called()
+  self.assertEqual((row['title'],row['originalTitle'],row['translationMethod']),('人工智能研究','AI study','editor'))
+  self.assertTrue(row['meta'].startswith('中文译名'))
+
+
+class AdditionalSecuritySourcesTests(unittest.TestCase):
+ def test_github_advisories_excludes_withdrawn(self):
+  first={'ghsa_id':'GHSA-1234-abcd-1234','summary':'A vulnerability','severity':'high'}
+  withdrawn={**first,'ghsa_id':'GHSA-abcd-1234-abcd','withdrawn_at':'2026-11-01'}
+  row,=x.parse_source('github_advisory',json.dumps([first,withdrawn]).encode())
+  self.assertIn('高危',row['meta'])
+  self.assertEqual(row['url'],'https://github.com/advisories/GHSA-1234-abcd-1234')
+
+ def test_cve_prefix_and_official_record(self):
+  cve='CVE-2026-12345'
+  batch={'new':[{'cveId':cve,'githubLink':'https://example.invalid/'}],'updated':[{'cveId':cve}]}
+  prefix=('['+json.dumps(batch)+', {"truncated":').encode()
+  record={'cveMetadata':{'state':'PUBLISHED','cveId':cve,'dateUpdated':'2026-11-08'},'containers':{'cna':{'title':'Example'}}}
+  with patch.object(x,'request_body',return_value=json.dumps(record).encode()) as request:
+   row,=x.parse_source('cve_program',prefix)
+  request.assert_called_once_with(x.CVE_RECORD_BASE+'2026/12xxx/'+cve+'.json')
+  self.assertEqual(row['url'],'https://www.cve.org/CVERecord?id='+cve)
+  record['cveMetadata']['state']='REJECTED'
+  self.assertIsNone(x.parse_cve_record(cve,json.dumps(record).encode()))
+
+ def test_crowdstrike_rejects_other_hosts_and_localizes_date(self):
+  feed=b'<rss><channel><item><title>Blog article</title><link>https://www.crowdstrike.com/en-us/blog/article/</link><pubDate>Nov 05, 2026 00:00:00-0600</pubDate></item><item><title>Other</title><link>https://example.com/en-us/blog/article/</link></item></channel></rss>'
+  row,=x.parse_source('crowdstrike',feed)
+  self.assertEqual(row['meta'],'发布 2026-11-05')
+
 if __name__=='__main__':unittest.main()

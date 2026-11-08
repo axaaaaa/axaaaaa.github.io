@@ -6342,6 +6342,562 @@
         "lastSuccessAt": "2026-11-07T11:03:07.399919+00:00",
         "error": ""
       }
+    },
+    "arxiv": {
+      "name": "arXiv 人工智能论文",
+      "kind": "AI 预印本 · 中文机译",
+      "url": "https://arxiv.org/list/cs.AI/recent",
+      "icon": "https://arxiv.org/favicon.ico",
+      "sourceUrlUsed": "https://export.arxiv.org/api/query?search_query=cat%3Acs.AI&sortBy=submittedDate&sortOrder=descending&max_results=12",
+      "updatedAt": "2026-11-08T04:50:15.819108+00:00",
+      "items": [
+        {
+          "title": "SwarmEvolve：用于进化式发现与优化的潜在智能体群",
+          "url": "https://arxiv.org/abs/2611.08483",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08483 · 发布 2026-11-05",
+          "originalTitle": "SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Scientist World：为 AI 科学家构建可扩展的研究世界",
+          "url": "https://arxiv.org/abs/2611.08478",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08478 · 发布 2026-11-05",
+          "originalTitle": "Scientist World: Grow a Research World for AI-Scientists",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "XStack：机器学习代码仓库迁移基准",
+          "url": "https://arxiv.org/abs/2611.08472",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08472 · 发布 2026-11-05",
+          "originalTitle": "XStack: A Benchmark for ML Repo Migration",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "行为相同、机制不同：有限实验能对整合信息证明什么？",
+          "url": "https://arxiv.org/abs/2611.08469",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08469 · 发布 2026-11-05",
+          "originalTitle": "Same Behavior, Different Mechanism: What Finite Experiments Can Certify About Integrated Information",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "通过扩展激活反演来解释残差流的任意方向",
+          "url": "https://arxiv.org/abs/2611.08465",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08465 · 发布 2026-11-05",
+          "originalTitle": "Towards interpreting any residual stream direction by scaling activation inversion",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "ReproBridge：将可复现性融入机器学习研究产物",
+          "url": "https://arxiv.org/abs/2611.08452",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08452 · 发布 2026-11-05",
+          "originalTitle": "ReproBridge: Building Reproducibility into ML Research Artifacts",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "类型化决策编码器的标签措辞增强：改善生僻词表现，但对缩写和代码无益",
+          "url": "https://arxiv.org/abs/2611.08439",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08439 · 发布 2026-11-05",
+          "originalTitle": "Label-Wording Augmentation in a Typed-Decision Encoder: Gains on Unfamiliar Words, Not on Abbreviations or Codes",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "从内部理解 AI：面向 AI 安全的机制可解释性现状",
+          "url": "https://arxiv.org/abs/2611.08438",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08438 · 发布 2026-11-05",
+          "originalTitle": "Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "MedGraph：用图记忆维护长期医疗对话中的患者状态",
+          "url": "https://arxiv.org/abs/2611.08433",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08433 · 发布 2026-11-05",
+          "originalTitle": "MedGraph: Maintaining Patient State with Graph Memory for Long-Term Medical Dialogue",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "未来软件中元访问的作用：以大语言模型聊天界面和对话 AI 为例",
+          "url": "https://arxiv.org/abs/2611.08428",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08428 · 发布 2026-11-05",
+          "originalTitle": "The Power of Meta Access in the Software of the Future --- Demonstrated on LLM Chat UIs and Chat AI",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "利用校准后的潜在表征探测预测和分类视觉—语言—动作模型故障",
+          "url": "https://arxiv.org/abs/2611.08425",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08425 · 发布 2026-11-05",
+          "originalTitle": "Failure Prediction and Classification in Vision-Language-Action Models Via Calibrated Latent Probing",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "基准即软件：从 Terminal-Bench 看持续运行基准的价值",
+          "url": "https://arxiv.org/abs/2611.08417",
+          "meta": "中文译名 · 翻译待更新 · arXiv:2611.08417 · 发布 2026-11-05",
+          "originalTitle": "Benchmarks as Software: Terminal-Bench and the Case for Continuous Benchmarks",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T04:50:15.379656+00:00",
+        "lastSuccessAt": "2026-11-08T04:50:15.819108+00:00",
+        "error": ""
+      }
+    },
+    "cisa_kev": {
+      "name": "CISA KEV",
+      "kind": "已知在野利用漏洞 · 中文机译",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+      "icon": "https://www.cisa.gov/favicon.ico",
+      "sourceUrlUsed": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "updatedAt": "2026-11-08T04:50:16.680933+00:00",
+      "items": [
+        {
+          "title": "SonicWall SonicOS SSLVPN 使用单因素认证的漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19868",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-19868 · 已知在野利用 · 收录 2026-11-06",
+          "originalTitle": "SonicWall SonicOS SSLVPN Use of Single-factor Authentication Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Apple 多款产品身份认证不当漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27834",
+          "meta": "中文译名 · 翻译待更新 · CVE-2024-27834 · 已知在野利用 · 收录 2026-11-04",
+          "originalTitle": "Apple Multiple Products Improper Authentication Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "WordPress 核心检查时与使用时（TOCTOU）竞态条件漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-119977",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-119977 · 已知在野利用 · 收录 2026-11-03",
+          "originalTitle": "WordPress WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Ivanti Connect Secure 生成可预测数字或标识符的漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-118527 · 已知在野利用 · 收录 2026-10-30",
+          "originalTitle": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Ivanti Connect Secure 关键功能缺少身份认证漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-111357 · 已知在野利用 · 收录 2026-10-30",
+          "originalTitle": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GitLab 社区版和企业版整数溢出或回绕漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-97229 · 已知在野利用 · 收录 2026-10-29",
+          "originalTitle": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Cisco Secure Firewall ASA 和 FTD 软件因未检查返回值导致的空指针解引用漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-76418 · 已知在野利用 · 收录 2026-10-29",
+          "originalTitle": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Broadcom VMware ESX 日志记录不足漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-41709 · 已知在野利用 · 收录 2026-10-28",
+          "originalTitle": "Broadcom VMWare ESX Insufficient Logging Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Linux 内核变量未初始化漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46300",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-46300 · 已知在野利用 · 收录 2026-10-28",
+          "originalTitle": "Linux Kernel Missing Initialization of a Variable Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Adobe Commerce 和 Magento 允许上传危险类型文件的漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48356",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-48356 · 已知在野利用 · 收录 2026-10-27",
+          "originalTitle": "Adobe Commerce and Magento Unrestricted Upload of File with Dangerous Type Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Google Brotli 未检查返回值漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-111497 · 已知在野利用 · 收录 2026-10-27",
+          "originalTitle": "Google Brotli Unchecked Return Value Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "PHP 内存损坏漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
+          "meta": "中文译名 · 翻译待更新 · CVE-2026-109618 · 已知在野利用 · 收录 2026-10-26",
+          "originalTitle": "PHP Memory Corruption Vulnerability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T04:50:15.380535+00:00",
+        "lastSuccessAt": "2026-11-08T04:50:16.680933+00:00",
+        "error": ""
+      }
+    },
+    "cncert": {
+      "name": "国家互联网应急中心",
+      "kind": "中文漏洞公告",
+      "url": "https://www.cert.org.cn/publish/main/9/index.html",
+      "icon": "https://www.cert.org.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.cert.org.cn/publish/main/9/index.html",
+      "updatedAt": "2026-11-08T04:50:15.561763+00:00",
+      "items": [
+        {
+          "title": "关于PHP远程代码执行漏洞分析及修复建议的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2026/20261022162132536309183/20261022162132536309183_.html",
+          "meta": "发布 2026-10-22"
+        },
+        {
+          "title": "关于对PHP2Shell漏洞开展修复的风险提示",
+          "url": "https://www.cert.org.cn/publish/main/9/2026/20261022123700555224858/20261022123700555224858_.html",
+          "meta": "发布 2026-10-22"
+        },
+        {
+          "title": "Apache Log4j2远程代码执行漏洞排查及修复手册",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211215154225883558274/20211215154225883558274_.html",
+          "meta": "发布 2021-12-15"
+        },
+        {
+          "title": "关于Apache Log4j2存在远程代码执行漏洞的安全公告（第二版）",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211213174252204187772/20211213174252204187772_.html",
+          "meta": "发布 2021-12-13"
+        },
+        {
+          "title": "关于Apache Log4j2存在远程代码执行漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211210110550958546708/20211210110550958546708_.html",
+          "meta": "发布 2021-12-10"
+        },
+        {
+          "title": "关于近期境外黑客组织攻击我国多个企业窃取源代码数据的通报",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211121170349483356572/20211121170349483356572_.html",
+          "meta": "发布 2021-11-21"
+        },
+        {
+          "title": "关于Microsoft ExchangeServer存在多个高危漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20210309132228442162114/20210309132228442162114_.html",
+          "meta": "发布 2021-03-09"
+        },
+        {
+          "title": "关于VMware多款产品存在远程代码执行漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20210225143753552202994/20210225143753552202994_.html",
+          "meta": "发布 2021-02-25"
+        },
+        {
+          "title": "关于防范黑客通过仿冒“ETC在线认证”网站实施网络诈骗的风险提示",
+          "url": "https://www.cert.org.cn/publish/main/9/2020/20200807131834462186499/20200807131834462186499_.html",
+          "meta": "发布 2020-08-07"
+        },
+        {
+          "title": "关于Microsoft远程桌面服务存在远程代码执行漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2019/20190515134947228198452/20190515134947228198452_.html",
+          "meta": "发布 2019-05-15"
+        },
+        {
+          "title": "国家互联网应急中心开通WannaCry勒索病毒感染数据免费查询服务",
+          "url": "https://www.cert.org.cn/publish/main/9/2019/20190429160302635538577/20190429160302635538577_.html",
+          "meta": "发布 2019-04-29"
+        },
+        {
+          "title": "关于MongoDB数据库不当配置导致信息泄露风险情况通报",
+          "url": "https://www.cert.org.cn/publish/main/9/2019/20190222090901924149842/20190222090901924149842_.html",
+          "meta": "发布 2019-02-22"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T04:50:15.380867+00:00",
+        "lastSuccessAt": "2026-11-08T04:50:15.561763+00:00",
+        "error": ""
+      }
+    },
+    "github_advisory": {
+      "name": "GitHub Advisory Database",
+      "kind": "GitHub 审核的开源漏洞",
+      "url": "https://github.com/advisories",
+      "icon": "https://github.githubassets.com/favicons/favicon.svg",
+      "sourceUrlUsed": "https://api.github.com/advisories?type=reviewed&sort=published&direction=desc&per_page=8",
+      "updatedAt": "2026-11-08T05:16:32.223417+00:00",
+      "items": [
+        {
+          "title": "LXD 受限项目限制可被绕过，导致任意命令执行",
+          "url": "https://github.com/advisories/GHSA-47w9-6r3f-938g",
+          "meta": "中文译名 · GHSA-47w9-6r3f-938g · 严重 · go",
+          "originalTitle": "LXD has restricted project bypass leading to arbitrary command execution",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 跨项目复制自定义存储卷可绕过项目限制",
+          "url": "https://github.com/advisories/GHSA-7mr3-28h5-m5vx",
+          "meta": "中文译名 · GHSA-7mr3-28h5-m5vx · 高危 · go",
+          "originalTitle": "LXD has project restriction bypass for custom volume copy across projects",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 跨项目复制实例可绕过项目限制",
+          "url": "https://github.com/advisories/GHSA-qx75-2p3r-pwm5",
+          "meta": "中文译名 · GHSA-qx75-2p3r-pwm5 · 高危 · go",
+          "originalTitle": "LXD has project restriction bypass in instance copy across projects",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GeoNode 文档元数据摘要字段存在存储型 XSS 漏洞",
+          "url": "https://github.com/advisories/GHSA-r4hm-p9f9-fj9v",
+          "meta": "中文译名 · GHSA-r4hm-p9f9-fj9v · CVE-2026-55649 · 中危 · pip",
+          "originalTitle": "GeoNode has Stored XSS in Documents metadata abstract field",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GeoNode 存在不受限制的文件上传漏洞",
+          "url": "https://github.com/advisories/GHSA-fqpv-mq26-pr4j",
+          "meta": "中文译名 · GHSA-fqpv-mq26-pr4j · CVE-2026-46429 · 中危 · pip",
+          "originalTitle": "GeoNode has Unrestricted File Upload",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GeoNode 上传文件的图层名称可触发操作系统命令注入",
+          "url": "https://github.com/advisories/GHSA-9fpx-fr6j-2vh6",
+          "meta": "中文译名 · GHSA-9fpx-fr6j-2vh6 · CVE-2026-33050 · 高危 · pip",
+          "originalTitle": "GeoNode has OS command injection via uploaded file layer name",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 从备份创建自定义存储卷时可能发生空指针解引用",
+          "url": "https://github.com/advisories/GHSA-j93m-3j9p-m5m8",
+          "meta": "中文译名 · GHSA-j93m-3j9p-m5m8 · CVE-2026-9639 · 中危 · go",
+          "originalTitle": "LXD has CreateCustomVolumeFromBackup nil-pointer dereference on volumes[0].snapshots[*].expires_at",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 信任镜像哈希，可能导致客户端任意文件写入",
+          "url": "https://github.com/advisories/GHSA-pjff-c2wc-f6jm",
+          "meta": "中文译名 · GHSA-pjff-c2wc-f6jm · 严重 · go",
+          "originalTitle": "LXD has arbitrary file write on client due to trusted image hash",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T05:16:31.435948+00:00",
+        "lastSuccessAt": "2026-11-08T05:16:32.223417+00:00",
+        "error": ""
+      }
+    },
+    "cve_program": {
+      "name": "CVE Program",
+      "kind": "官方 CVE 记录",
+      "url": "https://www.cve.org/",
+      "icon": "https://www.cve.org/cvePurpleVFavicon.svg",
+      "sourceUrlUsed": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/deltaLog.json",
+      "updatedAt": "2026-11-08T05:16:33.328266+00:00",
+      "items": [
+        {
+          "title": "GnuTLS 构建或验证证书链时可能崩溃",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2024-28835",
+          "meta": "中文译名 · CVE-2024-28835 · 更新 2026-11-08",
+          "originalTitle": "Gnutls: potential crash during chain building/verification",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GnuTLS 存在 Minerva 侧信道信息泄露漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2024-28834",
+          "meta": "中文译名 · CVE-2024-28834 · 更新 2026-11-08",
+          "originalTitle": "Gnutls: vulnerable to minerva side-channel information leak",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "OpenSSH 10.6p2 之前的 sshd 在使用 musl libc 且未启用 PAM 的 Linux 环境中存在密码认证绕过风险",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-123158",
+          "meta": "中文译名 · CVE-2026-123158 · 更新 2026-11-08",
+          "originalTitle": "sshd in OpenSSH before 10.6p2 on Linux, when musl libc is used without PAM, lacks a workaround for a password authentication bypass (related to misinterpretation of whether a string is intended to be a password hash). For some configuration",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "UnrealIRCd 的 labeled-response 模块未转义 IRCv3 标签，可能导致服务器间命令注入",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-114713",
+          "meta": "中文译名 · CVE-2026-114713 · 更新 2026-11-08",
+          "originalTitle": "The labeled-response module in UnrealIRCd 6.0.0 before 6.2.7.1 does not escape the IRCv3 \"label\" message tag when echoing it into replies, which allows any user on a network with two or more linked servers to inject server-to-server command",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17098",
+          "meta": "中文译名 · CVE-2026-17098 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17202",
+          "meta": "中文译名 · CVE-2026-17202 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17389",
+          "meta": "中文译名 · CVE-2026-17389 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17310",
+          "meta": "中文译名 · CVE-2026-17310 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T05:16:31.436513+00:00",
+        "lastSuccessAt": "2026-11-08T05:16:33.328266+00:00",
+        "error": ""
+      }
+    },
+    "crowdstrike": {
+      "name": "CrowdStrike Blog",
+      "kind": "威胁研究与安全资讯",
+      "url": "https://www.crowdstrike.com/en-us/blog/",
+      "icon": "https://www.crowdstrike.com/etc.clientlibs/crowdstrike/clientlibs/crowdstrike-common/resources/favicon.ico",
+      "sourceUrlUsed": "https://www.crowdstrike.com/en-us/blog/feed",
+      "updatedAt": "2026-11-08T05:16:32.023387+00:00",
+      "items": [
+        {
+          "title": "攻击者如何反过来利用漏洞生态对付防守方",
+          "url": "https://www.crowdstrike.com/en-us/blog/adversaries-turn-vulnerability-ecosystem-against-defenders/",
+          "meta": "中文译名 · 发布 2026-11-05",
+          "originalTitle": "How Adversaries Are Turning the Vulnerability Ecosystem Against Defenders",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 推出智能体对手模拟，应对利用 AI 的攻击者",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-agentic-adversary-emulation-counters-ai-enabled-adversaries/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "CrowdStrike Introduces Agentic Adversary Emulation to Counter AI-Enabled Adversaries",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 扩展智能体安全运营中心，检测并阻止智能体内部威胁",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-detects-and-stops-agent-insider-threats/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "CrowdStrike Extends the Agentic SOC to Detect and Stop Agent Insider Threats",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 为 Falcon 平台引入企业浏览器安全能力",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-brings-enterprise-browser-security-to-falcon-platform/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "CrowdStrike Brings Enterprise Browser Security to the Falcon Platform",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Falcon 云安全新功能保护 AI 运行的云环境",
+          "url": "https://www.crowdstrike.com/en-us/blog/falcon-cloud-security-innovations-secure-cloud-ai-runs-on/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "New Falcon Cloud Security Innovations Secure the Cloud AI Runs On",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 强化从终端到云端的 AI 安全防护",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-advances-ai-security-and-safety-falcon-guardian/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike Advances AI Security and Safety from Endpoint to Cloud",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "推出 AI 紧急停止开关：当 AI 智能体失控时及时接管",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "Introducing AI Kill Switch: Taking Control When AI Agents Go Rogue",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 为 Claude Cowork 中的 AI 智能体提供安全防护",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-secures-ai-agents-inside-claude-cowork/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike Secures AI Agents Inside Claude Cowork",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 拟收购 Dreadnode，为 Falcon 平台引入自动化 AI 安全测试",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-to-acquire-dreadnode/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike to Acquire Dreadnode to Bring Automated AI Security Testing to the Falcon Platform",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 拟收购 Fiddler，推出面向 AI 智能体可观测性的 Falcon Observe",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-to-acquire-fiddler/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike to Acquire Fiddler to Deliver Falcon Observe for AI Agent Observability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T05:16:31.437053+00:00",
+        "lastSuccessAt": "2026-11-08T05:16:32.023387+00:00",
+        "error": ""
+      }
     }
   }
 }

@@ -9,6 +9,12 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers,cache_douban_posters,public_directory
 SOURCES={
+ 'github_advisory':{'name': 'GitHub Advisory Database', 'kind': 'GitHub 审核的开源漏洞', 'url': 'https://github.com/advisories', 'endpoint': 'https://api.github.com/advisories?type=reviewed&sort=published&direction=desc&per_page=8', 'icon': 'https://github.githubassets.com/favicons/favicon.svg'},
+ 'cve_program':{'name': 'CVE Program', 'kind': '官方 CVE 记录', 'url': 'https://www.cve.org/', 'endpoint': 'https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/deltaLog.json', 'icon': 'https://www.cve.org/cvePurpleVFavicon.svg'},
+ 'crowdstrike':{'name': 'CrowdStrike Blog', 'kind': '威胁研究与安全资讯', 'url': 'https://www.crowdstrike.com/en-us/blog/', 'endpoint': 'https://www.crowdstrike.com/en-us/blog/feed', 'icon': 'https://www.crowdstrike.com/etc.clientlibs/crowdstrike/clientlibs/crowdstrike-common/resources/favicon.ico'},
+ 'arxiv':{'name': 'arXiv 人工智能论文', 'kind': 'AI 预印本 · 中文机译', 'url': 'https://arxiv.org/list/cs.AI/recent', 'endpoint': 'https://export.arxiv.org/api/query?search_query=cat%3Acs.AI&sortBy=submittedDate&sortOrder=descending&max_results=12', 'icon': 'https://arxiv.org/favicon.ico'},
+ 'cisa_kev':{'name': 'CISA KEV', 'kind': '已知在野利用漏洞 · 中文机译', 'url': 'https://www.cisa.gov/known-exploited-vulnerabilities-catalog', 'endpoint': 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json', 'icon': 'https://www.cisa.gov/favicon.ico'},
+ 'cncert':{'name': '国家互联网应急中心', 'kind': '中文漏洞公告', 'url': 'https://www.cert.org.cn/publish/main/9/index.html', 'endpoint': 'https://www.cert.org.cn/publish/main/9/index.html', 'icon': 'https://www.cert.org.cn/favicon.ico'},
  'dongchedi':{'name': '懂车帝', 'kind': '汽车资讯', 'url': 'https://www.dongchedi.com/', 'endpoint': 'https://www.dongchedi.com/', 'icon': 'https://www.dongchedi.com/favicon.ico'},
  'autohome':{'name': '汽车之家', 'kind': '汽车资讯', 'url': 'https://www.autohome.com.cn/news/', 'endpoint': 'https://www.autohome.com.cn/news/', 'icon': 'https://www.autohome.com.cn/favicon.ico'},
  'pcauto':{'name': '太平洋汽车', 'kind': '汽车资讯', 'url': 'https://www.pcauto.com.cn/news/', 'endpoint': 'https://www.pcauto.com.cn/news/', 'icon': 'https://www.pcauto.com.cn/favicon.ico'},
@@ -68,8 +74,9 @@ SOURCES={
  'hellogithub':{'name':'HelloGitHub','kind':'开源月刊','url':'https://hellogithub.com/','endpoint':'https://hellogithub.com/rss','icon':'https://hellogithub.com/favicon.ico'},
  'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'}
 }
-SECURITY_RESEARCH_SOURCES={'microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
+SECURITY_RESEARCH_SOURCES={'crowdstrike','microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
 SECURITY_FEED_HOSTS={
+ 'crowdstrike':{'www.crowdstrike.com','crowdstrike.com'},
  'microsoft':{'www.microsoft.com','microsoft.com'},
  'securelist':{'securelist.com'},'checkpoint':{'research.checkpoint.com'},
  'sentinellabs':{'www.sentinelone.com','sentinelone.com'},'elastic':{'www.elastic.co','elastic.co'},
@@ -86,12 +93,17 @@ def parse_security_feed(key,body):
    if u.scheme!='https' or u.hostname not in SECURITY_FEED_HOSTS[key] or u.username or u.password or u.port not in [None,443]:continue
   except ValueError:continue
   if key=='microsoft' and not re.fullmatch(r'/[a-z]{2}-[a-z]{2}/security/blog/\d{4}/\d{2}/\d{2}/[^/]+/',u.path):continue
+  if key=='crowdstrike' and not re.fullmatch(r'/en-us/blog/[^/]+/?',u.path):continue
   if key=='sentinellabs' and not u.path.startswith('/labs/'):continue
   if key=='elastic' and not u.path.startswith('/security-labs/'):continue
   if key=='eset' and u.hostname.endswith('eset.com') and not u.path.startswith('/blog/'):continue
   if not title or url in seen:continue
   seen.add(url)
-  rows.append({'title':title,'url':url,'meta':clean(entry.findtext('pubDate') or entry.findtext('a:updated',namespaces=atom))})
+  date=clean(entry.findtext('pubDate') or entry.findtext('a:updated',namespaces=atom))
+  if key=='crowdstrike':
+   try:date='发布 '+datetime.strptime(date,'%b %d, %Y %H:%M:%S%z').date().isoformat()
+   except ValueError:pass
+  rows.append({'title':title,'url':url,'meta':date})
   if len(rows)==24:break
  if not rows:raise ValueError('No valid security research entries')
  return rows
@@ -286,7 +298,98 @@ def parse_auto_news(key,body):
  if not rows:raise ValueError(f'No auto articles for {key}')
  return [row for _,row in sorted(rows.values(),key=lambda x:x[0],reverse=True)[:12]]
 
+
+def parse_arxiv(body):
+ root=ET.fromstring(body)
+ atom='{http://www.w3.org/2005/Atom}'
+ candidates=[(e.findtext(atom+'title'),e.findtext(atom+'id'),e.findtext(atom+'published')) for e in root.findall(atom+'entry')]
+ candidates.extend((e.findtext('title'),e.findtext('link'),e.findtext('pubDate')) for e in root.findall('./channel/item'))
+ rows={}
+ for title,link,date in candidates:
+  match=re.fullmatch(r'https?://arxiv\.org/abs/(\d{4}\.\d{4,5})(?:v\d+)?',clean(link))
+  if not match or not clean(title):continue
+  try: published=(datetime.fromisoformat(date.replace('Z','+00:00')) if 'T' in date else parsedate_to_datetime(date)).date().isoformat()
+  except (AttributeError,TypeError,ValueError):continue
+  paper=match[1]
+  rows.setdefault(paper,{'title':clean(title),'url':'https://arxiv.org/abs/'+paper,'meta':f'arXiv:{paper} · 发布 {published}'})
+ return list(rows.values())[:12]
+
+def parse_cisa_kev(body):
+ rows={}
+ for entry in json.loads(body)['vulnerabilities']:
+  cve=entry.get('cveID',''); title=clean(entry.get('vulnerabilityName')); added=entry.get('dateAdded','')
+  if not re.fullmatch(r'CVE-\d{4}-\d{4,}',cve) or not title or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',added):continue
+  rows[cve]=(added,{'title':title,'url':'https://nvd.nist.gov/vuln/detail/'+cve,'meta':f'{cve} · 已知在野利用 · 收录 {added}'})
+ return [row for _,row in sorted(rows.values(),key=lambda item:item[0],reverse=True)[:12]]
+
+def parse_cncert(body):
+ rows={}
+ html=re.sub(r'<!--.*?-->','',body.decode('utf-8-sig'),flags=re.S)
+ for date,attrs,title in re.findall(r'<li\b[^>]*>\s*<span>\[(\d{4}-\d{2}-\d{2})\]</span>\s*<a\b([^>]*)>(.*?)</a>',html,re.S|re.I):
+  link=re.search(r'''["'](/publish/main/9/\d{4}/[\d_]+/[\d_]+\.html)["']''',attrs)
+  title=clean(unescape(re.sub(r'<[^>]+>','',title)))
+  if link and title:
+   url=urljoin(SOURCES['cncert']['url'],link[1]);rows[url]=(date,{'title':title,'url':url,'meta':'发布 '+date})
+ return [row for _,row in sorted(rows.values(),key=lambda item:item[0],reverse=True)[:12]]
+
+
+CVE_RECORD_BASE='https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/'
+
+def parse_github_advisories(body):
+ rows={}
+ for entry in json.loads(body):
+  ghsa=entry.get('ghsa_id','')
+  title=clean(entry.get('summary'))
+  if not re.fullmatch(r'GHSA-[a-z0-9]{4}(?:-[a-z0-9]{4}){2}',ghsa) or not title or entry.get('withdrawn_at'):continue
+  cve=entry.get('cve_id') or ''
+  severity={'critical':'严重','high':'高危','medium':'中危','low':'低危'}.get(entry.get('severity'),'')
+  ecosystems=list(dict.fromkeys(v.get('package',{}).get('ecosystem','') for v in (entry.get('vulnerabilities') or [])))
+  meta=' · '.join(filter(None,[ghsa,cve,severity,', '.join(filter(None,ecosystems))]))
+  rows[ghsa]={'title':title,'url':'https://github.com/advisories/'+ghsa,'meta':meta}
+ return list(rows.values())[:8]
+
+def cve_record_urls(body):
+ # The official delta log is a newest-first JSON array. Decode only the
+ # complete batches in the downloaded prefix; older history is unnecessary.
+ text=body.decode('utf-8-sig',errors='ignore').lstrip()
+ if not text.startswith('['):raise ValueError('Invalid CVE delta log')
+ decoder=json.JSONDecoder();pos=1;seen=set();rows=[]
+ while len(rows)<12:
+  pos=re.match(r'\s*,?\s*',text[pos:]).end()+pos
+  if pos>=len(text) or text[pos]==']':break
+  try:batch,pos=decoder.raw_decode(text,pos)
+  except json.JSONDecodeError:break
+  for entry in sorted(batch.get('new',[])+batch.get('updated',[]),key=lambda item:item.get('dateUpdated',''),reverse=True):
+   cve=entry.get('cveId','')
+   match=re.fullmatch(r'CVE-(\d{4})-(\d{4,})',cve)
+   if not match or cve in seen:continue
+   year,number=match.groups()
+   bucket=number[:-3]+'xxx'
+   seen.add(cve);rows.append((cve,f'{CVE_RECORD_BASE}{year}/{bucket}/{cve}.json'))
+   if len(rows)==12:break
+ return rows
+
+def parse_cve_record(cve,body):
+ data=json.loads(body)
+ meta=data['cveMetadata'];cna=data['containers']['cna']
+ if meta.get('state')!='PUBLISHED' or meta.get('cveId')!=cve:return None
+ title=clean(cna.get('title')) or clean(next((x.get('value') for x in cna.get('descriptions',[]) if x.get('lang','').lower().startswith('en')), ''))
+ if not title:return None
+ date=meta.get('dateUpdated','')[:10]
+ return {'title':title[:240],'url':'https://www.cve.org/CVERecord?id='+cve,'meta':f'{cve} · 更新 {date}'}
+
+def fetch_cve_records(body):
+ def load(pair):
+  try:return parse_cve_record(pair[0],request_body(pair[1]))
+  except (OSError,ValueError,KeyError,TypeError):return None
+ with ThreadPoolExecutor(max_workers=4) as pool:
+  return [row for row in pool.map(load,cve_record_urls(body)) if row][:8]
+
 def parse_source(key,body):
+ if key in NEW_SOURCE_PARSERS:
+  rows=NEW_SOURCE_PARSERS[key](body)
+  if not rows:raise ValueError("No valid source entries")
+  return rows
  if key in AUTO_NEWS:return parse_auto_news(key,body)
  if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
  if key=='maoyan':return parse_maoyan_board(body)
@@ -491,7 +594,7 @@ WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.m
 
 def request_body(url):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
- with urllib.request.urlopen(req,timeout=25) as r:body=r.read(12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
+ with urllib.request.urlopen(req,timeout=25) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -558,11 +661,18 @@ def translate_security_titles(items,previous=None):
   try:
    result['title']=cached[original]['title'] if original in cached else translate_title(original)
    result['translationStatus']='translated'
+   if original in cached and cached[original].get('translationMethod')=='editor':result['translationMethod']='editor'
   except Exception as error:
    print(f'TRANSLATION_PENDING {type(error).__name__}')
-  result['meta']=('机器翻译' if result['translationStatus']=='translated' else '英文原题 · 翻译待更新')+(' · '+row['meta'] if row.get('meta') else '')
+  result['meta']=(('中文译名' if result.get('translationMethod')=='editor' else '机器翻译') if result['translationStatus']=='translated' else '英文原题 · 翻译待更新')+(' · '+row['meta'] if row.get('meta') else '')
   return result
  with ThreadPoolExecutor(max_workers=4) as pool:return list(pool.map(translate,items))
+
+NEW_SOURCE_PARSERS={'github_advisory':parse_github_advisories,'cve_program':fetch_cve_records,'arxiv':parse_arxiv,'cisa_kev':parse_cisa_kev,'cncert':parse_cncert}
+NEW_SOURCE_BACKUPS={
+ 'arxiv':'https://rss.arxiv.org/rss/cs.AI',
+ 'cisa_kev':'https://raw.githubusercontent.com/cisagov/kev-data/develop/known_exploited_vulnerabilities.json',
+}
 
 def fetch(key):
  if key=='maoyan':
@@ -579,19 +689,22 @@ def fetch(key):
  try:
   body=request_body(source['endpoint']);items=parse_source(key,body);used=source['endpoint']
  except Exception:
-  if key!='ruanyifeng':raise
-  body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
- if key=='thehackernews' or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
+  if key in NEW_SOURCE_BACKUPS:
+   used=NEW_SOURCE_BACKUPS[key];items=parse_source(key,request_body(used))
+  elif key=='ruanyifeng':
+   body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
+  else:raise
+ if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program') or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
   previous={}
   try:previous=json.loads((public_directory()/'extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
   except (OSError,ValueError):pass
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items,previous)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
- if key in AUTO_NEWS or key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/extra-hotspots.json');out=Path(parser.parse_args().output);previous={}
+ parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/extra-hotspots.json');parser.add_argument('--source',action='append',choices=SOURCES);args=parser.parse_args();out=Path(args.output);previous={}
  if out.exists():
   try:previous=json.loads(out.read_text(encoding='utf-8-sig')).get('sources',{})
   except (OSError,ValueError):pass
@@ -608,7 +721,9 @@ def main():
     return key,{**old,'collection':health}
    config=SOURCES[key]
    return key,{**{k:v for k,v in config.items() if k!='endpoint'},'updatedAt':None,'items':[],'unavailable':True,'collection':health}
- with ThreadPoolExecutor(max_workers=7) as pool:sources={k:v for k,v in pool.map(load,SOURCES) if v}
+ with ThreadPoolExecutor(max_workers=7) as pool:
+  updates=dict(pool.map(load,dict.fromkeys(args.source or SOURCES)))
+ sources={**previous,**updates} if args.source else updates
  if not sources:raise SystemExit('No current or cached sources available')
  out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps({'sources':sources},ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out)
  if out.resolve()==(Path(__file__).resolve().parents[1]/'public'/'extra-hotspots.json').resolve():prune_covers(sources)

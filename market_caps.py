@@ -4,6 +4,9 @@ from datetime import datetime,timezone
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 CG_IDS=dict(zip(['BTC','ETH','SOL','BNB','XRP','DOGE','ADA','AVAX','TRX','DOT','LINK','LTC','BCH','XLM','TON','HBAR','SUI','NEAR','APT','ICP','UNI','AAVE','FIL','ATOM','ETC','VET','SHIB','PEPE','USDT','USDC','DAI','POL','ARB','OP'],['bitcoin','ethereum','solana','binancecoin','ripple','dogecoin','cardano','avalanche-2','tron','polkadot','chainlink','litecoin','bitcoin-cash','stellar','the-open-network','hedera-hashgraph','sui','near','aptos','internet-computer','uniswap','aave','filecoin','cosmos','ethereum-classic','vechain','shiba-inu','pepe','tether','usd-coin','dai','polygon-ecosystem-token','arbitrum','optimism']))
+CG_IDS['GRAM']=CG_IDS['TON']
+# CoinGecko kept the asset ID when Toncoin (TON) became Gram (GRAM).
+CG_SYMBOL_ALIASES={'the-open-network':{'TON','GRAM'}}
 STOCKS={'600519.SS':('600519',1,'CNY'),'300750.SZ':('300750',0,'CNY'),'AAPL':('AAPL',105,'USD'),'MSFT':('MSFT',105,'USD'),'NVDA':('NVDA',105,'USD')}
 FIELDS=['marketCapUsd','marketCap','marketCapCurrency','marketCapSource','marketCapFetchedAt','marketCapQuoteAt','marketCapFxAt']
 def positive(value):return isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value) and value>0
@@ -22,9 +25,10 @@ def crypto_caps(rows,tickers):
  expected={CG_IDS[t]:t for t in tickers if t in CG_IDS};caps={};now=datetime.now(timezone.utc).isoformat()
  for row in rows:
   if not isinstance(row,dict):continue
-  ticker=expected.get(row.get('id'))
+  coin_id=row.get('id')
+  ticker=expected.get(coin_id)
   # Provider renames or symbol collisions must not silently attach another asset's cap.
-  if not ticker or str(row.get('symbol','')).upper()!=ticker or not positive(row.get('market_cap')):continue
+  if not ticker or str(row.get('symbol','')).upper() not in CG_SYMBOL_ALIASES.get(coin_id,{ticker}) or not positive(row.get('market_cap')):continue
   entry={'marketCapUsd':row['market_cap'],'marketCap':row['market_cap'],'marketCapCurrency':'USD','marketCapSource':'CoinGecko','marketCapFetchedAt':now}
   try:
    d=datetime.fromisoformat(str(row.get('last_updated','')).replace('Z','+00:00'))

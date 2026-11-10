@@ -15,20 +15,37 @@ class TheHackerNewsTests(unittest.TestCase):
    self.assertEqual(f.translate_security_titles(items)[0]['title'],'安全资讯')
    self.assertEqual(f.translate_security_titles(items)[0]['title'],'安全新闻')
   self.assertEqual(translate.call_count,2)
- def test_microsoft_after_google_http_error(self):
+ def setUp(self):
+  state=patch.object(f,'_translation_state',{'next':0,'stopped':False})
+  clock=patch.object(f.time,'monotonic',return_value=100)
+  sleep=patch.object(f.time,'sleep')
+  path=patch.object(f,'_translation_state_file',return_value=None)
+  for p in (state,clock,sleep,path):
+   p.start();self.addCleanup(p.stop)
+ def test_global_interval_between_titles(self):
+  with patch.object(f,'_google_title_request',return_value='安全新闻') as request:
+   f.translate_title('first')
+   f.translate_title('second')
+  self.assertEqual(request.call_count,2)
+  f.time.sleep.assert_called_once_with(1)
+ def test_google_429_honors_retry_after(self):
   from urllib.error import HTTPError
-  from io import BytesIO
-  limited=HTTPError('https://translate.googleapis.com',429,'Too Many Requests',None,None)
-  translated=json.dumps([{'translations':[{'text':'安全新闻'}]}]).encode()
-  with patch.dict(f.os.environ,{'AZURE_TRANSLATOR_KEY':'test-key','AZURE_TRANSLATOR_REGION':'westus'}):
-   with patch.object(f,'request_body',side_effect=limited),patch.object(f.urllib.request,'urlopen',return_value=BytesIO(translated)) as open_url:
-    self.assertEqual(f.translate_title('Security news'),'安全新闻')
-   req=open_url.call_args.args[0]
-   self.assertEqual(req.get_method(),'POST')
-   self.assertEqual(req.get_header('Ocp-apim-subscription-key'),'test-key')
-   self.assertEqual(req.get_header('Ocp-apim-subscription-region'),'westus')
-   self.assertEqual(json.loads(req.data),[{'Text':'Security news'}])
-   self.assertIn('to=zh-Hans',req.full_url)
+  limited=HTTPError('https://translate.google.com',429,'Too Many Requests',{'Retry-After':'12'},None)
+  translated=json.dumps([[['安全新闻','Security news']]]).encode()
+  with patch.object(f,'request_body',side_effect=[limited,translated]) as request:
+   self.assertEqual(f.translate_title('Security news'),'安全新闻')
+  self.assertEqual(request.call_count,2)
+  f.time.sleep.assert_called_once_with(12)
+ def test_repeated_429_stops_subsequent_process(self):
+  from tempfile import TemporaryDirectory
+  from urllib.error import HTTPError
+  limited=HTTPError('https://translate.google.com',429,'Too Many Requests',None,None)
+  with TemporaryDirectory() as temp,patch.object(f,'_translation_state_file',return_value=Path(temp)/'state.json'),patch.object(f,'request_body',side_effect=limited) as request:
+   with self.assertRaises(HTTPError):f.translate_title('first')
+   with patch.object(f,'_translation_state',{'next':0,'stopped':False}):
+    with self.assertRaisesRegex(ValueError,'paused'):f.translate_title('second')
+   self.assertEqual(request.call_count,2)
+  f.time.sleep.assert_called_once_with(60)
  def test_failed_translation_retains_original(self):
   with patch.object(f,'translate_title',side_effect=OSError('offline')):row=f.translate_security_titles([{'title':'Security news','url':'https://example.com'}])[0]
   self.assertEqual(row['title'],'Security news');self.assertEqual(row['translationStatus'],'original');self.assertIn('翻译待更新',row['meta'])

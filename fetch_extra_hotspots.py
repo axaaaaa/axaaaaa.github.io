@@ -1,8 +1,10 @@
 """Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
-import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
+import argparse,json,os,re,time,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
 from email.utils import parsedate_to_datetime
+from urllib.error import HTTPError
+from threading import Lock
 from urllib.parse import urljoin,urlparse,quote
 from datetime import datetime,timezone
 from concurrent.futures import ThreadPoolExecutor
@@ -647,34 +649,54 @@ def fetch_freebuf_items():
    return normalize_freebuf_rows(rows)
   finally:browser.close()
 
-def translate_google_title(title):
- url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title,safe='')
- data=json.loads(request_body(url,timeout=4))
- return ''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str))
+_translation_lock=Lock()
+_translation_state={'next':0,'stopped':False}
 
-def translate_microsoft_title(title):
- key=os.environ.get('AZURE_TRANSLATOR_KEY','').strip()
- if not key:raise ValueError('AZURE_TRANSLATOR_KEY is not configured')
- headers={'Content-Type':'application/json','Ocp-Apim-Subscription-Key':key}
- region=os.environ.get('AZURE_TRANSLATOR_REGION','').strip()
- if region:headers['Ocp-Apim-Subscription-Region']=region
- req=urllib.request.Request(
-  'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=zh-Hans',
-  data=json.dumps([{'Text':title}]).encode('utf-8'),headers=headers,method='POST')
- with urllib.request.urlopen(req,timeout=4) as response:
-  return json.loads(response.read(256_000))[0]['translations'][0]['text']
+def _translation_state_file():
+ path=os.environ.get('GOOGLE_TRANSLATION_STATE')
+ return Path(path) if path else None
+
+def _google_retry_after(error):
+ value=error.headers.get('Retry-After','') if error.headers else ''
+ try:return max(0,int(value))
+ except ValueError:
+  try:return max(0,parsedate_to_datetime(value).timestamp()-time.time())
+  except (TypeError,ValueError,OverflowError):return 60
+
+def _google_title_request(title):
+ url='https://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title,safe='')
+ data=json.loads(request_body(url,timeout=4))
+ translated=clean(''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str)))
+ if not translated or translated==title or not re.search(r'[\u3400-\u9fff]',translated):
+  raise ValueError('Translation did not return Chinese')
+ return translated
 
 def translate_title(title):
- errors=[]
- for name,provider in [('Google',translate_google_title),('Microsoft',translate_microsoft_title)]:
-  try:
-   translated=clean(provider(title))
-   if not translated or translated==title or not re.search(r'[\u3400-\u9fff]',translated):
-    raise ValueError('Translation did not return Chinese')
-   return translated
-  except (OSError,ValueError,TypeError,IndexError,KeyError) as error:
-   errors.append(f'{name}: {type(error).__name__} ({error})')
- raise ValueError('; '.join(errors))
+ # The workflow runs its collectors sequentially in separate processes.
+ # Share only throttling state across them, never translated text.
+ with _translation_lock:
+  path=_translation_state_file()
+  state=_translation_state
+  if path and path.exists():state.update(json.loads(path.read_text(encoding='utf-8')))
+  def save():
+   if path:path.write_text(json.dumps(state),encoding='utf-8')
+  if state['stopped']:raise ValueError('Google requests paused for this run after HTTP 429')
+  for attempt in range(2):
+   delay=state['next']-time.monotonic()
+   if delay>0:time.sleep(delay)
+   wait=1
+   try:return _google_title_request(title)
+   except HTTPError as error:
+    if error.code!=429:raise
+    wait=_google_retry_after(error)
+    if attempt or wait>120:
+     state['stopped']=True
+     print(f'GOOGLE_TRANSLATION_STOP HTTP 429 retry_after={wait:.0f}s',flush=True)
+     raise
+    print(f'GOOGLE_TRANSLATION_BACKOFF HTTP 429 retry_after={wait:.0f}s',flush=True)
+   finally:
+    state['next']=time.monotonic()+max(1,wait)
+    save()
 
 def translate_security_titles(items):
  def translate(row):

@@ -54,13 +54,11 @@ jobs:
         run: python -m unittest discover -s scripts -p "test_*.py"
       - name: Refresh independent sources and record health
         env:
-          AZURE_TRANSLATOR_KEY: ${{ secrets.AZURE_TRANSLATOR_KEY }}
-          AZURE_TRANSLATOR_REGION: ${{ vars.AZURE_TRANSLATOR_REGION }}
+          GOOGLE_TRANSLATION_STATE: ${{ runner.temp }}/google-translation-${{ github.run_id }}-${{ github.run_attempt }}.json
         run: xvfb-run -a python scripts/refresh_sources.py
       - name: Refresh NASA Astronomy Picture of the Day
         env:
-          AZURE_TRANSLATOR_KEY: ${{ secrets.AZURE_TRANSLATOR_KEY }}
-          AZURE_TRANSLATOR_REGION: ${{ vars.AZURE_TRANSLATOR_REGION }}
+          GOOGLE_TRANSLATION_STATE: ${{ runner.temp }}/google-translation-${{ github.run_id }}-${{ github.run_attempt }}.json
         continue-on-error: true
         run: python fetch_nasa_apod.py --output nasa-apod.json
       - name: Save headlines

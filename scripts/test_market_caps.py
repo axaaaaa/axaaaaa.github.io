@@ -19,6 +19,9 @@ class Tests(unittest.TestCase):
  def test_nasdaq_identity(self):
   data={'data':{'symbol':'AAPL','summaryData':{'MarketCap':{'value':'5,000'}}}};self.assertEqual(m.nasdaq_cap(data,'AAPL')['marketCapUsd'],5000)
   with self.assertRaises(ValueError):m.nasdaq_cap(data,'NVDA')
- def test_symbol_collision_rejected(self):
-  self.assertEqual(m.crypto_caps([{'id':'the-open-network','symbol':'gram','name':'Gram (prev. Toncoin)','market_cap':100}],['TON']),{})
+ def test_gram_rename_accepts_only_same_coin_id(self):
+  rows=[{'id':'the-open-network','symbol':'gram','market_cap':123},{'id':'unrelated-gram','symbol':'gram','market_cap':999}]
+  self.assertEqual(m.crypto_caps(rows,['GRAM'])['GRAM']['marketCapUsd'],123)
+  self.assertEqual(m.crypto_caps(rows,['TON'])['TON']['marketCapUsd'],123)
+  self.assertEqual(m.crypto_caps([{'id':'the-open-network','symbol':'unrelated','market_cap':999}],['GRAM']),{})
 if __name__=='__main__':unittest.main()

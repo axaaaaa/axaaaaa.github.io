@@ -1,9 +1,8 @@
 """Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
-import argparse,json,os,re,time,urllib.request,xml.etree.ElementTree as ET
+import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
 from email.utils import parsedate_to_datetime
-from urllib.error import HTTPError
 from threading import Lock
 from urllib.parse import urljoin,urlparse,quote
 from datetime import datetime,timezone
@@ -650,53 +649,52 @@ def fetch_freebuf_items():
   finally:browser.close()
 
 _translation_lock=Lock()
-_translation_state={'next':0,'stopped':False}
+_offline_translator=None
+ARGOS_MODEL_URL='https://argos-net.com/v1/translate-en_zh-1_9.argosmodel'
+ARGOS_MODEL_SHA256='433e7c4f034d87fbe2353161e05f18646d7999452f801a4e1f0378522b9850ab'
 
-def _translation_state_file():
- path=os.environ.get('GOOGLE_TRANSLATION_STATE')
- return Path(path) if path else None
+def _argos_english_package(package):
+ return next((p for p in package.get_installed_packages()
+              if p.type=='translate' and p.from_code=='en' and p.to_code=='zh'
+              and str(p.package_version)=='1.9'),None)
 
-def _google_retry_after(error):
- value=error.headers.get('Retry-After','') if error.headers else ''
- try:return max(0,int(value))
- except ValueError:
-  try:return max(0,parsedate_to_datetime(value).timestamp()-time.time())
-  except (TypeError,ValueError,OverflowError):return 60
+def prepare_offline_translation():
+ import hashlib,tempfile
+ from argostranslate import package
+ if _argos_english_package(package) is None:
+  with tempfile.TemporaryDirectory() as folder:
+   model=Path(folder)/'translate-en_zh-1_9.argosmodel'
+   digest=hashlib.sha256()
+   with urllib.request.urlopen(ARGOS_MODEL_URL,timeout=60) as response,model.open('wb') as output:
+    while chunk:=response.read(1024*1024):
+     digest.update(chunk);output.write(chunk)
+   if digest.hexdigest()!=ARGOS_MODEL_SHA256:raise ValueError('Argos model checksum mismatch')
+   package.install_from_path(model)
+ if _argos_english_package(package) is None:raise RuntimeError('Argos English-to-Chinese model not installed')
+ print('ARGOS_MODEL_READY en->zh v1.9',flush=True)
 
-def _google_title_request(title):
- url='https://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title,safe='')
- data=json.loads(request_body(url,timeout=4))
- translated=clean(''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str)))
- if not translated or translated==title or not re.search(r'[\u3400-\u9fff]',translated):
-  raise ValueError('Translation did not return Chinese')
- return translated
+class _OfflineSentencizer:
+ def split_sentences(self,text):
+  # Keep headlines intact. Split longer prose (e.g. APOD) without downloading another model.
+  return [text] if len(text)<=240 else re.split(r'(?<=[.!?])\s+(?=[A-Z])',text)
+
+def _load_offline_translator():
+ from argostranslate import package,translate
+ model=_argos_english_package(package)
+ if model is None:raise RuntimeError('Argos English-to-Chinese model not installed')
+ translator=translate.PackageTranslation(translate.Language('en','English'),translate.Language('zh','Chinese'),model)
+ translator.sentencizer=_OfflineSentencizer()
+ return translator
 
 def translate_title(title):
- # The workflow runs its collectors sequentially in separate processes.
- # Share only throttling state across them, never translated text.
+ global _offline_translator
  with _translation_lock:
-  path=_translation_state_file()
-  state=_translation_state
-  if path and path.exists():state.update(json.loads(path.read_text(encoding='utf-8')))
-  def save():
-   if path:path.write_text(json.dumps(state),encoding='utf-8')
-  if state['stopped']:raise ValueError('Google requests paused for this run after HTTP 429')
-  for attempt in range(2):
-   delay=state['next']-time.monotonic()
-   if delay>0:time.sleep(delay)
-   wait=1
-   try:return _google_title_request(title)
-   except HTTPError as error:
-    if error.code!=429:raise
-    wait=_google_retry_after(error)
-    if attempt or wait>120:
-     state['stopped']=True
-     print(f'GOOGLE_TRANSLATION_STOP HTTP 429 retry_after={wait:.0f}s',flush=True)
-     raise
-    print(f'GOOGLE_TRANSLATION_BACKOFF HTTP 429 retry_after={wait:.0f}s',flush=True)
-   finally:
-    state['next']=time.monotonic()+max(1,wait)
-    save()
+  if _offline_translator is None:_offline_translator=_load_offline_translator()
+  # Reuse loaded model weights, not the library's CachedTranslation wrapper.
+  translated=clean(_offline_translator.translate(title))
+ if not translated or translated==title or not re.search(r'[\u3400-\u9fff]',translated):
+  raise ValueError('Argos translation did not return Chinese')
+ return translated
 
 def translate_security_titles(items):
  def translate(row):

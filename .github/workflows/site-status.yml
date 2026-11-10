@@ -13,12 +13,26 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ARGOS_PACKAGES_DIR: ${{ github.workspace }}/.argos-models
+      ARGOS_DEVICE_TYPE: cpu
+      ARGOS_INTRA_THREADS: "2"
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Cache offline English-Chinese model
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.ARGOS_PACKAGES_DIR }}
+          key: argos-en-zh-1.9-v1
+      - name: Prepare offline Argos translation
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
+          python -m pip install argostranslate==1.11.0
+          python -c "from fetch_extra_hotspots import prepare_offline_translation, translate_title; prepare_offline_translation(); print(translate_title('Security news'))"
       - name: Restore previous headlines
         uses: actions/cache/restore@v4
         with:
@@ -53,12 +67,8 @@ jobs:
       - name: Test collectors
         run: python -m unittest discover -s scripts -p "test_*.py"
       - name: Refresh independent sources and record health
-        env:
-          GOOGLE_TRANSLATION_STATE: ${{ runner.temp }}/google-translation-${{ github.run_id }}-${{ github.run_attempt }}.json
         run: xvfb-run -a python scripts/refresh_sources.py
       - name: Refresh NASA Astronomy Picture of the Day
-        env:
-          GOOGLE_TRANSLATION_STATE: ${{ runner.temp }}/google-translation-${{ github.run_id }}-${{ github.run_attempt }}.json
         continue-on-error: true
         run: python fetch_nasa_apod.py --output nasa-apod.json
       - name: Save headlines

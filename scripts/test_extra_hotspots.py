@@ -111,15 +111,13 @@ class AddedSourcesTests(unittest.TestCase):
   self.assertEqual(row['title'],'中文漏洞公告')
   self.assertEqual(row['url'],'https://www.cert.org.cn/publish/main/9/2026/123/123_.html')
 
- def test_translation_keeps_original_and_uses_seeded_cache(self):
+ def test_translation_keeps_original_and_metadata(self):
   items=[{'title':'AI study','meta':'arXiv:2611.12345'}]
-  previous={'items':[{'title':'人工智能研究','originalTitle':'AI study',
-                      'translationStatus':'translated','translationMethod':'editor'}]}
-  with patch.object(x,'translate_title',side_effect=OSError('offline')) as translate:
-   row,=x.translate_security_titles(items,previous)
-   translate.assert_not_called()
-  self.assertEqual((row['title'],row['originalTitle'],row['translationMethod']),('人工智能研究','AI study','editor'))
-  self.assertTrue(row['meta'].startswith('中文译名'))
+  with patch.object(x,'translate_title',return_value='人工智能研究') as translate:
+   row,=x.translate_security_titles(items)
+  translate.assert_called_once_with('AI study')
+  self.assertEqual((row['title'],row['originalTitle']),('人工智能研究','AI study'))
+  self.assertEqual(row['meta'],'机器翻译 · arXiv:2611.12345')
 
 
 class AdditionalSecuritySourcesTests(unittest.TestCase):

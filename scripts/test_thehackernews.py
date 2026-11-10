@@ -9,11 +9,26 @@ class TheHackerNewsTests(unittest.TestCase):
   items=f.parse_source('thehackernews',body);self.assertEqual(len(items),2);self.assertEqual(items[0]['title'],'Claude Code security alert')
  def test_translation(self):
   with patch.object(f,'request_body',return_value=json.dumps([[['安全新闻','Security news']]]).encode()):self.assertEqual(f.translate_title('Security news'),'安全新闻')
- def test_cached_translation(self):
-  old={'items':[{'title':'安全新闻','originalTitle':'Security news','translationStatus':'translated'}]}
-  with patch.object(f,'translate_title',side_effect=AssertionError('cache miss')):
-   row=f.translate_security_titles([{'title':'Security news','url':'https://example.com','meta':''}],old)[0]
-  self.assertEqual(row['title'],'安全新闻');self.assertEqual(row['originalTitle'],'Security news');self.assertIn('机器翻译',row['meta'])
+ def test_fresh_translation_on_each_run(self):
+  items=[{'title':'Security news'}]
+  with patch.object(f,'translate_title',side_effect=['安全资讯','安全新闻']) as translate:
+   self.assertEqual(f.translate_security_titles(items)[0]['title'],'安全资讯')
+   self.assertEqual(f.translate_security_titles(items)[0]['title'],'安全新闻')
+  self.assertEqual(translate.call_count,2)
+ def test_microsoft_after_google_http_error(self):
+  from urllib.error import HTTPError
+  from io import BytesIO
+  limited=HTTPError('https://translate.googleapis.com',429,'Too Many Requests',None,None)
+  translated=json.dumps([{'translations':[{'text':'安全新闻'}]}]).encode()
+  with patch.dict(f.os.environ,{'AZURE_TRANSLATOR_KEY':'test-key','AZURE_TRANSLATOR_REGION':'westus'}):
+   with patch.object(f,'request_body',side_effect=limited),patch.object(f.urllib.request,'urlopen',return_value=BytesIO(translated)) as open_url:
+    self.assertEqual(f.translate_title('Security news'),'安全新闻')
+   req=open_url.call_args.args[0]
+   self.assertEqual(req.get_method(),'POST')
+   self.assertEqual(req.get_header('Ocp-apim-subscription-key'),'test-key')
+   self.assertEqual(req.get_header('Ocp-apim-subscription-region'),'westus')
+   self.assertEqual(json.loads(req.data),[{'Text':'Security news'}])
+   self.assertIn('to=zh-Hans',req.full_url)
  def test_failed_translation_retains_original(self):
   with patch.object(f,'translate_title',side_effect=OSError('offline')):row=f.translate_security_titles([{'title':'Security news','url':'https://example.com'}])[0]
   self.assertEqual(row['title'],'Security news');self.assertEqual(row['translationStatus'],'original');self.assertIn('翻译待更新',row['meta'])

@@ -592,9 +592,9 @@ FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href
 FREEBUF_FEED = 'https://www.freebuf.com/rss'
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
-def request_body(url):
+def request_body(url,timeout=25):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
- with urllib.request.urlopen(req,timeout=25) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
+ with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -647,26 +647,48 @@ def fetch_freebuf_items():
    return normalize_freebuf_rows(rows)
   finally:browser.close()
 
-def translate_title(title):
- url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title)
- data=json.loads(request_body(url))
- translated=clean(''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str)))
- if not translated or not re.search(r'[\u4e00-\u9fff]',translated):raise ValueError('Translation did not return Chinese')
- return translated
+def translate_google_title(title):
+ url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title,safe='')
+ data=json.loads(request_body(url,timeout=4))
+ return ''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str))
 
-def translate_security_titles(items,previous=None):
- cached={row.get('originalTitle'):row for row in (previous or {}).get('items',[]) if row.get('translationStatus')=='translated' and row.get('title')}
+def translate_microsoft_title(title):
+ key=os.environ.get('AZURE_TRANSLATOR_KEY','').strip()
+ if not key:raise ValueError('AZURE_TRANSLATOR_KEY is not configured')
+ headers={'Content-Type':'application/json','Ocp-Apim-Subscription-Key':key}
+ region=os.environ.get('AZURE_TRANSLATOR_REGION','').strip()
+ if region:headers['Ocp-Apim-Subscription-Region']=region
+ req=urllib.request.Request(
+  'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=zh-Hans',
+  data=json.dumps([{'Text':title}]).encode('utf-8'),headers=headers,method='POST')
+ with urllib.request.urlopen(req,timeout=4) as response:
+  return json.loads(response.read(256_000))[0]['translations'][0]['text']
+
+def translate_title(title):
+ errors=[]
+ for name,provider in [('Google',translate_google_title),('Microsoft',translate_microsoft_title)]:
+  try:
+   translated=clean(provider(title))
+   if not translated or translated==title or not re.search(r'[\u3400-\u9fff]',translated):
+    raise ValueError('Translation did not return Chinese')
+   return translated
+  except (OSError,ValueError,TypeError,IndexError,KeyError) as error:
+   errors.append(f'{name}: {type(error).__name__} ({error})')
+ raise ValueError('; '.join(errors))
+
+def translate_security_titles(items):
  def translate(row):
   original=row['title'];result={**row,'originalTitle':original,'translationStatus':'original'}
+  result.pop('translationMethod',None)
   try:
-   result['title']=cached[original]['title'] if original in cached else translate_title(original)
+   result['title']=translate_title(original)
    result['translationStatus']='translated'
-   if original in cached and cached[original].get('translationMethod')=='editor':result['translationMethod']='editor'
   except Exception as error:
-   print(f'TRANSLATION_PENDING {type(error).__name__}')
-  result['meta']=(('中文译名' if result.get('translationMethod')=='editor' else '机器翻译') if result['translationStatus']=='translated' else '英文原题 · 翻译待更新')+(' · '+row['meta'] if row.get('meta') else '')
+   print(f'TRANSLATION_PENDING {type(error).__name__}: {error}')
+  result['meta']=('机器翻译' if result['translationStatus']=='translated' else '英文原题 · 翻译待更新')+(' · '+row['meta'] if row.get('meta') else '')
   return result
  with ThreadPoolExecutor(max_workers=4) as pool:return list(pool.map(translate,items))
+
 
 NEW_SOURCE_PARSERS={'github_advisory':parse_github_advisories,'cve_program':fetch_cve_records,'arxiv':parse_arxiv,'cisa_kev':parse_cisa_kev,'cncert':parse_cncert}
 NEW_SOURCE_BACKUPS={
@@ -695,10 +717,7 @@ def fetch(key):
    body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
   else:raise
  if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program') or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
-  previous={}
-  try:previous=json.loads((public_directory()/'extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
-  except (OSError,ValueError):pass
-  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items,previous)}
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
  if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))

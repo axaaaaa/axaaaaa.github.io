@@ -34,9 +34,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/hacker-news.json');output=Path(parser.parse_args().output)
     try:
         items=fetch()
-        try:previous=json.loads(output.read_text(encoding='utf-8-sig'))
-        except (OSError,ValueError):previous={}
-        items=translate_security_titles(items,previous)
+        items=translate_security_titles(items)
         data={'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items};output.parent.mkdir(parents=True,exist_ok=True);temp=output.with_suffix('.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(output);print(f'HN_OK items={len(items)}')
     except Exception as error:
         if output.exists():

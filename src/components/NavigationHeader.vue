@@ -14,7 +14,7 @@
       </el-menu-item>
 
       <el-menu-item index="home" @click="handleHome" class="home-menu-item" title="主页" aria-label="主页">
-        <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9" /></svg>
+        <span class="home-pixel-icon" aria-hidden="true"></span>
       </el-menu-item>
       
 
@@ -29,12 +29,12 @@
 
     <BookmarkSite />
     <SponsorButton />
-    <el-dropdown class="header-tools" trigger="click" placement="bottom-start" :max-height="420" @command="$emit($event)">
+    <el-dropdown class="header-tools" popper-class="site-tools-win95" trigger="click" placement="bottom-start" :max-height="420" @command="$emit($event)">
       <button type="button" class="header-tools-trigger" aria-label="工具菜单">
         <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/></svg>
         <span>工具</span>
       </button>
-      <template #dropdown><el-dropdown-menu :class="{'site-tools-menu-dark':currentTheme==='dark'}">
+      <template #dropdown><el-dropdown-menu>
         <el-dropdown-item command="open-fundamentals"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg><span>计算机底层知识</span></el-dropdown-item>
         <el-dropdown-item command="open-installation"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H4zM8 20h8M12 16v4M12 7v6M9 10l3 3 3-3"/></svg><span>系统安装</span></el-dropdown-item>
         <el-dropdown-item command="open-commands"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4zM7 9l3 3-3 3M13 15h4"/></svg><span>命令速查</span></el-dropdown-item>
@@ -45,8 +45,8 @@
         <el-dropdown-item command="open-tools"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v14H3zM8 7V3h8v4M3 12h18M10 12v3h4v-3"/></svg><span>实用工具箱</span></el-dropdown-item>
         <el-dropdown-item command="open-system"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v18H4zM7 7h10M7 11h10M8 17h1M15 17h1"/></svg><span>装机与系统工具</span></el-dropdown-item>
         <el-dropdown-item command="open-electricity"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 10-13h-8l1-7"/></svg><span>电学知识与用电工具</span></el-dropdown-item>
-        <el-dropdown-item command="open-food"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18M17 3c-3 4-3 9 1 9V3M18 12v9"/></svg><span>日常饮食手册</span></el-dropdown-item>
         <el-dropdown-item command="open-reverse"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H4v4M16 4h4v4M4 16v4h4M20 16v4h-4M9 9l-3 3 3 3M15 9l3 3-3 3M13 8l-2 8"/></svg><span>软件逆向分析手册</span></el-dropdown-item>
+        <el-dropdown-item command="open-vulnerability"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4-3 7-8 9-5-2-8-5-8-9V7zM12 8v5m0 3h.01"/></svg><span>漏洞手册大全</span></el-dropdown-item>
         <el-dropdown-item command="open-terminal"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v16H3zM6 8l4 4-4 4M13 16h5"/></svg><span>Linux 终端练习室</span></el-dropdown-item>
       </el-dropdown-menu></template>
     </el-dropdown>
@@ -60,7 +60,6 @@
     <PersonalGreeting />
     <LocalMusicPlayer ref="localMusic" @request-play="$refs.headerRadio?.stop()" />
     <HeaderRadio ref="headerRadio" @request-play="$refs.localMusic?.pauseLocal()" />
-    <InteractionSoundToggle />
     <button
       type="button"
       class="header-theme-toggle"
@@ -88,14 +87,14 @@ import BookmarkSite from './BookmarkSite.vue';
 import PersonalGreeting from './PersonalGreeting.vue';
 import HeaderRadio from './HeaderRadio.vue';
 import LocalMusicPlayer from './LocalMusicPlayer.vue';
-import InteractionSoundToggle from './InteractionSoundToggle.vue';
+import { createInteractionSounds } from '../utils/interaction-sounds.mjs';
 import HeaderWeather from "./HeaderWeather.vue";
 import FlipClock from "./FlipClock.vue";
 import { Sunny, Moon } from '@element-plus/icons-vue'
 
 export default {
   name: 'NavigationHeader',
-  components: { ElDropdown, ElDropdownMenu, ElDropdownItem, SponsorButton, BookmarkSite, HeaderRadio, PersonalGreeting, LocalMusicPlayer, InteractionSoundToggle, HeaderWeather, FlipClock, Sunny, Moon },
+  components: { ElDropdown, ElDropdownMenu, ElDropdownItem, SponsorButton, BookmarkSite, HeaderRadio, PersonalGreeting, LocalMusicPlayer, HeaderWeather, FlipClock, Sunny, Moon },
 
   props: {
     activeIndex: { type: String, default: '' },
@@ -103,7 +102,7 @@ export default {
     weatherLocation: { type: Object, default: null }
   },
 
-  emits: ['toggle-theme', 'toggle-mobile-menu', 'open-fundamentals', 'open-installation', 'open-commands', 'open-shortcuts', 'open-network', 'open-image-tools', 'open-text-tools', 'open-tools', 'open-system', 'open-electricity', 'open-food', 'open-reverse', 'open-terminal'],
+  emits: ['toggle-theme', 'toggle-mobile-menu', 'open-fundamentals', 'open-installation', 'open-commands', 'open-shortcuts', 'open-network', 'open-image-tools', 'open-text-tools', 'open-tools', 'open-system', 'open-electricity', 'open-reverse', 'open-vulnerability', 'open-terminal'],
 
   data() {
     return {
@@ -113,11 +112,13 @@ export default {
   },
 
   mounted() {
+    this.soundController = createInteractionSounds();
     this.checkIfMobile();
     window.addEventListener('resize', this.handleResize);
   },
 
   beforeUnmount() {
+    this.soundController?.dispose();
     window.removeEventListener('resize', this.handleResize);
     if (this.resizeTimer) clearTimeout(this.resizeTimer);
   },
@@ -436,17 +437,26 @@ export default {
 /* Shared toolbar tokens override the individual widget trigger styles, never their panels. */
 .header-wrapper { --toolbar-icon-color: var(--ui-accent, #386a50); --toolbar-icon-hover: var(--ui-accent-soft, #edf4ef); }
 .header-wrapper.dark-theme { --toolbar-icon-color: #94bca4; --toolbar-icon-hover: rgba(148,188,164,.12); }
-.header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger), .header-wrapper :deep(.interaction-sound-toggle) {
+.header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger) {
   display: inline-flex; align-items: center; justify-content: center; flex: 0 0 32px; width: 32px; height: 32px; min-height: 32px; padding: 6px; box-sizing: border-box; border: 0; border-radius: 8px; background: transparent; color: var(--toolbar-icon-color); cursor: pointer; line-height: 1;
 }
-.header-wrapper :deep(.header-contact:hover), .header-wrapper :deep(.bookmark-site-button:hover), .header-wrapper :deep(.sponsor-button:hover), .header-wrapper :deep(.header-music-button:hover), .header-wrapper :deep(.radio-trigger:hover), .header-wrapper :deep(.interaction-sound-toggle:hover) { background: var(--toolbar-icon-hover); }
-.header-wrapper :deep(.header-contact:focus-visible), .header-wrapper :deep(.bookmark-site-button:focus-visible), .header-wrapper :deep(.sponsor-button:focus-visible), .header-wrapper :deep(.header-music-button:focus-visible), .header-wrapper :deep(.radio-trigger:focus-visible), .header-wrapper :deep(.interaction-sound-toggle:focus-visible) { outline: 2px solid var(--toolbar-icon-color); outline-offset: 2px; }
-.toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg), .header-wrapper :deep(.interaction-sound-toggle > svg) { display: block; width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.header-wrapper :deep(.header-contact:hover), .header-wrapper :deep(.bookmark-site-button:hover), .header-wrapper :deep(.sponsor-button:hover), .header-wrapper :deep(.header-music-button:hover), .header-wrapper :deep(.radio-trigger:hover) { background: var(--toolbar-icon-hover); }
+.header-wrapper :deep(.header-contact:focus-visible), .header-wrapper :deep(.bookmark-site-button:focus-visible), .header-wrapper :deep(.sponsor-button:focus-visible), .header-wrapper :deep(.header-music-button:focus-visible), .header-wrapper :deep(.radio-trigger:focus-visible) { outline: 2px solid var(--toolbar-icon-color); outline-offset: 2px; }
+.toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg) { display: block; width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .header-wrapper :deep(.home-menu-item), .header-wrapper :deep(.mobile-menu-toggle) { color: var(--toolbar-icon-color); }
+.home-pixel-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: url("../assets/hackernoon-pixels/home.svg") center / contain no-repeat;
+  mask: url("../assets/hackernoon-pixels/home.svg") center / contain no-repeat;
+}
 .header-wrapper :deep(.home-menu-item:hover), .header-wrapper :deep(.mobile-menu-toggle:hover) { background: var(--toolbar-icon-hover); }
 @media(max-width:768px) {
- .header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger), .header-wrapper :deep(.interaction-sound-toggle) { flex-basis: 26px; width: 26px; height: 30px; min-height: 30px; padding: 4px; }
- .toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg), .header-wrapper :deep(.interaction-sound-toggle > svg) { width: 18px; height: 18px; }
+ .header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger) { flex-basis: 26px; width: 26px; height: 30px; min-height: 30px; padding: 4px; }
+ .toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg) { width: 18px; height: 18px; }
 }
 </style>
 
@@ -463,9 +473,44 @@ export default {
 @media(max-width:768px){.header-tools{margin:0 2px}.header-tools-trigger{gap:3px;padding:0 5px;font-size:11px}.header-tools-trigger svg{width:15px;height:15px}}
 </style>
 <style>
-.site-tools-menu-dark.el-dropdown-menu{background:#182420}
-.site-tools-menu-dark .el-dropdown-menu__item{color:#c4d9cc}
-.site-tools-menu-dark .el-dropdown-menu__item:not(.is-disabled):hover,.site-tools-menu-dark .el-dropdown-menu__item:not(.is-disabled):focus{color:#d9eddf;background:#263d30}
+.site-tools-win95.el-popper {
+  --el-bg-color-overlay: #c0c0c0;
+  --el-text-color-primary: #151515;
+  --el-border-color: #c0c0c0;
+  --ui-accent: #fff;
+  --ui-accent-soft: #000080;
+  padding: 2px;
+  border: 0;
+  border-radius: 0;
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #111, inset -2px -2px #808080;
+}
+.site-tools-win95 .el-popper__arrow { display: none; }
+.site-tools-win95 .el-dropdown-menu {
+  margin: 0;
+  padding: 2px;
+  border: 0;
+  border-radius: 0;
+  background: #c0c0c0;
+  font-family: "Microsoft Sans Serif", Tahoma, "Microsoft YaHei", sans-serif;
+}
+.site-tools-win95 .el-dropdown-menu__item {
+  min-height: 28px;
+  padding: 4px 14px 4px 8px;
+  color: #151515;
+  font-size: 13px;
+  line-height: 20px;
+  border-radius: 0;
+}
+.site-tools-win95 .el-dropdown-menu__item:not(.is-disabled):is(:hover,:focus,.is-hovering) {
+  color: #fff;
+  background: #000080;
+}
+body.dark .site-tools-win95 .el-dropdown-menu__item:not(.is-disabled):is(:focus-visible,.is-hovering) {
+  color: #fff !important;
+  background: #000080 !important;
+}
+.site-tools-win95 .el-dropdown-menu__item:focus-visible { outline: 1px dotted #fff; outline-offset: -2px; }
 </style>
 
 <style>

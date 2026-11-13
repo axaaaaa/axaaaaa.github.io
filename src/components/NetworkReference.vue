@@ -1,7 +1,7 @@
 <template>
   <section id="network-reference" class="network-reference" aria-labelledby="network-reference-title">
     <header class="network-heading"><h2 id="network-reference-title"><button type="button" class="module-title-toggle" :aria-expanded="opened" aria-controls="network-reference-content" @click="opened = !opened" style="border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;padding:0;text-align:left;cursor:pointer"><svg class="module-heading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:19px;height:19px;vertical-align:-3px;margin-right:7px"><rect x="8" y="2" width="8" height="6" rx="1"/><rect x="2" y="16" width="8" height="6" rx="1"/><rect x="14" y="16" width="8" height="6" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg> 网络知识速查<svg class="module-heading-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" :style="{transform: opened ? 'rotate(90deg)' : 'rotate(0deg)'}" style="width:14px;height:14px;vertical-align:-2px;margin-left:8px"><path d="m9 5 7 7-7 7"/></svg></button></h2><div><span>{{ entries.length }} 条知识</span><button type="button" :aria-expanded="opened" aria-controls="network-reference-content" @click="opened = !opened">{{ opened ? '收起 ▴' : '展开 ▾' }}</button></div></header>
-    <div v-if="opened" id="network-reference-content">
+    <div v-if="opened" id="network-reference-content" class="luna-body">
       <nav class="network-categories" aria-label="网络知识分类"><button v-for="name in categories" :key="name" type="button" :aria-pressed="category === name" @click="category = name"><ToolEntryIcon :name="name" />{{ name || '全部知识' }}</button><button type="button" :aria-pressed="category === 'calculator'" @click="category = 'calculator'"><ToolEntryIcon name="calculator" />IPv4 子网计算器</button><button type="button" :aria-pressed="category === 'protocols'" @click="category = 'protocols'"><ToolEntryIcon name="导航" />协议大全</button><button type="button" :aria-pressed="category === 'whois'" @click="category = 'whois'">WHOIS 信息查询</button></nav>
       <WhoisQuery v-if="category === 'whois'" />
       <section v-else-if="category === 'calculator'" class="subnet-tool" aria-label="IPv4 CIDR 子网计算器">
@@ -57,4 +57,66 @@ export default {
 .network-reference { margin: 24px 20px 32px; padding: 20px; border: 1px solid var(--el-border-color-light, #d7e4dc); border-radius: 14px; background: var(--el-bg-color, #fff); color: var(--el-text-color-primary, #273b30); scroll-margin-top: 80px; font-size: 13px; }
 .network-heading,.network-heading>div,.network-card-heading,.network-pages { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }h2 { margin: 0; font-size: 20px; font-weight: 500; }h3 { margin: 8px 0; font-size: 15px; }button,input { font: inherit; color: inherit; background: var(--el-fill-color-blank, #fff); border: 1px solid var(--el-border-color, #d7e4dc); border-radius: 7px; padding: 7px 10px; box-sizing: border-box; }button { cursor: pointer; }button:hover:not(:disabled),button[aria-pressed="true"] { background: var(--ui-accent-soft); color: var(--ui-accent); }button:disabled { opacity: .4; cursor: default; }.network-categories,.network-examples { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0; }.network-search { display: flex; flex-wrap: wrap; gap: 10px; }.network-search input { flex: 1 1 220px; min-width: 0; }.network-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }.network-card { min-width: 0; padding: 14px; border: 1px solid var(--el-border-color-light); border-radius: 10px; }.network-card strong { font: 600 16px/1.5 Consolas,monospace; overflow-wrap: anywhere; }.network-card p,.network-note { line-height: 1.8; color: var(--el-text-color-secondary); }.network-card small { color: var(--el-text-color-secondary); }a { color: var(--ui-accent); font-size: 12px; }.network-pages { justify-content: center; margin-top: 16px; }.network-feedback { color: var(--ui-accent); }.subnet-tool label { display: block; margin: 12px 0 8px; }.subnet-tool input { width: 100%; max-width: 450px; }.subnet-results { display: grid; grid-template-columns: minmax(110px,auto) minmax(0,1fr); border: 1px solid var(--el-border-color-light); border-radius: 10px; overflow: hidden; }.subnet-results dt,.subnet-results dd { margin: 0; padding: 10px; border-bottom: 1px solid var(--el-border-color-light); overflow-wrap: anywhere; }.subnet-results dt { background: var(--ui-accent-soft); }.subnet-results dd { font-family: Consolas,monospace; }.network-error { color: var(--el-color-danger, #bf4343); }
 @media(max-width:760px) { .network-reference { margin: 16px 12px; padding: 14px; }.network-grid { grid-template-columns: minmax(0,1fr); }.subnet-results { grid-template-columns: 105px minmax(0,1fr); } }
+.network-reference {
+  --el-bg-color: #ece9d8;
+  --el-fill-color-blank: #fff;
+  --el-border-color: #7f9db9;
+  --el-border-color-light: #c3cfe1;
+  --el-text-color-primary: #172746;
+  --el-text-color-secondary: #465976;
+  --el-color-danger: #a62424;
+  --ui-accent: #174c9b;
+  --ui-accent-soft: #e1edff;
+  --field-bg: #fff;
+  --field-text: #172746;
+  --field-border: #7f9db9;
+  --field-placeholder: #586a83;
+  --field-font: Tahoma, "Microsoft YaHei", sans-serif;
+  padding: 0;
+  border: 1px solid #174fa8;
+  border-radius: 8px 8px 3px 3px;
+  box-shadow: 0 2px 6px #0b317640;
+  font-family: var(--field-font);
+  color-scheme: light;
+}
+.network-heading {
+  padding: 7px 10px;
+  border-radius: 7px 7px 0 0;
+  background: linear-gradient(#4b9bff 0%, #256de1 25%, #0a50c8 55%, #0842a7 100%);
+  color: #fff;
+  text-shadow: 1px 1px #123c82;
+}
+.network-heading h2 { font-size: 16px; font-weight: 700; }
+.network-heading > div { gap: 6px 10px; }
+.network-heading > div button {
+  padding: 3px 9px;
+  color: #fff;
+  border-color: #c1d9ff;
+  background: linear-gradient(#6eaeff, #1759cc);
+  box-shadow: inset 0 1px #ffffff70;
+}
+.network-heading > div button:hover:not(:disabled) { color: #fff; background: linear-gradient(#85baff, #2e6cdb); }
+.luna-body { padding: 0 14px 14px; }
+.luna-body button {
+  border-color: #7193be;
+  border-radius: 4px;
+  background: linear-gradient(#fff, #f0f0e8 63%, #deded4);
+}
+.luna-body button:hover:not(:disabled) { border-color: #2567be; background: linear-gradient(#fff, #e0edff); }
+.luna-body button[aria-pressed="true"] {
+  color: #123b76;
+  border-color: #5f86bb;
+  background: linear-gradient(#f5f9ff, #cddfff);
+  box-shadow: inset 0 -2px #edaa43;
+}
+.network-categories { padding: 0 0 8px; border-bottom: 1px solid #a0b4d0; }
+.network-card, .subnet-results { background: #fff; border-radius: 4px; }
+.network-card-heading strong { color: #174c9b; }
+.network-reference :is(button,a):focus-visible { outline: 2px solid #1754a7; outline-offset: 2px; }
+.network-heading button:focus-visible { outline-color: #fff; }
+.network-reference input:focus-visible { box-shadow: 0 0 0 2px #6a9ce3; }
+@media(max-width:760px) {
+  .network-reference { padding: 0; }
+  .luna-body { padding: 0 10px 10px; }
+}
 </style>

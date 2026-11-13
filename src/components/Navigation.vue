@@ -32,8 +32,8 @@
       @open-tools="scrollToUtilityTools" @open-image-tools="scrollToToolModule('imageTools','image-tools')" @open-text-tools="scrollToToolModule('textTools','text-tools')"
         @open-system="scrollToSystemTools"
       @open-electricity="scrollToElectricity"
-      @open-food="scrollToDailyFood"
       @open-reverse="scrollToReverseHandbook"
+      @open-vulnerability="scrollToVulnerabilityHandbook"
       @open-terminal="scrollToLinuxTerminal"
         @toggle-theme="toggleTheme"
         @toggle-mobile-menu="toggleSidebar"
@@ -58,8 +58,8 @@
       <UtilityToolbox ref="utilityToolbox" />
         <SystemTools ref="systemTools" />
         <ElectricityLibrary ref="electricityLibrary" />
-        <DailyFoodHandbook ref="dailyFood" />
         <ReverseHandbook ref="reverseHandbook" />
+        <VulnerabilityHandbook ref="vulnerabilityHandbook" />
         <LinuxTerminal ref="linuxTerminal" />
 
       <NavigationFooter 
@@ -173,7 +173,7 @@ export default {
   components: { CryptoPlayground, CommandPalette,
     LinuxTerminal: defineAsyncComponent(() => import('./LinuxTerminal.vue')),
     ReverseHandbook: defineAsyncComponent(() => import('./ReverseHandbook.vue')),
-    DailyFoodHandbook: defineAsyncComponent(() => import('./DailyFoodHandbook.vue')),
+    VulnerabilityHandbook: defineAsyncComponent(() => import('./VulnerabilityHandbook.vue')),
     ElectricityLibrary: defineAsyncComponent(() => import('./ElectricityLibrary.vue')),
     SystemTools: defineAsyncComponent(() => import('./SystemTools.vue')),
     UtilityToolbox: defineAsyncComponent(() => import('./UtilityToolbox.vue')),
@@ -227,6 +227,8 @@ export default {
     },
     async scrollToReverseHandbook() { return this.scrollToModule('ReverseHandbook','reverseHandbook','reverse-handbook','opened');
     },
+    async scrollToVulnerabilityHandbook() { return this.scrollToModule('VulnerabilityHandbook','vulnerabilityHandbook','vulnerability-handbook','opened');
+    },
     collapseAllContent() {
       if (this.$refs.navLinks) {
         this.$refs.navLinks.expandedCategories = {};
@@ -238,13 +240,11 @@ export default {
       }
       const commands = this.$refs.commandLibrary;
       if (commands) { commands.libraryExpanded = false; commands.expanded = {}; }
-      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','dailyFood','reverseHandbook','linuxTerminal']) {
+      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','reverseHandbook','vulnerabilityHandbook','linuxTerminal']) {
         if (this.$refs[refName]) this.$refs[refName].opened = false;
       }
       // Native details can live under v-show panels; close without clearing inputs.
       this.$el.querySelectorAll('.main-content details[open]').forEach(detail => { detail.open = false; });
-    },
-    async scrollToDailyFood() { return this.scrollToModule('DailyFoodHandbook','dailyFood','daily-food','opened');
     },
     async scrollToElectricity() { return this.scrollToModule('ElectricityLibrary','electricityLibrary','electricity-library','opened');
     },

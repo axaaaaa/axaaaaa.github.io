@@ -4,6 +4,7 @@ import { windowsRunCommands } from './commands-windows-run.mjs';
 import { extraCommands } from './commands-extra.mjs';
 import { osCommands } from './commands-os.mjs';
 import { routerGitCommands } from './commands-router-git.mjs';
+import { windowsReferenceCommands } from './commands-windows-reference.mjs';
 const env = { key: 'env', label: '环境名称', default: 'myenv', type: 'name' };
 const container = { key: 'container', label: '容器名称', default: 'nax-web', type: 'name' };
 const version = { key: 'version', label: 'Python 版本', default: '3.11', type: 'version' };
@@ -492,4 +493,4 @@ const windowsNetworkCommands = [
 export const commands = Object.entries(groups).flatMap(([category, group]) => group.rows.map((row, index) => {
   const [topic, title, command, explanation, result, params = [], impact = '只读查询'] = row;
   return { id: `${category.toLowerCase()}-${index + 1}`, category, shell: group.shell, requirement: group.requirement, source: group.source, topic, title, command, explanation, result, params, impact, danger: /删除|停止/.test(impact) };
-})).concat(extraCommands, osCommands, routerGitCommands, windowsRunCommands, supplementalCommands, cmdCommands, windowsNetworkCommands).map(decorateCommand);
+})).concat(extraCommands, osCommands, routerGitCommands, windowsRunCommands, supplementalCommands, cmdCommands, windowsNetworkCommands, windowsReferenceCommands).map(decorateCommand);

@@ -25,9 +25,16 @@ export const downloads = [
           "description": "QQ下载站"
         },
         {
-          "name": "sourceforge",
+          "name": "SourceForge",
           "url": "https://sourceforge.net/",
-          "description": "软件下载"
+          "description": "开源软件托管与下载平台，可浏览项目发布文件和历史版本",
+          "tag": "开源"
+        },
+        {
+          "name": "Avidemux · SourceForge 发布文件",
+          "url": "https://sourceforge.net/projects/avidemux/files/",
+          "description": "查看 Avidemux 官网列出的 SourceForge 镜像文件与历史版本",
+          "tag": "开源"
         },
         {
           "name": "OSSSR",

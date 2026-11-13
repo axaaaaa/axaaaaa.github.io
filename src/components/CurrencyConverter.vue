@@ -1,6 +1,6 @@
 <template>
 <section class="currency-panel" :class="{'currency-dark':dark}" aria-labelledby="currency-title">
-<header><div><h2 id="currency-title">⇄ 多币种费用换算</h2><p>输入一笔费用，同时查看多种货币下的预计支出</p></div><button type="button" @click="expanded=!expanded" :aria-expanded="expanded">{{expanded?'收起':'展开'}}</button></header>
+<header><div><h2 id="currency-title">💱 多币种费用换算</h2><p>输入一笔费用，同时查看多种货币下的预计支出</p></div><button type="button" @click="expanded=!expanded" :aria-expanded="expanded">{{expanded?'收起':'展开'}}</button></header>
 <template v-if="expanded">
 <div class="currency-inputs"><label>费用金额<input v-model="amount" type="number" min="0" max="1000000000000" step="0.01" /></label><label>原币种<el-select v-model="from" aria-label="原币种" class="currency-select" :popper-class="dark ? 'currency-rates-dropdown-dark' : ''"><template #prefix><img class="currency-flag" :src="flagUrl(from)" alt="" aria-hidden="true" /></template><el-option v-for="c in currencies" :key="c.code" :value="c.code" :label="`${c.code} · ${c.name}`"><span class="currency-option"><img class="currency-flag" :src="flagUrl(c.code)" alt="" aria-hidden="true" />{{c.code}} · {{c.name}}</span></el-option></el-select></label><label>附加手续费（%）<input v-model="fee" type="number" min="0" max="100" step="0.1" /></label><label>固定手续费（{{from}}）<input v-model="fixed" type="number" min="0" step="0.01" /></label></div>
 <p class="currency-status" role="status">{{error?'刷新失败，使用上次汇率 · ':''}}{{rateDate ? `汇率日期 ${rateDate}` : loading?'正在加载汇率…':'暂无汇率'}}<span v-if="stale"> · 较早的参考汇率</span></p>

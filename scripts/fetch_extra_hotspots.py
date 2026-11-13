@@ -3,12 +3,42 @@ import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
 from email.utils import parsedate_to_datetime
+from threading import Lock
+from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin,urlparse,quote
-from datetime import datetime,timezone
+from datetime import datetime,timezone,timedelta
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from source_images import attach_covers,clean_cover,cache_source_covers,prune_covers,cache_douban_posters,public_directory
 SOURCES={
+ 'mistral_news':{'name': 'Mistral News', 'kind': '官方产品与研究', 'url': 'https://mistral.ai/news/', 'endpoint': 'https://mistral.ai/news/'},
+ 'meta_ai_news':{'name': 'Meta AI Blog', 'kind': '官方模型与研究', 'url': 'https://ai.meta.com/blog/', 'endpoint': 'https://ai.meta.com/blog/'},
+ 'glm_news':{'name': '智谱 GLM', 'kind': '官方发布记录', 'url': 'https://docs.bigmodel.cn/cn/update/new-releases', 'endpoint': 'https://docs.bigmodel.cn/cn/update/new-releases.md'},
+ 'minimax_news':{'name': 'MiniMax', 'kind': '官方模型发布', 'url': 'https://platform.minimax.io/docs/release-notes/models', 'endpoint': 'https://platform.minimax.io/docs/release-notes/models.md'},
+ 'aa_models':{'name': 'Artificial Analysis', 'kind': '独立评测 · 智能指数', 'url': 'https://artificialanalysis.ai/leaderboards/models', 'endpoint': 'https://artificialanalysis.ai/leaderboards/models'},
+ 'mistral_api':{'name': 'Mistral API', 'kind': '官方更新日志', 'url': 'https://docs.mistral.ai/resources/changelogs', 'endpoint': 'https://docs.mistral.ai/resources/changelogs'},
+ 'minimax_api':{'name': 'MiniMax API', 'kind': '官方更新日志', 'url': 'https://platform.minimax.io/docs/release-notes/apis', 'endpoint': 'https://platform.minimax.io/docs/release-notes/apis.md'},
+ 'hf_trending':{'name':'Hugging Face Trending','kind':'首页趋势 · 最近 7 天','url':'https://huggingface.co/','endpoint':'https://huggingface.co/'},
+ 'deepseek_news':{'name': 'DeepSeek', 'kind': '官方更新日志', 'url': 'https://api-docs.deepseek.com/zh-cn/updates', 'endpoint': 'https://api-docs.deepseek.com/zh-cn/updates'},
+ 'bytedance_news':{'name': '字节跳动 Seed', 'kind': '官方最新动态', 'url': 'https://seed.bytedance.com/zh/', 'endpoint': 'https://seed.bytedance.com/zh/'},
+ 'kimi_news':{'name': 'Kimi · 月之暗面', 'kind': '官方技术博客', 'url': 'https://www.kimi.com/blog/', 'endpoint': 'https://www.kimi.com/blog/'},
+ 'tencent_ai_news':{'name': '腾讯混元', 'kind': '官方研究与模型发布', 'url': 'https://hunyuan.tencent.com/research', 'endpoint': 'https://api.hunyuan.tencent.com/api/blog/publicList'},
+ 'qwen_news':{'name': '阿里通义千问', 'kind': '官方中文技术博客', 'url': 'https://qwenlm.github.io/zh/blog/', 'endpoint': 'https://qwenlm.github.io/zh/blog/index.xml'},
+ 'openai_news':{'name': 'OpenAI News', 'kind': 'AI 官方发布 · 中文机译', 'url': 'https://openai.com/news/', 'endpoint': 'https://openai.com/news/rss.xml'},
+ 'anthropic_news':{'name': 'Anthropic News', 'kind': 'AI 官方发布 · 中文机译', 'url': 'https://www.anthropic.com/news', 'endpoint': 'https://www.anthropic.com/news'},
+ 'deepmind_news':{'name': 'Google DeepMind Blog', 'kind': 'AI 官方发布 · 中文机译', 'url': 'https://deepmind.google/blog/', 'endpoint': 'https://deepmind.google/blog/rss.xml'},
+ 'unknowncheats':{'name': 'UC 论坛 · UnknownCheats', 'kind': '论坛最新帖 · 中文机译', 'url': 'https://www.unknowncheats.me/forum/index.php', 'endpoint': 'https://www.unknowncheats.me/forum/external.php?type=RSS2'},
+ 'msrc':{'name': '微软 MSRC', 'kind': '微软官方安全更新 · 中文机译', 'url': 'https://msrc.microsoft.com/update-guide/', 'endpoint': 'https://api.msrc.microsoft.com/cvrf/v3.0/updates'},
+ 'chrome_security':{'name': 'Chrome Releases', 'kind': '桌面 Chrome 安全更新 · 中文机译', 'url': 'https://chromereleases.googleblog.com/', 'endpoint': 'https://chromereleases.googleblog.com/feeds/posts/default/-/Desktop%20Update?max-results=20'},
+ 'ubuntu_security':{'name': 'Ubuntu Security Notices', 'kind': 'Ubuntu 官方安全公告 · 中文机译', 'url': 'https://ubuntu.com/security/notices', 'endpoint': 'https://ubuntu.com/security/notices/rss.xml'},
+ 'projectzero':{'name': 'Google Project Zero', 'kind': '漏洞研究 · 中文机译', 'url': 'https://projectzero.google/', 'endpoint': 'https://projectzero.google/feed.xml', 'icon': 'https://projectzero.google/images/project-zero.svg'},
+ 'unit42':{'name': 'Palo Alto Unit 42', 'kind': '威胁研究与事件响应 · 中文机译', 'url': 'https://unit42.paloaltonetworks.com/', 'endpoint': 'https://unit42.paloaltonetworks.com/feed/', 'icon': 'https://unit42.paloaltonetworks.com/wp-content/uploads/2024/06/icon-Unit42-180x180-1.png'},
+ 'github_advisory':{'name': 'GitHub Advisory Database', 'kind': 'GitHub 审核的开源漏洞', 'url': 'https://github.com/advisories', 'endpoint': 'https://api.github.com/advisories?type=reviewed&sort=published&direction=desc&per_page=8', 'icon': 'https://github.githubassets.com/favicons/favicon.svg'},
+ 'cve_program':{'name': 'CVE Program', 'kind': '官方 CVE 记录', 'url': 'https://www.cve.org/', 'endpoint': 'https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/deltaLog.json', 'icon': 'https://www.cve.org/cvePurpleVFavicon.svg'},
+ 'crowdstrike':{'name': 'CrowdStrike Blog', 'kind': '威胁研究与安全资讯', 'url': 'https://www.crowdstrike.com/en-us/blog/', 'endpoint': 'https://www.crowdstrike.com/en-us/blog/feed', 'icon': 'https://www.crowdstrike.com/etc.clientlibs/crowdstrike/clientlibs/crowdstrike-common/resources/favicon.ico'},
+ 'arxiv':{'name': 'arXiv 人工智能论文', 'kind': 'AI 预印本 · 中文机译', 'url': 'https://arxiv.org/list/cs.AI/recent', 'endpoint': 'https://rss.arxiv.org/rss/cs.AI', 'icon': 'https://arxiv.org/favicon.ico'},
+ 'cisa_kev':{'name': 'CISA KEV', 'kind': '已知在野利用漏洞 · 中文机译', 'url': 'https://www.cisa.gov/known-exploited-vulnerabilities-catalog', 'endpoint': 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json', 'icon': 'https://www.cisa.gov/favicon.ico'},
+ 'cncert':{'name': '国家互联网应急中心', 'kind': '中文漏洞公告', 'url': 'https://www.cert.org.cn/portal/yjtb/ldtb/A001001001index_1.htm', 'endpoint': 'https://www.cert.org.cn/portal/yjtb/ldtb/A001001001index_1.htm', 'icon': 'https://www.cert.org.cn/favicon.ico'},
  'dongchedi':{'name': '懂车帝', 'kind': '汽车资讯', 'url': 'https://www.dongchedi.com/', 'endpoint': 'https://www.dongchedi.com/', 'icon': 'https://www.dongchedi.com/favicon.ico'},
  'autohome':{'name': '汽车之家', 'kind': '汽车资讯', 'url': 'https://www.autohome.com.cn/news/', 'endpoint': 'https://www.autohome.com.cn/news/', 'icon': 'https://www.autohome.com.cn/favicon.ico'},
  'pcauto':{'name': '太平洋汽车', 'kind': '汽车资讯', 'url': 'https://www.pcauto.com.cn/news/', 'endpoint': 'https://www.pcauto.com.cn/news/', 'icon': 'https://www.pcauto.com.cn/favicon.ico'},
@@ -36,13 +66,13 @@ SOURCES={
  'eset':{'name': 'ESET · WeLiveSecurity', 'kind': '威胁研究与资讯 · 中文机译', 'url': 'https://www.welivesecurity.com/en/', 'endpoint': 'https://www.welivesecurity.com/en/rss/feed/', 'icon': 'https://www.welivesecurity.com/favicon.ico'},
 
  'thehackernews':{'name':'The Hacker News','kind':'国际安全资讯 · 中文机译','url':'https://thehackernews.com/','endpoint':'https://feeds.feedburner.com/TheHackersNews','icon':'https://thehackernews.com/favicon.ico'},
- 'baidu':{'name':'百度热搜','kind':'实时热搜榜','url':'https://top.baidu.com/board?tab=realtime','endpoint':'https://top.baidu.com/board?tab=realtime','icon':'https://www.baidu.com/favicon.ico'},
+ 'baidu':{'name':'百度热搜','kind':'实时热搜榜','url':'https://top.baidu.com/board?tab=realtime','endpoint':'https://top.baidu.com/api/board?platform=wise&tab=realtime','icon':'https://www.baidu.com/favicon.ico'},
  'pojie52_new':{'name':'吾爱破解 · 新鲜出炉','kind':'新鲜出炉','url':'https://www.52pojie.cn/forum.php?mod=guide&view=newthread','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_tech':{'name':'吾爱破解 · 技术分享','kind':'技术分享','url':'https://www.52pojie.cn/forum.php?mod=guide&view=tech','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_digest':{'name':'吾爱破解 · 精华采撷','kind':'精华采撷','url':'https://www.52pojie.cn/forum.php?mod=guide&view=digest','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
 
- 'ijingyi_new':{'name':'精易论坛 · 最新帖','kind':'最新帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/','icon':'https://bbs.ijingyi.com/favicon.ico'},
- 'ijingyi_hot':{'name':'精易论坛 · 本周热帖','kind':'本周热帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/','icon':'https://bbs.ijingyi.com/favicon.ico'},
+ 'ijingyi_new':{'name':'精易论坛 · 最新帖','kind':'最新帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/forum.php','icon':'https://bbs.ijingyi.com/favicon.ico'},
+ 'ijingyi_hot':{'name':'精易论坛 · 本周热帖','kind':'本周热帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/forum.php','icon':'https://bbs.ijingyi.com/favicon.ico'},
  'bilibili':{'name':'哔哩哔哩（B站）','kind':'热门视频 · 非播放量排行','url':'https://www.bilibili.com/v/popular/all','endpoint':'https://api.bilibili.com/x/web-interface/popular?pn=1&ps=24','icon':'https://www.bilibili.com/favicon.ico'},
  'tieba':{'name':'百度贴吧','kind':'热议话题榜','url':'https://tieba.baidu.com/','endpoint':'https://tieba.baidu.com/hottopic/browse/topicList','icon':'https://tieba.baidu.com/favicon.ico'},
  'woshipm':{'name':'人人都是产品经理','kind':'产品与运营文章','url':'https://www.woshipm.com/','endpoint':'https://www.woshipm.com/feed','icon':'https://www.woshipm.com/favicon.ico'},
@@ -52,6 +82,8 @@ SOURCES={
  'xz':{'name':'先知社区','kind':'安全技术文章','url':'https://xz.aliyun.com/','endpoint':'https://xz.aliyun.com/','icon':'https://xz.aliyun.com/favicon.ico'},
  'anquanke':{'name':'安全客','kind':'安全资讯与研究','url':'https://www.anquanke.com/','endpoint':'https://api.anquanke.com/data/v1/posts?size=24&page=1','icon':'https://www.anquanke.com/favicon.ico'},
  'freebuf':{'name':'FreeBuf','kind':'安全资讯','url':'https://www.freebuf.com/','endpoint':'https://www.freebuf.com/','icon':'https://www.freebuf.com/favicon.ico'},
+ 'fng':{'name':'恐惧贪婪指数','kind':'加密市场情绪 · Alternative.me','url':'https://alternative.me/crypto/fear-and-greed-index/','endpoint':'https://api.alternative.me/fng/?limit=8&format=json','icon':'https://alternative.me/favicon.ico'},
+ 'eastmoney':{'name':'东方财富 · A股涨幅榜','kind':'A 股涨幅榜 · 实时快照','url':'https://quote.eastmoney.com/center/gridlist.html','endpoint':'https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=20&po=1&np=1&fltt=2&invt=2&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23&fields=f2,f3,f4,f6,f12,f13,f14','icon':'https://www.eastmoney.com/favicon.ico'},
  'yicai':{'name':'第一财经','kind':'财经资讯','url':'https://www.yicai.com/','endpoint':'https://www.yicai.com/','icon':'https://www.yicai.com/favicon.ico'},
  'sinafinance':{'name':'新浪财经','kind':'财经资讯','url':'https://finance.sina.com.cn/','endpoint':'https://finance.sina.com.cn/','icon':'https://finance.sina.com.cn/favicon.ico'},
  'pojie52':{'name':'吾爱破解热门','kind':'论坛最新热门','url':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
@@ -68,8 +100,15 @@ SOURCES={
  'hellogithub':{'name':'HelloGitHub','kind':'开源月刊','url':'https://hellogithub.com/','endpoint':'https://hellogithub.com/rss','icon':'https://hellogithub.com/favicon.ico'},
  'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'}
 }
-SECURITY_RESEARCH_SOURCES={'microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
+CN_AI_SOURCES={'deepseek_news','bytedance_news','kimi_news','tencent_ai_news','qwen_news'}
+AI_OFFICIAL_SOURCES={'openai_news','anthropic_news','deepmind_news'}
+VENDOR_SECURITY_SOURCES={'msrc','chrome_security','ubuntu_security'}
+SECURITY_RESEARCH_SOURCES={'unknowncheats','projectzero','unit42','crowdstrike','microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
 SECURITY_FEED_HOSTS={
+ 'unknowncheats':{'www.unknowncheats.me'},
+ 'projectzero':{'projectzero.google'},
+ 'unit42':{'unit42.paloaltonetworks.com'},
+ 'crowdstrike':{'www.crowdstrike.com','crowdstrike.com'},
  'microsoft':{'www.microsoft.com','microsoft.com'},
  'securelist':{'securelist.com'},'checkpoint':{'research.checkpoint.com'},
  'sentinellabs':{'www.sentinelone.com','sentinelone.com'},'elastic':{'www.elastic.co','elastic.co'},
@@ -85,13 +124,23 @@ def parse_security_feed(key,body):
    u=urlparse(url)
    if u.scheme!='https' or u.hostname not in SECURITY_FEED_HOSTS[key] or u.username or u.password or u.port not in [None,443]:continue
   except ValueError:continue
+  if key=='unknowncheats' and (u.query or u.fragment or not re.fullmatch(r'/forum/[a-z0-9_-]+/\d+-[^/]+\.html',u.path,re.I)):continue
+  if key=='projectzero' and not re.fullmatch(r'/\d{4}/\d{2}/[^/]+\.html',u.path):continue
+  if key=='unit42' and not re.fullmatch(r'/[a-z0-9][a-z0-9-]*/?',u.path):continue
   if key=='microsoft' and not re.fullmatch(r'/[a-z]{2}-[a-z]{2}/security/blog/\d{4}/\d{2}/\d{2}/[^/]+/',u.path):continue
+  if key=='crowdstrike' and not re.fullmatch(r'/en-us/blog/[^/]+/?',u.path):continue
   if key=='sentinellabs' and not u.path.startswith('/labs/'):continue
   if key=='elastic' and not u.path.startswith('/security-labs/'):continue
   if key=='eset' and u.hostname.endswith('eset.com') and not u.path.startswith('/blog/'):continue
   if not title or url in seen:continue
   seen.add(url)
-  rows.append({'title':title,'url':url,'meta':clean(entry.findtext('pubDate') or entry.findtext('a:updated',namespaces=atom))})
+  date=clean(entry.findtext('pubDate') or entry.findtext('a:published',namespaces=atom) or entry.findtext('a:updated',namespaces=atom))
+  if key=='crowdstrike':
+   try:date='发布 '+datetime.strptime(date,'%b %d, %Y %H:%M:%S%z').date().isoformat()
+   except ValueError:pass
+  if key=='unknowncheats':
+   date=' · '.join(filter(None,(clean(entry.findtext('category')),_vendor_date(date))))
+  rows.append({'title':title,'url':url,'meta':date})
   if len(rows)==24:break
  if not rows:raise ValueError('No valid security research entries')
  return rows
@@ -286,7 +335,345 @@ def parse_auto_news(key,body):
  if not rows:raise ValueError(f'No auto articles for {key}')
  return [row for _,row in sorted(rows.values(),key=lambda x:x[0],reverse=True)[:12]]
 
+
+def parse_arxiv(body):
+ root=ET.fromstring(body)
+ atom='{http://www.w3.org/2005/Atom}'
+ candidates=[(e.findtext(atom+'title'),e.findtext(atom+'id'),e.findtext(atom+'published')) for e in root.findall(atom+'entry')]
+ candidates.extend((e.findtext('title'),e.findtext('link'),e.findtext('pubDate')) for e in root.findall('./channel/item'))
+ rows={}
+ for title,link,date in candidates:
+  match=re.fullmatch(r'https?://arxiv\.org/abs/(\d{4}\.\d{4,5})(?:v\d+)?',clean(link))
+  if not match or not clean(title):continue
+  try: published=(datetime.fromisoformat(date.replace('Z','+00:00')) if re.match(r'^\d{4}-\d{2}-\d{2}',date or '') else parsedate_to_datetime(date)).date().isoformat()
+  except (AttributeError,TypeError,ValueError):continue
+  paper=match[1]
+  rows.setdefault(paper,{'title':clean(title),'url':'https://arxiv.org/abs/'+paper,'meta':f'arXiv:{paper} · 发布 {published}'})
+ return list(rows.values())[:12]
+
+def parse_cisa_kev(body):
+ rows={}
+ for entry in json.loads(body)['vulnerabilities']:
+  cve=entry.get('cveID',''); title=clean(entry.get('vulnerabilityName')); added=entry.get('dateAdded','')
+  if not re.fullmatch(r'CVE-\d{4}-\d{4,}',cve) or not title or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',added):continue
+  rows[cve]=(added,{'title':title,'url':'https://nvd.nist.gov/vuln/detail/'+cve,'meta':f'{cve} · 已知在野利用 · 收录 {added}'})
+ return [row for _,row in sorted(rows.values(),key=lambda item:item[0],reverse=True)[:12]]
+
+def parse_cncert(body):
+ rows={}
+ html=re.sub(r'<!--.*?-->','',body.decode('utf-8-sig'),flags=re.S)
+ for path,title,date in re.findall(
+  r'<a\b[^>]*href=["\'](/portal/yjtb/ldtb/\d{4}/\d{1,2}/[a-f0-9]{32}\.htm)["\'][^>]*>\s*'
+  r'<div\s+class=["\']title["\'][^>]*>(.*?)</div>\s*'
+  r'<div\s+class=["\']time["\'][^>]*>\s*(\d{4}-\d{2}-\d{2})\s*</div>',
+  html,re.S|re.I):
+  url=urljoin(SOURCES['cncert']['url'],path)
+  title=clean(unescape(re.sub(r'<[^>]+>','',title)))
+  if title:rows[url]=(date,{'title':title,'url':url,'meta':'发布 '+date})
+ for date,attrs,title in re.findall(r'<li\b[^>]*>\s*<span>\[(\d{4}-\d{2}-\d{2})\]</span>\s*<a\b([^>]*)>(.*?)</a>',html,re.S|re.I):
+  link=re.search(r'''["'](/publish/main/9/\d{4}/[\d_]+/[\d_]+\.html)["']''',attrs)
+  title=clean(unescape(re.sub(r'<[^>]+>','',title)))
+  if link and title:
+   url=urljoin(SOURCES['cncert']['url'],link[1]);rows[url]=(date,{'title':title,'url':url,'meta':'发布 '+date})
+ return [row for _,row in sorted(rows.values(),key=lambda item:item[0],reverse=True)[:12]]
+
+
+CVE_RECORD_BASE='https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/'
+
+def parse_github_advisories(body):
+ rows={}
+ for entry in json.loads(body):
+  ghsa=entry.get('ghsa_id','')
+  title=clean(entry.get('summary'))
+  if not re.fullmatch(r'GHSA-[a-z0-9]{4}(?:-[a-z0-9]{4}){2}',ghsa) or not title or entry.get('withdrawn_at'):continue
+  cve=entry.get('cve_id') or ''
+  severity={'critical':'严重','high':'高危','medium':'中危','low':'低危'}.get(entry.get('severity'),'')
+  ecosystems=list(dict.fromkeys(v.get('package',{}).get('ecosystem','') for v in (entry.get('vulnerabilities') or [])))
+  meta=' · '.join(filter(None,[ghsa,cve,severity,', '.join(filter(None,ecosystems))]))
+  rows[ghsa]={'title':title,'url':'https://github.com/advisories/'+ghsa,'meta':meta}
+ return list(rows.values())[:8]
+
+def cve_record_urls(body):
+ # The official delta log is a newest-first JSON array. Decode only the
+ # complete batches in the downloaded prefix; older history is unnecessary.
+ text=body.decode('utf-8-sig',errors='ignore').lstrip()
+ if not text.startswith('['):raise ValueError('Invalid CVE delta log')
+ decoder=json.JSONDecoder();pos=1;seen=set();rows=[]
+ while len(rows)<12:
+  pos=re.match(r'\s*,?\s*',text[pos:]).end()+pos
+  if pos>=len(text) or text[pos]==']':break
+  try:batch,pos=decoder.raw_decode(text,pos)
+  except json.JSONDecodeError:break
+  for entry in sorted(batch.get('new',[])+batch.get('updated',[]),key=lambda item:item.get('dateUpdated',''),reverse=True):
+   cve=entry.get('cveId','')
+   match=re.fullmatch(r'CVE-(\d{4})-(\d{4,})',cve)
+   if not match or cve in seen:continue
+   year,number=match.groups()
+   bucket=number[:-3]+'xxx'
+   seen.add(cve);rows.append((cve,f'{CVE_RECORD_BASE}{year}/{bucket}/{cve}.json'))
+   if len(rows)==12:break
+ return rows
+
+def parse_cve_record(cve,body):
+ data=json.loads(body)
+ meta=data['cveMetadata'];cna=data['containers']['cna']
+ if meta.get('state')!='PUBLISHED' or meta.get('cveId')!=cve:return None
+ title=clean(cna.get('title')) or clean(next((x.get('value') for x in cna.get('descriptions',[]) if x.get('lang','').lower().startswith('en')), ''))
+ if not title:return None
+ date=meta.get('dateUpdated','')[:10]
+ return {'title':title[:240],'url':'https://www.cve.org/CVERecord?id='+cve,'meta':f'{cve} · 更新 {date}'}
+
+def fetch_cve_records(body):
+ def load(pair):
+  try:return parse_cve_record(pair[0],request_body(pair[1]))
+  except (OSError,ValueError,KeyError,TypeError):return None
+ with ThreadPoolExecutor(max_workers=4) as pool:
+  return [row for row in pool.map(load,cve_record_urls(body)) if row][:8]
+
+
+def _vendor_date(value):
+ try:
+  if re.match(r'^\d{4}-\d{2}-\d{2}',value or ''):return datetime.fromisoformat(value.replace('Z','+00:00')).date().isoformat()
+  return parsedate_to_datetime(value).date().isoformat()
+ except (AttributeError,TypeError,ValueError):return ''
+
+def parse_vendor_security(key,body):
+ rows={}
+ def add(title,url,date,detail=''):
+  title=clean(title)
+  if title and date:rows.setdefault(url,(date,{'title':title,'url':url,'meta':' · '.join(filter(None,('发布 '+date,detail)))}))
+ if key=='msrc':
+  for entry in json.loads(body)['value']:
+   ident=entry.get('ID') or ''
+   title=clean(entry.get('DocumentTitle'))
+   if not re.fullmatch(r'20\d{2}-(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(?:-[A-Za-z0-9]+)*',ident) or not re.search(r'\bsecurity update',title,re.I):continue
+   date=_vendor_date(entry.get('InitialReleaseDate'))
+   updated=_vendor_date(entry.get('CurrentReleaseDate'))
+   add(title,'https://msrc.microsoft.com/update-guide/releaseNote/'+ident,date,('修订 '+updated) if updated and updated!=date else '')
+ else:
+  root=ET.fromstring(body)
+  if key=='chrome_security':
+   for entry in root.findall('{*}entry'):
+    title=clean(entry.findtext('{*}title'))
+    if title not in ('Stable Channel Update for Desktop','Extended Stable Update for Desktop'):continue
+    content=entry.findtext('{*}content') or ''
+    if not re.search(r'\b(?:CVE-\d{4}-\d{4,}|[1-9]\d*\s+security\s+fix(?:es)?)\b',content,re.I):continue
+    url=next((link.get('href','') for link in entry.findall('{*}link') if link.get('rel')=='alternate'),'')
+    if not re.fullmatch(r'https://chromereleases\.googleblog\.com/\d{4}/\d{2}/[a-z0-9_-]+\.html',url):continue
+    add(title,url,_vendor_date(entry.findtext('{*}published')))
+  else:
+   for entry in root.findall('./channel/item'):
+    url=clean(entry.findtext('link'))
+    match=re.fullmatch(r'https://ubuntu\.com/security/notices/(USN-\d+-\d+)',url)
+    if match:add(entry.findtext('title'),url,_vendor_date(entry.findtext('pubDate')),match[1])
+ if not rows:raise ValueError('No valid vendor security updates')
+ return [row for _,row in sorted(rows.values(),key=lambda pair:pair[0],reverse=True)[:12]]
+
+
+def parse_ai_official(key,body):
+ rows={}
+ def add(title,url,date):
+  title=clean(unescape(re.sub(r'<[^>]+>','',title or '')))
+  if title and date:rows.setdefault(url,(date,{'title':title,'url':url,'meta':'发布 '+date}))
+ if key=='anthropic_news':
+  html=body.decode('utf-8-sig')
+  for row in re.findall(r'<article\b[^>]*>(.*?)</article>|<li\b[^>]*\bdata-listing-row=[^>]*>(.*?)</li>',html,re.S|re.I):
+   row=row[0] or row[1]
+   heading=re.search(r"""<a\b[^>]*href=["']((?:https://www\.anthropic\.com)?/(?:news/[a-z0-9-]+|claude-[a-z0-9-]+))["'][^>]*>(?:(?!</a>).)*?<h[23]\b[^>]*>(.*?)</h[23]>""",row,re.S|re.I)
+   date=re.search(r'<time\b[^>]*>(.*?)</time>',row,re.S|re.I)
+   if not heading or not date:continue
+   try:day=datetime.strptime(clean(date[1]),'%b %d, %Y').date().isoformat()
+   except ValueError:continue
+   add(heading[2],urljoin(SOURCES[key]['url'],heading[1]),day)
+ else:
+  pattern=(r'https://openai\.com/index/[a-z0-9-]+/?' if key=='openai_news' else r'https://deepmind\.google/blog/[a-z0-9-]+/?')
+  for entry in ET.fromstring(body).findall('./channel/item'):
+   url=clean(entry.findtext('link'))
+   if re.fullmatch(pattern,url):add(entry.findtext('title'),url,_vendor_date(entry.findtext('pubDate')))
+ if not rows:raise ValueError('No valid official AI announcements')
+ return [r for _,r in sorted(rows.values(),key=lambda row:row[0],reverse=True)[:12]]
+
+
+def parse_cn_ai(key,body):
+ rows={}
+ def add(title,url,date):
+  title=clean(unescape(re.sub(r'<[^>]*>','',title or ''))).replace('\u200b','')
+  if title and re.fullmatch(r'\d{4}-\d{2}-\d{2}',date or ''):
+   rows.setdefault(url,(date,{'title':title,'url':url,'meta':'发布 '+date}))
+ if key=='qwen_news':
+  for item in ET.fromstring(body).findall('./channel/item'):
+   url=clean(item.findtext('link'))
+   if re.fullmatch(r'https://qwenlm\.github\.io/zh/blog/[a-z0-9_-]+/?',url):
+    add(item.findtext('title'),url,_vendor_date(item.findtext('pubDate')))
+ elif key=='tencent_ai_news':
+  payload=json.loads(body)
+  if payload.get('code')!=0:raise ValueError('Tencent public blog API failed')
+  for item in payload.get('data',{}).get('list',[]):
+   slug=str(item.get('customUrl') or item.get('id') or '')
+   timestamp=item.get('displayPublishTime') or item.get('publishedAt')
+   if not re.fullmatch(r'[A-Za-z0-9_-]+',slug) or not isinstance(timestamp,(int,float)) or isinstance(timestamp,bool):continue
+   if item.get('publicVisible')!=1 or item.get('status')!=2:continue
+   add(item.get('title'),'https://hunyuan.tencent.com/research/'+slug,datetime.fromtimestamp(timestamp,timezone(timedelta(hours=8))).date().isoformat())
+ else:
+  html=body.decode('utf-8-sig')
+  if key=='deepseek_news':
+   for match in re.finditer(r'<h2\b[^>]*>.*?(20\d{2}-\d{2}-\d{2}).*?</h2>(.*?)(?=<h2\b|$)',html,re.S|re.I):
+    date,block=match.groups()
+    for heading in re.finditer(r'<h3\b[^>]*id=["\']([^"\']+)["\'][^>]*>(.*?)(?:<a\b|</h3>)',block,re.S|re.I):
+     add(heading[2],SOURCES[key]['url']+'#'+quote(heading[1],safe='-'),date)
+  elif key=='bytedance_news':
+   for href,block in re.findall(r'<a\b[^>]*href=["\'](/zh/blog/[a-z0-9-]+)["\'][^>]*>(.*?)</a>',html,re.S|re.I):
+    title=re.search(r'<h3\b[^>]*>(.*?)</h3>',block,re.S|re.I)
+    date=re.search(r'\b(20\d{2}\.\d{2}\.\d{2})\b',block)
+    if title and date:add(title[1],urljoin(SOURCES[key]['url'],href),date[1].replace('.','-'))
+  elif key=='kimi_news':
+   for block in re.split(r'<div\b[^>]*class=["\']menu-card\b',html)[1:]:
+    link=re.search(r'<a\b[^>]*href=["\'](/(?:en/)?blog/[a-z0-9-]+)["\']',block)
+    title=re.search(r'<h4\b[^>]*>(.*?)</h4>',block,re.S|re.I)
+    date=re.search(r'class=["\'][^"\']*card-date[^"\']*["\'][^>]*>\s*(20\d{2}-\d{2}-\d{2})',block)
+    if link and title and date:add(title[1],urljoin(SOURCES[key]['url'],link[1]),date[1])
+ if not rows:raise ValueError('No valid official domestic AI news')
+ return [row for _,row in sorted(rows.values(),key=lambda item:item[0],reverse=True)[:12]]
+
+def request_cn_ai(key):
+ if key!='tencent_ai_news':return request_body(SOURCES[key]['endpoint'])
+ req=urllib.request.Request(SOURCES[key]['endpoint'],
+  data=b'{"pageNum":1,"pageSize":12}',
+  headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0','Referer':'https://hunyuan.tencent.com/','Accept-Language':'zh-CN'},method='POST')
+ with urllib.request.urlopen(req,timeout=25) as response:return response.read(4_000_000)
+
+def parse_hf_trending(body):
+ html=body.decode('utf-8-sig')
+ marker=re.search(r'Trending on\s*<img\b[^>]*>\s*(?:this week|last 7 days)',html,re.I)
+ if not marker:raise ValueError('Hugging Face homepage trending section missing')
+ sections=list(re.finditer(r'<h2\b[^>]*>(.*?)</h2>',html[marker.end():],re.S|re.I))
+ tail=html[marker.end():]
+ kinds={'Models':('model','模型',''),'Spaces':('space','Space','spaces/'),'Datasets':('dataset','数据集','datasets/')}
+ rows=[];seen=set();found=set()
+ for index,heading in enumerate(sections[:3]):
+  title=clean(re.sub(r'<[^>]*>','',heading[1]))
+  if title not in kinds or title in found:raise ValueError('Unexpected homepage trending heading')
+  found.add(title)
+  kind,label,prefix=kinds[title]
+  block=tail[heading.end():sections[index+1].start() if index+1<len(sections) else len(tail)]
+  for article in re.findall(r'<article\b[^>]*>(.*?)</article>',block,re.S|re.I):
+   link=re.match(r'\s*<a\b[^>]*\bhref=["\']([^"\']+)["\']',article,re.I)
+   if not link:continue
+   path=link[1]
+   match=re.fullmatch('/'+prefix+r'([A-Za-z0-9][\w.-]*/[A-Za-z0-9][\w.-]*)',path,re.ASCII)
+   if not match or path in seen:continue
+   seen.add(path)
+   row={'title':match[1],'url':'https://huggingface.co'+path,'meta':label+' · 近 7 天趋势','repoType':kind}
+   stamp=re.search(r'<time\b[^>]*\bdatetime=["\']([^"\']+)["\']',article,re.I)
+   if stamp:row['updatedAt']=stamp[1]
+   rows.append(row)
+ if {row['repoType'] for row in rows}!={'model','space','dataset'}:raise ValueError('Incomplete homepage trending lists')
+ return rows
+
+
+def enrich_hf_trending(rows):
+ labels={'text-generation':'文本生成','image-to-3d':'图像转 3D','text-to-3d':'文本转 3D',
+         'text-to-image':'文本生成图像','image-to-image':'图像转图像','image-text-to-text':'图文转文本',
+         'image-to-text':'图像转文本','automatic-speech-recognition':'语音识别','text-to-speech':'文本转语音',
+         'text-to-video':'文本生成视频','image-to-video':'图像生成视频','feature-extraction':'特征提取',
+         'sentence-similarity':'句子相似度','text-classification':'文本分类','any-to-any':'任意模态转换'}
+ index={}
+ try:
+  payload=json.loads(request_body('https://huggingface.co/api/trending',timeout=8))
+  for entry in payload.get('recentlyTrending',[]):
+   if not isinstance(entry,dict):continue
+   repo=entry.get('repoData')
+   if isinstance(repo,dict) and isinstance(repo.get('id'),str):
+    index[(entry.get('repoType'),repo['id'])]=repo
+ except (OSError,ValueError,AttributeError,TypeError) as error:
+  print(f'HF_TRENDING_METADATA_UNAVAILABLE: {error}')
+ for row in rows:
+  repo=index.get((row['repoType'],row['title']),{})
+  task=repo.get('pipeline_tag')
+  if row['repoType']=='model' and isinstance(task,str) and re.fullmatch(r'[a-z0-9-]+',task):
+   row['pipelineTag']=task
+   row['meta']+=' · '+labels.get(task,task)
+  stamp=row.get('updatedAt') or repo.get('lastModified')
+  if isinstance(stamp,str):
+   try:
+    moment=datetime.fromisoformat(stamp.replace('Z','+00:00'))
+    if moment.tzinfo is None:moment=moment.replace(tzinfo=timezone.utc)
+    row['updatedAt']=moment.astimezone(timezone.utc).isoformat()
+    row['meta']+=' · 更新于 '+moment.astimezone(timezone(timedelta(hours=8))).strftime('%m-%d %H:%M')
+   except ValueError:row.pop('updatedAt',None)
+ return rows
+
+EXTRA_MODEL_SOURCES={'mistral_news','meta_ai_news','glm_news','minimax_news','aa_models','mistral_api','minimax_api'}
+
+def parse_extra_model_source(key,body):
+ html=body.decode('utf-8-sig');base=SOURCES[key]['url'];rows={}
+ def text(raw):
+  return clean(unescape(re.sub(r'<[^>]*>',' ',raw))).strip('* ')
+ def day(raw):
+  raw=raw.replace('Sept.','Sep.').replace('.','')
+  for fmt in ('%Y-%m-%d','%B %d, %Y','%b %d, %Y','%b %Y'):
+   try:
+    date=datetime.strptime(raw,fmt)
+    return date.strftime('%Y-%m' if fmt=='%b %Y' else '%Y-%m-%d')
+   except ValueError:pass
+  return ''
+ def add(title,url,meta):
+  title=text(title)
+  if title and url not in rows:rows[url]={'title':title,'url':url,'meta':meta}
+ if key=='mistral_news':
+  for path,block in re.findall(r'<a\b[^>]*href="(/news/[a-z0-9-]+/)"[^>]*>(.*?)</a>',html,re.S):
+   category=re.search(r'>\s*(Product|Research)\s*<',block)
+   title=re.search(r'<h[1-4]\b[^>]*>(.*?)</h[1-4]>',block,re.S)
+   date=re.search(r'\b([A-Z][a-z]+ \d{1,2}, 20\d{2})\b',text(block))
+   if category and title and date:add(title[1],urljoin(base,path),'发布 '+day(date[1]))
+ elif key=='meta_ai_news':
+  for url,title,date in re.findall(r'<a\b[^>]*href="(https://ai\.meta\.com/blog/[a-z0-9-]+/)"[^>]*>([^<]+)</a>(?:(?!<a\b).){0,500}?>([A-Z][a-z]+ \d{1,2}, 20\d{2})<',html,re.S):
+   if re.search(r'\b(?:AI|Llama|FAIR|Muse|SAM|model|research|benchmark)\b',title,re.I):add(title,url,'发布 '+day(date))
+ elif key=='glm_news':
+  for date,block in re.findall(r'^\*\*(20\d{2}-\d{1,2}-\d{1,2})\*\*\s*\n(.*?)(?=^\*\*20\d{2}-|\Z)',html,re.M|re.S):
+   title=next((line.strip() for line in block.splitlines() if line.strip()),'')
+   link=re.search(r'\]\((https://docs\.bigmodel\.cn/cn/[A-Za-z0-9/_.-]+)\)',block)
+   if link:add(title,link[1].removesuffix('.md'),'发布 '+day(date))
+ elif key in ('minimax_news','minimax_api'):
+  for date,block in re.findall(r'^#{2,4}\s+([^\n]+)\n(.*?)(?=^#{2,4}\s|\Z)',html,re.M|re.S):
+   anchor=re.sub(r'[^a-z0-9 ]','',date.strip().lower()).replace(' ','-')
+   date=day(date.strip())
+   if not date:continue
+   if key=='minimax_news':
+    match=re.search(r'\[card\]\s*\[([^\]]+)\]\((https://(?:www\.minimax\.io|platform\.minimax\.io)/[A-Za-z0-9/_.-]+)\)',block)
+    if match:add(match[1],match[2].removesuffix('.md'),'发布 '+date)
+   else:
+    line=re.search(r'^\*\s+([^\n]+)',block,re.M)
+    if line:add(line[1],base+'#'+anchor,'更新 '+date)
+ elif key=='mistral_api':
+  for date,block in re.findall(r'<div id="date-(20\d{2}-\d{2}-\d{2})"[^>]*data-changelog-entry="true"[^>]*>(.*?)(?=<div id="date-|\Z)',html,re.S):
+   line=re.search(r'<li\b[^>]*>(.*?)(?=<span[^>]*data-slot="badge"|<ul\b|</li>)',block,re.S)
+   if line:add(line[1],base+'#date-'+date,'更新 '+date)
+ elif key=='aa_models':
+  if 'Artificial Analysis Intelligence Index' not in html or 'Cost per Task' not in html or 'Time per Task' not in html:raise ValueError('Unknown evaluation table')
+  for block in re.findall(r'<tr\b[^>]*>(.*?)</tr>',html,re.S):
+   cells=[text(cell) for cell in re.findall(r'<td\b[^>]*>(.*?)</td>',block,re.S)]
+   link=re.search(r'href="(/models/[a-z0-9-]+)"',block)
+   if len(cells)!=8 or not link or not re.fullmatch(r'\d+(?:\.\d+)?',cells[3]):continue
+   meta='智能指数 '+cells[3]
+   if re.fullmatch(r'\$[\d.]+',cells[4]):meta+=' · 每任务 '+cells[4]
+   if re.fullmatch(r'[\d.]+',cells[5]):meta+=' · '+cells[5]+' 分钟/任务'
+   add(cells[0],urljoin(base,link[1]),meta)
+ if not rows:raise ValueError('No valid entries for '+key)
+ entries=list(rows.values())
+ if key=='aa_models':entries.sort(key=lambda row:float(row['meta'].split()[1]),reverse=True)
+ return entries[:12]
+
 def parse_source(key,body):
+ if key in EXTRA_MODEL_SOURCES:return parse_extra_model_source(key,body)
+ if key=='hf_trending':return parse_hf_trending(body)
+ if key in CN_AI_SOURCES:return parse_cn_ai(key,body)
+ if key in AI_OFFICIAL_SOURCES:return parse_ai_official(key,body)
+ if key in VENDOR_SECURITY_SOURCES:return parse_vendor_security(key,body)
+ if key in NEW_SOURCE_PARSERS:
+  rows=NEW_SOURCE_PARSERS[key](body)
+  if not rows:raise ValueError("No valid source entries")
+  return rows
  if key in AUTO_NEWS:return parse_auto_news(key,body)
  if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
  if key=='maoyan':return parse_maoyan_board(body)
@@ -340,17 +727,66 @@ def parse_source(key,body):
    if image:row['cover']=image
    rows.append(row)
  if key=='baidu':
-  match=re.search(r'<!--s-data:(.*?)-->',body.decode('utf-8'),re.S)
-  if not match:raise ValueError('Missing Baidu ranking data')
-  cards=json.loads(match.group(1))['data']['cards']
-  for card in cards:
-   if card.get('component')!='hotList':continue
-   for row in card.get('content',[]):
-    if not isinstance(row,dict) or row.get('isTop'):continue
-    title=clean(row.get('word'))
-    if not title:continue
-    heat=str(row.get('hotScore',''))
-    add(title,'https://www.baidu.com/s?wd='+quote(title),'热度 '+heat if heat.isdigit() else '')
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('success') is not True:raise ValueError('Invalid Baidu board response')
+  entries=[]
+  def walk(node):
+   if isinstance(node,dict):
+    if isinstance(node.get('word'),str):entries.append(node)
+    for value in node.values():
+     if isinstance(value,(dict,list)):walk(value)
+   elif isinstance(node,list):
+    for value in node:walk(value)
+  walk((data.get('data') or {}).get('cards',[]))
+  for row in entries:
+   if row.get('isTop'):continue
+   title=clean(unescape(row.get('word')))
+   if not title:continue
+   url=clean(row.get('url'))
+   if url.startswith('https://m.baidu.com/s?'):
+    url='https://www.baidu.com/s?'+url.split('?',1)[1].replace('word=','wd=',1)
+   if not valid_url(url):url='https://www.baidu.com/s?wd='+quote(title)
+   rank=row.get('index')
+   meta='实时热搜'
+   if isinstance(rank,int) and not isinstance(rank,bool) and rank>0:meta=f'热搜第 {rank} 位'
+   tag=clean(row.get('newHotName'))
+   if tag:meta+=' · '+tag
+   add(title,url,meta)
+ elif key=='fng':
+  data=json.loads(body)
+  metadata=data.get('metadata') if isinstance(data,dict) and isinstance(data.get('metadata'),dict) else {}
+  if not isinstance(data,dict) or metadata.get('error'):raise ValueError('Invalid Fear and Greed response')
+  raw=data.get('data',[])
+  if not isinstance(raw,list):raise ValueError('Missing Fear and Greed series')
+  labels={'Extreme Fear':'极度恐惧','Fear':'恐惧','Neutral':'中性','Greed':'贪婪','Extreme Greed':'极度贪婪'}
+  series=[]
+  for row in raw:
+   if not isinstance(row,dict):continue
+   value=str(row.get('value',''));stamp=str(row.get('timestamp',''))
+   if not value.isdigit() or not stamp.isdigit():continue
+   series.append((int(value),clean(row.get('value_classification')),int(stamp)))
+  for index,(value,classification,stamp) in enumerate(series):
+   label=labels.get(classification,classification or '未知')
+   meta=datetime.fromtimestamp(stamp,timezone.utc).strftime('%Y-%m-%d')
+   if index+1<len(series):meta+=f' · 较前日 {value-series[index+1][0]:+d}'
+   add(f'恐贪指数 {value} · {label}','https://alternative.me/crypto/fear-and-greed-index/#day-'+str(stamp),meta)
+ elif key=='eastmoney':
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('rc')!=0:raise ValueError('Invalid Eastmoney response')
+  payload=data.get('data') or {}
+  diff=payload.get('diff',[]) if isinstance(payload,dict) else []
+  if not isinstance(diff,list):raise ValueError('Missing Eastmoney ranking')
+  def numeric(value):return isinstance(value,(int,float)) and not isinstance(value,bool)
+  for row in diff:
+   if not isinstance(row,dict):continue
+   code=str(row.get('f12',''));name=clean(row.get('f14'))
+   price=row.get('f2');change=row.get('f3');amount=row.get('f6')
+   if not re.fullmatch(r'\d{6}',code) or not name or not numeric(price) or not numeric(change):continue
+   market='sh' if code.startswith(('6','9')) else 'bj' if code.startswith(('8','4')) else 'sz'
+   parts=[f'{price:g} 元',f'{change:+.2f}%']
+   if numeric(amount) and amount>0:
+    parts.append('成交 '+(f'{amount/1e8:.2f} 亿' if amount>=1e8 else f'{amount/1e4:.0f} 万'))
+   add(f'{name} {code}','https://quote.eastmoney.com/'+market+code+'.html',' · '.join(parts))
  elif key=='bilibili':
   data=json.loads(body)
   if not isinstance(data,dict) or type(data.get('code')) is not int or data['code']!=0:raise ValueError('Invalid Bilibili response')
@@ -486,12 +922,12 @@ def parse_source(key,body):
  return unique[:24]
 
 FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href*=".html"]'
-FREEBUF_FEED = 'https://www.freebuf.com/rss'
+FREEBUF_FEEDS = ('https://www.freebuf.com/feed','https://www.freebuf.com/rss')
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
-def request_body(url):
+def request_body(url,timeout=25):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
- with urllib.request.urlopen(req,timeout=25) as r:body=r.read(12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
+ with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -544,25 +980,75 @@ def fetch_freebuf_items():
    return normalize_freebuf_rows(rows)
   finally:browser.close()
 
+_translation_lock=Lock()
+_offline_translator=None
+ARGOS_MODEL_URL='https://github.com/axaaaaa/axaaaaa.github.io/releases/download/argos-en-zh-1.9/translate-en_zh-1_9.argosmodel'
+ARGOS_MODEL_SHA256='433e7c4f034d87fbe2353161e05f18646d7999452f801a4e1f0378522b9850ab'
+
+def _argos_english_package(package):
+ return next((p for p in package.get_installed_packages()
+              if p.type=='translate' and p.from_code=='en' and p.to_code=='zh'
+              and str(p.package_version)=='1.9'),None)
+
+def prepare_offline_translation():
+ import hashlib,tempfile
+ from argostranslate import package
+ if _argos_english_package(package) is None:
+  with tempfile.TemporaryDirectory() as folder:
+   model=Path(folder)/'translate-en_zh-1_9.argosmodel'
+   digest=hashlib.sha256()
+   with urllib.request.urlopen(ARGOS_MODEL_URL,timeout=60) as response,model.open('wb') as output:
+    while chunk:=response.read(1024*1024):
+     digest.update(chunk);output.write(chunk)
+   if digest.hexdigest()!=ARGOS_MODEL_SHA256:raise ValueError('Argos model checksum mismatch')
+   package.install_from_path(model)
+ if _argos_english_package(package) is None:raise RuntimeError('Argos English-to-Chinese model not installed')
+ print('ARGOS_MODEL_READY en->zh v1.9',flush=True)
+
+class _OfflineSentencizer:
+ def split_sentences(self,text):
+  # Keep headlines intact. Split longer prose (e.g. APOD) without downloading another model.
+  return [text] if len(text)<=240 else re.split(r'(?<=[.!?])\s+(?=[A-Z])',text)
+
+def _load_offline_translator():
+ from argostranslate import package,translate
+ model=_argos_english_package(package)
+ if model is None:raise RuntimeError('Argos English-to-Chinese model not installed')
+ translator=translate.PackageTranslation(translate.Language('en','English'),translate.Language('zh','Chinese'),model)
+ translator.sentencizer=_OfflineSentencizer()
+ return translator
+
 def translate_title(title):
- url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+quote(title)
- data=json.loads(request_body(url))
- translated=clean(''.join(segment[0] for segment in data[0] if isinstance(segment,list) and segment and isinstance(segment[0],str)))
- if not translated or not re.search(r'[\u4e00-\u9fff]',translated):raise ValueError('Translation did not return Chinese')
+ global _offline_translator
+ with _translation_lock:
+  if _offline_translator is None:_offline_translator=_load_offline_translator()
+  # Reuse loaded model weights, not the library's CachedTranslation wrapper.
+  translated=clean(_offline_translator.translate(title))
+ if not translated or translated==title or not re.search(r'[\u3400-\u9fff]',translated):
+  raise ValueError('Argos translation did not return Chinese')
  return translated
 
-def translate_security_titles(items,previous=None):
- cached={row.get('originalTitle'):row for row in (previous or {}).get('items',[]) if row.get('translationStatus')=='translated' and row.get('title')}
+def translate_security_titles(items):
  def translate(row):
   original=row['title'];result={**row,'originalTitle':original,'translationStatus':'original'}
+  result.pop('translationMethod',None)
   try:
-   result['title']=cached[original]['title'] if original in cached else translate_title(original)
+   result['title']=translate_title(original)
    result['translationStatus']='translated'
   except Exception as error:
-   print(f'TRANSLATION_PENDING {type(error).__name__}')
+   print(f'TRANSLATION_PENDING {type(error).__name__}: {error}')
   result['meta']=('机器翻译' if result['translationStatus']=='translated' else '英文原题 · 翻译待更新')+(' · '+row['meta'] if row.get('meta') else '')
   return result
  with ThreadPoolExecutor(max_workers=4) as pool:return list(pool.map(translate,items))
+
+
+NEW_SOURCE_PARSERS={'github_advisory':parse_github_advisories,'cve_program':fetch_cve_records,'arxiv':parse_arxiv,'cisa_kev':parse_cisa_kev,'cncert':parse_cncert}
+NEW_SOURCE_BACKUPS={
+ 'arxiv':'https://export.arxiv.org/api/query?search_query=cat%3Acs.AI&sortBy=submittedDate&sortOrder=descending&max_results=12',
+ 'ijingyi_new':'https://att.ijingyi.com/',
+ 'ijingyi_hot':'https://att.ijingyi.com/',
+ 'cisa_kev':'https://raw.githubusercontent.com/cisagov/kev-data/develop/known_exploited_vulnerabilities.json',
+}
 
 def fetch(key):
  if key=='maoyan':
@@ -570,28 +1056,46 @@ def fetch(key):
   items=cache_source_covers(key,add_maoyan_metrics(fetch_maoyan_board()))
   return {**{k:v for k,v in config.items() if k!='endpoint'},'sourceUrlUsed':config['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  source=SOURCES[key]
+ if key in CN_AI_SOURCES:
+  items=parse_source(key,request_cn_ai(key))
+  items=[row if re.search(r'[㐀-鿿]',row['title']) else translate_security_titles([row])[0] for row in items]
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  if key=='freebuf':
-  try:items=parse_freebuf_feed(request_body(FREEBUF_FEED));used=FREEBUF_FEED
-  except Exception as error:
-   print(f'FREEBUF_FEED_FALLBACK {type(error).__name__}: {error}')
-   items=fetch_freebuf_items();used=source['endpoint']
+  for feed in FREEBUF_FEEDS:
+   try:items=parse_freebuf_feed(request_body(feed));used=feed;break
+   except Exception as error:print(f'FREEBUF_FEED_FALLBACK {feed}: {type(error).__name__}: {error}')
+  else:items=fetch_freebuf_items();used=source['endpoint']
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
  try:
-  body=request_body(source['endpoint']);items=parse_source(key,body);used=source['endpoint']
+  used=source['endpoint']
+  try:
+   if key=='meta_ai_news':
+    req=urllib.request.Request(used,headers={'User-Agent':'Mozilla/5.0'})
+    with urllib.request.urlopen(req,timeout=15) as response:body=response.read(2_000_000)
+   else:body=request_body(used)
+  except (URLError,TimeoutError) as error:
+   if key!='douban' or isinstance(error,HTTPError):raise
+   print(f'DOUBAN_NETWORK_RETRY {type(error).__name__}: {error}')
+   body=request_body(used)
+  items=parse_source(key,body)
  except Exception:
-  if key!='ruanyifeng':raise
-  body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
- if key=='thehackernews' or key in SECURITY_RESEARCH_SOURCES or key in INTERNATIONAL_NEWS:
-  previous={}
-  try:previous=json.loads((public_directory()/'extra-hotspots.json').read_text(encoding='utf-8-sig')).get('sources',{}).get(key,{})
-  except (OSError,ValueError):pass
-  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items,previous)}
+  if key in NEW_SOURCE_BACKUPS:
+   used=NEW_SOURCE_BACKUPS[key];items=parse_source(key,request_body(used))
+  elif key=='ruanyifeng':
+   body=request_body(WEEKLY_BACKUP);items=parse_weekly_backup(body);used=WEEKLY_BACKUP
+  else:raise
+ if key in EXTRA_MODEL_SOURCES:
+  if key in {'mistral_news','meta_ai_news','mistral_api','minimax_api'}:items=translate_security_titles(items)
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key=='hf_trending':items=enrich_hf_trending(items)
+ if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
- if key in AUTO_NEWS or key in ['seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/extra-hotspots.json');out=Path(parser.parse_args().output);previous={}
+ parser=argparse.ArgumentParser();parser.add_argument('--output',default='public/extra-hotspots.json');parser.add_argument('--source',action='append',choices=SOURCES);args=parser.parse_args();out=Path(args.output);previous={}
  if out.exists():
   try:previous=json.loads(out.read_text(encoding='utf-8-sig')).get('sources',{})
   except (OSError,ValueError):pass
@@ -608,7 +1112,9 @@ def main():
     return key,{**old,'collection':health}
    config=SOURCES[key]
    return key,{**{k:v for k,v in config.items() if k!='endpoint'},'updatedAt':None,'items':[],'unavailable':True,'collection':health}
- with ThreadPoolExecutor(max_workers=7) as pool:sources={k:v for k,v in pool.map(load,SOURCES) if v}
+ with ThreadPoolExecutor(max_workers=7) as pool:
+  updates=dict(pool.map(load,dict.fromkeys(args.source or SOURCES)))
+ sources={**previous,**updates} if args.source else updates
  if not sources:raise SystemExit('No current or cached sources available')
  out.parent.mkdir(parents=True,exist_ok=True);temp=out.with_suffix('.tmp');temp.write_text(json.dumps({'sources':sources},ensure_ascii=False,indent=2)+'\n',encoding='utf-8');temp.replace(out)
  if out.resolve()==(Path(__file__).resolve().parents[1]/'public'/'extra-hotspots.json').resolve():prune_covers(sources)

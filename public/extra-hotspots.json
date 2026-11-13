@@ -1,5 +1,129 @@
 {
   "sources": {
+    "hf_trending": {
+      "name": "Hugging Face Trending",
+      "kind": "首页趋势 · 最近 7 天",
+      "url": "https://huggingface.co/",
+      "sourceUrlUsed": "https://huggingface.co/",
+      "updatedAt": "2026-11-11T04:24:22.148793+00:00",
+      "items": [
+        {
+          "title": "xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic",
+          "url": "https://huggingface.co/xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic",
+          "meta": "模型 · 近 7 天趋势 · 文本生成 · 更新于 11-08 11:48",
+          "repoType": "model",
+          "updatedAt": "2026-11-08T03:48:02+00:00",
+          "pipelineTag": "text-generation"
+        },
+        {
+          "title": "speridlabs/idol",
+          "url": "https://huggingface.co/speridlabs/idol",
+          "meta": "模型 · 近 7 天趋势 · 图像转 3D · 更新于 10-30 02:17",
+          "repoType": "model",
+          "updatedAt": "2026-10-29T18:17:36+00:00",
+          "pipelineTag": "image-to-3d"
+        },
+        {
+          "title": "moonshotai/Kimi-K3.1-Pro",
+          "url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+          "meta": "模型 · 近 7 天趋势 · 图文转文本 · 更新于 11-05 15:11",
+          "repoType": "model",
+          "updatedAt": "2026-11-05T07:11:43+00:00",
+          "pipelineTag": "image-text-to-text"
+        },
+        {
+          "title": "ricursiveAI/Ripple-65B-Preview",
+          "url": "https://huggingface.co/ricursiveAI/Ripple-65B-Preview",
+          "meta": "模型 · 近 7 天趋势 · 更新于 11-10 17:31",
+          "repoType": "model",
+          "updatedAt": "2026-11-10T09:31:23+00:00"
+        },
+        {
+          "title": "MiniMaxAI/MiniMax-H3-Image",
+          "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image",
+          "meta": "模型 · 近 7 天趋势 · 文本生成图像 · 更新于 11-11 08:30",
+          "repoType": "model",
+          "updatedAt": "2026-11-11T00:30:36+00:00",
+          "pipelineTag": "text-to-image"
+        },
+        {
+          "title": "huggingface/moe-blogpost",
+          "url": "https://huggingface.co/spaces/huggingface/moe-blogpost",
+          "meta": "Space · 近 7 天趋势 · 更新于 11-06 02:07",
+          "repoType": "space",
+          "updatedAt": "2026-11-05T18:07:55+00:00"
+        },
+        {
+          "title": "thea2026/image-to-video",
+          "url": "https://huggingface.co/spaces/thea2026/image-to-video",
+          "meta": "Space · 近 7 天趋势 · 更新于 11-11 11:49",
+          "repoType": "space",
+          "updatedAt": "2026-11-11T03:49:49+00:00"
+        },
+        {
+          "title": "joelniklaus/harness-leaderboard",
+          "url": "https://huggingface.co/spaces/joelniklaus/harness-leaderboard",
+          "meta": "Space · 近 7 天趋势 · 更新于 11-11 10:55",
+          "repoType": "space",
+          "updatedAt": "2026-11-11T02:55:45+00:00"
+        },
+        {
+          "title": "kulkas2pintu/wan777",
+          "url": "https://huggingface.co/spaces/kulkas2pintu/wan777",
+          "meta": "Space · 近 7 天趋势 · 更新于 08-23 23:26",
+          "repoType": "space",
+          "updatedAt": "2026-08-23T15:26:43+00:00"
+        },
+        {
+          "title": "fendouai/free-ai-humanizer",
+          "url": "https://huggingface.co/spaces/fendouai/free-ai-humanizer",
+          "meta": "Space · 近 7 天趋势 · 更新于 11-06 15:43",
+          "repoType": "space",
+          "updatedAt": "2026-11-06T07:43:26+00:00"
+        },
+        {
+          "title": "Angais/pixel-art-atlas-1.4m",
+          "url": "https://huggingface.co/datasets/Angais/pixel-art-atlas-1.4m",
+          "meta": "数据集 · 近 7 天趋势 · 更新于 11-06 21:05",
+          "repoType": "dataset",
+          "updatedAt": "2026-11-06T13:05:13+00:00"
+        },
+        {
+          "title": "Vyber07/cyber-security",
+          "url": "https://huggingface.co/datasets/Vyber07/cyber-security",
+          "meta": "数据集 · 近 7 天趋势 · 更新于 09-01 01:57",
+          "repoType": "dataset",
+          "updatedAt": "2026-08-31T17:57:10+00:00"
+        },
+        {
+          "title": "nvidia/simready-assets",
+          "url": "https://huggingface.co/datasets/nvidia/simready-assets",
+          "meta": "数据集 · 近 7 天趋势 · 更新于 11-05 04:49",
+          "repoType": "dataset",
+          "updatedAt": "2026-11-04T20:49:04+00:00"
+        },
+        {
+          "title": "codepawl/abo-glb",
+          "url": "https://huggingface.co/datasets/codepawl/abo-glb",
+          "meta": "数据集 · 近 7 天趋势 · 更新于 11-10 21:42",
+          "repoType": "dataset",
+          "updatedAt": "2026-11-10T13:42:32+00:00"
+        },
+        {
+          "title": "open-index/hacker-news",
+          "url": "https://huggingface.co/datasets/open-index/hacker-news",
+          "meta": "数据集 · 近 7 天趋势 · 更新于 08-24 00:25",
+          "repoType": "dataset",
+          "updatedAt": "2026-08-23T16:25:00+00:00"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:24:21.036284+00:00",
+        "lastSuccessAt": "2026-11-11T04:24:22.148793+00:00",
+        "error": ""
+      }
+    },
     "dongchedi": {
       "name": "懂车帝",
       "kind": "汽车资讯",
@@ -220,25 +344,25 @@
           "translationStatus": "translated"
         },
         {
-          "title": "Iran executes Baluch militant over armed attack on police station",
+          "title": "伊朗处决武装袭击警察局的俾路支武装分子",
           "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOa0ZJZklBbmNsclpBQXZHR1B5ZlVGN01JR19CX1VDbXZ3M3FxODlXdXZLZzJScTM2SjR4dTA4eklLb3RfT2pvV0wzNFBTTjFVcVFvRG9VekIxVXlVbXhpXzFWcEt1QnM0WTFkV2oycHA5QzFhOWxWWlh1Sl9oVUJTTGNhcGZ4QjlfVGIwWWRSYjBXMHZfRGMyQmY0OXV5U0dSQWpwUU5pLVl6dUpFdTF4Q2Z6akFpSlF4?oc=5",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07 · 经 Google 新闻跳转",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
           "originalTitle": "Iran executes Baluch militant over armed attack on police station",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Russia pounds power facilities around Kyiv, damages major bridge",
+          "title": "俄罗斯猛烈袭击基辅周围的电力设施，损坏了主要桥梁",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPVGhCNTc0bjdqTkxuZDdtOFpCZVd1TEdDQnpURXNYeGY1ZG9saHUyZGFBbTMzWF8zbzBmOHQyeERTMTlWaUo1eUVXdjAyUENTaEkwbGNsb2xteDdxWXFybS1GcjlKWWl4VU4xUGdVdk9wSE1PM3NSTktvYWRINUpESnp4bDJqMkhzR21ySDZKWVVBbzJ5NHpDeDJFNFh5MDdGcEpWbEkzU2dFWFZBVWhxR0pR?oc=5",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07 · 经 Google 新闻跳转",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
           "originalTitle": "Russia pounds power facilities around Kyiv, damages major bridge",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Hong Kong lawmakers condemn foreign governments' criticism of Joshua Wong ruling",
+          "title": "香港立法会谴责外国政府批评黄之锋裁决",
           "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQRHc3Q2ozTlVsanhBang5b1Z0cmpvOGczN2R1TWJQd2JaZUdaLWtfd0Vva3ZTZkkxU0ZPTWZZenE1Q1JwUzBjdTVwU2xNV1JQdUZ2ZUZLYlR0SnpSczl4WENRcUJSYm53M21BblRuZnYzbTVGczZZX0U4NjdLTG95TDN0ZkVnVUV3NUg1NkpPQXpnZDR2dnlUWmFEZlBNVDZ1NUlZcEJpMDFxdlEtc1ZwU1dPMkJlLUdOQ2xCR1RFZGRHQQ?oc=5",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07 · 经 Google 新闻跳转",
+          "meta": "机器翻译 · 2026-11-07 · 经 Google 新闻跳转",
           "originalTitle": "Hong Kong lawmakers condemn foreign governments' criticism of Joshua Wong ruling",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "海地总理称黑帮头目马蒂亚斯·桑蒂尔已死",
@@ -369,11 +493,11 @@
           "translationStatus": "translated"
         },
         {
-          "title": "‘A beautifully American story’: El-Sayed's historic Senate victory resonates with Muslim Americans",
+          "title": "“一个美丽的美国故事”：埃尔赛义德在参议院的历史性胜利引起穆斯林美国人的共鸣",
           "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPR1czT05ZS29RbFNOcHJ3N0VqbDdBeXlzWmtuVFhNS3VwY3JCUlQxd19LaFJ5TXpPUS12NFFiMTh6R3dlS0MzeG4zRDh3NEszYVVNZ2hNRU9qdmxNV1o3RzBDN0J4ZzdWT1RNdE0wY0lEMUdOX0M3d1Y0TVdDa04tbExQZDhDSkpudEpUWnpuVVVGdDZGV1FFbF9Hb2lqTEpldzJmMXFBTW1JNkppZ2dn?oc=5",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-05 · 经 Google 新闻跳转",
+          "meta": "机器翻译 · 2026-11-05 · 经 Google 新闻跳转",
           "originalTitle": "‘A beautifully American story’: El-Sayed's historic Senate victory resonates with Muslim Americans",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         }
       ],
       "collection": {
@@ -392,11 +516,11 @@
       "updatedAt": "2026-11-07T11:02:59.989271+00:00",
       "items": [
         {
-          "title": "With Stephen Miller pick, Trump readies for a battle",
+          "title": "斯蒂芬·米勒选择特朗普，准备战斗",
           "url": "https://www.bbc.co.uk/news/articles/crp3gg2z171go?at_medium=RSS&at_campaign=rss",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-06",
+          "meta": "机器翻译 · 2026-11-06",
           "originalTitle": "With Stephen Miller pick, Trump readies for a battle",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "巴拉圭总统在银行倒闭后被弹劾并软禁",
@@ -469,11 +593,11 @@
           "translationStatus": "translated"
         },
         {
-          "title": "Dozens of Democrats eyeing 2028 presidential run, says former Obama aide",
+          "title": "奥巴马前助手表示，数十名民主党人正在考虑参加 2028 年总统竞选",
           "url": "https://www.bbc.co.uk/news/articles/cx8dzzy8n713o?at_medium=RSS&at_campaign=rss",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-06",
+          "meta": "机器翻译 · 2026-11-06",
           "originalTitle": "Dozens of Democrats eyeing 2028 presidential run, says former Obama aide",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         }
       ],
       "collection": {
@@ -492,25 +616,25 @@
       "updatedAt": "2026-11-07T11:02:58.467766+00:00",
       "items": [
         {
-          "title": "Sudan war and climate change see parents struggle to feed their children",
+          "title": "苏丹战争和气候变化导致父母难以养活孩子",
           "url": "https://www.aljazeera.com/features/2026/11/7/sudan-war-and-climate-change-sees-parents-struggle-to-feed-their-children?traffic_source=rss",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Sudan war and climate change see parents struggle to feed their children",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Pakistani astronaut to join China’s next space station mission",
+          "title": "巴基斯坦宇航员将参加中国的下一次空间站任务",
           "url": "https://www.aljazeera.com/news/2026/11/7/pakistani-astronaut-to-join-chinas-next-space-station-mission?traffic_source=rss",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Pakistani astronaut to join China’s next space station mission",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Palestinian citizens of Israel put to ‘loyalty test’ after election wins",
+          "title": "以色列的巴勒斯坦公民在选举获胜后接受“忠诚度测试”",
           "url": "https://www.aljazeera.com/features/2026/11/7/palestinian-citizens-of-israel-put-to-loyalty-test-after-election-wins?traffic_source=rss",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Palestinian citizens of Israel put to ‘loyalty test’ after election wins",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "随着燃油价格上涨，中国电动自行车蓬勃发展",
@@ -892,11 +1016,11 @@
       "updatedAt": "2026-11-07T11:02:59.157793+00:00",
       "items": [
         {
-          "title": "Why Israel’s Ex-Army Chief’s Next Mission Could Be Mission Impossible",
+          "title": "为什么以色列前陆军参谋长的下一个任务可能是不可能的任务",
           "url": "https://www.nytimes.com/2026/11/07/world/middleeast/eisenkot-israel-new-government.html",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Why Israel’s Ex-Army Chief’s Next Mission Could Be Mission Impossible",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "查尔斯国王在加勒比海之旅中不带雨伞但很自在",
@@ -906,32 +1030,32 @@
           "translationStatus": "translated"
         },
         {
-          "title": "Inside the Operation That Helped Ukraine Reverse Some Russian War Gains",
+          "title": "帮助乌克兰扭转部分俄罗斯战争成果的行动内部",
           "url": "https://www.nytimes.com/2026/11/07/world/europe/ukraine-russia-war-operation-vivaldi.html",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Inside the Operation That Helped Ukraine Reverse Some Russian War Gains",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Bomb Threats and Cyberattacks in Europe Inject Unease Into Everyday Life",
+          "title": "欧洲的炸弹威胁和网络攻击给日常生活带来不安",
           "url": "https://www.nytimes.com/2026/11/07/world/europe/bomb-threats-cyberattacks-europe-uncertainty.html",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Bomb Threats and Cyberattacks in Europe Inject Unease Into Everyday Life",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Another Day of Protests Is Planned in France’s Autumn of Discontent",
+          "title": "法国计划在充满不满的秋天再次举行抗议活动",
           "url": "https://www.nytimes.com/2026/11/07/world/europe/france-fourth-saturday-protests.html",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Another Day of Protests Is Planned in France’s Autumn of Discontent",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Why Are There Protests in France?",
+          "title": "法国为何爆发抗议活动？",
           "url": "https://www.nytimes.com/article/france-student-protests-why.html",
-          "meta": "英文原题 · 翻译待更新 · 2026-11-07",
+          "meta": "机器翻译 · 2026-11-07",
           "originalTitle": "Why Are There Protests in France?",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "新西兰会加入选民对成本飙升的全球反抗吗？",
@@ -1546,11 +1670,11 @@
       "updatedAt": "2026-11-07T11:03:03.386612+00:00",
       "items": [
         {
-          "title": "ARTEX abuse expands as cybercriminals target financial sector",
+          "title": "随着网络犯罪分子瞄准金融部门，ARTEX 滥用扩大",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/11/06/artex-abuse-expands-as-cybercriminals-target-financial-sector/",
-          "meta": "英文原题 · 翻译待更新 · Sat, 07 Nov 2026 02:44:34 +0000",
+          "meta": "机器翻译 · Sat, 07 Nov 2026 02:44:34 +0000",
           "originalTitle": "ARTEX abuse expands as cybercriminals target financial sector",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "威胁行为者使用代理人工智能工具来查找和滥用暴露的秘密",
@@ -1560,11 +1684,11 @@
           "translationStatus": "translated"
         },
         {
-          "title": "​​​​What’s new in Microsoft Security: November 2026",
+          "title": "​​​​Microsoft 安全性新增内容：2026 年 11 月",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/whats-new-in-microsoft-security-november-2026/",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 17:00:00 +0000",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 17:00:00 +0000",
           "originalTitle": "​​​​What’s new in Microsoft Security: November 2026",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "电子邮件威胁形势：2026 年第三季度趋势和见解",
@@ -1581,18 +1705,18 @@
           "translationStatus": "translated"
         },
         {
-          "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for AI Agent Management Platforms",
+          "title": "Microsoft 在 2026 年 Gartner® 人工智能代理管理平台魔力象限™ 中被评为领导者",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/11/03/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-ai-agent-management-platforms/",
-          "meta": "英文原题 · 翻译待更新 · Tue, 03 Nov 2026 17:00:00 +0000",
+          "meta": "机器翻译 · Tue, 03 Nov 2026 17:00:00 +0000",
           "originalTitle": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for AI Agent Management Platforms",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "What exploited vulnerabilities have in common: A data-driven analysis of real-world attacks",
+          "title": "被利用的漏洞的共同点：对现实世界攻击的数据驱动分析",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 02 Nov 2026 20:20:59 +0000",
+          "meta": "机器翻译 · Mon, 02 Nov 2026 20:20:59 +0000",
           "originalTitle": "What exploited vulnerabilities have in common: A data-driven analysis of real-world attacks",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
           "title": "恶意 Claude Code 品牌扩展及其持久 SSH 后门的内部",
@@ -1602,11 +1726,11 @@
           "translationStatus": "translated"
         },
         {
-          "title": "From help desk impersonation to AD CS abuse: Investigating ESC1 and ESC8 intrusion paths",
+          "title": "从帮助台假冒到 AD CS 滥用：调查 ESC1 和 ESC8 入侵路径",
           "url": "https://www.microsoft.com/en-us/security/blog/2026/10/30/help-desk-impersonation-ad-cs-abuse-investigating-esc1-esc8-intrusion-paths/",
-          "meta": "英文原题 · 翻译待更新 · Fri, 30 Oct 2026 16:11:44 +0000",
+          "meta": "机器翻译 · Fri, 30 Oct 2026 16:11:44 +0000",
           "originalTitle": "From help desk impersonation to AD CS abuse: Investigating ESC1 and ESC8 intrusion paths",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         }
       ],
       "collection": {
@@ -1777,109 +1901,109 @@
       "updatedAt": "2026-11-07T11:03:00.434054+00:00",
       "items": [
         {
-          "title": "Hacking on Autopilot: Inside ARTEX Cybercrime Campaigns",
+          "title": "自动驾驶仪黑客攻击：ARTEX 网络犯罪活动内部",
           "url": "https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 17:22:06 +0000",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 17:22:06 +0000",
           "originalTitle": "Hacking on Autopilot: Inside ARTEX Cybercrime Campaigns",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "ChatGPT Lockdown Mode Bypass: Phishing, Malware Delivery, and Silent Data Exfiltration",
+          "title": "ChatGPT 锁定模式绕过：网络钓鱼、恶意软件传播和静默数据泄露",
           "url": "https://research.checkpoint.com/2026/chatgpt-lockdown-mode-bypass-phishing-malware-delivery-and-silent-data-exfiltration/",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 14:00:11 +0000",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 14:00:11 +0000",
           "originalTitle": "ChatGPT Lockdown Mode Bypass: Phishing, Malware Delivery, and Silent Data Exfiltration",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Free the Model, Sell the Gateway: Prompt Adware hidden in Jailbreak Bundles",
+          "title": "释放模型，出售网关：提示越狱捆绑包中隐藏的广告软件",
           "url": "https://research.checkpoint.com/2026/free-the-model-sell-the-gateway-prompt-adware-hidden-in-jailbreak-bundles/",
-          "meta": "英文原题 · 翻译待更新 · Tue, 03 Nov 2026 13:57:04 +0000",
+          "meta": "机器翻译 · Tue, 03 Nov 2026 13:57:04 +0000",
           "originalTitle": "Free the Model, Sell the Gateway: Prompt Adware hidden in Jailbreak Bundles",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "2nd November – Threat Intelligence Report",
+          "title": "11 月 2 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/2nd-november-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 02 Nov 2026 15:57:23 +0000",
+          "meta": "机器翻译 · Mon, 02 Nov 2026 15:57:23 +0000",
           "originalTitle": "2nd November – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Cohere’s Qwen Story: Looks More Like Model Jaggedness",
+          "title": "Cohere 的 Qwen 故事：看起来更像是模特锯齿状",
           "url": "https://research.checkpoint.com/2026/coheres-qwen-story-looks-more-like-model-jaggedness/",
-          "meta": "英文原题 · 翻译待更新 · Thu, 29 Oct 2026 14:08:46 +0000",
+          "meta": "机器翻译 · Thu, 29 Oct 2026 14:08:46 +0000",
           "originalTitle": "Cohere’s Qwen Story: Looks More Like Model Jaggedness",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Tricks from the Past deployed via signed ChatGPT and Claude binaries",
+          "title": "通过签名的 ChatGPT 和 Claude 二进制文件部署过去的技巧",
           "url": "https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/",
-          "meta": "英文原题 · 翻译待更新 · Tue, 27 Oct 2026 13:03:27 +0000",
+          "meta": "机器翻译 · Tue, 27 Oct 2026 13:03:27 +0000",
           "originalTitle": "Tricks from the Past deployed via signed ChatGPT and Claude binaries",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "26th October – Threat Intelligence Report",
+          "title": "10 月 26 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 26 Oct 2026 16:12:38 +0000",
+          "meta": "机器翻译 · Mon, 26 Oct 2026 16:12:38 +0000",
           "originalTitle": "26th October – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Infostealer riding the AI Train",
+          "title": "乘坐人工智能列车的信息窃取者",
           "url": "https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/",
-          "meta": "英文原题 · 翻译待更新 · Fri, 23 Oct 2026 13:00:09 +0000",
+          "meta": "机器翻译 · Fri, 23 Oct 2026 13:00:09 +0000",
           "originalTitle": "Infostealer riding the AI Train",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "The Risk of AI-Powered Antidetect Browsers in Online Fraud and Influence Operations",
+          "title": "人工智能支持的反检测浏览器在在线欺诈和影响力操作中的风险",
           "url": "https://research.checkpoint.com/2026/the-risk-of-ai-powered-antidetect-browsers-in-online-fraud-and-influence-operations/",
-          "meta": "英文原题 · 翻译待更新 · Tue, 20 Oct 2026 14:17:23 +0000",
+          "meta": "机器翻译 · Tue, 20 Oct 2026 14:17:23 +0000",
           "originalTitle": "The Risk of AI-Powered Antidetect Browsers in Online Fraud and Influence Operations",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "19th October – Threat Intelligence Report",
+          "title": "10 月 19 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/19th-october-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 19 Oct 2026 14:54:40 +0000",
+          "meta": "机器翻译 · Mon, 19 Oct 2026 14:54:40 +0000",
           "originalTitle": "19th October – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "When LLM Gateways Go Wrong: Findings from LiteLLM",
+          "title": "当 LLM 网关出现问题时：LiteLLM 的发现",
           "url": "https://research.checkpoint.com/2026/when-llm-gateways-go-wrong-findings-from-litellm/",
-          "meta": "英文原题 · 翻译待更新 · Tue, 13 Oct 2026 14:30:26 +0000",
+          "meta": "机器翻译 · Tue, 13 Oct 2026 14:30:26 +0000",
           "originalTitle": "When LLM Gateways Go Wrong: Findings from LiteLLM",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "12th October – Threat Intelligence Report",
+          "title": "10 月 12 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/12th-october-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 12 Oct 2026 14:51:31 +0000",
+          "meta": "机器翻译 · Mon, 12 Oct 2026 14:51:31 +0000",
           "originalTitle": "12th October – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "5th October – Threat Intelligence Report",
+          "title": "10 月 5 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/5th-october-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 05 Oct 2026 13:57:30 +0000",
+          "meta": "机器翻译 · Mon, 05 Oct 2026 13:57:30 +0000",
           "originalTitle": "5th October – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "28th September – Threat Intelligence Report",
+          "title": "9 月 28 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/28th-september-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 28 Sep 2026 13:55:26 +0000",
+          "meta": "机器翻译 · Mon, 28 Sep 2026 13:55:26 +0000",
           "originalTitle": "28th September – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "21st September – Threat Intelligence Report",
+          "title": "9 月 21 日 – 威胁情报报告",
           "url": "https://research.checkpoint.com/2026/21st-september-threat-intelligence-report/",
-          "meta": "英文原题 · 翻译待更新 · Mon, 21 Sep 2026 23:13:07 +0000",
+          "meta": "机器翻译 · Mon, 21 Sep 2026 23:13:07 +0000",
           "originalTitle": "21st September – Threat Intelligence Report",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         }
       ],
       "collection": {
@@ -2352,172 +2476,172 @@
       "updatedAt": "2026-11-07T11:03:01.131564+00:00",
       "items": [
         {
-          "title": "Claude Code's “Don't Ask Again” File Exposes Passwords and Keys in 1,122 Public Copies on GitHub",
+          "title": "Claude Code 的“不要再问”文件在 GitHub 上公开了 1,122 份公开副本中的密码和密钥",
           "url": "https://thehackernews.com/2026/11/claude-codes-dont-ask-again-file.html",
-          "meta": "英文原题 · 翻译待更新 · Sat, 07 Nov 2026 12:14:17 +0530",
+          "meta": "机器翻译 · Sat, 07 Nov 2026 12:14:17 +0530",
           "originalTitle": "Claude Code's “Don't Ask Again” File Exposes Passwords and Keys in 1,122 Public Copies on GitHub",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Installing the Fix for an Exploited WordPress Flaw Can Expose Some Sites One Last Time",
+          "title": "安装针对 WordPress 漏洞的修复程序可能会导致某些网站最后一次暴露",
           "url": "https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 21:38:38 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 21:38:38 +0530",
           "originalTitle": "Installing the Fix for an Exploited WordPress Flaw Can Expose Some Sites One Last Time",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Hackers Target OpenSSH SSHole Flaw Within Hours of Disclosure, Gain Root on Honeypot",
+          "title": "黑客在披露后数小时内瞄准 OpenSSH SSHole 漏洞，并在蜜罐上扎根",
           "url": "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 20:51:49 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 20:51:49 +0530",
           "originalTitle": "Hackers Target OpenSSH SSHole Flaw Within Hours of Disclosure, Gain Root on Honeypot",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "OpenAI Launches GPT-6 Cyber After AI Helps Find 81 Firefox Flaws, 948 Linux Exploits",
+          "title": "OpenAI 在 AI 帮助查找 81 个 Firefox 缺陷和 948 个 Linux 漏洞后推出 GPT-6 Cyber",
           "url": "https://thehackernews.com/2026/11/openai-launches-gpt-6-cyber-after-ai.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 20:28:32 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 20:28:32 +0530",
           "originalTitle": "OpenAI Launches GPT-6 Cyber After AI Helps Find 81 Firefox Flaws, 948 Linux Exploits",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Microsoft Paint RCE Fix Now Available, but Windows Update Won't Deliver It",
+          "title": "Microsoft Paint RCE 修复现已可用，但 Windows 更新不会提供该修复",
           "url": "https://thehackernews.com/2026/11/microsoft-paint-rce-fix-now-available.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 17:36:43 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 17:36:43 +0530",
           "originalTitle": "Microsoft Paint RCE Fix Now Available, but Windows Update Won't Deliver It",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Malicious Browser Extensions Could Use Claude Dispatch to Run Code on Users' Computers",
+          "title": "恶意浏览器扩展可能利用 Claude Dispatch 在用户计算机上运行代码",
           "url": "https://thehackernews.com/2026/11/malicious-browser-extensions-could-use.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 17:36:35 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 17:36:35 +0530",
           "originalTitle": "Malicious Browser Extensions Could Use Claude Dispatch to Run Code on Users' Computers",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "The Flood is Coming And The Pipes Were Already Full",
+          "title": "洪水来了，管道已经满了",
           "url": "https://thehackernews.com/2026/11/the-flood-is-coming-and-pipes-were.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 17:00:00 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 17:00:00 +0530",
           "originalTitle": "The Flood is Coming And The Pipes Were Already Full",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Chainalysis Breach Exposes All Users' Credentials, Forces Shutdown of Key Services",
+          "title": "Chainaanalysis 漏洞暴露了所有用户的凭据，迫使关键服务关闭",
           "url": "https://thehackernews.com/2026/11/chainalysis-breach-exposes-all-users.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 13:34:49 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 13:34:49 +0530",
           "originalTitle": "Chainalysis Breach Exposes All Users' Credentials, Forces Shutdown of Key Services",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Hackers Hide Linux Backdoor in Control Web Panel Server to Execute Commands Without Logs",
+          "title": "黑客在控制Web面板服务器中隐藏Linux后门以在没有日志的情况下执行命令",
           "url": "https://thehackernews.com/2026/11/hackers-hide-linux-backdoor-in-control.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 11:28:54 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 11:28:54 +0530",
           "originalTitle": "Hackers Hide Linux Backdoor in Control Web Panel Server to Execute Commands Without Logs",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Experts Demonstrate Barracuda Email Security Gateway Chain Enabling Root Access Without Login",
+          "title": "专家展示梭子鱼电子邮件安全网关链无需登录即可实现根访问",
           "url": "https://thehackernews.com/2026/11/experts-demonstrate-barracuda-email.html",
-          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 11:09:10 +0530",
+          "meta": "机器翻译 · Fri, 06 Nov 2026 11:09:10 +0530",
           "originalTitle": "Experts Demonstrate Barracuda Email Security Gateway Chain Enabling Root Access Without Login",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "OpenSSH Issues Emergency Fix for Flaw Letting Long Passwords Bypass SSH Auth on Alpine Linux",
+          "title": "OpenSSH 紧急修复了 Alpine Linux 上长密码绕过 SSH 身份验证的缺陷",
           "url": "https://thehackernews.com/2026/11/openssh-issues-emergency-fix-for-flaw.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 22:12:46 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 22:12:46 +0530",
           "originalTitle": "OpenSSH Issues Emergency Fix for Flaw Letting Long Passwords Bypass SSH Auth on Alpine Linux",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Researchers Bypass ChatGPT Lockdown Mode to Exfiltrate Chats Without User Interaction",
+          "title": "研究人员绕过 ChatGPT 锁定模式，在没有用户交互的情况下窃取聊天内容",
           "url": "https://thehackernews.com/2026/11/researchers-bypass-chatgpt-lockdown.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 22:12:32 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 22:12:32 +0530",
           "originalTitle": "Researchers Bypass ChatGPT Lockdown Mode to Exfiltrate Chats Without User Interaction",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "ThreatsDay: Apache OFBiz RCE, DreamHost Breach, DeFi Site Hijacks + 17 More Stories",
+          "title": "ThreatsDay：Apache OFBiz RCE、DreamHost 漏洞、DeFi 网站劫持 + 17 个其他故事",
           "url": "https://thehackernews.com/2026/11/threatsday-apache-ofbiz-rce-dreamhost.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 20:11:10 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 20:11:10 +0530",
           "originalTitle": "ThreatsDay: Apache OFBiz RCE, DreamHost Breach, DeFi Site Hijacks + 17 More Stories",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Is Your Exposure Management Platform Leaving You Exposed? Five Tests to Find Out",
+          "title": "您的暴露管理平台是否让您暴露在外？五项测试来找出答案",
           "url": "https://thehackernews.com/2026/11/is-your-exposure-management-platform.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 17:55:00 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 17:55:00 +0530",
           "originalTitle": "Is Your Exposure Management Platform Leaving You Exposed? Five Tests to Find Out",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "OpenAI AI Pipeline Generates 948 Linux Root Escalation Exploits in 30-Hour Run",
+          "title": "OpenAI AI Pipeline 在 30 小时运行中生成 948 个 Linux Root 升级漏洞",
           "url": "https://thehackernews.com/2026/11/openai-ai-pipeline-generates-948-linux.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 17:38:54 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 17:38:54 +0530",
           "originalTitle": "OpenAI AI Pipeline Generates 948 Linux Root Escalation Exploits in 30-Hour Run",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "5 Active Cyber Threats That Put US Enterprises at Risk in October 2026",
+          "title": "2026 年 10 月使美国企业面临风险的 5 个活跃网络威胁",
           "url": "https://thehackernews.com/2026/11/5-active-cyber-threats-that-put-us.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 15:36:19 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 15:36:19 +0530",
           "originalTitle": "5 Active Cyber Threats That Put US Enterprises at Risk in October 2026",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Apple to Start Scanning Publicly Shared iCloud Photos and Files for Harmful Content",
+          "title": "苹果将​​开始扫描公开共享的 iCloud 照片和文件以查找有害内容",
           "url": "https://thehackernews.com/2026/11/apple-to-start-scanning-publicly-shared.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 14:43:28 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 14:43:28 +0530",
           "originalTitle": "Apple to Start Scanning Publicly Shared iCloud Photos and Files for Harmful Content",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "CERT-In Flags AI-Driven Attacks as Backdoored ARTEX Exposes 62 Consoles to Root Access",
+          "title": "CERT-In 标记人工智能驱动的攻击，因为 ARTEX 后门暴露了 62 个控制台的根访问权限",
           "url": "https://thehackernews.com/2026/11/backdoored-docker-image-for-artex-ai.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 14:12:03 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 14:12:03 +0530",
           "originalTitle": "CERT-In Flags AI-Driven Attacks as Backdoored ARTEX Exposes 62 Consoles to Root Access",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Zyxel GS1900 Patch Fails to Block Zero-Day Exploit Allowing Root Command Execution",
+          "title": "Zyxel GS1900 补丁无法阻止允许执行 root 命令的零日漏洞",
           "url": "https://thehackernews.com/2026/11/zyxel-gs1900-patch-fails-to-block-zero.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 12:36:33 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 12:36:33 +0530",
           "originalTitle": "Zyxel GS1900 Patch Fails to Block Zero-Day Exploit Allowing Root Command Execution",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Hackers Exploit Patched Apple Flaw to Deliver Info-Stealing Malware, CISA Says",
+          "title": "CISA 称，黑客利用已修补的 Apple 漏洞来传播窃取信息的恶意软件",
           "url": "https://thehackernews.com/2026/11/hackers-exploit-patched-apple-flaw-to.html",
-          "meta": "英文原题 · 翻译待更新 · Thu, 05 Nov 2026 10:47:04 +0530",
+          "meta": "机器翻译 · Thu, 05 Nov 2026 10:47:04 +0530",
           "originalTitle": "Hackers Exploit Patched Apple Flaw to Deliver Info-Stealing Malware, CISA Says",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Debian and Ubuntu APT Flaw Lets MitM Attackers Swap Verified Packages and Run Code as Root",
+          "title": "Debian 和 Ubuntu APT 漏洞可让 MitM 攻击者交换经过验证的软件包并以 root 身份运行代码",
           "url": "https://thehackernews.com/2026/11/debian-and-ubuntu-apt-flaw-lets-mitm.html",
-          "meta": "英文原题 · 翻译待更新 · Wed, 04 Nov 2026 22:30:46 +0530",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 22:30:46 +0530",
           "originalTitle": "Debian and Ubuntu APT Flaw Lets MitM Attackers Swap Verified Packages and Run Code as Root",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "SonicWall Won't Patch EoL GMS Flaws That Could Expose Files, Alter Database Records",
+          "title": "SonicWall 不会修补 EoL GMS 缺陷，这些缺陷可能会泄露文件、更改数据库记录",
           "url": "https://thehackernews.com/2026/11/sonicwall-wont-patch-eol-gms-flaws-that.html",
-          "meta": "英文原题 · 翻译待更新 · Wed, 04 Nov 2026 22:30:38 +0530",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 22:30:38 +0530",
           "originalTitle": "SonicWall Won't Patch EoL GMS Flaws That Could Expose Files, Alter Database Records",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "Researchers Uncover Prompt Adware Hidden in OpenAI Codex Jailbreak Toolkit",
+          "title": "研究人员发现 OpenAI Codex 越狱工具包中隐藏的提示广告软件",
           "url": "https://thehackernews.com/2026/11/researchers-uncover-prompt-adware.html",
-          "meta": "英文原题 · 翻译待更新 · Wed, 04 Nov 2026 21:36:43 +0530",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 21:36:43 +0530",
           "originalTitle": "Researchers Uncover Prompt Adware Hidden in OpenAI Codex Jailbreak Toolkit",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         },
         {
-          "title": "APT29-Linked Hackers Hijack Web Analytics Script to Deliver iOS and Android Exploits",
+          "title": "与 APT29 相关的黑客劫持 Web 分析脚本以利用 iOS 和 Android 漏洞",
           "url": "https://thehackernews.com/2026/11/apt29-linked-hackers-hijack-web.html",
-          "meta": "英文原题 · 翻译待更新 · Wed, 04 Nov 2026 19:57:52 +0530",
+          "meta": "机器翻译 · Wed, 04 Nov 2026 19:57:52 +0530",
           "originalTitle": "APT29-Linked Hackers Hijack Web Analytics Script to Deliver iOS and Android Exploits",
-          "translationStatus": "original"
+          "translationStatus": "translated"
         }
       ],
       "collection": {
@@ -2532,134 +2656,134 @@
       "kind": "实时热搜榜",
       "url": "https://top.baidu.com/board?tab=realtime",
       "icon": "https://www.baidu.com/favicon.ico",
-      "sourceUrlUsed": "https://top.baidu.com/board?tab=realtime",
-      "updatedAt": "2026-11-07T11:03:01.327111+00:00",
+      "sourceUrlUsed": "https://top.baidu.com/api/board?platform=wise&tab=realtime",
+      "updatedAt": "2026-11-13T08:06:51.391041+00:00",
       "items": [
         {
-          "title": "华北北部降雪多到“发黑”",
-          "url": "https://www.baidu.com/s?wd=%E5%8D%8E%E5%8C%97%E5%8C%97%E9%83%A8%E9%99%8D%E9%9B%AA%E5%A4%9A%E5%88%B0%E2%80%9C%E5%8F%91%E9%BB%91%E2%80%9D",
-          "meta": "热度 7809500"
+          "title": "1600元网购冲锋衣口袋有张身份证",
+          "url": "https://m.baidu.com/s?word=1600%E5%85%83%E7%BD%91%E8%B4%AD%E5%86%B2%E9%94%8B%E8%A1%A3%E5%8F%A3%E8%A2%8B%E6%9C%89%E5%BC%A0%E8%BA%AB%E4%BB%BD%E8%AF%81&sa=fyb_news",
+          "meta": "热搜第 1 位"
         },
         {
-          "title": "芒果涨疯了",
-          "url": "https://www.baidu.com/s?wd=%E8%8A%92%E6%9E%9C%E6%B6%A8%E7%96%AF%E4%BA%86",
-          "meta": "热度 7714527"
+          "title": "外交部回应中俄美元首会晤",
+          "url": "https://m.baidu.com/s?word=%E5%A4%96%E4%BA%A4%E9%83%A8%E5%9B%9E%E5%BA%94%E4%B8%AD%E4%BF%84%E7%BE%8E%E5%85%83%E9%A6%96%E4%BC%9A%E6%99%A4&sa=fyb_news",
+          "meta": "热搜第 2 位 · 新"
         },
         {
-          "title": "当进博会遇上APEC“中国年”",
-          "url": "https://www.baidu.com/s?wd=%E5%BD%93%E8%BF%9B%E5%8D%9A%E4%BC%9A%E9%81%87%E4%B8%8AAPEC%E2%80%9C%E4%B8%AD%E5%9B%BD%E5%B9%B4%E2%80%9D",
-          "meta": "热度 7616461"
+          "title": "秋假带火研学游、亲子游",
+          "url": "https://m.baidu.com/s?word=%E7%A7%8B%E5%81%87%E5%B8%A6%E7%81%AB%E7%A0%94%E5%AD%A6%E6%B8%B8%E3%80%81%E4%BA%B2%E5%AD%90%E6%B8%B8&sa=fyb_news",
+          "meta": "热搜第 3 位"
         },
         {
-          "title": "“AI陈建斌”越来越逼真 陈建斌回应",
-          "url": "https://www.baidu.com/s?wd=%E2%80%9CAI%E9%99%88%E5%BB%BA%E6%96%8C%E2%80%9D%E8%B6%8A%E6%9D%A5%E8%B6%8A%E9%80%BC%E7%9C%9F%20%E9%99%88%E5%BB%BA%E6%96%8C%E5%9B%9E%E5%BA%94",
-          "meta": "热度 7519804"
+          "title": "40岁男子花4千元做96集AI短剧爆火",
+          "url": "https://m.baidu.com/s?word=40%E5%B2%81%E7%94%B7%E5%AD%90%E8%8A%B14%E5%8D%83%E5%85%83%E5%81%9A96%E9%9B%86AI%E7%9F%AD%E5%89%A7%E7%88%86%E7%81%AB&sa=fyb_news",
+          "meta": "热搜第 4 位 · 热"
         },
         {
-          "title": "DeepSeek又崩了",
-          "url": "https://www.baidu.com/s?wd=DeepSeek%E5%8F%88%E5%B4%A9%E4%BA%86",
-          "meta": "热度 7426914"
+          "title": "远程注射疫苗被东北虎一把叼住针管",
+          "url": "https://m.baidu.com/s?word=%E8%BF%9C%E7%A8%8B%E6%B3%A8%E5%B0%84%E7%96%AB%E8%8B%97%E8%A2%AB%E4%B8%9C%E5%8C%97%E8%99%8E%E4%B8%80%E6%8A%8A%E5%8F%BC%E4%BD%8F%E9%92%88%E7%AE%A1&sa=fyb_news",
+          "meta": "热搜第 5 位"
         },
         {
-          "title": "男子被小奶狗抓伤确诊狂犬病",
-          "url": "https://www.baidu.com/s?wd=%E7%94%B7%E5%AD%90%E8%A2%AB%E5%B0%8F%E5%A5%B6%E7%8B%97%E6%8A%93%E4%BC%A4%E7%A1%AE%E8%AF%8A%E7%8B%82%E7%8A%AC%E7%97%85",
-          "meta": "热度 7330003"
+          "title": "睡前有这5种表现可能是脑梗",
+          "url": "https://m.baidu.com/s?word=%E7%9D%A1%E5%89%8D%E6%9C%89%E8%BF%995%E7%A7%8D%E8%A1%A8%E7%8E%B0%E5%8F%AF%E8%83%BD%E6%98%AF%E8%84%91%E6%A2%97&sa=fyb_news",
+          "meta": "热搜第 6 位"
         },
         {
-          "title": "哈工大硕士出摊卖气球走红",
-          "url": "https://www.baidu.com/s?wd=%E5%93%88%E5%B7%A5%E5%A4%A7%E7%A1%95%E5%A3%AB%E5%87%BA%E6%91%8A%E5%8D%96%E6%B0%94%E7%90%83%E8%B5%B0%E7%BA%A2",
-          "meta": "热度 7233031"
+          "title": "KFC列车诞生了",
+          "url": "https://m.baidu.com/s?word=KFC%E5%88%97%E8%BD%A6%E8%AF%9E%E7%94%9F%E4%BA%86&sa=fyb_news",
+          "meta": "热搜第 7 位"
         },
         {
-          "title": "抢烤鸡的那批人开始在山姆抢始祖鸟",
-          "url": "https://www.baidu.com/s?wd=%E6%8A%A2%E7%83%A4%E9%B8%A1%E7%9A%84%E9%82%A3%E6%89%B9%E4%BA%BA%E5%BC%80%E5%A7%8B%E5%9C%A8%E5%B1%B1%E5%A7%86%E6%8A%A2%E5%A7%8B%E7%A5%96%E9%B8%9F",
-          "meta": "热度 7137430"
+          "title": "刘欢妻子不到10个月失去两个至亲",
+          "url": "https://m.baidu.com/s?word=%E5%88%98%E6%AC%A2%E5%A6%BB%E5%AD%90%E4%B8%8D%E5%88%B010%E4%B8%AA%E6%9C%88%E5%A4%B1%E5%8E%BB%E4%B8%A4%E4%B8%AA%E8%87%B3%E4%BA%B2&sa=fyb_news",
+          "meta": "热搜第 8 位 · 热"
         },
         {
-          "title": "妹妹出嫁前一夜哥哥连夜铺平道路",
-          "url": "https://www.baidu.com/s?wd=%E5%A6%B9%E5%A6%B9%E5%87%BA%E5%AB%81%E5%89%8D%E4%B8%80%E5%A4%9C%E5%93%A5%E5%93%A5%E8%BF%9E%E5%A4%9C%E9%93%BA%E5%B9%B3%E9%81%93%E8%B7%AF",
-          "meta": "热度 7046275"
+          "title": "张萌后悔叫马天宇上节目",
+          "url": "https://m.baidu.com/s?word=%E5%BC%A0%E8%90%8C%E5%90%8E%E6%82%94%E5%8F%AB%E9%A9%AC%E5%A4%A9%E5%AE%87%E4%B8%8A%E8%8A%82%E7%9B%AE&sa=fyb_news",
+          "meta": "热搜第 9 位"
         },
         {
-          "title": "杨幂立冬晒饺子",
-          "url": "https://www.baidu.com/s?wd=%E6%9D%A8%E5%B9%82%E7%AB%8B%E5%86%AC%E6%99%92%E9%A5%BA%E5%AD%90",
-          "meta": "热度 6953228"
+          "title": "创业板指高开低走跌3.32%",
+          "url": "https://m.baidu.com/s?word=%E5%88%9B%E4%B8%9A%E6%9D%BF%E6%8C%87%E9%AB%98%E5%BC%80%E4%BD%8E%E8%B5%B0%E8%B7%8C3.32%25&sa=fyb_news",
+          "meta": "热搜第 10 位 · 新"
         },
         {
-          "title": "网传电动车装挡风被罚五百系谣言",
-          "url": "https://www.baidu.com/s?wd=%E7%BD%91%E4%BC%A0%E7%94%B5%E5%8A%A8%E8%BD%A6%E8%A3%85%E6%8C%A1%E9%A3%8E%E8%A2%AB%E7%BD%9A%E4%BA%94%E7%99%BE%E7%B3%BB%E8%B0%A3%E8%A8%80",
-          "meta": "热度 6858772"
+          "title": "破译流言 不可不知的100个真相",
+          "url": "https://m.baidu.com/s?word=%E7%A0%B4%E8%AF%91%E6%B5%81%E8%A8%80+%E4%B8%8D%E5%8F%AF%E4%B8%8D%E7%9F%A5%E7%9A%84100%E4%B8%AA%E7%9C%9F%E7%9B%B8&sa=fyb_news",
+          "meta": "热搜第 11 位"
         },
         {
-          "title": "一名携枪男子在白宫附近被捕",
-          "url": "https://www.baidu.com/s?wd=%E4%B8%80%E5%90%8D%E6%90%BA%E6%9E%AA%E7%94%B7%E5%AD%90%E5%9C%A8%E7%99%BD%E5%AE%AB%E9%99%84%E8%BF%91%E8%A2%AB%E6%8D%95",
-          "meta": "热度 6756311"
+          "title": "男子生吞新鲜蛇胆 脑子里长满寄生虫",
+          "url": "https://m.baidu.com/s?word=%E7%94%B7%E5%AD%90%E7%94%9F%E5%90%9E%E6%96%B0%E9%B2%9C%E8%9B%87%E8%83%86+%E8%84%91%E5%AD%90%E9%87%8C%E9%95%BF%E6%BB%A1%E5%AF%84%E7%94%9F%E8%99%AB&sa=fyb_news",
+          "meta": "热搜第 12 位"
         },
         {
-          "title": "45岁演员邱泽自曝已戴上老花镜",
-          "url": "https://www.baidu.com/s?wd=45%E5%B2%81%E6%BC%94%E5%91%98%E9%82%B1%E6%B3%BD%E8%87%AA%E6%9B%9D%E5%B7%B2%E6%88%B4%E4%B8%8A%E8%80%81%E8%8A%B1%E9%95%9C",
-          "meta": "热度 6666454"
+          "title": "刘欢墓地曝光",
+          "url": "https://m.baidu.com/s?word=%E5%88%98%E6%AC%A2%E5%A2%93%E5%9C%B0%E6%9B%9D%E5%85%89&sa=fyb_news",
+          "meta": "热搜第 13 位 · 热"
         },
         {
-          "title": "北京今夜局部大到暴雪",
-          "url": "https://www.baidu.com/s?wd=%E5%8C%97%E4%BA%AC%E4%BB%8A%E5%A4%9C%E5%B1%80%E9%83%A8%E5%A4%A7%E5%88%B0%E6%9A%B4%E9%9B%AA",
-          "meta": "热度 6567457"
+          "title": "徐峥刷到自己的AI换脸视频惊了",
+          "url": "https://m.baidu.com/s?word=%E5%BE%90%E5%B3%A5%E5%88%B7%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84AI%E6%8D%A2%E8%84%B8%E8%A7%86%E9%A2%91%E6%83%8A%E4%BA%86&sa=fyb_news",
+          "meta": "热搜第 14 位"
         },
         {
-          "title": "乘客削苹果遇急刹车 水果刀插进心脏",
-          "url": "https://www.baidu.com/s?wd=%E4%B9%98%E5%AE%A2%E5%89%8A%E8%8B%B9%E6%9E%9C%E9%81%87%E6%80%A5%E5%88%B9%E8%BD%A6%20%E6%B0%B4%E6%9E%9C%E5%88%80%E6%8F%92%E8%BF%9B%E5%BF%83%E8%84%8F",
-          "meta": "热度 6472823"
+          "title": "钓友喜提12斤多的稀有“寿星公”",
+          "url": "https://m.baidu.com/s?word=%E9%92%93%E5%8F%8B%E5%96%9C%E6%8F%9012%E6%96%A4%E5%A4%9A%E7%9A%84%E7%A8%80%E6%9C%89%E2%80%9C%E5%AF%BF%E6%98%9F%E5%85%AC%E2%80%9D&sa=fyb_news",
+          "meta": "热搜第 15 位"
         },
         {
-          "title": "荆轲刺秦武松打虎等监控画面流出",
-          "url": "https://www.baidu.com/s?wd=%E8%8D%86%E8%BD%B2%E5%88%BA%E7%A7%A6%E6%AD%A6%E6%9D%BE%E6%89%93%E8%99%8E%E7%AD%89%E7%9B%91%E6%8E%A7%E7%94%BB%E9%9D%A2%E6%B5%81%E5%87%BA",
-          "meta": "热度 6382358"
+          "title": "女子花8950将爱犬毛发做钻戒戴手上",
+          "url": "https://m.baidu.com/s?word=%E5%A5%B3%E5%AD%90%E8%8A%B18950%E5%B0%86%E7%88%B1%E7%8A%AC%E6%AF%9B%E5%8F%91%E5%81%9A%E9%92%BB%E6%88%92%E6%88%B4%E6%89%8B%E4%B8%8A&sa=fyb_news",
+          "meta": "热搜第 16 位"
         },
         {
-          "title": "家里传出腐臭味 警方破门后哭笑不得",
-          "url": "https://www.baidu.com/s?wd=%E5%AE%B6%E9%87%8C%E4%BC%A0%E5%87%BA%E8%85%90%E8%87%AD%E5%91%B3%20%E8%AD%A6%E6%96%B9%E7%A0%B4%E9%97%A8%E5%90%8E%E5%93%AD%E7%AC%91%E4%B8%8D%E5%BE%97",
-          "meta": "热度 6280566"
+          "title": "市民捐赠公交车保暖坐垫4天被拿光",
+          "url": "https://m.baidu.com/s?word=%E5%B8%82%E6%B0%91%E6%8D%90%E8%B5%A0%E5%85%AC%E4%BA%A4%E8%BD%A6%E4%BF%9D%E6%9A%96%E5%9D%90%E5%9E%AB4%E5%A4%A9%E8%A2%AB%E6%8B%BF%E5%85%89&sa=fyb_news",
+          "meta": "热搜第 17 位"
         },
         {
-          "title": "男孩被诊断有肿瘤切除多器官离世",
-          "url": "https://www.baidu.com/s?wd=%E7%94%B7%E5%AD%A9%E8%A2%AB%E8%AF%8A%E6%96%AD%E6%9C%89%E8%82%BF%E7%98%A4%E5%88%87%E9%99%A4%E5%A4%9A%E5%99%A8%E5%AE%98%E7%A6%BB%E4%B8%96",
-          "meta": "热度 6176232"
+          "title": "离岸信托个税申报超1600亿不是劫富",
+          "url": "https://m.baidu.com/s?word=%E7%A6%BB%E5%B2%B8%E4%BF%A1%E6%89%98%E4%B8%AA%E7%A8%8E%E7%94%B3%E6%8A%A5%E8%B6%851600%E4%BA%BF%E4%B8%8D%E6%98%AF%E5%8A%AB%E5%AF%8C&sa=fyb_news",
+          "meta": "热搜第 18 位 · 新"
         },
         {
-          "title": "吴奇隆被蜘蛛猴一脚踩头上",
-          "url": "https://www.baidu.com/s?wd=%E5%90%B4%E5%A5%87%E9%9A%86%E8%A2%AB%E8%9C%98%E8%9B%9B%E7%8C%B4%E4%B8%80%E8%84%9A%E8%B8%A9%E5%A4%B4%E4%B8%8A",
-          "meta": "热度 6087587"
+          "title": "3人被撤销全国优秀科技工作者称号",
+          "url": "https://m.baidu.com/s?word=3%E4%BA%BA%E8%A2%AB%E6%92%A4%E9%94%80%E5%85%A8%E5%9B%BD%E4%BC%98%E7%A7%80%E7%A7%91%E6%8A%80%E5%B7%A5%E4%BD%9C%E8%80%85%E7%A7%B0%E5%8F%B7&sa=fyb_news",
+          "meta": "热搜第 19 位 · 新"
         },
         {
-          "title": "女子和已婚男交往被原配发现后坠楼",
-          "url": "https://www.baidu.com/s?wd=%E5%A5%B3%E5%AD%90%E5%92%8C%E5%B7%B2%E5%A9%9A%E7%94%B7%E4%BA%A4%E5%BE%80%E8%A2%AB%E5%8E%9F%E9%85%8D%E5%8F%91%E7%8E%B0%E5%90%8E%E5%9D%A0%E6%A5%BC",
-          "meta": "热度 5987052"
+          "title": "英雄联盟总决赛带火凌晨影院",
+          "url": "https://m.baidu.com/s?word=%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F%E6%80%BB%E5%86%B3%E8%B5%9B%E5%B8%A6%E7%81%AB%E5%87%8C%E6%99%A8%E5%BD%B1%E9%99%A2&sa=fyb_news",
+          "meta": "热搜第 20 位 · 新"
         },
         {
-          "title": "赵丽颖胖起来了",
-          "url": "https://www.baidu.com/s?wd=%E8%B5%B5%E4%B8%BD%E9%A2%96%E8%83%96%E8%B5%B7%E6%9D%A5%E4%BA%86",
-          "meta": "热度 5903632"
+          "title": "2027研究生报考人数347万",
+          "url": "https://m.baidu.com/s?word=2027%E7%A0%94%E7%A9%B6%E7%94%9F%E6%8A%A5%E8%80%83%E4%BA%BA%E6%95%B0347%E4%B8%87&sa=fyb_news",
+          "meta": "热搜第 21 位"
         },
         {
-          "title": "尚雯婕早年同声传译时薪四五千",
-          "url": "https://www.baidu.com/s?wd=%E5%B0%9A%E9%9B%AF%E5%A9%95%E6%97%A9%E5%B9%B4%E5%90%8C%E5%A3%B0%E4%BC%A0%E8%AF%91%E6%97%B6%E8%96%AA%E5%9B%9B%E4%BA%94%E5%8D%83",
-          "meta": "热度 5810234"
+          "title": "警方通报和平饭店51万元天价小票",
+          "url": "https://m.baidu.com/s?word=%E8%AD%A6%E6%96%B9%E9%80%9A%E6%8A%A5%E5%92%8C%E5%B9%B3%E9%A5%AD%E5%BA%9751%E4%B8%87%E5%85%83%E5%A4%A9%E4%BB%B7%E5%B0%8F%E7%A5%A8&sa=fyb_news",
+          "meta": "热搜第 22 位"
         },
         {
-          "title": "一打开红果短剧 一晚上就没了",
-          "url": "https://www.baidu.com/s?wd=%E4%B8%80%E6%89%93%E5%BC%80%E7%BA%A2%E6%9E%9C%E7%9F%AD%E5%89%A7%20%E4%B8%80%E6%99%9A%E4%B8%8A%E5%B0%B1%E6%B2%A1%E4%BA%86",
-          "meta": "热度 5698496"
+          "title": "刘欢癌症扩散后曾放手一搏试新药",
+          "url": "https://m.baidu.com/s?word=%E5%88%98%E6%AC%A2%E7%99%8C%E7%97%87%E6%89%A9%E6%95%A3%E5%90%8E%E6%9B%BE%E6%94%BE%E6%89%8B%E4%B8%80%E6%90%8F%E8%AF%95%E6%96%B0%E8%8D%AF&sa=fyb_news",
+          "meta": "热搜第 23 位"
         },
         {
-          "title": "主评审赵丽颖正式“上班”",
-          "url": "https://www.baidu.com/s?wd=%E4%B8%BB%E8%AF%84%E5%AE%A1%E8%B5%B5%E4%B8%BD%E9%A2%96%E6%AD%A3%E5%BC%8F%E2%80%9C%E4%B8%8A%E7%8F%AD%E2%80%9D",
-          "meta": "热度 5599478"
+          "title": "税务人员回应网红大美被举报偷税漏税",
+          "url": "https://m.baidu.com/s?word=%E7%A8%8E%E5%8A%A1%E4%BA%BA%E5%91%98%E5%9B%9E%E5%BA%94%E7%BD%91%E7%BA%A2%E5%A4%A7%E7%BE%8E%E8%A2%AB%E4%B8%BE%E6%8A%A5%E5%81%B7%E7%A8%8E%E6%BC%8F%E7%A8%8E&sa=fyb_news",
+          "meta": "热搜第 24 位"
         }
       ],
       "collection": {
         "status": "ok",
-        "lastAttemptAt": "2026-11-07T11:03:01.071502+00:00",
-        "lastSuccessAt": "2026-11-07T11:03:01.327111+00:00",
+        "lastAttemptAt": "2026-11-13T08:06:51.107842+00:00",
+        "lastSuccessAt": "2026-11-13T08:06:51.391041+00:00",
         "error": ""
       }
     },
@@ -6340,6 +6464,1240 @@
         "status": "ok",
         "lastAttemptAt": "2026-11-07T11:03:06.915743+00:00",
         "lastSuccessAt": "2026-11-07T11:03:07.399919+00:00",
+        "error": ""
+      }
+    },
+    "arxiv": {
+      "name": "arXiv 人工智能论文",
+      "kind": "AI 预印本 · 中文机译",
+      "url": "https://arxiv.org/list/cs.AI/recent",
+      "icon": "https://arxiv.org/favicon.ico",
+      "sourceUrlUsed": "https://export.arxiv.org/api/query?search_query=cat%3Acs.AI&sortBy=submittedDate&sortOrder=descending&max_results=12",
+      "updatedAt": "2026-11-08T04:50:15.819108+00:00",
+      "items": [
+        {
+          "title": "SwarmEvolve：用于进化发现和优化的潜在代理群",
+          "url": "https://arxiv.org/abs/2611.08483",
+          "meta": "机器翻译 · arXiv:2611.08483 · 发布 2026-11-05",
+          "originalTitle": "SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "科学家世界：为人工智能科学家打造一个研究世界",
+          "url": "https://arxiv.org/abs/2611.08478",
+          "meta": "机器翻译 · arXiv:2611.08478 · 发布 2026-11-05",
+          "originalTitle": "Scientist World: Grow a Research World for AI-Scientists",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "XStack：ML 存储库迁移的基准",
+          "url": "https://arxiv.org/abs/2611.08472",
+          "meta": "机器翻译 · arXiv:2611.08472 · 发布 2026-11-05",
+          "originalTitle": "XStack: A Benchmark for ML Repo Migration",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "相同的行为，不同的机制：有限实验可以证明什么是综合信息",
+          "url": "https://arxiv.org/abs/2611.08469",
+          "meta": "机器翻译 · arXiv:2611.08469 · 发布 2026-11-05",
+          "originalTitle": "Same Behavior, Different Mechanism: What Finite Experiments Can Certify About Integrated Information",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "通过缩放激活反转来解释任何残余流方向",
+          "url": "https://arxiv.org/abs/2611.08465",
+          "meta": "机器翻译 · arXiv:2611.08465 · 发布 2026-11-05",
+          "originalTitle": "Towards interpreting any residual stream direction by scaling activation inversion",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "ReproBridge：将可重复性构建到 ML 研究工件中",
+          "url": "https://arxiv.org/abs/2611.08452",
+          "meta": "机器翻译 · arXiv:2611.08452 · 发布 2026-11-05",
+          "originalTitle": "ReproBridge: Building Reproducibility into ML Research Artifacts",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "类型化决策编码器中的标签措辞增强：在不熟悉的单词上增强，而不是在缩写或代码上增强",
+          "url": "https://arxiv.org/abs/2611.08439",
+          "meta": "机器翻译 · arXiv:2611.08439 · 发布 2026-11-05",
+          "originalTitle": "Label-Wording Augmentation in a Typed-Decision Encoder: Gains on Unfamiliar Words, Not on Abbreviations or Codes",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "从内部理解人工智能：人工智能安全的机械解释状态",
+          "url": "https://arxiv.org/abs/2611.08438",
+          "meta": "机器翻译 · arXiv:2611.08438 · 发布 2026-11-05",
+          "originalTitle": "Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "MedGraph：利用图形内存维持患者状态以实现长期医疗对话",
+          "url": "https://arxiv.org/abs/2611.08433",
+          "meta": "机器翻译 · arXiv:2611.08433 · 发布 2026-11-05",
+          "originalTitle": "MedGraph: Maintaining Patient State with Graph Memory for Long-Term Medical Dialogue",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "未来软件中元访问的力量 --- 在 LLM 聊天 UI 和聊天 AI 上展示",
+          "url": "https://arxiv.org/abs/2611.08428",
+          "meta": "机器翻译 · arXiv:2611.08428 · 发布 2026-11-05",
+          "originalTitle": "The Power of Meta Access in the Software of the Future --- Demonstrated on LLM Chat UIs and Chat AI",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "通过校准潜在探测进行视觉-语言-动作模型中的故障预测和分类",
+          "url": "https://arxiv.org/abs/2611.08425",
+          "meta": "机器翻译 · arXiv:2611.08425 · 发布 2026-11-05",
+          "originalTitle": "Failure Prediction and Classification in Vision-Language-Action Models Via Calibrated Latent Probing",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "作为软件的基准：终端基准和连续基准的案例",
+          "url": "https://arxiv.org/abs/2611.08417",
+          "meta": "机器翻译 · arXiv:2611.08417 · 发布 2026-11-05",
+          "originalTitle": "Benchmarks as Software: Terminal-Bench and the Case for Continuous Benchmarks",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T04:50:15.379656+00:00",
+        "lastSuccessAt": "2026-11-08T04:50:15.819108+00:00",
+        "error": ""
+      }
+    },
+    "cisa_kev": {
+      "name": "CISA KEV",
+      "kind": "已知在野利用漏洞 · 中文机译",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+      "icon": "https://www.cisa.gov/favicon.ico",
+      "sourceUrlUsed": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "updatedAt": "2026-11-08T04:50:16.680933+00:00",
+      "items": [
+        {
+          "title": "SonicWall SonicOS SSLVPN 利用单因素身份验证漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19868",
+          "meta": "机器翻译 · CVE-2026-19868 · 已知在野利用 · 收录 2026-11-06",
+          "originalTitle": "SonicWall SonicOS SSLVPN Use of Single-factor Authentication Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "苹果多款产品认证不当漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27834",
+          "meta": "机器翻译 · CVE-2024-27834 · 已知在野利用 · 收录 2026-11-04",
+          "originalTitle": "Apple Multiple Products Improper Authentication Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "WordPress WordPress 核心检查时间使用时间 (TOCTOU) 竞争条件漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-119977",
+          "meta": "机器翻译 · CVE-2026-119977 · 已知在野利用 · 收录 2026-11-03",
+          "originalTitle": "WordPress WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Ivanti Connect 安全生成可预测数字或标识符漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118527",
+          "meta": "机器翻译 · CVE-2026-118527 · 已知在野利用 · 收录 2026-10-30",
+          "originalTitle": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Ivanti Connect Secure 关键功能缺失身份验证漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111357",
+          "meta": "机器翻译 · CVE-2026-111357 · 已知在野利用 · 收录 2026-10-30",
+          "originalTitle": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "GitLab 社区版和企业版整数溢出或环绕漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97229",
+          "meta": "机器翻译 · CVE-2026-97229 · 已知在野利用 · 收录 2026-10-29",
+          "originalTitle": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "思科安全防火墙 ASA 软件和思科安全 FTD 软件未经检查的返回值到 NULL 指针取消引用漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76418",
+          "meta": "机器翻译 · CVE-2026-76418 · 已知在野利用 · 收录 2026-10-29",
+          "originalTitle": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Broadcom VMWare ESX 日志记录不足漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41709",
+          "meta": "机器翻译 · CVE-2026-41709 · 已知在野利用 · 收录 2026-10-28",
+          "originalTitle": "Broadcom VMWare ESX Insufficient Logging Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Linux内核变量初始化缺失漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46300",
+          "meta": "机器翻译 · CVE-2026-46300 · 已知在野利用 · 收录 2026-10-28",
+          "originalTitle": "Linux Kernel Missing Initialization of a Variable Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Adobe Commerce 和 Magento 无限制上传具有危险类型漏洞的文件",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48356",
+          "meta": "机器翻译 · CVE-2026-48356 · 已知在野利用 · 收录 2026-10-27",
+          "originalTitle": "Adobe Commerce and Magento Unrestricted Upload of File with Dangerous Type Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Google Brotli 未检查返回值漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+          "meta": "机器翻译 · CVE-2026-111497 · 已知在野利用 · 收录 2026-10-27",
+          "originalTitle": "Google Brotli Unchecked Return Value Vulnerability",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "PHP 内存损坏漏洞",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
+          "meta": "机器翻译 · CVE-2026-109618 · 已知在野利用 · 收录 2026-10-26",
+          "originalTitle": "PHP Memory Corruption Vulnerability",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T04:50:15.380535+00:00",
+        "lastSuccessAt": "2026-11-08T04:50:16.680933+00:00",
+        "error": ""
+      }
+    },
+    "cncert": {
+      "name": "国家互联网应急中心",
+      "kind": "中文漏洞公告",
+      "url": "https://www.cert.org.cn/publish/main/9/index.html",
+      "icon": "https://www.cert.org.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.cert.org.cn/publish/main/9/index.html",
+      "updatedAt": "2026-11-08T04:50:15.561763+00:00",
+      "items": [
+        {
+          "title": "关于PHP远程代码执行漏洞分析及修复建议的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2026/20261022162132536309183/20261022162132536309183_.html",
+          "meta": "发布 2026-10-22"
+        },
+        {
+          "title": "关于对PHP2Shell漏洞开展修复的风险提示",
+          "url": "https://www.cert.org.cn/publish/main/9/2026/20261022123700555224858/20261022123700555224858_.html",
+          "meta": "发布 2026-10-22"
+        },
+        {
+          "title": "Apache Log4j2远程代码执行漏洞排查及修复手册",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211215154225883558274/20211215154225883558274_.html",
+          "meta": "发布 2021-12-15"
+        },
+        {
+          "title": "关于Apache Log4j2存在远程代码执行漏洞的安全公告（第二版）",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211213174252204187772/20211213174252204187772_.html",
+          "meta": "发布 2021-12-13"
+        },
+        {
+          "title": "关于Apache Log4j2存在远程代码执行漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211210110550958546708/20211210110550958546708_.html",
+          "meta": "发布 2021-12-10"
+        },
+        {
+          "title": "关于近期境外黑客组织攻击我国多个企业窃取源代码数据的通报",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20211121170349483356572/20211121170349483356572_.html",
+          "meta": "发布 2021-11-21"
+        },
+        {
+          "title": "关于Microsoft ExchangeServer存在多个高危漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20210309132228442162114/20210309132228442162114_.html",
+          "meta": "发布 2021-03-09"
+        },
+        {
+          "title": "关于VMware多款产品存在远程代码执行漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2021/20210225143753552202994/20210225143753552202994_.html",
+          "meta": "发布 2021-02-25"
+        },
+        {
+          "title": "关于防范黑客通过仿冒“ETC在线认证”网站实施网络诈骗的风险提示",
+          "url": "https://www.cert.org.cn/publish/main/9/2020/20200807131834462186499/20200807131834462186499_.html",
+          "meta": "发布 2020-08-07"
+        },
+        {
+          "title": "关于Microsoft远程桌面服务存在远程代码执行漏洞的安全公告",
+          "url": "https://www.cert.org.cn/publish/main/9/2019/20190515134947228198452/20190515134947228198452_.html",
+          "meta": "发布 2019-05-15"
+        },
+        {
+          "title": "国家互联网应急中心开通WannaCry勒索病毒感染数据免费查询服务",
+          "url": "https://www.cert.org.cn/publish/main/9/2019/20190429160302635538577/20190429160302635538577_.html",
+          "meta": "发布 2019-04-29"
+        },
+        {
+          "title": "关于MongoDB数据库不当配置导致信息泄露风险情况通报",
+          "url": "https://www.cert.org.cn/publish/main/9/2019/20190222090901924149842/20190222090901924149842_.html",
+          "meta": "发布 2019-02-22"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T04:50:15.380867+00:00",
+        "lastSuccessAt": "2026-11-08T04:50:15.561763+00:00",
+        "error": ""
+      }
+    },
+    "github_advisory": {
+      "name": "GitHub Advisory Database",
+      "kind": "GitHub 审核的开源漏洞",
+      "url": "https://github.com/advisories",
+      "icon": "https://github.githubassets.com/favicons/favicon.svg",
+      "sourceUrlUsed": "https://api.github.com/advisories?type=reviewed&sort=published&direction=desc&per_page=8",
+      "updatedAt": "2026-11-08T05:16:32.223417+00:00",
+      "items": [
+        {
+          "title": "LXD 受限项目限制可被绕过，导致任意命令执行",
+          "url": "https://github.com/advisories/GHSA-47w9-6r3f-938g",
+          "meta": "中文译名 · GHSA-47w9-6r3f-938g · 严重 · go",
+          "originalTitle": "LXD has restricted project bypass leading to arbitrary command execution",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 跨项目复制自定义存储卷可绕过项目限制",
+          "url": "https://github.com/advisories/GHSA-7mr3-28h5-m5vx",
+          "meta": "中文译名 · GHSA-7mr3-28h5-m5vx · 高危 · go",
+          "originalTitle": "LXD has project restriction bypass for custom volume copy across projects",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 跨项目复制实例可绕过项目限制",
+          "url": "https://github.com/advisories/GHSA-qx75-2p3r-pwm5",
+          "meta": "中文译名 · GHSA-qx75-2p3r-pwm5 · 高危 · go",
+          "originalTitle": "LXD has project restriction bypass in instance copy across projects",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GeoNode 文档元数据摘要字段存在存储型 XSS 漏洞",
+          "url": "https://github.com/advisories/GHSA-r4hm-p9f9-fj9v",
+          "meta": "中文译名 · GHSA-r4hm-p9f9-fj9v · CVE-2026-55649 · 中危 · pip",
+          "originalTitle": "GeoNode has Stored XSS in Documents metadata abstract field",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GeoNode 存在不受限制的文件上传漏洞",
+          "url": "https://github.com/advisories/GHSA-fqpv-mq26-pr4j",
+          "meta": "中文译名 · GHSA-fqpv-mq26-pr4j · CVE-2026-46429 · 中危 · pip",
+          "originalTitle": "GeoNode has Unrestricted File Upload",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GeoNode 上传文件的图层名称可触发操作系统命令注入",
+          "url": "https://github.com/advisories/GHSA-9fpx-fr6j-2vh6",
+          "meta": "中文译名 · GHSA-9fpx-fr6j-2vh6 · CVE-2026-33050 · 高危 · pip",
+          "originalTitle": "GeoNode has OS command injection via uploaded file layer name",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 从备份创建自定义存储卷时可能发生空指针解引用",
+          "url": "https://github.com/advisories/GHSA-j93m-3j9p-m5m8",
+          "meta": "中文译名 · GHSA-j93m-3j9p-m5m8 · CVE-2026-9639 · 中危 · go",
+          "originalTitle": "LXD has CreateCustomVolumeFromBackup nil-pointer dereference on volumes[0].snapshots[*].expires_at",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "LXD 信任镜像哈希，可能导致客户端任意文件写入",
+          "url": "https://github.com/advisories/GHSA-pjff-c2wc-f6jm",
+          "meta": "中文译名 · GHSA-pjff-c2wc-f6jm · 严重 · go",
+          "originalTitle": "LXD has arbitrary file write on client due to trusted image hash",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T05:16:31.435948+00:00",
+        "lastSuccessAt": "2026-11-08T05:16:32.223417+00:00",
+        "error": ""
+      }
+    },
+    "cve_program": {
+      "name": "CVE Program",
+      "kind": "官方 CVE 记录",
+      "url": "https://www.cve.org/",
+      "icon": "https://www.cve.org/cvePurpleVFavicon.svg",
+      "sourceUrlUsed": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/deltaLog.json",
+      "updatedAt": "2026-11-08T05:16:33.328266+00:00",
+      "items": [
+        {
+          "title": "GnuTLS 构建或验证证书链时可能崩溃",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2024-28835",
+          "meta": "中文译名 · CVE-2024-28835 · 更新 2026-11-08",
+          "originalTitle": "Gnutls: potential crash during chain building/verification",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "GnuTLS 存在 Minerva 侧信道信息泄露漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2024-28834",
+          "meta": "中文译名 · CVE-2024-28834 · 更新 2026-11-08",
+          "originalTitle": "Gnutls: vulnerable to minerva side-channel information leak",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "OpenSSH 10.6p2 之前的 sshd 在使用 musl libc 且未启用 PAM 的 Linux 环境中存在密码认证绕过风险",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-123158",
+          "meta": "中文译名 · CVE-2026-123158 · 更新 2026-11-08",
+          "originalTitle": "sshd in OpenSSH before 10.6p2 on Linux, when musl libc is used without PAM, lacks a workaround for a password authentication bypass (related to misinterpretation of whether a string is intended to be a password hash). For some configuration",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "UnrealIRCd 的 labeled-response 模块未转义 IRCv3 标签，可能导致服务器间命令注入",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-114713",
+          "meta": "中文译名 · CVE-2026-114713 · 更新 2026-11-08",
+          "originalTitle": "The labeled-response module in UnrealIRCd 6.0.0 before 6.2.7.1 does not escape the IRCv3 \"label\" message tag when echoing it into replies, which allows any user on a network with two or more linked servers to inject server-to-server command",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17098",
+          "meta": "中文译名 · CVE-2026-17098 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17202",
+          "meta": "中文译名 · CVE-2026-17202 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17389",
+          "meta": "中文译名 · CVE-2026-17389 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "IBM API Connect 存在多个漏洞",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-17310",
+          "meta": "中文译名 · CVE-2026-17310 · 更新 2026-11-08",
+          "originalTitle": "Multiple Vulnerabilities in IBM API Connect",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T05:16:31.436513+00:00",
+        "lastSuccessAt": "2026-11-08T05:16:33.328266+00:00",
+        "error": ""
+      }
+    },
+    "crowdstrike": {
+      "name": "CrowdStrike Blog",
+      "kind": "威胁研究与安全资讯",
+      "url": "https://www.crowdstrike.com/en-us/blog/",
+      "icon": "https://www.crowdstrike.com/etc.clientlibs/crowdstrike/clientlibs/crowdstrike-common/resources/favicon.ico",
+      "sourceUrlUsed": "https://www.crowdstrike.com/en-us/blog/feed",
+      "updatedAt": "2026-11-08T05:16:32.023387+00:00",
+      "items": [
+        {
+          "title": "攻击者如何反过来利用漏洞生态对付防守方",
+          "url": "https://www.crowdstrike.com/en-us/blog/adversaries-turn-vulnerability-ecosystem-against-defenders/",
+          "meta": "中文译名 · 发布 2026-11-05",
+          "originalTitle": "How Adversaries Are Turning the Vulnerability Ecosystem Against Defenders",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 推出智能体对手模拟，应对利用 AI 的攻击者",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-agentic-adversary-emulation-counters-ai-enabled-adversaries/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "CrowdStrike Introduces Agentic Adversary Emulation to Counter AI-Enabled Adversaries",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 扩展智能体安全运营中心，检测并阻止智能体内部威胁",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-detects-and-stops-agent-insider-threats/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "CrowdStrike Extends the Agentic SOC to Detect and Stop Agent Insider Threats",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 为 Falcon 平台引入企业浏览器安全能力",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-brings-enterprise-browser-security-to-falcon-platform/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "CrowdStrike Brings Enterprise Browser Security to the Falcon Platform",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "Falcon 云安全新功能保护 AI 运行的云环境",
+          "url": "https://www.crowdstrike.com/en-us/blog/falcon-cloud-security-innovations-secure-cloud-ai-runs-on/",
+          "meta": "中文译名 · 发布 2026-11-04",
+          "originalTitle": "New Falcon Cloud Security Innovations Secure the Cloud AI Runs On",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 强化从终端到云端的 AI 安全防护",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-advances-ai-security-and-safety-falcon-guardian/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike Advances AI Security and Safety from Endpoint to Cloud",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "推出 AI 紧急停止开关：当 AI 智能体失控时及时接管",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "Introducing AI Kill Switch: Taking Control When AI Agents Go Rogue",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 为 Claude Cowork 中的 AI 智能体提供安全防护",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-secures-ai-agents-inside-claude-cowork/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike Secures AI Agents Inside Claude Cowork",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 拟收购 Dreadnode，为 Falcon 平台引入自动化 AI 安全测试",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-to-acquire-dreadnode/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike to Acquire Dreadnode to Bring Automated AI Security Testing to the Falcon Platform",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        },
+        {
+          "title": "CrowdStrike 拟收购 Fiddler，推出面向 AI 智能体可观测性的 Falcon Observe",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-to-acquire-fiddler/",
+          "meta": "中文译名 · 发布 2026-11-03",
+          "originalTitle": "CrowdStrike to Acquire Fiddler to Deliver Falcon Observe for AI Agent Observability",
+          "translationStatus": "translated",
+          "translationMethod": "editor"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-08T05:16:31.437053+00:00",
+        "lastSuccessAt": "2026-11-08T05:16:32.023387+00:00",
+        "error": ""
+      }
+    },
+    "mistral_news": {
+      "name": "Mistral News",
+      "kind": "官方产品与研究",
+      "url": "https://mistral.ai/news/",
+      "sourceUrlUsed": "https://mistral.ai/news/",
+      "updatedAt": "2026-11-11T04:30:21.243151+00:00",
+      "items": [
+        {
+          "title": "Le Chonk带来了大脑 工作室让它工作",
+          "url": "https://mistral.ai/news/build-with-studio/",
+          "meta": "机器翻译 · 发布 2026-11-05",
+          "originalTitle": "Le Chonk brings the brains. Studio puts it to work.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Le Chonk:为编者所建,由维权者信任.",
+          "url": "https://mistral.ai/news/mistral-large-4-oss/",
+          "meta": "机器翻译 · 发布 2026-10-29",
+          "originalTitle": "Le Chonk: Built for Coders, Trusted by Defenders.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "阴道3",
+          "url": "https://mistral.ai/news/voxtral-3/",
+          "meta": "机器翻译 · 发布 2026-10-20",
+          "originalTitle": "Voxtral 3",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "引入时序",
+          "url": "https://mistral.ai/news/timestral/",
+          "meta": "机器翻译 · 发布 2026-10-15",
+          "originalTitle": "Introducing Timestral",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "引入大型雾器 4",
+          "url": "https://mistral.ai/news/mistral-large-4/",
+          "meta": "机器翻译 · 发布 2026-10-06",
+          "originalTitle": "Introducing Mistral Large 4",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "代理搜索 从你的人工智能系统得到的更准确有效的结果",
+          "url": "https://mistral.ai/news/agentic-search/",
+          "meta": "机器翻译 · 发布 2026-08-20",
+          "originalTitle": "Agentic Search. More accurate and efficient results from your AI systems.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "您的提示和技能需要一个记录系统。",
+          "url": "https://mistral.ai/news/manage-prompts-and-skills-in-studio/",
+          "meta": "机器翻译 · 发布 2026-07-09",
+          "originalTitle": "Your Prompts and Skills need a system of record.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "引入 Robostral 导航",
+          "url": "https://mistral.ai/news/robostral-navigate/",
+          "meta": "机器翻译 · 发布 2026-07-08",
+          "originalTitle": "Introducing Robostral Navigate",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Leansstral 1.5:人人富裕的证据",
+          "url": "https://mistral.ai/news/leanstral-1-5/",
+          "meta": "机器翻译 · 发布 2026-07-02",
+          "originalTitle": "Leanstral 1.5: Proof Abundance for All",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "引入迷雾 OCR 4",
+          "url": "https://mistral.ai/news/ocr-4/",
+          "meta": "机器翻译 · 发布 2026-06-23",
+          "originalTitle": "Introducing Mistral OCR 4",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "维贝去上班了",
+          "url": "https://mistral.ai/news/vibe-agent/",
+          "meta": "机器翻译 · 发布 2026-05-28",
+          "originalTitle": "Vibe gets to work.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "引入搜索工具箱",
+          "url": "https://mistral.ai/news/search-toolkit/",
+          "meta": "机器翻译 · 发布 2026-05-28",
+          "originalTitle": "Introducing Search Toolkit",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.451967+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:21.243151+00:00",
+        "error": ""
+      }
+    },
+    "meta_ai_news": {
+      "name": "Meta AI Blog",
+      "kind": "官方模型与研究",
+      "url": "https://ai.meta.com/blog/",
+      "sourceUrlUsed": "https://ai.meta.com/blog/",
+      "updatedAt": "2026-11-11T04:30:20.644239+00:00",
+      "items": [
+        {
+          "title": "引入 Muse Spark 1.1",
+          "url": "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/",
+          "meta": "机器翻译 · 发布 2026-07-09",
+          "originalTitle": "Introducing Muse Spark 1.1",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "重新想象独立:Meta的AI模型如何帮助匹兹堡大学转型辅助机器人",
+          "url": "https://ai.meta.com/blog/assistive-robotics-university-of-pittsburgh-sam-dino/",
+          "meta": "机器翻译 · 发布 2026-07-27",
+          "originalTitle": "Reimagining Independence: How Meta’s AI Models Are Helping the University of Pittsburgh Transform Assistive Robotics",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Meta的AI模型如何为创世纪任务项目第一波提供动力",
+          "url": "https://ai.meta.com/blog/genesis-mission-lawrence-berkeley-national-laboratory-segment-anything-dino/",
+          "meta": "机器翻译 · 发布 2026-07-21",
+          "originalTitle": "How Meta’s AI Models Are Powering the First Wave of Genesis Mission Projects",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "引入 Muse 图像和 Muse 视频",
+          "url": "https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/",
+          "meta": "机器翻译 · 发布 2026-07-07",
+          "originalTitle": "Introducing Muse Image and Muse Video",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.453340+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:20.644239+00:00",
+        "error": ""
+      }
+    },
+    "glm_news": {
+      "name": "智谱 GLM",
+      "kind": "官方发布记录",
+      "url": "https://docs.bigmodel.cn/cn/update/new-releases",
+      "sourceUrlUsed": "https://docs.bigmodel.cn/cn/update/new-releases.md",
+      "updatedAt": "2026-11-11T04:30:09.725638+00:00",
+      "items": [
+        {
+          "title": "GLM-5.3-Flash 原生多模态模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash",
+          "meta": "发布 2026-08-26"
+        },
+        {
+          "title": "GLM-5.3 新一代旗舰模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.3",
+          "meta": "发布 2026-08-19"
+        },
+        {
+          "title": "GLM-5.2 新一代旗舰模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.2",
+          "meta": "发布 2026-06-16"
+        },
+        {
+          "title": "GLM Coding Plan 团队版上线",
+          "url": "https://docs.bigmodel.cn/cn/coding-plan/team",
+          "meta": "发布 2026-05-29"
+        },
+        {
+          "title": "GLM-5.1 新一代旗舰模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.1",
+          "meta": "发布 2026-04-07"
+        },
+        {
+          "title": "GLM-5V-Turbo 多模态 Coding 基座模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5v-turbo",
+          "meta": "发布 2026-04-02"
+        },
+        {
+          "title": "GLM-5-Turbo 龙虾增强基座模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5-turbo",
+          "meta": "发布 2026-03-15"
+        },
+        {
+          "title": "GLM-5 新一代旗舰模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/text/glm-5",
+          "meta": "发布 2026-02-12"
+        },
+        {
+          "title": "GLM-OCR 图文解析模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-ocr",
+          "meta": "发布 2026-02-03"
+        },
+        {
+          "title": "GLM-4.7-Flash 免费模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/free/glm-4.7-flash",
+          "meta": "发布 2026-01-19"
+        },
+        {
+          "title": "GLM-Image 图像生成模型上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.7",
+          "meta": "发布 2026-01-14"
+        },
+        {
+          "title": "AutoGLM-Phone AI 手机智能助理框架上线",
+          "url": "https://docs.bigmodel.cn/cn/guide/models/vlm/autoglm-phone",
+          "meta": "发布 2025-12-11"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.453340+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:09.725638+00:00",
+        "error": ""
+      }
+    },
+    "minimax_news": {
+      "name": "MiniMax",
+      "kind": "官方模型发布",
+      "url": "https://platform.minimax.io/docs/release-notes/models",
+      "sourceUrlUsed": "https://platform.minimax.io/docs/release-notes/models.md",
+      "updatedAt": "2026-11-11T04:30:10.313411+00:00",
+      "items": [
+        {
+          "title": "MiniMax H3 Image",
+          "url": "https://platform.minimax.io/docs/guides/image-generation",
+          "meta": "发布 2026-11-10"
+        },
+        {
+          "title": "MiniMax M3.1 Flash",
+          "url": "https://www.minimax.io/blog/minimax-m31f",
+          "meta": "发布 2026-10-19"
+        },
+        {
+          "title": "MiniMax H3",
+          "url": "https://www.minimax.io/blog/minimax-h3",
+          "meta": "发布 2026-07-31"
+        },
+        {
+          "title": "Music-3.0",
+          "url": "https://platform.minimax.io/docs/guides/music-generation",
+          "meta": "发布 2026-07-16"
+        },
+        {
+          "title": "MiniMax M3",
+          "url": "https://www.minimax.io/models/text/m3",
+          "meta": "发布 2026-06-01"
+        },
+        {
+          "title": "Music-2.6",
+          "url": "https://www.minimax.io/news/music-26",
+          "meta": "发布 2026-04"
+        },
+        {
+          "title": "MiniMax M2.7",
+          "url": "https://www.minimax.io/news/minimax-m27-en",
+          "meta": "发布 2026-03-18"
+        },
+        {
+          "title": "Music2.5+",
+          "url": "https://www.minimax.io/news/music-25-unlock-instrumental-music",
+          "meta": "发布 2026-03"
+        },
+        {
+          "title": "MiniMax M2.5",
+          "url": "https://www.minimax.io/news/minimax-m25",
+          "meta": "发布 2026-02"
+        },
+        {
+          "title": "Speech-2.8",
+          "url": "https://www.minimax.io/news/minimax-speech-28",
+          "meta": "发布 2026-01-23"
+        },
+        {
+          "title": "Music-2.5",
+          "url": "https://platform.minimax.io/docs/api-reference/music-generation",
+          "meta": "发布 2026-01-16"
+        },
+        {
+          "title": "MiniMax-M2.1",
+          "url": "https://www.minimax.io/news/minimax-m21",
+          "meta": "发布 2025-12-22"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.453340+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:10.313411+00:00",
+        "error": ""
+      }
+    },
+    "aa_models": {
+      "name": "Artificial Analysis",
+      "kind": "独立评测 · 智能指数",
+      "url": "https://artificialanalysis.ai/leaderboards/models",
+      "sourceUrlUsed": "https://artificialanalysis.ai/leaderboards/models",
+      "updatedAt": "2026-11-11T04:30:10.255828+00:00",
+      "items": [
+        {
+          "title": "Claude Fable 5.2 (max)",
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-2",
+          "meta": "智能指数 65 · 每任务 $26.54 · 44.4 分钟/任务"
+        },
+        {
+          "title": "Claude Fable 5.2 (xhigh)",
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-2-xhigh",
+          "meta": "智能指数 62 · 每任务 $14.83 · 26.1 分钟/任务"
+        },
+        {
+          "title": "Claude Fable 5.2 (high)",
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-2-high",
+          "meta": "智能指数 62 · 每任务 $9.08 · 17.5 分钟/任务"
+        },
+        {
+          "title": "Gemini 4 Carbon (high)",
+          "url": "https://artificialanalysis.ai/models/gemini-4-carbon",
+          "meta": "智能指数 60 · 每任务 $7.76 · 24.9 分钟/任务"
+        },
+        {
+          "title": "Claude Opus 5.5 (max)",
+          "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+          "meta": "智能指数 59 · 每任务 $10.04 · 24.7 分钟/任务"
+        },
+        {
+          "title": "Gemini 4 Carbon (medium)",
+          "url": "https://artificialanalysis.ai/models/gemini-4-carbon-medium",
+          "meta": "智能指数 58 · 每任务 $6.59 · 23.3 分钟/任务"
+        },
+        {
+          "title": "Claude Opus 5.5 (xhigh)",
+          "url": "https://artificialanalysis.ai/models/claude-opus-5-5-xhigh",
+          "meta": "智能指数 57 · 每任务 $6.05 · 15.9 分钟/任务"
+        },
+        {
+          "title": "GPT-6 Astra (max)",
+          "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+          "meta": "智能指数 57 · 每任务 $6.24 · 23.0 分钟/任务"
+        },
+        {
+          "title": "Claude Fable 5.2 (medium)",
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-2-medium",
+          "meta": "智能指数 56 · 每任务 $3.80 · 7.9 分钟/任务"
+        },
+        {
+          "title": "GPT-6 Astra (xhigh)",
+          "url": "https://artificialanalysis.ai/models/gpt-6-astra-xhigh",
+          "meta": "智能指数 55 · 每任务 $3.66 · 11.4 分钟/任务"
+        },
+        {
+          "title": "GPT-6 Astra (high)",
+          "url": "https://artificialanalysis.ai/models/gpt-6-astra-high",
+          "meta": "智能指数 55 · 每任务 $3.24 · 9.8 分钟/任务"
+        },
+        {
+          "title": "GPT-6.1 Sol (max)",
+          "url": "https://artificialanalysis.ai/models/gpt-6-1-sol",
+          "meta": "智能指数 55 · 每任务 $1.27 · 20.1 分钟/任务"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.454661+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:10.255828+00:00",
+        "error": ""
+      }
+    },
+    "mistral_api": {
+      "name": "Mistral API",
+      "kind": "官方更新日志",
+      "url": "https://docs.mistral.ai/resources/changelogs",
+      "sourceUrlUsed": "https://docs.mistral.ai/resources/changelogs",
+      "updatedAt": "2026-11-11T04:30:22.516370+00:00",
+      "items": [
+        {
+          "title": "Z.ai GLM 5.3 Flash(zai-glm-5-3-flash )现在可以使用.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-10-22",
+          "meta": "机器翻译 · 更新 2026-10-22",
+          "originalTitle": "Z.ai GLM 5.3 Flash ( zai-glm-5-3-flash ) is now available.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们发布了Voxtral 3 音频家族,我们下一代的语音对文本和文本对语音模型。所有四个模型都在公共预览中。参见Voxtral 3 公告和音频模型定价。",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-10-20",
+          "meta": "机器翻译 · 更新 2026-10-20",
+          "originalTitle": "We released the Voxtral 3 audio family, our next generation of speech-to-text and text-to-speech models. All four models are in Public Preview. See the Voxtral 3 announcement and the audio models pricing .",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Mistral Large 4 (Mistral- Large-4 ) 现在可以在公共预览中找到。详情见Mistral Large 4型卡。",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-10-06",
+          "meta": "机器翻译 · 更新 2026-10-06",
+          "originalTitle": "Mistral Large 4 ( mistral-large-4 ) is now available in Public Preview. For details, see the Mistral Large 4 model card .",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "OCR 4.0(误差-ocr-4-0)于2026年9月30日贬值,退役,改用OCR 4.1(误差-ocr-4-1或误差-ocr-latest),价格相同.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-09-29",
+          "meta": "机器翻译 · 更新 2026-09-29",
+          "originalTitle": "OCR 4.0 ( mistral-ocr-4-0 ) is deprecated and retires on September 30, 2026. Use OCR 4.1 ( mistral-ocr-4-1 or mistral-ocr-latest ) instead, at the same price.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "Z.ai GLM 5.3(zai-glm-5-3 )现在一般可以使用。",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-09-28",
+          "meta": "机器翻译 · 更新 2026-09-28",
+          "originalTitle": "Z.ai GLM 5.3 ( zai-glm-5-3 ) is now Generally Available.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "OCR 4.1(误差-ocr-4-1)现在一般可用.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-08-31",
+          "meta": "机器翻译 · 更新 2026-08-31",
+          "originalTitle": "OCR 4.1 ( mistral-ocr-4-1 ) is now Generally Available.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们释放了 OCR 4.1(误差-ocr-4-1). 误差-ocr-latest和误差-ocr-4现在指向它.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-07-16",
+          "meta": "机器翻译 · 更新 2026-07-16",
+          "originalTitle": "We released OCR 4.1 ( mistral-ocr-4-1 ). mistral-ocr-latest and mistral-ocr-4 now point to it.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们发布了Leansstral 1.5(labs-leanstral-1-5 ),这是更新的Lean 4正式证明工程模型,其改进了SFT混合物质量并扩展了长文本推理. 这个模型将于2026年9月30日退役.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-06-30",
+          "meta": "机器翻译 · 更新 2026-06-30",
+          "originalTitle": "We released Leanstral 1.5 ( labs-leanstral-1-5 ), an updated Lean 4 formal proof engineering model with improved SFT mixture quality and extended long-context reasoning. This model will be retired on September 30, 2026 .",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们释放了 OCR 4 (mistral-ocr-4-0). mistral-ocr-latest 现在指向它.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-06-23",
+          "meta": "机器翻译 · 更新 2026-06-23",
+          "originalTitle": "We released OCR 4 ( mistral-ocr-4-0 ). mistral-ocr-latest now points to it.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们推出Vibe, 我们的统一代理在charch.mistral.ai,",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-05-28",
+          "meta": "机器翻译 · 更新 2026-05-28",
+          "originalTitle": "We launched Vibe , our unified agent at chat.mistral.ai , available in three modes:",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们发布了Mistral Medical 3.5(迷雾-介质-3-5),这是我们前沿级的多式联运模式,优化了用于代理和编码使用案例,通过推理-努力参数可以调整推理。 根据经修改的麻省理工学院许可证作为开放重量释放.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-04-28",
+          "meta": "机器翻译 · 更新 2026-04-28",
+          "originalTitle": "We released Mistral Medium 3.5 ( mistral-medium-3-5 ), our frontier-class multimodal model optimized for agentic and coding use cases, with adjustable reasoning via the reasoning_effort parameter. Released as open weights under a Modified MIT license.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "我们发布了Voxtral TTS(voxtral-tts-2603),我们最先进的文本对语音模式,零镜头语音克隆,多语种支持,实时流传.",
+          "url": "https://docs.mistral.ai/resources/changelogs#date-2026-03-23",
+          "meta": "机器翻译 · 更新 2026-03-23",
+          "originalTitle": "We released Voxtral TTS ( voxtral-tts-2603 ), our state-of-the-art text-to-speech model with zero-shot voice cloning, multilingual support, and real-time streaming.",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.454661+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:22.516370+00:00",
+        "error": ""
+      }
+    },
+    "minimax_api": {
+      "name": "MiniMax API",
+      "kind": "官方更新日志",
+      "url": "https://platform.minimax.io/docs/release-notes/apis",
+      "sourceUrlUsed": "https://platform.minimax.io/docs/release-notes/apis.md",
+      "updatedAt": "2026-11-11T04:30:20.026271+00:00",
+      "items": [
+        {
+          "title": "视频生成API**:添加两个新型号——**MiniMax-Hailuo-2.3**和**MiniMax-Hailuo-2.3-Fast",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#oct-28-2025",
+          "meta": "机器翻译 · 更新 2025-10-28",
+          "originalTitle": "Video Generation API**: Added two new models — **MiniMax-Hailuo-2.3** and **MiniMax-Hailuo-2.3-Fast",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "T2A v2 API Update: 恒定比特率控制 一个新的子参数`force cbr' (布尔)' 已添加在 ' audio setting' 参数下.",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#sept-23-2025",
+          "meta": "机器翻译 · 更新 2025-09-23",
+          "originalTitle": "T2A v2 API Update: Constant Bitrate Control A new sub-parameter `force_cbr`( boolean ) has been added under the `audio_setting` parameter.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "启用了MiniMax-Hailuo-02模型的图像到视频生成,支持512p分辨率,可选择持续时间为6秒或10秒.",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#aug-2-2025",
+          "meta": "机器翻译 · 更新 2025-08-02",
+          "originalTitle": "Enabled image-to-video generation for the MiniMax-Hailuo-02 model, supporting 512p resolution with selectable durations of 6 or 10 seconds.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "在Synchronous(T2A)(HTTP & WebSocket)和同步语音合成(T2A Async)中添加了‘voice modify'参数,允许像音调和音量一样调整语音效果.",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#jul-19-2025",
+          "meta": "机器翻译 · 更新 2025-07-19",
+          "originalTitle": "Added the `voice_modify` parameter to both Synchronous ( T2A ) ( HTTP & WebSocket ) and Asynchronous speech synthesis ( T2A Async ) allowing for adjustment of voice effects like pitch and volume.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新功能:**引入了基于模板的视频创建的**视频代理API**,从**11**定期更新的模板开始.",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#jul-15-2025",
+          "meta": "机器翻译 · 更新 2025-07-15",
+          "originalTitle": "New Feature:** Introduced the **Video Agent API** for template-based video creation, starting with **11** regularly updated templates.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新特性:** 引入了** Voice Design** 一种新能力,允许通过文本提示生成自定义语音调侃。",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#jun-20-2025",
+          "meta": "机器翻译 · 更新 2025-06-20",
+          "originalTitle": "New Feature:** Introduced the **Voice Design** a new capability allowing for the generation of custom voice timbres via text prompts.",
+          "translationStatus": "translated"
+        },
+        {
+          "title": "新特性:**在图像-01模型中增加了宽度和高度参数,使用户能够生成自定义维度的图像.",
+          "url": "https://platform.minimax.io/docs/release-notes/apis#apr-25-2025",
+          "meta": "机器翻译 · 更新 2025-04-25",
+          "originalTitle": "New Feature:** Added width and height parameters to the image-01 model, enabling users to generate images with custom dimensions.",
+          "translationStatus": "translated"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-11T04:30:09.454661+00:00",
+        "lastSuccessAt": "2026-11-11T04:30:20.026271+00:00",
+        "error": ""
+      }
+    },
+    "fng": {
+      "name": "恐惧贪婪指数",
+      "kind": "加密市场情绪 · Alternative.me",
+      "url": "https://alternative.me/crypto/fear-and-greed-index/",
+      "icon": "https://alternative.me/favicon.ico",
+      "sourceUrlUsed": "https://api.alternative.me/fng/?limit=8&format=json",
+      "updatedAt": "2026-11-13T08:06:53.069106+00:00",
+      "items": [
+        {
+          "title": "恐贪指数 20 · 极度恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794528000",
+          "meta": "2026-11-13 · 较前日 -8"
+        },
+        {
+          "title": "恐贪指数 28 · 恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794441600",
+          "meta": "2026-11-12 · 较前日 -1"
+        },
+        {
+          "title": "恐贪指数 29 · 恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794355200",
+          "meta": "2026-11-11 · 较前日 -3"
+        },
+        {
+          "title": "恐贪指数 32 · 恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794268800",
+          "meta": "2026-11-10 · 较前日 +3"
+        },
+        {
+          "title": "恐贪指数 29 · 恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794182400",
+          "meta": "2026-11-09 · 较前日 +1"
+        },
+        {
+          "title": "恐贪指数 28 · 恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794096000",
+          "meta": "2026-11-08 · 较前日 +3"
+        },
+        {
+          "title": "恐贪指数 25 · 极度恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1794009600",
+          "meta": "2026-11-07 · 较前日 -3"
+        },
+        {
+          "title": "恐贪指数 28 · 恐惧",
+          "url": "https://alternative.me/crypto/fear-and-greed-index/#day-1793923200",
+          "meta": "2026-11-06"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-13T08:06:51.108302+00:00",
+        "lastSuccessAt": "2026-11-13T08:06:53.069106+00:00",
+        "error": ""
+      }
+    },
+    "eastmoney": {
+      "name": "东方财富 · A股涨幅榜",
+      "kind": "A 股涨幅榜 · 实时快照",
+      "url": "https://quote.eastmoney.com/center/gridlist.html",
+      "icon": "https://www.eastmoney.com/favicon.ico",
+      "sourceUrlUsed": "https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=20&po=1&np=1&fltt=2&invt=2&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23&fields=f2,f3,f4,f6,f12,f13,f14",
+      "updatedAt": "2026-11-13T08:06:51.300654+00:00",
+      "items": [
+        {
+          "title": "幸福蓝海 300528",
+          "url": "https://quote.eastmoney.com/sz300528.html",
+          "meta": "17.99 元 · +20.01% · 成交 10.36 亿"
+        },
+        {
+          "title": "美晨科技 300237",
+          "url": "https://quote.eastmoney.com/sz300237.html",
+          "meta": "3.26 元 · +19.85% · 成交 6.34 亿"
+        },
+        {
+          "title": "旋极信息 300324",
+          "url": "https://quote.eastmoney.com/sz300324.html",
+          "meta": "3.88 元 · +17.58% · 成交 13.86 亿"
+        },
+        {
+          "title": "华是科技 301218",
+          "url": "https://quote.eastmoney.com/sz301218.html",
+          "meta": "99.86 元 · +15.31% · 成交 23.57 亿"
+        },
+        {
+          "title": "嘉益股份 301004",
+          "url": "https://quote.eastmoney.com/sz301004.html",
+          "meta": "33.97 元 · +13.54% · 成交 8329 万"
+        },
+        {
+          "title": "横河精密 300539",
+          "url": "https://quote.eastmoney.com/sz300539.html",
+          "meta": "20.26 元 · +11.14% · 成交 7.52 亿"
+        },
+        {
+          "title": "星华新材 301077",
+          "url": "https://quote.eastmoney.com/sz301077.html",
+          "meta": "22.12 元 · +10.43% · 成交 1.97 亿"
+        },
+        {
+          "title": "湖北广电 000665",
+          "url": "https://quote.eastmoney.com/sz000665.html",
+          "meta": "4.58 元 · +10.10% · 成交 2.45 亿"
+        },
+        {
+          "title": "好当家 600467",
+          "url": "https://quote.eastmoney.com/sh600467.html",
+          "meta": "2.73 元 · +10.08% · 成交 7.41 亿"
+        },
+        {
+          "title": "金新农 002548",
+          "url": "https://quote.eastmoney.com/sz002548.html",
+          "meta": "3.83 元 · +10.06% · 成交 1.37 亿"
+        },
+        {
+          "title": "岳阳兴长 000819",
+          "url": "https://quote.eastmoney.com/sz000819.html",
+          "meta": "12.82 元 · +10.04% · 成交 3.33 亿"
+        },
+        {
+          "title": "国统股份 002205",
+          "url": "https://quote.eastmoney.com/sz002205.html",
+          "meta": "12.93 元 · +10.04% · 成交 3.71 亿"
+        },
+        {
+          "title": "福达股份 603166",
+          "url": "https://quote.eastmoney.com/sh603166.html",
+          "meta": "11.84 元 · +10.04% · 成交 3.13 亿"
+        },
+        {
+          "title": "世龙实业 002748",
+          "url": "https://quote.eastmoney.com/sz002748.html",
+          "meta": "12.39 元 · +10.04% · 成交 3.43 亿"
+        },
+        {
+          "title": "福龙马 603686",
+          "url": "https://quote.eastmoney.com/sh603686.html",
+          "meta": "13.6 元 · +10.03% · 成交 7.01 亿"
+        },
+        {
+          "title": "文投控股 600715",
+          "url": "https://quote.eastmoney.com/sh600715.html",
+          "meta": "3.4 元 · +10.03% · 成交 10.45 亿"
+        },
+        {
+          "title": "华孚时尚 002042",
+          "url": "https://quote.eastmoney.com/sz002042.html",
+          "meta": "3.62 元 · +10.03% · 成交 4.61 亿"
+        },
+        {
+          "title": "横店影视 603103",
+          "url": "https://quote.eastmoney.com/sh603103.html",
+          "meta": "19.31 元 · +10.03% · 成交 1.33 亿"
+        },
+        {
+          "title": "兴业股份 603928",
+          "url": "https://quote.eastmoney.com/sh603928.html",
+          "meta": "11.96 元 · +10.03% · 成交 1.47 亿"
+        },
+        {
+          "title": "皮阿诺 002853",
+          "url": "https://quote.eastmoney.com/sz002853.html",
+          "meta": "21.77 元 · +10.01% · 成交 1.03 亿"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-13T08:06:51.108591+00:00",
+        "lastSuccessAt": "2026-11-13T08:06:51.300654+00:00",
         "error": ""
       }
     }

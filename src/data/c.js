@@ -746,16 +746,5 @@ export const c = [
     }
   ]
 },
-  {
-    name: '法律与政务',
-    icon: 'Law',
-    emoji: '⚖️',
-    links: [
-      { name: '中国法律服务网', url: 'https://www.moj.gov.cn/', description: '司法部主办的法律服务平台', tags: ['官方'] },
-      { name: '人行征信中心', url: 'https://ipcrs.pbccrc.org.cn/', description: '个人信用信息服务平台', tags: ['征信'] },
-      { name: '裁判文书网', url: 'https://wenshu.court.gov.cn/', description: '中国裁判文书公开网', tags: ['文书'] },
-      { name: '国家政务服务平台', url: 'http://www.gjzwfw.gov.cn/', description: '全国一体化在线政务服务', tags: ['政务'] }
-    ]
-  },
   
 ];

@@ -54,4 +54,39 @@ export default {
 .github-trending{padding:14px 24px 0}.github-periods{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.github-periods button.active{color:#e6764f;background:rgba(241,118,77,.11);font-weight:600}.github-periods a{margin-left:auto;text-decoration:none;color:var(--news-muted);font-size:11px}.github-status{font-size:10px;color:var(--news-muted);margin:12px 0}.github-list{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:0;padding:0;list-style:none}.github-list li{min-width:0}.github-list a{display:flex;gap:12px;text-decoration:none;color:var(--news-text);border-bottom:1px solid var(--news-line);padding:15px 5px;border-radius:7px;min-height:118px;box-sizing:border-box}.github-list a:hover{background:rgba(127,145,171,.06)}.github-rank{font-size:17px;font-weight:700;color:#ef805a}.github-copy{min-width:0;flex:1}.github-copy h3{margin:0;font-size:13px;line-height:1.6;overflow-wrap:anywhere}.github-copy p{font-size:12px;color:var(--news-muted);line-height:1.65;margin:6px 0;white-space:normal;overflow-wrap:anywhere}.github-meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--news-muted);font-size:10px}.github-growth{color:#40966c}.github-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;color:var(--news-muted);font-size:10px}.github-footer>span{flex:1}.github-footer button{flex-shrink:0}.github-empty{padding:24px;text-align:center;font-size:12px;color:var(--news-muted)}.github-trending a:focus-visible{outline:2px solid #ec7957;outline-offset:2px}@media(max-width:700px){.github-trending{padding:12px 16px 0}.github-list{grid-template-columns:1fr}.github-periods{gap:3px}.github-periods button{padding:6px!important;font-size:11px!important}.github-periods a{font-size:10px}.github-footer{line-height:1.7}}
 
 .github-list a.has-content-cover{flex-wrap:wrap}
+
+.github-trending:not(.github-dark) {
+  --news-text: #f3f6ff;
+  --news-muted: #c9d6ff;
+  --news-line: #5577c9;
+  border: 1px solid #7897ee;
+  border-radius: 0;
+  background: #101e76;
+  box-shadow: none;
+}
+.github-trending:not(.github-dark) .github-heading {
+  margin-bottom: 10px;
+  padding: 6px 9px;
+  color: #101e76;
+  background: #bfceff;
+}
+.github-trending:not(.github-dark) .github-heading h2, .github-trending:not(.github-dark) .github-copy h3, .github-trending:not(.github-dark) .github-rank, .github-trending:not(.github-dark) .github-meta, .github-trending:not(.github-dark) .github-periods button {
+  font-family: Consolas, "Courier New", "Microsoft YaHei", monospace;
+}
+.github-trending:not(.github-dark) .github-heading p { color: #283e7c; }
+.github-trending:not(.github-dark) .github-heading h2 span { border-radius: 0; background: transparent; }
+.github-trending:not(.github-dark) .github-dark .github-official-icon { filter: none; }
+.github-trending:not(.github-dark) .github-periods button, .github-trending:not(.github-dark) .github-footer button, .github-trending:not(.github-dark) .github-empty button {
+  border: 1px solid #7897ee;
+  border-radius: 0;
+}
+.github-trending:not(.github-dark) button:hover, .github-trending:not(.github-dark) .github-periods button.active {
+  color: #0b195a;
+  background: #9df0ff;
+}
+.github-trending:not(.github-dark) .github-list a { border-radius: 0; }
+.github-trending:not(.github-dark) .github-list a:hover { background: #172e93; }
+.github-trending:not(.github-dark) .github-rank, .github-trending:not(.github-dark) .github-growth { color: #9df0ff; }
+.github-trending:not(.github-dark) .github-footer { border-top: 1px solid var(--news-line); }
+.github-trending:not(.github-dark) :is(a,button):focus-visible { outline-color: #9df0ff; }
 </style>

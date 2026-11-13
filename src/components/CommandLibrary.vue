@@ -1,22 +1,22 @@
 <template>
   <section id="command-library" class="command-library-panel hacker-console" aria-labelledby="command-library-title">
-    <div class="hacker-console-heading"><h2 id="command-library-title"><button type="button" class="module-title-toggle" :aria-expanded="libraryExpanded" aria-controls="command-library-content" @click="libraryExpanded = !libraryExpanded" style="border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;padding:0;text-align:left;cursor:pointer"><svg class="module-heading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:19px;height:19px;vertical-align:-3px;margin-right:7px"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></svg> 命令速查<span class="console-cursor" aria-hidden="true">▌</span><svg class="module-heading-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" :style="{transform: libraryExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}" style="width:14px;height:14px;vertical-align:-2px;margin-left:8px"><path d="m9 5 7 7-7 7"/></svg></button></h2><div class="console-heading-actions"><span class="console-mode">{{ commands.length }} 条命令</span><button type="button" class="console-expand-toggle" :aria-expanded="libraryExpanded" aria-controls="command-library-content" @click="libraryExpanded = !libraryExpanded">{{ libraryExpanded ? '收起 ▴' : '展开 ▾' }}</button></div></div>
+    <div class="hacker-console-heading"><h2 id="command-library-title"><button type="button" class="module-title-toggle" :aria-expanded="libraryExpanded" aria-controls="command-library-content" @click="libraryExpanded = !libraryExpanded" style="border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;padding:0;text-align:left;cursor:pointer"><img class="pixel-web-badge" src="../assets/pixel-badges/commands.png" width="88" height="31" alt=""> 命令速查<span class="console-cursor" aria-hidden="true">▌</span><svg class="module-heading-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" :style="{transform: libraryExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}" style="width:14px;height:14px;vertical-align:-2px;margin-left:8px"><path d="m9 5 7 7-7 7"/></svg></button></h2><div class="console-heading-actions"><span class="console-mode">{{ commands.length }} 条命令</span><button type="button" class="console-expand-toggle" :aria-expanded="libraryExpanded" aria-controls="command-library-content" @click="libraryExpanded = !libraryExpanded">{{ libraryExpanded ? '收起 ▴' : '展开 ▾' }}</button></div></div>
     <div v-if="libraryExpanded" id="command-library-content">
     <section ref="library" class="command-library" aria-label="命令工具箱">
-      <p v-if="category === 'Windows' && topic === '运行快捷命令'" class="command-feedback">按 Win + R 打开运行对话框，粘贴命令后按 Enter。例如：calc 打开计算器，mspaint 打开画图，services.msc 打开服务。</p>
+      <p v-if="!isSearching && category === 'Windows' && topic === '运行快捷命令'" class="command-feedback">按 Win + R 打开运行对话框，粘贴命令后按 Enter。例如：calc 打开计算器，mspaint 打开画图，services.msc 打开服务。</p>
       <div class="command-search-row">
-        <input v-model="query" type="search" placeholder="search --query  命令 / 用途 / 参数" aria-label="搜索命令" />
+        <input v-model="query" type="search" placeholder="搜索全部命令 / 用途 / 参数" aria-label="搜索全部命令" />
         <button type="button" :aria-pressed="favoritesOnly" @click="favoritesOnly = !favoritesOnly">{{ favoritesOnly ? '★ 只看收藏' : '☆ 我的收藏' }}</button>
       </div>
-      <nav class="command-filters" aria-label="命令系统分类">
+      <nav v-if="!isSearching" class="command-filters" aria-label="命令系统分类">
         <button v-for="name in categories" :key="name" type="button" :aria-pressed="category === name" @click="selectCategory(name)"><component :is="systemIcons[name]" class="command-label-icon" aria-hidden="true" />{{ name }} <small>{{ commands.filter(c => !name || c.category === name).length }}</small></button>
       </nav>
-      <div v-if="category === 'Windows'" class="command-environment-section"><span class="command-filter-label">命令环境</span><nav class="command-environments" aria-label="Windows 命令环境"><button v-for="name in windowsEnvironments" :key="name" type="button" :aria-pressed="environment === name" @click="selectEnvironment(name)">{{name}} <small>{{environmentCounts[name] || 0}}</small></button></nav><p class="command-environment-note">运行窗口使用 Win + R；CMD 与 PowerShell 的同名命令可能语法不同。“通用”仅表示本条原生命令适用于两者，不代表所有脚本语法通用。</p></div>
+      <div v-if="!isSearching && category === 'Windows'" class="command-environment-section"><span class="command-filter-label">命令环境</span><nav class="command-environments" aria-label="Windows 命令环境"><button v-for="name in windowsEnvironments" :key="name" type="button" :aria-pressed="environment === name" @click="selectEnvironment(name)">{{name}} <small>{{environmentCounts[name] || 0}}</small></button></nav><p class="command-environment-note">运行窗口使用 Win + R；CMD 与 PowerShell 的同名命令可能语法不同。“通用”仅表示本条原生命令适用于两者，不代表所有脚本语法通用。</p></div>
       <div class="command-topics">
-        <nav class="command-topic-tabs" aria-label="按用途筛选命令">
+        <nav v-if="!isSearching" class="command-topic-tabs" aria-label="按用途筛选命令">
           <button v-for="name in topics" :key="name" type="button" class="command-topic-tab" :class="{ 'is-selected': topic === name }" :aria-pressed="topic === name" @click="topic = name"><component :is="topicIcons[name] || topicIcons['']" class="command-label-icon" aria-hidden="true" />{{ name }} <small>{{ topicCounts[name] || 0 }}</small></button>
         </nav>
-        <span>{{ filtered.length }} 条命令 · 收藏保存在此浏览器</span>
+        <span>{{ isSearching ? (favoritesOnly ? '搜索全部收藏 · ' : '搜索全部分类 · ') : '' }}{{ filtered.length }} 条命令 · 收藏保存在此浏览器</span>
       </div>
       <p class="command-feedback" role="status" aria-live="polite">{{ feedback }}</p>
       <div class="command-list command-card-grid">
@@ -76,6 +76,7 @@ export default {
     return { systemIcons, topicIcons, libraryExpanded: false, windowsEnvironments, environment: windowsEnvironments[0] || '', commands, categories, query: '', category: 'Windows', topic: environmentCommands(commands, 'Windows', windowsEnvironments[0])[0]?.topic || '', favoritesOnly: false, favorites, values: {}, expanded: {}, feedback: '', copying: '' };
   },
   computed: {
+    isSearching() { return this.query.trim().length > 0; },
     scopedCommands() { return environmentCommands(commands, this.category, this.environment); },
     environmentCounts() { const counts = {'': 0}; for (const c of commands.filter(c => c.category === 'Windows')) { counts['']++; counts[c.environment] = (counts[c.environment] || 0) + 1; } return counts; },
     topicCounts() {
@@ -84,7 +85,11 @@ export default {
       return counts;
     },
     topics() { return [...new Set(this.scopedCommands.map(c => c.topic))]; },
-    filtered() { return filterCommands(this.scopedCommands, this.query, this.category, this.favoritesOnly, this.favorites).filter(c => !this.topic || c.topic === this.topic); },
+    filtered() {
+      if (this.isSearching) return filterCommands(commands, this.query, '', this.favoritesOnly, this.favorites);
+      return filterCommands(this.scopedCommands, '', this.category, this.favoritesOnly, this.favorites)
+        .filter(c => !this.topic || c.topic === this.topic);
+    },
   },
   methods: {
     selectCategory(name) { this.category = name; this.environment = name === 'Windows' ? this.windowsEnvironments[0] || '' : ''; this.topic = this.topics[0] || ''; },
@@ -121,6 +126,8 @@ export default {
 };
 </script>
 <style>
+#command-library .pixel-web-badge { display: inline-block; width: 88px; height: 31px; max-width: none; vertical-align: middle; image-rendering: pixelated; margin-inline-end: 6px; }
+
  .command-library-panel { margin: 32px 20px; padding: 20px; border: 1px solid var(--el-border-color-light); border-radius: 14px; scroll-margin-top: 80px; }
 .command-library-panel h2 { margin: 0 0 16px; font-size: 20px; font-weight: 500; }
 body.dark .command-library-panel {

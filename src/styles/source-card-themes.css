@@ -1,0 +1,222 @@
+/* The theme attribute is only supplied in light mode. Keep card layout,
+   status placement and the original interaction targets shared. */
+.navigation [data-source-theme] {
+  --theme-ink: #26364c;
+  --theme-muted: #4d5c70;
+  --theme-radius: 4px;
+  --s-text: var(--theme-ink);
+  --s-muted: var(--theme-muted);
+  --s-line: var(--theme-line);
+  --v-text: var(--theme-ink);
+  --v-muted: var(--theme-muted);
+  --v-line: var(--theme-line);
+  --ev-text: var(--theme-ink);
+  --ev-muted: var(--theme-muted);
+  --ev-line: var(--theme-line);
+}
+.navigation section[data-source-theme] {
+  color: var(--theme-ink);
+  background: var(--theme-paper);
+  border: 1px solid var(--theme-line);
+  border-radius: var(--theme-radius);
+  box-shadow: var(--theme-shadow, none);
+}
+.navigation [data-source-theme] > header {
+  padding: 7px 10px;
+  margin-bottom: 5px;
+  color: var(--theme-heading-ink, var(--theme-ink));
+  background: var(--theme-heading);
+  border-block-end: var(--theme-rule, 1px solid var(--theme-line));
+}
+.navigation [data-source-theme] > header h2 {
+  color: inherit;
+  font-family: var(--theme-title-font, inherit);
+}
+.navigation [data-source-theme] > header :is(p, .events-notes, .events-actions > span) {
+  color: inherit;
+}
+.navigation [data-source-theme] :is(.source-rank, .weibo-rank, .v2ex-rank, .hacker-news-rank) {
+  color: var(--theme-accent);
+  font-variant-numeric: tabular-nums;
+}
+.navigation [data-source-theme] :is(.source-toolbar, .weibo-toolbar, .v2ex-toolbar, .hacker-news-toolbar) {
+  color: var(--theme-muted);
+}
+.navigation [data-source-theme] :is(a, button, select):focus-visible {
+  outline: 2px solid var(--theme-accent);
+  outline-offset: 2px;
+}
+.navigation [data-source-theme] :is(.source-list, .weibo-list, .v2ex-list, .hacker-news-list) li > a:hover {
+  background: var(--theme-hover, #ffffff80);
+}
+
+[data-source-theme="bbs"] {
+  --theme-paper: #f4f6f9; --theme-heading: #dce6f4; --theme-line: #9daec4; --theme-accent: #284c78;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="personal"] {
+  --theme-paper: #fffdf4; --theme-heading: linear-gradient(#f8f8f8, #d7d7d7); --theme-line: #8c8c8c; --theme-accent: #254b84;
+  --theme-rule: 3px double #8c8c8c; --theme-title-font: Verdana, "Microsoft YaHei", sans-serif;
+}
+[data-source-theme="arcade"] {
+  --theme-paper: #fdf2fc; --theme-heading: #572b74; --theme-heading-ink: #fff;
+  --theme-line: #9871a9; --theme-accent: #702487; --theme-rule: 3px solid #e590d5;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="ticker"] {
+  --theme-paper: #fff9e9; --theme-heading: #433315; --theme-heading-ink: #ffe3a0;
+  --theme-line: #c1a66c; --theme-accent: #805413;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="wire"] {
+  --theme-paper: #f5fbfb; --theme-heading: #cce9e9; --theme-line: #8babab; --theme-accent: #235c63;
+  --theme-rule: 2px solid #59918f; --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="swiss"] {
+  --theme-paper: #fff; --theme-heading: #f5f5f5; --theme-line: #b7b7b7; --theme-accent: #a11c29;
+  --theme-rule: 3px solid #202020; --theme-radius: 0;
+  --theme-title-font: Arial, "Microsoft YaHei", sans-serif;
+}
+[data-source-theme="archive"] {
+  --theme-paper: #f8f1e5; --theme-heading: #ece0c9; --theme-line: #b6a083; --theme-accent: #79482b;
+  --theme-rule: 1px dashed #997e58; --theme-title-font: Georgia, SimSun, serif;
+}
+[data-source-theme="ledger"] {
+  --theme-paper: #f7fbff; --theme-heading: #234c7b; --theme-heading-ink: #fff;
+  --theme-line: #a7bfd5; --theme-accent: #234c7b; --theme-radius: 0;
+}
+[data-source-theme="notes"] {
+  --theme-paper: #fffbea; --theme-heading: #faecab; --theme-line: #cdbb74; --theme-accent: #745517;
+  --theme-shadow: 2px 3px #a58b3826;
+}
+[data-source-theme="tickets"] {
+  --theme-paper: #fff5ec; --theme-heading: #f9e0cd; --theme-line: #c3a38f; --theme-accent: #8b422e;
+  --theme-rule: 2px dashed #b18169; --theme-radius: 8px;
+  --theme-title-font: Georgia, SimSun, serif;
+}
+[data-source-theme="blueprint"] {
+  --theme-paper: #eef6ff; --theme-heading: #d4e7fb; --theme-line: #86a9cc; --theme-accent: #184e82;
+  --theme-rule: 1px dashed #5d83ad; --theme-radius: 0;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="ops"] {
+  --theme-paper: #f1f7f3; --theme-heading: #daebe0; --theme-line: #98b1a1; --theme-accent: #2b614b;
+  --theme-rule: 2px solid #618675; --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="industrial"] {
+  --theme-paper: #f6f5f0; --theme-heading: #f4e4b0; --theme-line: #b4a47e; --theme-accent: #735314;
+  --theme-rule: 3px solid #9b7530; --theme-radius: 0;
+}
+[data-source-theme="bento"] {
+  --theme-paper: #f6f2ff; --theme-heading: #e7dcff; --theme-line: #c2afe8; --theme-accent: #5b4388;
+  --theme-radius: 12px;
+}
+
+.navigation :is([data-source-theme="bbs"], [data-source-theme="personal"]) :is(.source-rank, .v2ex-rank, .hacker-news-rank)::before { content: "[" / ""; }
+.navigation :is([data-source-theme="bbs"], [data-source-theme="personal"]) :is(.source-rank, .v2ex-rank, .hacker-news-rank)::after { content: "]" / ""; }
+.navigation [data-source-theme="arcade"] :is(.source-rank, .weibo-rank) { box-shadow: inset 0 -2px #d5a6e2; }
+.navigation [data-source-theme="ledger"] .source-list li:nth-child(even) { background: #eaf2fa; }
+.navigation [data-source-theme="blueprint"] > header { background-image: repeating-linear-gradient(90deg, transparent 0 11px, #fff6 11px 12px); }
+.navigation [data-source-theme="industrial"] > header { border-inline-start: 5px solid #9b7530; }
+.navigation [data-source-theme="bento"] .source-list li > a { background: #fffc; border-radius: 8px; }
+
+[data-source-theme="aero"] {
+  --theme-paper: #f3faff; --theme-heading: linear-gradient(155deg, #faffff 3%, #d9f2ff 42%, #8dbff0 50%, #e1f9f8 95%);
+  --theme-line: #7fa9c7; --theme-accent: #185c8d; --theme-radius: 9px;
+  --theme-shadow: 0 3px 10px #3171a333, inset 0 0 0 2px #fff9;
+}
+[data-source-theme="aqua"] {
+  --theme-paper: #fbfcff; --theme-heading: linear-gradient(#fff 0%, #e2f3ff 48%, #b0d9ff 49%, #e0f6ff 100%);
+  --theme-line: #9cbbdc; --theme-accent: #205e9f; --theme-radius: 12px;
+}
+[data-source-theme="winamp"] {
+  --theme-paper: #f2f2f5; --theme-heading: linear-gradient(#414856, #222830);
+  --theme-heading-ink: #d2fba6; --theme-line: #8b929e; --theme-accent: #415921;
+  --theme-rule: 3px double #818895; --theme-radius: 0;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="palm"] {
+  --theme-paper: #edf0e6; --theme-heading: #dce3d3; --theme-ink: #25362b; --theme-muted: #455648;
+  --theme-line: #899788; --theme-accent: #344e3b; --theme-radius: 3px;
+  --theme-title-font: Verdana, "Microsoft YaHei", sans-serif;
+}
+[data-source-theme="gameboy"] {
+  --theme-paper: #eef2d4; --theme-heading: #c9d38a; --theme-ink: #263719; --theme-muted: #475829;
+  --theme-line: #697943; --theme-accent: #394c22; --theme-radius: 0;
+  --theme-shadow: 2px 2px #556539; --theme-rule: 3px solid #536633;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="lcd"] {
+  --theme-paper: #f0f5ef; --theme-heading: #c5d3c3; --theme-ink: #25382e; --theme-muted: #445b4b;
+  --theme-line: #82998a; --theme-accent: #345846; --theme-radius: 3px;
+  --theme-shadow: inset 0 0 0 2px #dce5db;
+  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
+}
+[data-source-theme="library"] {
+  --theme-paper: #fffbed; --theme-heading: #f3e8c8; --theme-line: #baa985; --theme-accent: #75542c;
+  --theme-rule: 3px double #ab9468; --theme-radius: 2px;
+  --theme-title-font: Georgia, SimSun, serif;
+}
+[data-source-theme="brutalist"] {
+  --theme-paper: #fffdf4; --theme-heading: #ffe664; --theme-ink: #171717; --theme-muted: #4b432f;
+  --theme-line: #222; --theme-accent: #3d2a00; --theme-radius: 0;
+  --theme-shadow: 3px 3px #222; --theme-rule: 2px solid #222;
+}
+.navigation [data-source-theme="aero"] > header { box-shadow: inset 0 1px 0 #fff; }
+.navigation [data-source-theme="aqua"] > header { border-radius: 14px; box-shadow: inset 0 1px #fff; }
+.navigation [data-source-theme="winamp"] .x-tabs button[aria-pressed="true"] { background: #303741; color: #d2fba6; border-radius: 2px; }
+.navigation [data-source-theme="palm"] .source-rank { border: 1px solid var(--theme-line); padding-inline: 3px; }
+.navigation [data-source-theme="gameboy"] .source-rank { background: #dce5ab; box-shadow: 2px 2px #697943; padding-inline: 3px; }
+.navigation [data-source-theme="lcd"] .source-rank { font: 700 15px/1.4 Consolas, monospace; letter-spacing: .12em; background: #dce5db; padding-inline: 3px; }
+.navigation [data-source-theme="library"] .source-list > li { border-bottom: 1px dashed var(--theme-line); }
+.navigation [data-source-theme="library"] .source-cover { border-radius: 0; }
+.navigation [data-source-theme="brutalist"] > header h2 { font-weight: 800; }
+
+[data-source-theme="win95"] {
+  --theme-paper: #c0c0c0;
+  --theme-heading: var(--theme-paper);
+  --theme-heading-ink: var(--theme-ink);
+  --theme-ink: #161616;
+  --theme-muted: #383838;
+  --theme-line: #808080;
+  --theme-accent: #000080;
+  --theme-hover: #e7ebfa;
+  --theme-radius: 0;
+  --win-raised: inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #111, inset -2px -2px #808080;
+  --win-inset: inset 1px 1px #808080, inset 2px 2px #111, inset -1px -1px #fff, inset -2px -2px #dfdfdf;
+  --theme-shadow: var(--win-raised);
+  --theme-title-font: "Microsoft Sans Serif", Tahoma, "Microsoft YaHei", sans-serif;
+}
+.navigation .source-news-card[data-source-theme="win95"] > .source-heading {
+  padding-top: 1px;
+}
+.navigation .x-global-events[data-source-theme="win95"] .events-viewport {
+  border-radius: 0;
+  background: #a0a0a0;
+  box-shadow: var(--win-inset);
+  scrollbar-color: #c0c0c0 #808080;
+}
+.navigation .x-global-events[data-source-theme="win95"] .event-tile {
+  border-radius: 0;
+  border-color: #808080;
+  box-shadow: var(--win-raised);
+}
+.navigation .x-global-events[data-source-theme="win95"] button[aria-pressed="true"] {
+  box-shadow: var(--win-inset);
+}
+.navigation [data-source-theme="win95"] .source-list {
+  padding: 2px;
+  background: #fff;
+  box-shadow: var(--win-inset);
+}
+.navigation [data-source-theme="win95"] .source-list :is(a,h3) { color: var(--theme-ink); }
+.navigation [data-source-theme="win95"] .source-list a { padding-inline: 8px; border-radius: 0; }
+.navigation [data-source-theme="win95"] button {
+  color: var(--theme-ink);
+  border: 0;
+  border-radius: 0;
+  background: #c0c0c0;
+  box-shadow: var(--win-raised);
+}
+.navigation [data-source-theme="win95"] button:hover { background: #d4d4d4; }
+.navigation [data-source-theme="win95"] button:active { box-shadow: var(--win-inset); }

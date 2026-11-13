@@ -14,306 +14,65 @@
 
 
 
-      <InteractiveStarfield :dark="currentTheme === 'dark'" />
-
-
-
-    <div class="search-bar-compact">
-
-
-
-      <!-- 搜索引擎选择 -->
-
-
-
-      <el-select
-
-
-
-        v-model="selectedEngine"
-
-
-
-        class="engine-select"
-
-
-
-        :popper-class="currentTheme === 'dark' ? 'homepage-engine-dropdown dark-dropdown' : 'homepage-engine-dropdown'"
-
-
-
-        :aria-label="'搜索引擎：' + (searchEngines.find(engine => engine.value === selectedEngine)?.label || '')"
-
-
-
-      >
-
-
-
-        <template #prefix>
-
-
-
-          <img class="engine-brand-icon" :src="currentEngineIcon" alt="" aria-hidden="true" />
-
-
-
-        </template>
-
-
-
-        <el-option
-
-
-
-          v-for="engine in searchEngines"
-
-
-
-          :key="engine.value"
-
-
-
-          :label="engine.label"
-
-
-
-          :value="engine.value"
-
-
-
-        >
-
-
-
-          <span class="engine-option-content">
-
-
-
-            <img class="engine-brand-icon" :src="engine.icon" alt="" aria-hidden="true" />
-
-
-
-            <span class="engine-option-label">{{ engine.label }}</span>
-
-
-
-          </span>
-
-
-
-        </el-option>
-
-
-
-      </el-select>
-
-
-
-
-
-
-
-      <div class="unified-search-control">
-
-
-
-      <!-- 统一搜索输入框 -->
-
-
-
-      <el-autocomplete data-typing-sound
-
-
-
-        v-model="searchText"
-
-
-
-        :placeholder="searchPlaceholder"
-
-
-
-        clearable
-
-
-
-        class="search-input"
-
-
-
-        :class="{ 'has-search-illustration': !searchText }"
-
-
-
-        :fetch-suggestions="fetchSearchSuggestions"
-
-
-
-        :trigger-on-focus="false"
-
-
-
-        :popper-class="currentTheme === 'dark' ? 'dark-autocomplete' : ''"
-
-
-
-        @select="handleSuggestionSelect"
-
-
-
-        @keydown.enter="handleSearch"
-
-
-
-        value-key="name"
-
-
-
-      >
-
-
-
-        <template #suffix>
-
-
-
-          <SearchPlanet />
-
-
-
-        </template>
-
-
-
-        <template #default="{ item }">
-
-
-
-          <div class="suggestion-item">
-
-
-
-            <span class="suggestion-name"><HighlightText :text="item.name" :query="localSearchQuery" /></span>
-
-
-
-            <span class="suggestion-category" v-if="item.categoryName"><HighlightText :text="item.categoryName" :query="localSearchQuery" /></span>
-
-
-
-          </div>
-
-
-
-        </template>
-
-
-
-      </el-autocomplete>
-
-
-
-      
-
-
-
-      <!-- 搜索按钮 -->
-
-
-
-      <el-button 
-
-
-
-        @click="handleSearch" 
-
-
-
-        class="search-btn"
-
-
-
-        :class="{ 'dark-theme': currentTheme === 'dark' }"
-
-
-
-        title="搜索"
-
-
-
-      >
-
-
-
-        <el-icon><Search /></el-icon>
-
-
-
-      </el-button>
-
-
-
-      
-
-
-
-      <!-- 粘贴按钮 -->
-
-
-
-      <el-button 
-
-
-
-        @click="pasteFromClipboard" 
-
-
-
-        circle
-
-
-
-        class="paste-btn"
-
-
-
-        :class="{ 'dark-theme': currentTheme === 'dark' }"
-
-
-
-        title="粘贴"
-
-
-
-      >
-
-
-
-        <el-icon><DocumentCopy /></el-icon>
-
-
-
-      </el-button>
-
-
-
-    </div>
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-
-
-
+      <SearchBackground :dark="currentTheme === 'dark'" />
+
+
+
+      <div class="search-bar-compact">
+        <div class="unified-search-control">
+          <el-autocomplete
+            v-model="searchText"
+            data-typing-sound
+            aria-label="站内搜索"
+            placeholder="搜索站内网站…"
+            clearable
+            class="search-input"
+            :class="{ 'has-search-illustration': !searchText }"
+            :fetch-suggestions="fetchSearchSuggestions"
+            :trigger-on-focus="false"
+            :popper-class="currentTheme === 'dark' ? 'dark-autocomplete' : ''"
+            @select="handleSuggestionSelect"
+            value-key="name"
+          >
+            <template #suffix><SearchPlanet /></template>
+            <template #default="{ item }">
+              <div class="suggestion-item">
+                <span class="suggestion-name"><HighlightText :text="item.name" :query="localSearchQuery" /></span>
+                <span v-if="item.categoryName" class="suggestion-category"><HighlightText :text="item.categoryName" :query="localSearchQuery" /></span>
+              </div>
+            </template>
+          </el-autocomplete>
+          <el-button @click="pasteFromClipboard" class="paste-btn" title="粘贴" aria-label="粘贴到站内搜索">
+            <el-icon><DocumentCopy /></el-icon>
+          </el-button>
+        </div>
+
+        <div class="engine-search-grid" role="group" aria-label="外部搜索引擎">
+          <details v-for="engine in searchEngines" :key="engine.value" class="engine-search-item">
+            <summary>
+              <img class="engine-brand-icon" :src="engine.icon" alt="" />
+              <span>{{ engine.label }}</span>
+            </summary>
+            <form class="unified-search-control" @submit.prevent="handleEngineSearch(engine)">
+              <el-input
+                v-model="engineQueries[engine.value]"
+                data-typing-sound
+                class="search-input"
+                :aria-label="engine.label + ' 搜索关键词'"
+                clearable
+              />
+              <el-button
+                native-type="submit"
+                class="search-btn"
+                :title="'用 ' + engine.label + ' 搜索'"
+                :aria-label="'用 ' + engine.label + ' 搜索'"
+              >
+                <el-icon><Search /></el-icon>
+              </el-button>
+            </form>
+          </details>
+        </div>
+      </div>
     </section>
 
 
@@ -350,10 +109,10 @@
 
 
 
-    <XGlobalEvents ref="xGlobalEvents" v-show="!localSearchQuery.trim() && hotspotsExpanded" :dark="currentTheme === 'dark'" @select-event="$refs.xGlobalTweets.selectEvent($event)" />
+    <XGlobalEvents :data-source-theme="sourceCardTheme('x-events', currentTheme === 'dark')" ref="xGlobalEvents" v-show="!localSearchQuery.trim() && hotspotsExpanded" :dark="currentTheme === 'dark'" @select-event="$refs.xGlobalTweets.selectEvent($event)" />
 
     <nav v-show="!localSearchQuery.trim()" class="source-category-tabs" role="tablist" aria-label="信息来源分类">
-      <button v-for="tab in sourceCategoryTabs" :key="tab.id" :id="`source-tab-${tab.id}`" type="button" role="tab" :aria-selected="sourceCategory===tab.id" :tabindex="sourceCategory===tab.id?0:-1" aria-controls="information-source-cards" @click="selectSourceCategory(tab.id)" @keydown="onSourceTabKey($event,tab.id)"><span class="source-tab-icon" aria-hidden="true">{{tab.icon}}</span>{{tab.label}}</button>
+      <button v-for="tab in sourceCategoryTabs" :key="tab.id" :id="`source-tab-${tab.id}`" type="button" role="tab" :aria-selected="sourceCategory===tab.id" :tabindex="sourceCategory===tab.id?0:-1" aria-controls="information-source-cards" @click="selectSourceCategory(tab.id)" @keydown="onSourceTabKey($event,tab.id)"><span class="source-tab-icon" aria-hidden="true" :style="{ '--source-tab-glyph': 'url(' + tab.icon + ')' }"></span>{{tab.label}}</button>
     </nav>
 
 
@@ -364,19 +123,19 @@
 
 
 
-      <XHotTweets v-show="sourceVisible('x')" :dark="currentTheme === 'dark'" />
+      <XHotTweets :data-source-theme="sourceCardTheme('x-hot', currentTheme === 'dark')" v-show="sourceVisible('x')" :dark="currentTheme === 'dark'" />
 
 
 
-      <XGlobalTweets v-show="sourceVisible('x')" ref="xGlobalTweets" @clear-event="$refs.xGlobalEvents.clearSelection()" :dark="currentTheme === 'dark'" />
+      <XGlobalTweets :data-source-theme="sourceCardTheme('x-global', currentTheme === 'dark')" v-show="sourceVisible('x')" ref="xGlobalTweets" @clear-event="$refs.xGlobalEvents.clearSelection()" :dark="currentTheme === 'dark'" />
 
 
 
-      <XWordsTopics v-show="sourceVisible('x')" :dark="currentTheme === 'dark'" />
+      <XWordsTopics :data-source-theme="sourceCardTheme('x-topics', currentTheme === 'dark')" v-show="sourceVisible('x')" :dark="currentTheme === 'dark'" />
 
 
 
-      <XArticles v-show="sourceVisible('x')" :dark="currentTheme === 'dark'" />
+      <XArticles :data-source-theme="sourceCardTheme('x-articles', currentTheme === 'dark')" v-show="sourceVisible('x')" :dark="currentTheme === 'dark'" />
 
 
 
@@ -384,11 +143,11 @@
 
 
 
-      <HackerNews v-show="sourceVisible('hackernews')" :dark="currentTheme === 'dark'" />
+      <HackerNews :data-source-theme="sourceCardTheme('hackernews', currentTheme === 'dark')" v-show="sourceVisible('hackernews')" :dark="currentTheme === 'dark'" />
 
 
 
-      <V2exHot v-show="sourceVisible('v2ex')" :dark="currentTheme === 'dark'" />
+      <V2exHot :data-source-theme="sourceCardTheme('v2ex', currentTheme === 'dark')" v-show="sourceVisible('v2ex')" :dark="currentTheme === 'dark'" />
 
 
 
@@ -399,11 +158,11 @@
 
 
 
-      <WeiboHot v-show="sourceVisible('weibo')" :dark="currentTheme === 'dark'" />
+      <WeiboHot :data-source-theme="sourceCardTheme('weibo', currentTheme === 'dark')" v-show="sourceVisible('weibo')" :dark="currentTheme === 'dark'" />
 
 
 
-      <SourceNewsCard v-show="sourceVisible(sourceId)" v-for="sourceId in ['ijingyi_new','bilibili','baidu','tieba','sspai','juejin','toutiao','qq','netease','globaltimes','nytimes','wsj','reuters','ap','bbc','aljazeera','guardian','nhk','hellogithub','gamersky','uisdc','geekpark','qbitai','ruanyifeng','pojie52','kanxue','yicai','sinafinance','woshipm','csdn','oschina','zcool','xz','anquanke','freebuf','thehackernews','securelist','checkpoint','sentinellabs','elastic','eset','microsoft','seebug','douban','maoyan','dongchedi','autohome','pcauto']" :key="sourceId" :source-id="sourceId" :dark="currentTheme === 'dark'" />
+      <SourceNewsCard :data-source-theme="sourceCardTheme(sourceId, currentTheme === 'dark')" v-show="sourceVisible(sourceId)" v-for="sourceId in ['ijingyi_new','bilibili','baidu','tieba','sspai','juejin','toutiao','qq','netease','globaltimes','nytimes','wsj','reuters','ap','bbc','aljazeera','guardian','nhk','aa_models','ai_official','cn_ai','hf_trending','ai_api_updates','hellogithub','gamersky','uisdc','geekpark','qbitai','ruanyifeng','pojie52','kanxue','yicai','sinafinance','woshipm','csdn','oschina','zcool','xz','anquanke','freebuf','thehackernews','projectzero','unit42','unknowncheats','vendor_security','securelist','checkpoint','sentinellabs','elastic','eset','microsoft','seebug','arxiv','cisa_kev','cncert','github_advisory','cve_program','crowdstrike','douban','maoyan','dongchedi','autohome','pcauto','fng','eastmoney']" :key="sourceId" :source-id="sourceId" :dark="currentTheme === 'dark'" />
 
 
 
@@ -424,7 +183,7 @@
     <div v-show="!localSearchQuery.trim()" class="dashboard-hubs-row">
     <section v-show="!localSearchQuery.trim()" class="market-hub" :class="{'market-hub-dark':currentTheme === 'dark'}" aria-label="市场行情与费用换算">
       <nav class="market-hub-tabs" aria-label="市场工具切换">
-        <button v-for="tab in [{id:'market',label:'市场行情'},{id:'currency',label:'多币种费用换算'}]" :key="tab.id" type="button" :aria-pressed="marketHubTab===tab.id" :aria-controls="`market-hub-${tab.id}`" @click="marketHubTab=tab.id">{{tab.label}}</button>
+        <button v-for="tab in [{id:'market',label:'📈 市场行情'},{id:'currency',label:'💱 多币种费用换算'}]" :key="tab.id" type="button" :aria-pressed="marketHubTab===tab.id" :aria-controls="`market-hub-${tab.id}`" @click="marketHubTab=tab.id">{{tab.label}}</button>
       </nav>
       <div id="market-hub-market" v-show="marketHubTab==='market'"><MarketOverview ref="marketOverview" :dark="currentTheme === 'dark'" /></div>
       <div id="market-hub-currency" v-show="marketHubTab==='currency'"><CurrencyConverter ref="currencyConverter" :dark="currentTheme === 'dark'" /></div>
@@ -432,13 +191,14 @@
 
 
 
-    <section v-show="!localSearchQuery.trim()" class="time-hub" :class="{'time-hub-dark': currentTheme === 'dark'}" aria-label="时间与日历">
+    <section v-show="!localSearchQuery.trim()" class="time-hub" :class="{'time-hub-dark': currentTheme === 'dark', 'time-hub-apod-open': timeHubTab === 'apod'}" aria-label="时间与日历">
       <nav class="time-hub-tabs" aria-label="时间与日历功能切换">
-        <button v-for="tab in [{id:'world',label:'世界时间'},{id:'calendar',label:'中国节假日日历'},{id:'history',label:'历史上的今天'}]" :key="tab.id" type="button" :aria-pressed="timeHubTab===tab.id" :aria-controls="`time-hub-${tab.id}`" @click="timeHubTab=tab.id">{{tab.label}}</button>
+        <button v-for="tab in [{id:'world',label:'🌍 世界时间'},{id:'calendar',label:'📅 中国节假日日历'},{id:'history',label:'📜 历史上的今天'},{id:'apod',label:'🔭 每日宇宙图'}]" :key="tab.id" type="button" :aria-pressed="timeHubTab===tab.id" :aria-controls="`time-hub-${tab.id}`" @click="timeHubTab=tab.id">{{tab.label}}</button>
       </nav>
       <div id="time-hub-world" v-show="timeHubTab==='world'"><WorldTime ref="worldTime" :dark="currentTheme === 'dark'" /></div>
       <div id="time-hub-calendar" v-show="timeHubTab==='calendar'"><ChinaCalendar ref="chinaCalendar" :dark="currentTheme === 'dark'" /></div>
       <div id="time-hub-history" v-show="timeHubTab==='history'"><HistoryToday ref="historyToday" :dark="currentTheme === 'dark'" /></div>
+      <div id="time-hub-apod" v-show="timeHubTab==='apod'"><NasaApod v-if="timeHubTab==='apod'" /></div>
     </section>
     </div>
 
@@ -460,7 +220,11 @@
 
 
 
-      <el-empty description="未找到相关内容" :image-size="200"></el-empty>
+      <el-empty description="未找到相关内容" :image-size="160">
+        <template #image>
+          <img src="../assets/retro-pc-no-match.svg" alt="" width="160" height="108">
+        </template>
+      </el-empty>
 
 
 
@@ -480,7 +244,7 @@
 
 
 
-        <CategoryIcon :icon="category.icon" :emoji="category.emoji" style="margin-right: 4px;" />
+        <CategoryPixelBadge :name="category.name" style="margin-right: 4px;" />
 
 
 
@@ -1025,6 +789,17 @@
 
 
 <script>
+import CategoryPixelBadge from './CategoryPixelBadge.vue';
+import sourceIcon0 from '../assets/hackernoon-pixels/grid.svg';
+import sourceIcon1 from '../assets/hackernoon-pixels/fire.svg';
+import sourceIcon2 from '../assets/hackernoon-pixels/laptop-code.svg';
+import sourceIcon3 from '../assets/hackernoon-pixels/lock.svg';
+import sourceIcon4 from '../assets/hackernoon-pixels/chart-line.svg';
+import sourceIcon5 from '../assets/hackernoon-pixels/paint-brush.svg';
+import sourceIcon6 from '../assets/hackernoon-pixels/location-pin.svg';
+import sourceIcon7 from '../assets/hackernoon-pixels/comments.svg';
+import { securitySourceIds, sourceCardTheme } from '../utils/source-card-themes.mjs';
+import '../styles/source-card-themes.css';
 
 
 
@@ -1035,6 +810,7 @@ import { cardScramble } from '../utils/card-scramble.mjs';
 
 
 import HistoryToday from './HistoryToday.vue';
+import NasaApod from './NasaApod.vue';
 
 
 
@@ -1103,7 +879,7 @@ import HighlightText from "./HighlightText.vue";
 
 
 
-import InteractiveStarfield from "./InteractiveStarfield.vue";
+import SearchBackground from "./SearchBackground.vue";
 
 
 
@@ -1179,11 +955,6 @@ import { matchPinyin } from '../utils/pinyin.js';
 
 
 
-// Favicon URL 缓存（模块级别，所有组件实例共享）
-
-
-
-const faviconCache = new Map();
 
 
 
@@ -1198,6 +969,12 @@ const faviconCache = new Map();
 // 导航链接组件定义
 
 
+
+// Favicon URL 缓存（模块级别，所有组件实例共享）
+
+
+
+const faviconCache = new Map();
 
 export default {
 
@@ -1215,7 +992,7 @@ export default {
 
 
 
-  components: { SourceSyncStatus, XArticles, XWordsTopics, XGlobalEvents, XGlobalTweets, XHotTweets, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, MarketOverview, WeiboHot, IthomeNews, V2exHot, GithubTrending, HackerNews, BrowserFingerprint, HighlightText, InteractiveStarfield, SearchPlanet, DocumentCopy, Search, Link, Check, SiteHealth }, // 注册组件
+  components: { CategoryPixelBadge, NasaApod, SourceSyncStatus, XArticles, XWordsTopics, XGlobalEvents, XGlobalTweets, XHotTweets, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, MarketOverview, WeiboHot, IthomeNews, V2exHot, GithubTrending, HackerNews, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check, SiteHealth }, // 注册组件
 
 
 
@@ -1261,14 +1038,15 @@ export default {
       sourceCategory: 'all',
       showAllSourceCards: false,
       sourceCategoryTabs: [
-        {id:'all',label:'全部',icon:'▦'},
-        {id:'hot',icon:'🔥',label:'热点资讯',sources:['weibo','baidu','tieba','toutiao','qq','netease','globaltimes','nytimes','wsj','reuters','ap','bbc','aljazeera','guardian','nhk']},
-        {id:'tech',icon:'💻',label:'科技开发',sources:['github','hackernews','v2ex','ithome','ijingyi_new','sspai','juejin','hellogithub','geekpark','qbitai','ruanyifeng','csdn','oschina']},
-        {id:'security',icon:'🛡️',label:'网络安全',sources:['pojie52','kanxue','xz','anquanke','freebuf','thehackernews','securelist','checkpoint','sentinellabs','elastic','eset','microsoft','seebug']},
-        {id:'business',icon:'📈',label:'财经商业',sources:['yicai','sinafinance','woshipm']},
-        {id:'design',icon:'🎨',label:'设计文娱',sources:['bilibili','gamersky','uisdc','zcool','douban','maoyan']},
-        {id:'auto',icon:'🚗',label:'汽车资讯',sources:['dongchedi','autohome','pcauto']},
-        {id:'social',icon:'𝕏',label:'X 动态',sources:['x']}
+        {id:'all',label:'全部',icon:sourceIcon0},
+        {id:'hot',icon:sourceIcon1,label:'热点资讯',sources:['weibo','baidu','tieba','toutiao','qq','netease','globaltimes','nytimes','wsj','reuters','ap','bbc','aljazeera','guardian','nhk']},
+        {id:'models',icon:sourceIcon2,label:'模型消息',sources:['aa_models','ai_official','cn_ai','hf_trending','ai_api_updates']},
+        {id:'tech',icon:sourceIcon2,label:'科技开发',sources:['github','hackernews','v2ex','ithome','ijingyi_new','sspai','juejin','hellogithub','geekpark','qbitai','ruanyifeng','csdn','oschina','arxiv']},
+        {id:'security',icon:sourceIcon3,label:'网络安全',sources:securitySourceIds},
+        {id:'business',icon:sourceIcon4,label:'财经商业',sources:['yicai','sinafinance','woshipm','fng','eastmoney']},
+        {id:'design',icon:sourceIcon5,label:'设计文娱',sources:['bilibili','gamersky','uisdc','zcool','douban','maoyan']},
+        {id:'auto',icon:sourceIcon6,label:'汽车资讯',sources:['dongchedi','autohome','pcauto']},
+        {id:'social',icon:sourceIcon7,label:'X 动态',sources:['x']}
       ],
 
 
@@ -1345,7 +1123,7 @@ export default {
 
 
 
-      selectedEngine: 'google', // 当前选择的外部搜索引擎
+      engineQueries: {}, // 各引擎的关键词独立保存
 
 
 
@@ -1357,7 +1135,7 @@ export default {
 
 
 
-      // 外部搜索引擎配置；输入框始终同步站内实时搜索
+      // 外部搜索引擎配置
 
 
 
@@ -1437,7 +1215,7 @@ export default {
       const measure = () => {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
-          if (!row.getClientRects().length || window.innerWidth <= 1000) return;
+          if (!row.getClientRects().length || window.innerWidth <= 1000 || this.timeHubTab === 'apod') return;
           const heights = [...row.children].map(card => {
             const panel = [...card.children].find(el => el.tagName === 'DIV' && getComputedStyle(el).display !== 'none');
             const content = panel?.firstElementChild;
@@ -1542,18 +1320,6 @@ export default {
 
 
   computed: {
-
-
-
-    currentEngineIcon() {
-
-
-
-      return this.searchEngines.find(engine => engine.value === this.selectedEngine)?.icon || this.searchEngines[0].icon;
-
-
-
-    },
 
 
 
@@ -1925,26 +1691,6 @@ export default {
 
 
 
-    // 搜索占位符
-
-
-
-    searchPlaceholder() {
-
-
-
-      const engine = this.searchEngines.find(e => e.value === this.selectedEngine);
-
-
-
-      return `输入关键词：实时搜索站内，回车用 ${engine?.label || 'Google'} 搜索...`;
-
-
-
-    },
-
-
-
     // 分页后的分类数据：根据当前页码和每页大小切片过滤后的数据
 
 
@@ -2082,6 +1828,7 @@ export default {
 
 
   methods: {
+    sourceCardTheme,
     selectSourceCategory(id) {
       this.sourceCategory=id;
     },
@@ -2375,37 +2122,12 @@ export default {
 
 
 
-    // 统一搜索处理
-
-
-
-    handleSearch() {
-
-
-
-      const query = this.searchText.trim();
-
-
-
+    handleEngineSearch(engine) {
+      const query = (this.engineQueries[engine.value] || '').trim();
       if (!query) return;
 
-
-
-      const engine = this.searchEngines.find(e => e.value === this.selectedEngine);
-
-
-
-      const searchUrl = engine?.url || 'https://www.google.com/search?q=';
-
-
-
-      window.open(searchUrl + encodeURIComponent(query), '_blank');
-
-
-
+      window.open(engine.url + encodeURIComponent(query), '_blank', 'noopener,noreferrer');
     },
-
-
 
     // 搜索建议获取方法
 
@@ -4645,7 +4367,7 @@ export default {
 @media (max-width:1100px){.hotspots-row.source-preview-rows > :nth-child(n+3){display:none}}
 @media (min-width:1101px) and (max-width:1399px){.hotspots-row.source-preview-rows > :nth-child(n+5){display:none}}
 @media (min-width:1400px){.hotspots-row.source-preview-rows > :nth-child(n+11){display:none}}
-.source-tab-icon{display:inline-block;min-width:1.3em;margin-right:6px;text-align:center}
+.source-tab-icon{display:inline-block;width:18px;height:18px;flex:none;margin-right:6px;vertical-align:middle;background:currentColor;-webkit-mask:var(--source-tab-glyph) center / contain no-repeat;mask:var(--source-tab-glyph) center / contain no-repeat}
 </style>
 
 
@@ -7416,5 +7138,116 @@ ul {
  .dashboard-hubs-row>.market-hub,.dashboard-hubs-row>.time-hub{height:var(--hub-compact-height,520px);display:flex;flex-direction:column;overflow:hidden}
  .dashboard-hubs-row>section>nav{flex-shrink:0}
  .dashboard-hubs-row>section>div{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-gutter:stable;overscroll-behavior:contain}
+ .dashboard-hubs-row>.time-hub.time-hub-apod-open{height:auto;align-self:start;overflow:visible}
+ .dashboard-hubs-row>.time-hub-apod-open>#time-hub-apod{flex:none;overflow:visible;scrollbar-gutter:auto}
 }
+/* Independent expandable search forms; keep the site filter above them. */
+.search-cosmic-panel .search-bar-compact {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 880px;
+}
+
+.search-bar-compact .unified-search-control { flex: none; }
+
+.engine-search-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 8px;
+}
+
+.engine-search-item {
+  --engine-panel: #f8faf9;
+  --engine-field: #ffffff;
+  --engine-border: #d4ded8;
+  --engine-hover: #edf2ef;
+  --engine-text: #26332c;
+  --engine-muted: #53635a;
+  --engine-accent: #456253;
+  --engine-focus-ring: rgb(69 98 83 / 18%);
+  min-width: 0;
+  border: 1px solid var(--engine-border);
+  border-radius: 10px;
+  background: var(--engine-panel);
+  color: var(--engine-text);
+}
+
+.engine-search-item summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 10px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 13px;
+  border-radius: 9px;
+}
+
+.engine-search-item summary::-webkit-details-marker { display: none; }
+.engine-search-item summary::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  border: solid currentColor;
+  border-width: 0 1px 1px 0;
+  transform: rotate(45deg);
+}
+
+.engine-search-item[open] summary::after { transform: rotate(225deg); }
+.dark-theme .engine-search-item {
+  --engine-panel: #14291e;
+  --engine-field: #0c1c13;
+  --engine-border: #3c5946;
+  --engine-hover: #223d2d;
+  --engine-text: #edf6ef;
+  --engine-muted: #b4cbb9;
+  --engine-accent: #a5d5b3;
+  --engine-focus-ring: rgb(165 213 179 / 22%);
+}
+
+.engine-search-item summary:hover { background: var(--engine-hover); }
+
+.engine-search-item summary:focus-visible,
+.search-bar-compact .engine-search-item .search-btn:focus-visible {
+  outline: 2px solid var(--engine-accent);
+  outline-offset: -2px;
+}
+
+.search-bar-compact .engine-search-item .unified-search-control {
+  margin: 0 6px 6px;
+  background: var(--engine-field);
+  border-color: var(--engine-border);
+}
+
+.search-bar-compact .engine-search-item .unified-search-control:focus-within {
+  border-color: var(--engine-accent);
+  box-shadow: 0 0 0 2px var(--engine-focus-ring);
+}
+
+.search-bar-compact .engine-search-item .search-input :deep(.el-input__inner) {
+  color: var(--engine-text);
+}
+
+.search-bar-compact .engine-search-item .search-input :deep(.el-input__inner::placeholder),
+.search-bar-compact .engine-search-item .search-input :deep(.el-input__clear) {
+  color: var(--engine-muted);
+}
+
+.search-bar-compact .engine-search-item .unified-search-control .search-btn {
+  color: var(--engine-accent) !important;
+}
+
+.search-bar-compact .engine-search-item .unified-search-control .search-btn:hover {
+  background: var(--engine-hover) !important;
+  color: var(--engine-text) !important;
+}
+
+@media (max-width: 700px) {
+  .engine-search-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 </style>

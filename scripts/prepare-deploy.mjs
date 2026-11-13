@@ -8,7 +8,7 @@
  *
  * 用法：npm run build:deploy
  */
-import { cp, rm, mkdir, stat, readdir } from 'node:fs/promises';
+import { cp, rm, mkdir, stat, readdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +23,7 @@ const items = [
   { from: path.join(root, 'scripts', 'refresh_sources.py'), to: path.join(dist, 'scripts', 'refresh_sources.py'), label: '采集执行与健康状态' },
   ...(await readdir(path.join(root, 'scripts'))).filter(name => /^test_.*\.py$/.test(name)).map(name => ({ from: path.join(root, 'scripts', name), to: path.join(dist, 'scripts', name), label: `采集测试 ${name}` })),
   { from: path.join(root, 'scripts', 'fetch_history_today.py'), to: path.join(dist, 'fetch_history_today.py'), label: '历史上的今天脚本' },
+  { from: path.join(root, 'scripts', 'fetch_nasa_apod.py'), to: path.join(dist, 'fetch_nasa_apod.py'), label: 'NASA 每日天文图脚本' },
   { from: path.join(root, 'scripts', 'fetch_extra_hotspots.py'), to: path.join(dist, 'fetch_extra_hotspots.py'), label: '扩展热点来源脚本' },
   { from: path.join(root, 'scripts', 'source_images.py'), to: path.join(dist, 'source_images.py'), label: '来源封面采集模块' },
   { from: path.join(root, 'scripts', 'fetch_exchange_rates.py'), to: path.join(dist, 'fetch_exchange_rates.py'), label: '多币种汇率脚本' },
@@ -57,4 +58,27 @@ for (const item of items) {
   if (!info.isDirectory()) console.log(`      ${info.size} bytes`);
 }
 
+const usageFile = path.join(dist, 'pages-usage.json');
+async function countBytes(dir) {
+  let bytes = 0;
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const file = path.join(dir, entry.name);
+    if (file === usageFile || file === path.join(dist, '.git')) continue;
+    if (entry.isDirectory()) bytes += await countBytes(file);
+    else if (entry.isFile()) bytes += (await stat(file)).size;
+  }
+  return bytes;
+}
+
+const fileBytes = await countBytes(dist);
+let deployedBytes = fileBytes;
+let manifest;
+while (true) {
+  manifest = JSON.stringify({ deployedBytes }) + '\n';
+  const total = fileBytes + Buffer.byteLength(manifest);
+  if (total === deployedBytes) break;
+  deployedBytes = total;
+}
+await writeFile(usageFile, manifest);
+console.log(`  + 发布文件总大小：${deployedBytes} bytes`);
 console.log('\ndist 已就绪，可以直接同步到 Pages 仓库。');

@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-31T15:23:23.076643+00:00",
-  "source": "Yahoo Finance",
+  "updatedAt": "2026-11-13T13:08:10.434348+00:00",
+  "source": "Eastmoney",
   "items": [
     {
       "symbol": "000001.SS",
@@ -90,31 +90,21 @@
       "category": "A 股",
       "kind": "stock",
       "currency": "CNY",
-      "price": 1392.05,
-      "previousClose": 1354.0,
-      "change": 38.049999999999955,
-      "changePercent": 2.810192023633675,
-      "quoteAt": "2026-10-30T07:00:01+00:00",
-      "fetchedAt": "2026-10-31T15:22:43.615240+00:00",
-      "series": [
-        1372.0,
-        1370.7099609375,
-        1369.510009765625,
-        1371.510009765625,
-        1379.93994140625,
-        1388.5799560546875,
-        1386.8599853515625,
-        1389.1500244140625,
-        1392.050048828125
-      ],
+      "price": 1435.26,
+      "previousClose": 1410.27,
+      "change": 24.99000000000001,
+      "changePercent": 1.7720011061711596,
+      "quoteAt": "2026-11-13T08:11:35+00:00",
+      "fetchedAt": "2026-11-13T13:07:06.337474+00:00",
+      "series": [],
       "url": "https://finance.yahoo.com/quote/600519.SS/",
-      "marketCapUsd": 261566548824.12183,
-      "marketCap": 1740176092672,
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 269685718806.98642,
+      "marketCap": 1794192118651,
       "marketCapCurrency": "CNY",
       "marketCapSource": "Eastmoney",
-      "marketCapFetchedAt": "2026-10-31T15:17:35.584657+00:00",
-      "marketCapFxAt": "2026-10-30",
-      "marketCapPreserved": true
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
     },
     {
       "symbol": "300750.SZ",
@@ -122,34 +112,285 @@
       "category": "A 股",
       "kind": "stock",
       "currency": "CNY",
-      "price": 232.92,
-      "previousClose": 229.07,
-      "change": 3.8499999999999943,
-      "changePercent": 1.6807089535949684,
-      "quoteAt": "2026-10-30T07:04:37+00:00",
-      "fetchedAt": "2026-10-31T15:22:49.056511+00:00",
-      "series": [
-        233.63999938964844,
-        232.16000366210938,
-        232.9499969482422,
-        234.0500030517578,
-        234.0500030517578,
-        234.0500030517578,
-        234.0500030517578,
-        235.08999633789062,
-        233.7100067138672,
-        233.52000427246094,
-        233.41000366210938,
-        232.9199981689453
-      ],
+      "price": 237.7,
+      "previousClose": 240.0,
+      "change": -2.3000000000000114,
+      "changePercent": -0.9583333333333381,
+      "quoteAt": "2026-11-13T07:34:45+00:00",
+      "fetchedAt": "2026-11-13T13:07:06.458412+00:00",
+      "series": [],
       "url": "https://finance.yahoo.com/quote/300750.SZ/",
-      "marketCapUsd": 162001382384.07312,
-      "marketCap": 1077778996863,
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 165325985714.80106,
+      "marketCap": 1099897250362,
       "marketCapCurrency": "CNY",
       "marketCapSource": "Eastmoney",
-      "marketCapFetchedAt": "2026-10-31T15:17:35.584657+00:00",
-      "marketCapFxAt": "2026-10-30",
-      "marketCapPreserved": true
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "601318.SS",
+      "name": "中国平安",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 53.8,
+      "previousClose": 53.33,
+      "change": 0.46999999999999886,
+      "changePercent": 0.8813050815675958,
+      "quoteAt": "2026-11-13T08:11:58+00:00",
+      "fetchedAt": "2026-11-13T13:07:05.912701+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/601318.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 146431051020.00632,
+      "marketCap": 974191139331,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "600036.SS",
+      "name": "招商银行",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 42.93,
+      "previousClose": 42.63,
+      "change": 0.29999999999999716,
+      "changePercent": 0.70372976776917,
+      "quoteAt": "2026-11-13T08:11:55+00:00",
+      "fetchedAt": "2026-11-13T13:07:09.337890+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/600036.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 162739252303.65704,
+      "marketCap": 1082687971651,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "000858.SZ",
+      "name": "五粮液",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 73.38,
+      "previousClose": 72.63,
+      "change": 0.75,
+      "changePercent": 1.0326311441553078,
+      "quoteAt": "2026-11-13T07:34:12+00:00",
+      "fetchedAt": "2026-11-13T13:07:09.451083+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/000858.SZ/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 42813268710.93809,
+      "marketCap": 284832395407,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "002594.SZ",
+      "name": "比亚迪",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 79.99,
+      "previousClose": 80.32,
+      "change": -0.3299999999999983,
+      "changePercent": -0.4108565737051772,
+      "quoteAt": "2026-11-13T07:34:33+00:00",
+      "fetchedAt": "2026-11-13T13:07:09.708964+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/002594.SZ/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 109619058339.07019,
+      "marketCap": 729284633224,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "600900.SS",
+      "name": "长江电力",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 29.91,
+      "previousClose": 29.61,
+      "change": 0.3000000000000007,
+      "changePercent": 1.013171225937186,
+      "quoteAt": "2026-11-13T08:11:34+00:00",
+      "fetchedAt": "2026-11-13T13:07:10.700129+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/600900.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 110003816664.31181,
+      "marketCap": 731844391886,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "601899.SS",
+      "name": "紫金矿业",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 26.38,
+      "previousClose": 26.78,
+      "change": -0.40000000000000213,
+      "changePercent": -1.49365197908888,
+      "quoteAt": "2026-11-13T08:11:39+00:00",
+      "fetchedAt": "2026-11-13T13:07:11.415269+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/601899.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 105437517112.5374,
+      "marketCap": 701465257598,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "000333.SZ",
+      "name": "美的集团",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 90.55,
+      "previousClose": 87.99,
+      "change": 2.5600000000000023,
+      "changePercent": 2.9094215251733178,
+      "quoteAt": "2026-11-13T07:34:18+00:00",
+      "fetchedAt": "2026-11-13T13:07:12.855018+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/000333.SZ/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 103851786452.52446,
+      "marketCap": 690915550090,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "300059.SZ",
+      "name": "东方财富",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 18.29,
+      "previousClose": 18.23,
+      "change": 0.05999999999999872,
+      "changePercent": 0.3291278113000478,
+      "quoteAt": "2026-11-13T07:34:51+00:00",
+      "fetchedAt": "2026-11-13T13:07:12.521111+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/300059.SZ/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 43498028786.54421,
+      "marketCap": 289388035714,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "601012.SS",
+      "name": "隆基绿能",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 11.7,
+      "previousClose": 11.78,
+      "change": -0.08000000000000007,
+      "changePercent": -0.6791171477079803,
+      "quoteAt": "2026-11-13T08:11:59+00:00",
+      "fetchedAt": "2026-11-13T13:07:12.609157+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/601012.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 13327032879.796782,
+      "marketCap": 88663417046,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "600276.SS",
+      "name": "恒瑞医药",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 48.07,
+      "previousClose": 47.93,
+      "change": 0.14000000000000057,
+      "changePercent": 0.2920926350928449,
+      "quoteAt": "2026-11-13T08:11:32+00:00",
+      "fetchedAt": "2026-11-13T13:07:13.518003+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/600276.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 47956559987.82486,
+      "marketCap": 319050197943,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "002415.SZ",
+      "name": "海康威视",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 34.45,
+      "previousClose": 33.88,
+      "change": 0.5700000000000003,
+      "changePercent": 1.6824085005903193,
+      "quoteAt": "2026-11-13T07:34:39+00:00",
+      "fetchedAt": "2026-11-13T13:07:13.546094+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/002415.SZ/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 47457473417.30674,
+      "marketCap": 315729824898,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
+    },
+    {
+      "symbol": "601988.SS",
+      "name": "中国银行",
+      "category": "A 股",
+      "kind": "stock",
+      "currency": "CNY",
+      "price": 7.18,
+      "previousClose": 7.04,
+      "change": 0.13999999999999968,
+      "changePercent": 1.988636363636359,
+      "quoteAt": "2026-11-13T08:11:46+00:00",
+      "fetchedAt": "2026-11-13T13:07:14.831226+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/601988.SS/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 347740852383.9228,
+      "marketCap": 2313485116825,
+      "marketCapCurrency": "CNY",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00",
+      "marketCapFxAt": "2026-10-30"
     },
     {
       "symbol": "^GSPC",
@@ -247,34 +488,20 @@
       "category": "美股",
       "kind": "stock",
       "currency": "USD",
-      "price": 344.63,
-      "previousClose": 348.91,
-      "change": -4.28000000000003,
-      "changePercent": -1.2266773666561661,
-      "quoteAt": "2026-10-30T20:00:01+00:00",
-      "fetchedAt": "2026-10-31T15:22:45.164613+00:00",
-      "series": [
-        345.3299865722656,
-        346.3299865722656,
-        348.5,
-        347.69000244140625,
-        346.9200134277344,
-        347.5,
-        346.9549865722656,
-        346.54998779296875,
-        344.5849914550781,
-        343.1341857910156,
-        343.2749938964844,
-        343.5199890136719,
-        344.7900085449219,
-        344.6300048828125
-      ],
+      "price": 354.88,
+      "previousClose": 355.36,
+      "change": -0.4800000000000182,
+      "changePercent": -0.1350742908599781,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:16.748989+00:00",
+      "series": [],
       "url": "https://finance.yahoo.com/quote/AAPL/",
-      "marketCapUsd": 5029592253400.0,
-      "marketCap": 5029592253400.0,
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 5157180748160,
+      "marketCap": 5157180748160,
       "marketCapCurrency": "USD",
-      "marketCapSource": "Nasdaq",
-      "marketCapFetchedAt": "2026-10-31T15:25:50.733592+00:00"
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
     },
     {
       "symbol": "MSFT",
@@ -282,34 +509,20 @@
       "category": "美股",
       "kind": "stock",
       "currency": "USD",
-      "price": 521.91,
-      "previousClose": 530.14,
-      "change": -8.230000000000018,
-      "changePercent": -1.5524201154412076,
-      "quoteAt": "2026-10-30T20:00:01+00:00",
-      "fetchedAt": "2026-10-31T15:22:46.562689+00:00",
-      "series": [
-        523.9550170898438,
-        522.0999755859375,
-        522.0430297851562,
-        521.77001953125,
-        523.0999755859375,
-        523.4149780273438,
-        521.3400268554688,
-        521.1900024414062,
-        521.1400146484375,
-        519.5800170898438,
-        519.6300048828125,
-        522.219970703125,
-        521.9000244140625,
-        521.9099731445312
-      ],
+      "price": 523.0,
+      "previousClose": 521.125,
+      "change": 1.875,
+      "changePercent": 0.3597985128328136,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:16.708455+00:00",
+      "series": [],
       "url": "https://finance.yahoo.com/quote/MSFT/",
-      "marketCapUsd": 3875805198634.0,
-      "marketCap": 3875805198634.0,
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 3883899750696,
+      "marketCap": 3883899750696,
       "marketCapCurrency": "USD",
-      "marketCapSource": "Nasdaq",
-      "marketCapFetchedAt": "2026-10-31T15:25:52.561302+00:00"
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
     },
     {
       "symbol": "NVDA",
@@ -317,34 +530,209 @@
       "category": "美股",
       "kind": "stock",
       "currency": "USD",
-      "price": 204.64,
-      "previousClose": 213.66,
-      "change": -9.02000000000001,
-      "changePercent": -4.22166058223346,
-      "quoteAt": "2026-10-30T20:00:01+00:00",
-      "fetchedAt": "2026-10-31T15:22:46.920682+00:00",
-      "series": [
-        207.78500366210938,
-        206.13999938964844,
-        206.91000366210938,
-        206.16000366210938,
-        205.87049865722656,
-        204.72000122070312,
-        203.94509887695312,
-        203.3800048828125,
-        202.8000030517578,
-        201.57000732421875,
-        202.11000061035156,
-        202.77499389648438,
-        204.80999755859375,
-        204.63999938964844
-      ],
+      "price": 166.19,
+      "previousClose": 173.73,
+      "change": -7.539999999999992,
+      "changePercent": -4.3400679214873605,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:19.604320+00:00",
+      "series": [],
       "url": "https://finance.yahoo.com/quote/NVDA/",
-      "marketCapUsd": 4931824000000.0,
-      "marketCap": 4931824000000.0,
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 4005179000000,
+      "marketCap": 4005179000000,
       "marketCapCurrency": "USD",
-      "marketCapSource": "Nasdaq",
-      "marketCapFetchedAt": "2026-10-31T15:25:50.492225+00:00"
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 298.7,
+      "previousClose": 293.45,
+      "change": 5.25,
+      "changePercent": 1.7890611688532971,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:19.068570+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/GOOGL/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 3672217800000,
+      "marketCap": 3672217800000,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 267.44,
+      "previousClose": 266.17,
+      "change": 1.2699999999999818,
+      "changePercent": 0.47713867077431027,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:18.877752+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/AMZN/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 2891865708557,
+      "marketCap": 2891865708557,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "META",
+      "name": "Meta",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 623.61,
+      "previousClose": 628.77,
+      "change": -5.159999999999968,
+      "changePercent": -0.8206498401641249,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:20.769134+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/META/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 1619042007783,
+      "marketCap": 1619042007783,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 397.45,
+      "previousClose": 390.84,
+      "change": 6.610000000000014,
+      "changePercent": 1.691229147477232,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:19.850469+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/TSLA/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 1571023645638,
+      "marketCap": 1571023645638,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "AVGO",
+      "name": "Broadcom",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 364.36,
+      "previousClose": 345.22,
+      "change": 19.139999999999986,
+      "changePercent": 5.544290597300268,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:21.390675+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/AVGO/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 1739319777611,
+      "marketCap": 1739319777611,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "WMT",
+      "name": "Walmart",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 126.19,
+      "previousClose": 125.67,
+      "change": 0.519999999999996,
+      "changePercent": 0.4137821277950155,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:21.726052+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/WMT/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 1001159438152,
+      "marketCap": 1001159438152,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "COST",
+      "name": "Costco",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 1092.21,
+      "previousClose": 1087.61,
+      "change": 4.600000000000136,
+      "changePercent": 0.4229457250301245,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:22.542743+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/COST/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 483990306271,
+      "marketCap": 483990306271,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "AMD",
+      "name": "AMD",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 585.3,
+      "previousClose": 552.9,
+      "change": 32.39999999999998,
+      "changePercent": 5.8600108518719445,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:25.061134+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/AMD/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 959943068010,
+      "marketCap": 959943068010,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
+    },
+    {
+      "symbol": "NFLX",
+      "name": "Netflix",
+      "category": "美股",
+      "kind": "stock",
+      "currency": "USD",
+      "price": 62.69,
+      "previousClose": 64.54,
+      "change": -1.8500000000000085,
+      "changePercent": -2.8664394174155694,
+      "quoteAt": "2026-11-12T21:00:00+00:00",
+      "fetchedAt": "2026-11-13T13:07:23.096077+00:00",
+      "series": [],
+      "url": "https://finance.yahoo.com/quote/NFLX/",
+      "quoteSource": "Eastmoney",
+      "marketCapUsd": 257425570859,
+      "marketCap": 257425570859,
+      "marketCapCurrency": "USD",
+      "marketCapSource": "Eastmoney",
+      "marketCapFetchedAt": "2026-11-13T13:07:50.452138+00:00"
     },
     {
       "ticker": "BTC",
@@ -401,7 +789,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "ETH",
@@ -458,7 +847,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "SOL",
@@ -515,7 +905,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "BNB",
@@ -572,7 +963,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "XRP",
@@ -629,7 +1021,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "DOGE",
@@ -686,7 +1079,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "ADA",
@@ -743,7 +1137,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "AVAX",
@@ -800,7 +1195,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "TRX",
@@ -857,7 +1253,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "DOT",
@@ -914,7 +1311,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "LINK",
@@ -971,7 +1369,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "LTC",
@@ -1028,7 +1427,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "BCH",
@@ -1085,7 +1485,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "XLM",
@@ -1142,14 +1543,15 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
-      "ticker": "TON",
+      "ticker": "GRAM",
       "nameZh": "开放网络币",
-      "nameEn": "Toncoin",
+      "nameEn": "Gram (原 Toncoin)",
       "symbol": "TON11419-USD",
-      "name": "开放网络币 Toncoin",
+      "name": "开放网络币 Gram (原 Toncoin)",
       "category": "加密货币",
       "kind": "crypto",
       "currency": "USD",
@@ -1250,7 +1652,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "SUI",
@@ -1307,7 +1710,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "NEAR",
@@ -1364,7 +1768,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "APT",
@@ -1421,7 +1826,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "ICP",
@@ -1478,7 +1884,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "UNI",
@@ -1535,7 +1942,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "AAVE",
@@ -1592,7 +2000,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "FIL",
@@ -1649,7 +2058,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "ATOM",
@@ -1706,7 +2116,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "ETC",
@@ -1763,7 +2174,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "VET",
@@ -1820,7 +2232,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "SHIB",
@@ -1877,7 +2290,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "PEPE",
@@ -1934,7 +2348,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "USDT",
@@ -1991,7 +2406,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "USDC",
@@ -2048,7 +2464,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "DAI",
@@ -2105,7 +2522,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "POL",
@@ -2161,7 +2579,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "ARB",
@@ -2218,7 +2637,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     },
     {
       "ticker": "OP",
@@ -2275,7 +2695,8 @@
       "marketCapCurrency": "USD",
       "marketCapSource": "CoinGecko",
       "marketCapFetchedAt": "2026-10-31T15:25:50.279912+00:00",
-      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00"
+      "marketCapQuoteAt": "2026-10-31T15:24:38+00:00",
+      "marketCapPreserved": true
     }
   ]
 }

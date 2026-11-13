@@ -1,5 +1,5 @@
 /* Shared palette mirrors CommandLibrary's light/dark console without changing tools. */
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) {
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) {
  --el-text-color-primary: #b0d4ba; --el-text-color-regular: #b0d4ba; --el-text-color-secondary: #8ca995;
  --el-border-color: #344b3d; --el-border-color-light: #263c2e;
  --el-bg-color: #080f0b; --el-fill-color-blank: #0b140e; --el-fill-color-light: #14251b;
@@ -10,7 +10,7 @@ body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, 
  border-radius: 6px; box-shadow: 0 8px 28px rgba(0,0,0,.15);
  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace; color-scheme: dark;
 }
-body:not(.dark) :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) {
+body:not(.dark) :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) {
  --el-text-color-primary: #294c38; --el-text-color-regular: #294c38; --el-text-color-secondary: #5e7567;
  --el-border-color: #b9cfc1; --el-border-color-light: #d4e1d9;
  --el-bg-color: #f7faf8; --el-fill-color-blank: #fff; --el-fill-color-light: #edf4ef;
@@ -19,14 +19,14 @@ body:not(.dark) :is(#shortcut-library, #network-reference, #utility-toolbox, #im
  background: linear-gradient(rgba(56,106,80,.025) 1px, transparent 1px), #f7faf8;
  background-size: 100% 4px; border-color: #c6d8cd; box-shadow: 0 8px 24px rgba(40,75,53,.05); color-scheme: light;
 }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) h2 { font: 400 18px/1.5 ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace; letter-spacing: .04em; }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) :is(button,input,select,textarea) { border-radius: 3px; font-family: inherit; }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) button { background: var(--el-fill-color-blank); color: var(--el-text-color-primary); border-color: var(--el-border-color); }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) :is(button:hover:not(:disabled),button[aria-pressed="true"],button[aria-selected="true"]) { background: var(--el-color-primary-light-9); color: var(--console-selected); border-color: var(--console-hover-border); }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) :is(input,select,textarea)::placeholder { color: var(--el-text-color-secondary); opacity: 1; }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) :is(button,input,select,textarea):focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 2px; }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) :is(.shortcut-card,.network-card,.subnet-results,.basic-machine) { background: var(--console-card); border-color: var(--el-border-color-light); border-radius: 3px; }
-body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) :is(.shortcut-card,.network-card):hover { border-color: var(--console-hover-border); }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) h2 { font: 400 18px/1.5 ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace; letter-spacing: .04em; }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) :is(button,input,select,textarea) { border-radius: 3px; font-family: inherit; }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) button { background: var(--el-fill-color-blank); color: var(--el-text-color-primary); border-color: var(--el-border-color); }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) :is(button:hover:not(:disabled),button[aria-pressed="true"],button[aria-selected="true"]) { background: var(--el-color-primary-light-9); color: var(--console-selected); border-color: var(--console-hover-border); }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) :is(input,select,textarea)::placeholder { color: var(--el-text-color-secondary); opacity: 1; }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) :is(button,input,select,textarea):focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 2px; }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) :is(.shortcut-card,.network-card,.subnet-results,.basic-machine) { background: var(--console-card); border-color: var(--el-border-color-light); border-radius: 3px; }
+body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) :is(.shortcut-card,.network-card):hover { border-color: var(--console-hover-border); }
 /* Shared by every shortcut category: raised key face, bevel and keyboard base. */
 body #shortcut-library kbd {
  display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box;
@@ -42,7 +42,7 @@ body.dark #shortcut-library kbd {
  text-shadow:0 1px 0 #08120c;
 }
 body #utility-toolbox .basic-keys .basic-equals { background: var(--el-color-primary-light-9)!important; color: var(--console-selected)!important; border-color: var(--console-hover-border); }
-@media(max-width:680px) { body :is(#shortcut-library, #network-reference, #utility-toolbox, #image-tools, #text-tools, #system-tools, #electricity-library, #daily-food, #reverse-handbook, #linux-terminal, #crypto-playground, #computer-fundamentals, #system-installation) h2 { font-size: 16px; } }
+@media(max-width:680px) { body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) h2 { font-size: 16px; } }
 /* Shortcut filters use the same raised keyboard treatment as their key labels. */
 body #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) button {
  display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:33px;padding:5px 10px;
@@ -120,21 +120,26 @@ body.dark .china-calendar .calendar-day:hover {border-color:#83a88f;}
 /* Site-wide input skin. Form semantics, sizes and numeric controls remain unchanged. */
 #app .navigation-container{--field-bg:#fff;--field-text:#294c38;--field-border:#b9cfc1;--field-hover:#7f9f8a;--field-focus:#527d63;--field-placeholder:#748879;--field-soft:#edf4ef;--field-font:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace}
 body.dark #app .navigation-container{--field-bg:#0b140e;--field-text:#b0d4ba;--field-border:#344b3d;--field-hover:#83a88f;--field-focus:#95b9a0;--field-placeholder:#759180;--field-soft:#14251b}
-#app .navigation-container :is(input,textarea,select):not(.el-input__inner):not(.el-select__input):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="hidden"]){background:var(--field-bg)!important;color:var(--field-text)!important;border:1px solid var(--field-border)!important;border-radius:3px!important;font-family:var(--field-font)!important;caret-color:var(--field-text);color-scheme:light}
+#app .navigation-container :is(input,textarea,select):not(.el-input__inner):not(.el-select__input):not(#linux-command-input):not(:where(#crypto-playground textarea)):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="hidden"]){background:var(--field-bg)!important;color:var(--field-text)!important;border:1px solid var(--field-border)!important;border-radius:3px!important;font-family:var(--field-font)!important;caret-color:var(--field-text);color-scheme:light}
 body.dark #app .navigation-container :is(input,textarea,select){color-scheme:dark}
 #app .navigation-container :is(.el-input__wrapper,.el-select__wrapper,.el-textarea__inner){background:var(--field-bg)!important;color:var(--field-text)!important;border-radius:3px!important;box-shadow:0 0 0 1px var(--field-border) inset!important;font-family:var(--field-font)!important}
 #app .navigation-container :is(.el-input__inner,.el-select__input,.el-select__selected-item){color:var(--field-text)!important;font-family:var(--field-font)!important;caret-color:var(--field-text)}
-#app .navigation-container :is(input,textarea)::placeholder,#app .navigation-container .el-select__placeholder{color:var(--field-placeholder)!important;opacity:1}
+#app .navigation-container :is(input,textarea):not(#linux-command-input):not(:where(#crypto-playground textarea))::placeholder,#app .navigation-container .el-select__placeholder{color:var(--field-placeholder)!important;opacity:1}
 #app .navigation-container :is(.el-input__wrapper:hover,.el-select__wrapper:hover,.el-textarea__inner:hover){box-shadow:0 0 0 1px var(--field-hover) inset!important}
 #app .navigation-container :is(.el-input__wrapper.is-focus,.el-select__wrapper.is-focused,.el-textarea__inner:focus){box-shadow:0 0 0 1px var(--field-border) inset!important;outline:none!important;outline-offset:0}
-#app .navigation-container :is(input,textarea,select):not(.el-input__inner):not(.el-select__input):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):focus-visible{border-color:var(--field-border)!important;outline:none!important;outline-offset:0}
+#app .navigation-container :is(input,textarea,select):not(.el-input__inner):not(.el-select__input):not(#linux-command-input):not(:where(#crypto-playground textarea)):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):focus-visible{border-color:var(--field-border)!important;outline:none!important;outline-offset:0}
 /* Main search is one continuous frame, not nested double borders. */
-#app .navigation-container .search-bar-compact .unified-search-control{background:var(--field-bg)!important;border:1px solid var(--field-border)!important;border-radius:3px!important;box-shadow:none!important}
+#app .navigation-container .search-bar-compact .unified-search-control{background:transparent!important;border:1px solid var(--field-border)!important;border-radius:3px!important;box-shadow:none!important}
 #app .navigation-container .search-bar-compact .unified-search-control:focus-within{border-color:var(--field-border)!important;outline:none!important;outline-offset:0}
 #app .navigation-container .search-bar-compact .unified-search-control :is(.el-input__wrapper,.el-input__wrapper:hover,.el-input__wrapper.is-focus){background:transparent!important;box-shadow:none!important;outline:none!important}
 #app .navigation-container .search-bar-compact .unified-search-control :is(.search-btn,.paste-btn){background:transparent!important;color:var(--field-text)!important;border-color:var(--field-border)!important;border-radius:0!important}
 #app .navigation-container .search-bar-compact .unified-search-control :is(.search-btn:hover,.paste-btn:hover){background:var(--field-soft)!important;color:var(--field-text)!important}
 #app .navigation-container select option{background:var(--field-bg)!important;color:var(--field-text)!important}
+/* Only the external-engine disclosure cards and their expanded forms are transparent. */
+#app .navigation-container .search-bar-compact .engine-search-item{background:transparent;--engine-hover:rgb(69 98 83 / 12%)}
+#app .navigation-container .dark-theme .search-bar-compact .engine-search-item{--engine-hover:rgb(165 213 179 / 13%)}
+#app .navigation-container .search-bar-compact .engine-search-item .unified-search-control{background:transparent!important}
+#app .navigation-container .search-cosmic-panel > .search-wave ~ .search-bar-compact .engine-search-item > summary{color:#fff}
 /* Element Plus menus are teleported under body, outside the main container. */
 :is(.homepage-engine-dropdown,.el-autocomplete-suggestion){--el-bg-color-overlay:#fff;--el-text-color-regular:#294c38;--el-text-color-primary:#294c38;--el-fill-color-light:#edf4ef;--el-color-primary:#386a50;--el-border-color-light:#b9cfc1;background:#fff!important;color:#294c38!important;border-color:#b9cfc1!important;border-radius:3px!important;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
 body.dark :is(.homepage-engine-dropdown,.el-autocomplete-suggestion){--el-bg-color-overlay:#0b140e;--el-text-color-regular:#b0d4ba;--el-text-color-primary:#b0d4ba;--el-fill-color-light:#14251b;--el-color-primary:#d0e7d7;--el-border-color-light:#344b3d;background:#0b140e!important;color:#b0d4ba!important;border-color:#344b3d!important}
@@ -154,13 +159,3 @@ body.dark :is(.homepage-engine-dropdown,.el-autocomplete-suggestion) .el-popper_
  :is(input[type="checkbox"],input[type="radio"],input[type="color"],input[type="file"]) {cursor:pointer;}
 }
 
-/* Learning modules use the same console surfaces and states as the tools above. */
-body :is(#crypto-playground, #computer-fundamentals, #system-installation) :is(.card,.practice,.installation-prep,.installation-lesson,.knowledge-diagram) {
- background:var(--console-card); border-color:var(--el-border-color-light); border-radius:3px;
-}
-body :is(#crypto-playground, #computer-fundamentals, #system-installation) :is(.intro,.installation-intro,.example,.scene-tip,code,.installation-code pre) {border-radius:3px;}
-body :is(#computer-fundamentals, #system-installation) h2 button {background:transparent;border:0;padding:0;color:inherit;text-align:left;}
-body :is(#crypto-playground, #computer-fundamentals, #system-installation) button[aria-current="step"] {background:var(--ui-accent-soft);color:var(--console-selected);border-color:var(--console-hover-border);}
-body :is(#crypto-playground, #computer-fundamentals, #system-installation) :is(a,summary):focus-visible {outline:2px solid var(--ui-focus);outline-offset:2px;}
-body :is(#computer-fundamentals, #system-installation) :is(input,progress) {accent-color:var(--ui-accent);}
-body #crypto-playground [role="alert"] {color:var(--el-color-danger,#c34c45);}

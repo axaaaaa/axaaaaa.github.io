@@ -6,7 +6,7 @@
 
 
 
-  <header class="events-header"><div class="events-title-line"><h2 id="global-events-heading">{{selectedDay==='previous'?'前一天海外在聊什么':'昨天海外在聊什么'}}</h2><div class="events-notes"><span>图文热点 · 点击查看 X 原文</span><span>自动滚动 · 悬停暂停 · 点击打开 X 原文</span></div></div><div class="events-actions"><div class="events-day-tabs" role="group" aria-label="海外热点日期"><button type="button" :aria-pressed="selectedDay==='latest'" @click="changeDay('latest')">最新一天</button><button type="button" :aria-pressed="selectedDay==='previous'" @click="changeDay('previous')">前一天</button></div><span>数据 {{dataDate.slice(5)}}（UTC）{{error?' · 缓存':''}}</span><button type="button" :aria-pressed="paused" @click="paused=!paused">{{paused?'继续轮播':'暂停轮播'}}</button><a href="https://xbangdan.com/global/" target="_blank" rel="noopener noreferrer">来源：X榜单海外 ↗</a></div></header>
+  <header class="events-header"><div class="events-title-line"><h2 id="global-events-heading">{{selectedDay==='previous'?'前一天海外在聊什么':'昨天海外在聊什么'}}</h2></div><div class="events-actions"><div class="events-day-tabs" role="group" aria-label="海外热点日期"><button type="button" :aria-pressed="selectedDay==='latest'" @click="changeDay('latest')">最新一天</button><button type="button" :aria-pressed="selectedDay==='previous'" @click="changeDay('previous')">前一天</button></div><span>数据 {{dataDate.slice(5)}}（UTC）{{error?' · 缓存':''}}</span><button type="button" :aria-pressed="paused" @click="paused=!paused">{{paused?'继续轮播':'暂停轮播'}}</button><a href="https://xbangdan.com/global/" target="_blank" rel="noopener noreferrer">来源：X榜单海外 ↗</a></div></header>
 
 
 
@@ -243,7 +243,7 @@ export default {
 
 
 
-.events-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.events-header h2{margin:0;font-size:17px;font-weight:700}.events-header p{margin:5px 0 0;font-size:12px;color:var(--ev-muted)}.events-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--ev-muted);font-size:11px}.events-actions a{color:inherit;text-decoration:none}
+.events-header{position:relative;inset-block-start:-9px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.events-header h2{margin:0;font-size:17px;font-weight:700}.events-header p{margin:5px 0 0;font-size:12px;color:var(--ev-muted)}.events-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--ev-muted);font-size:11px}.events-actions a{color:inherit;text-decoration:none}
 
 
 

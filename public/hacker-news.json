@@ -3,14 +3,15 @@
   "items": [
     {
       "id": 50399933,
-      "title": "Libghostty 1.0",
+      "title": "Libghostty 1.0 版本",
       "url": "https://news.ycombinator.com/item?id=50399933",
       "author": "mfiguiere",
       "points": 661,
       "replies": 102,
       "originalTitle": "Libghostty 1.0",
-      "translationStatus": "original",
-      "meta": "英文原题 · 翻译待更新"
+      "translationStatus": "translated",
+      "meta": "中文译名",
+      "translationMethod": "editor"
     },
     {
       "id": 50401740,
@@ -179,14 +180,15 @@
     },
     {
       "id": 50401867,
-      "title": "Asahi Linux Progress Linux 7.3",
+      "title": "Asahi Linux 进展：Linux 7.3",
       "url": "https://news.ycombinator.com/item?id=50401867",
       "author": "ackyshake",
       "points": 181,
       "replies": 139,
       "originalTitle": "Asahi Linux Progress Linux 7.3",
-      "translationStatus": "original",
-      "meta": "英文原题 · 翻译待更新"
+      "translationStatus": "translated",
+      "meta": "中文译名",
+      "translationMethod": "editor"
     },
     {
       "id": 50394855,

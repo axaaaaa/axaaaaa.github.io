@@ -7,13 +7,19 @@ on:
     - cron: '23 */3 * * *'
 permissions:
   contents: read
+  pages: write
+  id-token: write
 concurrency:
   group: pages-news
   cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    env:
+      ARGOS_PACKAGES_DIR: ${{ github.workspace }}/.argos-models
+      ARGOS_DEVICE_TYPE: cpu
+      ARGOS_INTRA_THREADS: "2"
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,6 +29,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Cache offline English-Chinese model
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.ARGOS_PACKAGES_DIR }}
+          key: argos-en-zh-1.9-v1
+      - name: Prepare offline Argos translation
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
+          python -m pip install argostranslate==1.11.0
+          python -c "import sys; sys.path.insert(0, 'scripts'); from fetch_extra_hotspots import prepare_offline_translation, translate_title; prepare_offline_translation(); print(translate_title('Security news'))"
+      - name: Restore last published snapshots
+        run: |
+          git clone --depth 1 --branch main https://github.com/axaaaaa/axaaaaa.github.io.git published-snapshots
+          mkdir -p public
+          for f in news.json github-trending.json v2ex-hot.json weibo-hot.json hacker-news.json x-hot.json x-global.json x-words.json x-articles.json markets.json exchange-rates.json extra-hotspots.json history-today.json nasa-apod.json collection-health.json; do
+            if [ -f "published-snapshots/$f" ]; then cp "published-snapshots/$f" "public/$f"; fi
+          done
+          if [ -d published-snapshots/source-covers ]; then cp -R published-snapshots/source-covers public/; fi
+          rm -rf published-snapshots
       - uses: actions/cache/restore@v4
         with:
           path: |
@@ -70,22 +95,10 @@ jobs:
       - run: python -m unittest discover -s scripts -p test_history_today.py
       - run: python -m unittest discover -s scripts -p test_hacker_news.py
       - run: python -m unittest discover -s scripts -p test_refresh_sources.py
-      - run: python scripts/fetch_news.py
-      - run: python scripts/fetch_github_trending.py
-      - run: python scripts/fetch_v2ex.py
-      - run: python scripts/fetch_weibo.py
-      - run: python scripts/fetch_hacker_news.py
-      - run: python scripts/fetch_exchange_rates.py
-      - run: python scripts/fetch_markets.py
       - run: python -m pip install playwright==1.64.1
       - run: python -m playwright install --with-deps chromium
-      - run: xvfb-run -a python scripts/fetch_extra_hotspots.py
-      - run: xvfb-run -a python scripts/fetch_x_hot.py
-      - run: xvfb-run -a python scripts/fetch_x_global.py
-      - run: xvfb-run -a python scripts/fetch_x_words.py
-      - run: xvfb-run -a python scripts/fetch_x_articles.py
-      - run: python scripts/fetch_history_today.py
-      - run: python scripts/refresh_sources.py --summarize
+      - name: Collect sources with bounded retries and snapshot fallback
+        run: xvfb-run -a python scripts/refresh_sources.py
       - run: python -c "from scripts.source_images import prune_all_covers; prune_all_covers()"
       - uses: actions/cache/save@v4
         with:
@@ -107,23 +120,12 @@ jobs:
           key: news-source-${{ github.run_id }}-${{ github.run_attempt }}
       - run: npm ci
       - run: npm run build:deploy
-      - name: Push dist to axaaaaa/axaaaaa.github.io
-        env:
-          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+      - name: Deploy static site with GitHub Pages
         run: |
-          if [ -z "$PAGES_TOKEN" ]; then
-            echo "::warning::Secret PAGES_TOKEN 未配置，跳过用户主页部署"
-            exit 0
-          fi
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git clone --depth 1 "https://x-access-token:${PAGES_TOKEN}@github.com/axaaaaa/axaaaaa.github.io.git" user-site
-          cd user-site
-          # 清空旧产物，但保留 .nojekyll 和 CNAME（自定义域名）
-          find . -mindepth 1 -maxdepth 1 ! -name '.nojekyll' ! -name 'CNAME' ! -name '.git' -exec rm -rf {} +
-          cp -r ../dist/. .
-          touch .nojekyll
-          git add -A
-          git commit -m "Deploy from axaaaaa/mydaohang@${GITHUB_SHA::7}" || { echo "无变更，跳过推送"; exit 0; }
-          git push
+          touch dist/.nojekyll
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
 

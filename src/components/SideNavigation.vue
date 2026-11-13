@@ -19,6 +19,16 @@
       <button v-if="isCollapsed && !isMobile" class="rail-expand" type="button" title="展开侧栏" aria-label="展开侧栏" @click="toggleMenu">☰</button>
       <div class="nav-header">
         <div class="ascii-brand" role="img" aria-label="0 1">
+          <div class="sidebar-retro-computer" aria-hidden="true">
+            <img class="sidebar-site-icon" :src="siteIconUrl" width="48" height="48" alt="">
+            <svg class="sidebar-retro-keyboard" width="44" height="24" viewBox="0 0 44 24" aria-hidden="true">
+              <path d="M6 4h32l5 12v2l-2 2H3l-2-2v-2Z" fill="#2e303b"/>
+              <path d="M7 5h30l4 11H3Z" fill="#f3e5bb"/>
+              <path d="M3 17h38v1H3Z" fill="#af966e"/>
+              <path d="M8 7h27l3 8H5Z" fill="#af966e"/>
+              <path d="M10 9h3m2 0h3m2 0h3m2 0h3m2 0h3M8 12h4m2 0h13m2 0h6" fill="none" stroke="#fff4d8" stroke-width="2"/>
+            </svg>
+          </div>
           <pre class="ascii-logo" aria-hidden="true"><template v-for="(row, rowIndex) in logoRows" :key="rowIndex"><span v-for="(char, column) in row" :key="column" :class="{ 'logo-scan-glyph': isDarkTheme || (logoScanStart !== null && column >= logoScanStart && column < logoScanStart + 4) }">{{ char }}</span><template v-if="rowIndex < logoRows.length - 1">{{ '\n' }}</template></template></pre>
         </div>
         <el-input
@@ -94,7 +104,7 @@
                 :class="{ 'is-active': activeIndex === category.name, 'has-active-child': category.subCategories?.some(sub => sub.name === activeIndex) }"
                 @click="handleSelect(category.name)"
               >
-                <span class="emoji-icon" aria-hidden="true">{{ category.emoji || category.name.slice(0, 1) }}</span>
+                <CategoryPixelBadge :name="category.name" />
                 <span class="category-name"><HighlightText :text="category.name" :query="searchText" /></span>
                 <span class="item-count">{{ getCategoryCount(category) }}</span>
                 <el-icon 
@@ -150,6 +160,7 @@
 import HighlightText from "./HighlightText.vue";
 import { Fold, ArrowUpBold, ArrowDownBold, ArrowRight } from '@element-plus/icons-vue'
 import { navData } from "../nav-data.js"
+import CategoryPixelBadge from './CategoryPixelBadge.vue';
 import { nextTick } from 'vue'
 import { matchPinyin } from "../utils/pinyin.js"
 
@@ -157,7 +168,7 @@ const ORIGINAL_LOGO = " ████        ██    \n██  ██      █�
 
 export default {
   name: 'SideNavigation',
-  components: { HighlightText,
+  components: { HighlightText, CategoryPixelBadge,
     Fold, ArrowUpBold, ArrowDownBold, ArrowRight
   },
   props: {
@@ -167,6 +178,7 @@ export default {
   },
   data() {
     return {
+      siteIconUrl: process.env.BASE_URL + "favicon.ico?v=retro-pc",
       logoDisplay: ORIGINAL_LOGO,
       logoScanStart: null,
       logoDecodeTimer: null,
@@ -427,8 +439,26 @@ export default {
 
 .ascii-brand {
   display: flex;
+  align-items: center;
+  gap: 12px;
   justify-content: center;
   padding: 12px 0 20px;
+}
+
+.sidebar-retro-computer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sidebar-retro-keyboard {
+  flex-shrink: 0;
+}
+
+.sidebar-site-icon {
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .ascii-logo {

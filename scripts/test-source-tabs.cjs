@@ -1,15 +1,32 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
+async function main() {
+const {securitySourceIds, sourceCardTheme}=await import('../src/utils/source-card-themes.mjs');
 const s=fs.readFileSync('src/components/NavigationLinks.vue','utf8');
 const methods=s.slice(s.indexOf('  methods: {')+12,s.indexOf('    rememberSourceCardHeight('));
 let focused='';
-const context={document:{getElementById:id=>({focus:()=>{focused=id;}})}};
+const context={sourceCardTheme,securitySourceIds,document:{getElementById:id=>({focus:()=>{focused=id;}})}};
+for(const [,name,path] of s.matchAll(/import (sourceIcon\d+) from '\.\.\/assets\/([^']+\.svg)';/g)){
+  assert.ok(fs.existsSync('src/assets/'+path),path);
+  context[name]=path;
+}
 const behavior=vm.runInNewContext('({'+methods+'})',context);
-const tabs=vm.runInNewContext(s.match(/sourceCategoryTabs: (\[[\s\S]*?\n      \])/)[1]);
+const tabs=vm.runInNewContext(s.match(/sourceCategoryTabs: (\[[\s\S]*?\n      \])/)[1],context);
 const state={...behavior,sourceCategoryTabs:tabs,sourceCategory:'all',$nextTick:fn=>fn()};
 state.selectSourceCategory('security');
 assert.equal(state.sourceCategory,'security');
 assert.equal(state.sourceVisible('thehackernews'),true);
+for (const id of ['projectzero','unit42','unknowncheats','vendor_security']) assert.equal(state.sourceVisible(id),true);
 assert.equal(state.sourceVisible('dongchedi'),false);
+state.selectSourceCategory('models');
+assert.equal(tabs.find(t=>t.id==='models').label,'模型消息');
+assert.equal(state.sourceVisible('ai_official'),true);
+assert.equal(state.sourceVisible('cn_ai'),true);
+assert.equal(state.sourceVisible('hf_trending'),true);
+assert.equal(state.sourceVisible('reuters'),false);
+state.selectSourceCategory('hot');
+assert.equal(state.sourceVisible('ai_official'),false);
+assert.equal(state.sourceVisible('cn_ai'),false);
+assert.equal(state.sourceVisible('reuters'),true);
 let prevented=false;
 state.onSourceTabKey({key:'ArrowLeft',preventDefault:()=>{prevented=true;}},'all');
 assert.equal(state.sourceCategory,'social');
@@ -19,10 +36,13 @@ state.onSourceTabKey({key:'Home',preventDefault:()=>{}},'social');
 assert.equal(state.sourceCategory,'all');
 assert.ok(tabs.every(t=>t.icon));assert.deepEqual(Array.from(tabs.find(t=>t.id==='auto').sources),['dongchedi','autohome','pcauto']);assert.ok(tabs.find(t=>t.id==='security').sources.includes('thehackernews'));
 const ids=tabs.flatMap(t=>t.sources||[]);const rendered=s.match(/sourceId in \[([^\]]+)\]/)[1].match(/'([^']+)'/g).map(v=>v.slice(1,-1));assert.equal(ids.length,new Set(ids).size);assert.deepEqual([...new Set(ids)].sort(),[...rendered,'github','hackernews','v2ex','ithome','weibo','x'].sort());
-assert.ok(s.indexOf('<XGlobalEvents ref=')<s.indexOf('class="source-category-tabs"'));assert.doesNotMatch(s,/source-auto-controls|sourceTabsTimer|advanceSourceCategory/);
+const carousel=s.search(/<XGlobalEvents\b[^>]*\bref="xGlobalEvents"/);
+assert.ok(carousel>=0 && carousel<s.indexOf('class="source-category-tabs"'));assert.doesNotMatch(s,/source-auto-controls|sourceTabsTimer|advanceSourceCategory/);
 assert.ok(s.includes("'source-preview-rows': sourceCategory === 'all' && !showAllSourceCards"));
 for(const limit of [3,5,11])assert.ok(s.includes('source-preview-rows > :nth-child(n+'+limit+')'));
 assert.ok(s.indexOf('class="all-sources-more"')>s.indexOf('id="information-source-cards"'));
 assert.ok(s.includes('showAllSourceCards: false'));
 assert.ok(s.includes('展示更多'));
-console.log('PASS: 8 tab icons; manual selection, keyboard wrap, source coverage and carousel order');
+console.log('PASS: 9 tab icons; manual selection, keyboard wrap, source coverage and carousel order');
+}
+main().catch(error=>{console.error(error);process.exitCode=1;});

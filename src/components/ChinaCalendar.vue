@@ -1,6 +1,6 @@
 <template>
 <section class="china-calendar" :class="{'calendar-dark':dark}" aria-labelledby="china-calendar-title">
-  <header class="calendar-heading"><div><h2 id="china-calendar-title">中国节假日日历</h2><p>公历与农历 · 放假调休 · 中国标准时间（UTC+8）</p></div><button type="button" @click="expanded=!expanded" :aria-expanded="expanded">{{expanded?'收起':'展开'}}</button></header>
+  <header class="calendar-heading"><div><h2 id="china-calendar-title">📅 中国节假日日历</h2><p>公历与农历 · 放假调休 · 中国标准时间（UTC+8）</p></div><button type="button" @click="expanded=!expanded" :aria-expanded="expanded">{{expanded?'收起':'展开'}}</button></header>
   <template v-if="expanded">
     <div class="calendar-navigation"><button type="button" aria-label="上个月" @click="move(-1)">‹</button><label class="sr-only" for="calendar-year">年份</label><select id="calendar-year" v-model.number="year"><option v-for="y in years" :key="y" :value="y">{{y}}年</option></select><label class="sr-only" for="calendar-month">月份</label><select id="calendar-month" v-model.number="month"><option v-for="m in 12" :key="m" :value="m">{{m}}月</option></select><button type="button" aria-label="下个月" @click="move(1)">›</button><button type="button" @click="goToday">回到今天</button><span class="calendar-legend"><i class="legend-off"></i>放假 <i class="legend-work"></i>调休上班 <i class="legend-weekend"></i>普通周末</span></div>
     <p v-if="!schedule" class="calendar-notice" role="status">{{year}} 年官方放假调休安排尚未收录，暂仅展示日期、农历及普通周末，不推测放假日期。</p>

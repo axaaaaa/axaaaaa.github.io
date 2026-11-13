@@ -1,7 +1,7 @@
 <template>
   <section class="browser-fingerprint" :class="{ 'is-dark': dark }" aria-label="浏览器环境信息">
     <div class="fingerprint-heading">
-      <span><span class="environment-emoji" aria-hidden="true">🧭</span>浏览器环境 <small>环境本地检测 · IP 联网查询</small></span>
+      <span class="fingerprint-heading-label"><CategoryPixelBadge name="科技与数码" /><span>浏览器环境 <small>环境本地检测 · IP 联网查询</small></span></span>
       <div class="fingerprint-actions">
       <button type="button" :aria-expanded="allExpanded" @click="toggleAllGroups">{{ allExpanded ? '全部收起' : '全部展开' }}</button>
       <button type="button" :disabled="loading" @click="inspect"><span class="environment-emoji" aria-hidden="true">🔄</span>{{ loading ? '检测中…' : '重新检测' }}</button>
@@ -68,12 +68,13 @@
 <script>
 import NetworkExit from './NetworkExit.vue'
 import IpLocation from './IpLocation.vue'
+import CategoryPixelBadge from './CategoryPixelBadge.vue'
 import { inspectFingerprint } from '../fingerprint-inspector'
 const groupEmojis = {"浏览器与系统": "🌐", "浏览器详细版本": "🏷️", "屏幕与显示": "🖥️", "硬件与能力": "⚙️", "区域与网络提示": "📡", "Canvas 指纹": "🎨", "WebGL 渲染": "🎮"}
 const fieldEmojis = {"User Agent": "🪪", "平台": "💻", "语言": "🗣️", "语言列表": "🌐", "Cookie": "🍪", "在线状态": "📶", "自动化标记": "🤖", "Do Not Track": "🛡️", "品牌": "🏷️", "移动设备": "📱", "平台提示": "💻", "浏览器名称": "🌐", "浏览器版本": "🔢", "版本来源": "📋", "系统名称": "💻", "系统版本（平台报告值）": "🔢", "CPU架构": "🧩", "架构位数": "🔢", "设备型号": "📱", "32位浏览器运行于64位Windows": "🔄", "完整版本列表": "📚", "屏幕尺寸": "🖥️", "可用区域": "📐", "窗口视口": "🪟", "像素比": "🔍", "色深": "🎨", "像素深度": "🎨", "屏幕方向": "🔄", "配色偏好": "🌓", "减少动画": "🧘", "HDR 查询": "✨", "逻辑处理器": "⚙️", "设备内存（近似 GB）": "💾", "最大触摸点": "👆", "触摸事件": "👆", "PDF查看器": "📄", "WebAssembly": "🧩", "WebRTC": "📹", "安全上下文": "🔒", "时区": "🌍", "UTC 偏移（分钟）": "🕒", "数字格式示例": "🔢", "连接类型": "📡", "下行估计 Mbps": "⬇️", "往返估计 ms": "⏱️", "节省流量": "🍃", "绘制检测": "🖌️", "绘制样本": "🖼️", "Canvas SHA-256": "🖌️", "厂商": "🏢", "渲染器": "🎮", "版本": "🔢", "着色语言": "🎨", "最大纹理尺寸": "📐", "扩展列表": "🧩", "状态": "📋"}
 export default {
   name: 'BrowserFingerprint',
-  components: { IpLocation, NetworkExit },
+  components: { IpLocation, NetworkExit, CategoryPixelBadge },
   emits: ['located'],
   props: { dark: { type: Boolean, default: false } },
   data() { return { loading: false, report: null, disposed: false, error: false, defaultExpanded: false, groupExpanded: {} } },
@@ -151,6 +152,7 @@ export default {
 .browser-fingerprint { --fp-line: #e5e9ee; --fp-muted: #78838f; --fp-bg: #f7f9fb; color: #354252; width: 100%; min-width: 0; padding: 12px 0; text-align: left; }
 .browser-fingerprint.is-dark { --fp-line: #253b2d; --fp-muted: var(--dark-text-muted, #8ca995); --fp-bg: #101b14; color: var(--dark-text-primary, #b0d4ba); }
 .fingerprint-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; font-size: 13px; font-weight: 600; }
+.fingerprint-heading-label { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
 .fingerprint-heading small { font-size: 11px; font-weight: 400; color: var(--fp-muted); margin-left: 8px; }
 .fingerprint-heading button { border: 1px solid var(--fp-line); border-radius: 5px; background: var(--fp-bg); color: inherit; padding: 4px 10px; cursor: pointer; font-size: 11px; }
 .fingerprint-heading button:disabled { cursor: wait; opacity: .6; }

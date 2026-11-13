@@ -1,6 +1,6 @@
 <template>
  <section class="weibo-card x-words-card" :class="{'weibo-dark':dark}" aria-labelledby="x-words-title">
-  <header class="weibo-heading"><div><h2 id="x-words-title"><span class="weibo-logo x-logo" aria-hidden="true"><img :src="`${publicPath}source-icons/x-official.png`" alt="" width="26" height="26" /></span>X 话题榜</h2><p>近 24 小时热门话题</p></div></header>
+  <header class="weibo-heading"><div><h2 id="x-words-title"><span class="weibo-logo x-logo" aria-hidden="true"><img :src="`${publicPath}source-icons/x-official.png`" alt="" width="26" height="26" /></span>X 话题榜</h2><p>近 24 小时热门话题</p></div><span class="cyber-label" aria-hidden="true">X // 24H</span></header>
   <div class="words-controls"><label>分类<select v-model="category" aria-label="话题分类" @change="showAll=false"><option value="all">全部话题</option><option v-for="cat in categories" :key="cat.key" :value="cat.key">{{cat.label}}</option></select></label><label><input v-model="risingOnly" type="checkbox" @change="showAll=false" />只看上升</label></div>
   <div class="weibo-toolbar"><span role="status">{{status}}</span><a href="https://xbangdan.com/words/" target="_blank" rel="noopener noreferrer">来源：X榜单话题 ↗</a></div>
   <ol v-if="visible.length" class="weibo-list"><li v-for="item in visible" :key="item.rank"><a :href="item.url" :title="item.summary" target="_blank" rel="noopener noreferrer"><span class="weibo-rank" :class="{top:item.rank<4}">{{item.rank}}</span><div class="weibo-copy"><h3>{{item.title}}</h3><div class="weibo-meta"><span>{{item.categoryLabel}}</span><span>{{item.viewsText}} 曝光</span><span :class="{'words-rising':item.trend==='up'}">{{trendLabel(item.trend)}}</span></div></div></a></li></ol>
@@ -41,4 +41,58 @@ export default {
 .x-words-card{min-width:0;width:100%}.x-logo{background:#000}.x-logo img{display:block;width:26px;height:26px;object-fit:contain}.x-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.x-tabs button.active{color:#e6764f;background:rgba(241,118,77,.11);font-weight:600}
 
 .words-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px;color:var(--v-muted);font-size:11px}.words-controls label{display:flex;align-items:center;gap:5px;min-width:0}.words-controls select{min-width:0;max-width:100%;border:1px solid var(--v-line);border-radius:6px;padding:5px;color:var(--v-text);background:transparent;font:inherit}.words-controls input{accent-color:#e6764f}.words-rising{color:#cb6c37}.weibo-dark select option{background:#181f2d}
+
+.x-words-card {
+  --cyber-yellow: #f7f362;
+  --cyber-cyan: #66f5e1;
+  --cyber-pink: #ff89ca;
+  --v-text: #edf5fa;
+  --v-muted: #a9c0ce;
+  --v-line: #344754;
+  color-scheme: dark;
+  border: 1px solid #60767c;
+  border-top: 3px solid var(--cyber-yellow);
+  border-radius: 0;
+  background: linear-gradient(135deg, #12272e, #0a101a 48%, #180f24);
+  box-shadow: inset 0 0 0 3px #0a101a, 0 4px 18px #07121a38;
+}
+.x-words-card .weibo-heading {
+  justify-content: space-between;
+  padding: 1px 0 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed #60767c;
+}
+.x-words-card .weibo-heading h2 { color: var(--cyber-yellow); letter-spacing: .04em; }
+.x-words-card .weibo-logo { border: 1px solid var(--cyber-yellow); border-radius: 0; }
+.cyber-label {
+  flex-shrink: 0;
+  color: #10151c;
+  background: var(--cyber-yellow);
+  padding: 3px 8px 3px 11px;
+  clip-path: polygon(7px 0, 100% 0, 100% 100%, 0 100%, 0 7px);
+  font: 700 10px/1.4 Consolas, monospace;
+  letter-spacing: .1em;
+}
+.x-words-card .words-controls select,
+.x-words-card button { border: 1px solid #526e78; border-radius: 0; background: #111e29; color: var(--cyber-cyan); }
+.x-words-card .words-controls option { background: #111e29; color: var(--v-text); }
+.x-words-card .words-controls input { accent-color: var(--cyber-yellow); }
+.x-words-card :is(a, button, input, select):focus-visible { outline: 2px solid var(--cyber-yellow); outline-offset: 2px; }
+.x-words-card .weibo-toolbar a { color: var(--cyber-cyan); }
+.x-words-card .weibo-list a { border-radius: 0; }
+.x-words-card .weibo-list a:hover,
+.x-words-card button:hover { background: #16333c; }
+.x-words-card .weibo-rank {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  min-height: 25px;
+  color: var(--cyber-cyan);
+  border: 1px solid #526e78;
+  background: #111e29;
+  font: 700 14px/1 Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.x-words-card .weibo-rank.top { border-color: var(--cyber-yellow); color: #10151c; background: var(--cyber-yellow); }
+.x-words-card .words-rising { color: var(--cyber-pink); }
 </style>

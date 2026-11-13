@@ -37,12 +37,12 @@
         </div>
       </div>
 
+      <img class="footer-web-badge" src="../assets/ai-nav-web-badge.png" width="88" height="31" alt="AI NAV — AI 网站导航" loading="lazy">
+
       <div class="public-visits" role="status" aria-live="polite" title="PV 为页面访问次数，不是独立人数；第三方统计可能受网络、拦截器及服务可用性影响">
         <span>本站累计访问</span><strong>{{ visitText }}</strong>
         <span id="busuanzi_value_site_pv" hidden aria-hidden="true"></span>
-        <a href="https://busuanzi.ibruce.info/" target="_blank" rel="noopener noreferrer">不蒜子统计</a>
       </div>
-      <p class="visit-note">PV 访问次数，重复访问会累计；接入后开始统计。统计由第三方服务处理。</p>
       <div class="footer-bottom">
         <div class="footer-slogan">去往心之所向。</div>
         <div class="footer-copyright">
@@ -123,7 +123,15 @@ export default {
 </script>
 
 <style scoped>
-.public-visits{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--el-text-color-secondary,#909399)}.public-visits strong{font-variant-numeric:tabular-nums;color:var(--ui-accent,#398c5a);font-weight:600}.public-visits a{font-size:10px;color:inherit;text-decoration:none;opacity:.75}.public-visits a:hover{text-decoration:underline}.visit-note{margin:-8px 0 0;text-align:center;font-size:10px;line-height:1.7;color:var(--el-text-color-secondary,#909399)}
+.footer-web-badge {
+  display: block;
+  width: 88px;
+  height: 31px;
+  margin: 8px auto;
+  image-rendering: pixelated;
+}
+
+.public-visits{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--el-text-color-secondary,#909399)}.public-visits strong{font-variant-numeric:tabular-nums;color:var(--ui-accent,#398c5a);font-weight:600}
 .footer {
   width: 100%;
   background: #fff;

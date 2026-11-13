@@ -5,7 +5,7 @@
       :title="currentTrack ? (playing ? '正在播放：' : '本机音乐：') + currentTrack.name : '本机音乐'"
       @click="expanded = !expanded"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13M9 9l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/></svg><span v-if="playing" class="playing-indicator" aria-hidden="true"></span></button>
     <section v-show="expanded" id="local-music-panel" class="music-panel" aria-label="音乐列表">
-      <header class="music-heading"><div><strong>本机音乐</strong><p>只在本机播放，不上传文件</p></div><button type="button" aria-label="关闭音乐面板" @click="closePanel">关闭</button></header>
+      <header class="music-heading"><div><img class="pixel-web-badge" src="../assets/pixel-badges/music.png" width="88" height="31" alt=""> <strong>本机音乐</strong><p>只在本机播放，不上传文件</p></div><button type="button" aria-label="关闭音乐面板" @click="closePanel">关闭</button></header>
       <div class="music-import"><button type="button" :disabled="restoring || saving" @click="$refs.files.click()">＋ 选择音乐</button><button type="button" :disabled="restoring || saving || !tracks.length" @click="clearTracks">清空</button></div>
       <input ref="files" class="music-file-input" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.opus" multiple aria-label="选择本机音乐文件" @change="addFiles" />
       <p class="music-current" :title="currentTrack?.name">{{ currentTrack?.name || '选择你喜欢的音乐' }}</p>
@@ -188,6 +188,8 @@ export default {
 };
 </script>
 <style scoped>
+.pixel-web-badge { display: inline-block; width: 88px; height: 31px; max-width: none; vertical-align: middle; image-rendering: pixelated; margin-inline-end: 6px; }
+
 
 .local-music { position: relative; flex: 0 0 32px; margin: 0; min-width: 0; color: var(--el-text-color-primary, #273b30); font-size: 13px; }
 .local-music button, .local-music select { font: inherit; color: inherit; border: 1px solid var(--el-border-color, #d7e4dc); background: var(--el-bg-color, #fff); border-radius: 8px; padding: 7px 10px; cursor: pointer; }

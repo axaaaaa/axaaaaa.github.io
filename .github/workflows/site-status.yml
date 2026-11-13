@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '17,47 * * * *' # retry opportunity twice hourly; GitHub scheduling is best-effort
+    - cron: '7,22,37,52 * * * *' # four best-effort collection windows per hour
 permissions:
   contents: read
 concurrency:
@@ -17,7 +17,7 @@ jobs:
       ARGOS_PACKAGES_DIR: ${{ github.workspace }}/.argos-models
       ARGOS_DEVICE_TYPE: cpu
       ARGOS_INTRA_THREADS: "2"
-    timeout-minutes: 40
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v5
@@ -54,6 +54,13 @@ jobs:
             source-covers/
           key: news-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: news-
+      - name: Restore last published snapshots when cache is empty
+        run: |
+          for f in news.json github-trending.json v2ex-hot.json weibo-hot.json hacker-news.json markets.json exchange-rates.json history-today.json nasa-apod.json x-hot.json x-global.json x-words.json x-articles.json collection-health.json extra-hotspots.json; do
+            if [ ! -s "$f" ]; then
+              curl --fail --silent --show-error --max-time 20 "https://axaaaaa.github.io/$f" -o "$f" || rm -f "$f"
+            fi
+          done
       - name: Restore extra headlines for this collector version
         uses: actions/cache/restore@v4
         with:
@@ -67,6 +74,7 @@ jobs:
       - name: Test collectors
         run: python -m unittest discover -s scripts -p "test_*.py"
       - name: Refresh independent sources and record health
+        timeout-minutes: 30
         run: xvfb-run -a python scripts/refresh_sources.py
       - name: Refresh NASA Astronomy Picture of the Day
         continue-on-error: true

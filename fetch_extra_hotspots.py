@@ -66,7 +66,7 @@ SOURCES={
  'eset':{'name': 'ESET · WeLiveSecurity', 'kind': '威胁研究与资讯 · 中文机译', 'url': 'https://www.welivesecurity.com/en/', 'endpoint': 'https://www.welivesecurity.com/en/rss/feed/', 'icon': 'https://www.welivesecurity.com/favicon.ico'},
 
  'thehackernews':{'name':'The Hacker News','kind':'国际安全资讯 · 中文机译','url':'https://thehackernews.com/','endpoint':'https://feeds.feedburner.com/TheHackersNews','icon':'https://thehackernews.com/favicon.ico'},
- 'baidu':{'name':'百度热搜','kind':'实时热搜榜','url':'https://top.baidu.com/board?tab=realtime','endpoint':'https://top.baidu.com/board?tab=realtime','icon':'https://www.baidu.com/favicon.ico'},
+ 'baidu':{'name':'百度热搜','kind':'实时热搜榜','url':'https://top.baidu.com/board?tab=realtime','endpoint':'https://top.baidu.com/api/board?platform=wise&tab=realtime','icon':'https://www.baidu.com/favicon.ico'},
  'pojie52_new':{'name':'吾爱破解 · 新鲜出炉','kind':'新鲜出炉','url':'https://www.52pojie.cn/forum.php?mod=guide&view=newthread','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_tech':{'name':'吾爱破解 · 技术分享','kind':'技术分享','url':'https://www.52pojie.cn/forum.php?mod=guide&view=tech','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
  'pojie52_digest':{'name':'吾爱破解 · 精华采撷','kind':'精华采撷','url':'https://www.52pojie.cn/forum.php?mod=guide&view=digest','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
@@ -82,6 +82,8 @@ SOURCES={
  'xz':{'name':'先知社区','kind':'安全技术文章','url':'https://xz.aliyun.com/','endpoint':'https://xz.aliyun.com/','icon':'https://xz.aliyun.com/favicon.ico'},
  'anquanke':{'name':'安全客','kind':'安全资讯与研究','url':'https://www.anquanke.com/','endpoint':'https://api.anquanke.com/data/v1/posts?size=24&page=1','icon':'https://www.anquanke.com/favicon.ico'},
  'freebuf':{'name':'FreeBuf','kind':'安全资讯','url':'https://www.freebuf.com/','endpoint':'https://www.freebuf.com/','icon':'https://www.freebuf.com/favicon.ico'},
+ 'fng':{'name':'恐惧贪婪指数','kind':'加密市场情绪 · Alternative.me','url':'https://alternative.me/crypto/fear-and-greed-index/','endpoint':'https://api.alternative.me/fng/?limit=8&format=json','icon':'https://alternative.me/favicon.ico'},
+ 'eastmoney':{'name':'东方财富 · A股涨幅榜','kind':'A 股涨幅榜 · 实时快照','url':'https://quote.eastmoney.com/center/gridlist.html','endpoint':'https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=20&po=1&np=1&fltt=2&invt=2&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23&fields=f2,f3,f4,f6,f12,f13,f14','icon':'https://www.eastmoney.com/favicon.ico'},
  'yicai':{'name':'第一财经','kind':'财经资讯','url':'https://www.yicai.com/','endpoint':'https://www.yicai.com/','icon':'https://www.yicai.com/favicon.ico'},
  'sinafinance':{'name':'新浪财经','kind':'财经资讯','url':'https://finance.sina.com.cn/','endpoint':'https://finance.sina.com.cn/','icon':'https://finance.sina.com.cn/favicon.ico'},
  'pojie52':{'name':'吾爱破解热门','kind':'论坛最新热门','url':'https://www.52pojie.cn/forum.php?mod=guide&view=hot','endpoint':'https://www.52pojie.cn/','icon':'https://www.52pojie.cn/favicon.ico'},
@@ -725,17 +727,66 @@ def parse_source(key,body):
    if image:row['cover']=image
    rows.append(row)
  if key=='baidu':
-  match=re.search(r'<!--s-data:(.*?)-->',body.decode('utf-8'),re.S)
-  if not match:raise ValueError('Missing Baidu ranking data')
-  cards=json.loads(match.group(1))['data']['cards']
-  for card in cards:
-   if card.get('component')!='hotList':continue
-   for row in card.get('content',[]):
-    if not isinstance(row,dict) or row.get('isTop'):continue
-    title=clean(row.get('word'))
-    if not title:continue
-    heat=str(row.get('hotScore',''))
-    add(title,'https://www.baidu.com/s?wd='+quote(title),'热度 '+heat if heat.isdigit() else '')
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('success') is not True:raise ValueError('Invalid Baidu board response')
+  entries=[]
+  def walk(node):
+   if isinstance(node,dict):
+    if isinstance(node.get('word'),str):entries.append(node)
+    for value in node.values():
+     if isinstance(value,(dict,list)):walk(value)
+   elif isinstance(node,list):
+    for value in node:walk(value)
+  walk((data.get('data') or {}).get('cards',[]))
+  for row in entries:
+   if row.get('isTop'):continue
+   title=clean(unescape(row.get('word')))
+   if not title:continue
+   url=clean(row.get('url'))
+   if url.startswith('https://m.baidu.com/s?'):
+    url='https://www.baidu.com/s?'+url.split('?',1)[1].replace('word=','wd=',1)
+   if not valid_url(url):url='https://www.baidu.com/s?wd='+quote(title)
+   rank=row.get('index')
+   meta='实时热搜'
+   if isinstance(rank,int) and not isinstance(rank,bool) and rank>0:meta=f'热搜第 {rank} 位'
+   tag=clean(row.get('newHotName'))
+   if tag:meta+=' · '+tag
+   add(title,url,meta)
+ elif key=='fng':
+  data=json.loads(body)
+  metadata=data.get('metadata') if isinstance(data,dict) and isinstance(data.get('metadata'),dict) else {}
+  if not isinstance(data,dict) or metadata.get('error'):raise ValueError('Invalid Fear and Greed response')
+  raw=data.get('data',[])
+  if not isinstance(raw,list):raise ValueError('Missing Fear and Greed series')
+  labels={'Extreme Fear':'极度恐惧','Fear':'恐惧','Neutral':'中性','Greed':'贪婪','Extreme Greed':'极度贪婪'}
+  series=[]
+  for row in raw:
+   if not isinstance(row,dict):continue
+   value=str(row.get('value',''));stamp=str(row.get('timestamp',''))
+   if not value.isdigit() or not stamp.isdigit():continue
+   series.append((int(value),clean(row.get('value_classification')),int(stamp)))
+  for index,(value,classification,stamp) in enumerate(series):
+   label=labels.get(classification,classification or '未知')
+   meta=datetime.fromtimestamp(stamp,timezone.utc).strftime('%Y-%m-%d')
+   if index+1<len(series):meta+=f' · 较前日 {value-series[index+1][0]:+d}'
+   add(f'恐贪指数 {value} · {label}','https://alternative.me/crypto/fear-and-greed-index/#day-'+str(stamp),meta)
+ elif key=='eastmoney':
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('rc')!=0:raise ValueError('Invalid Eastmoney response')
+  payload=data.get('data') or {}
+  diff=payload.get('diff',[]) if isinstance(payload,dict) else []
+  if not isinstance(diff,list):raise ValueError('Missing Eastmoney ranking')
+  def numeric(value):return isinstance(value,(int,float)) and not isinstance(value,bool)
+  for row in diff:
+   if not isinstance(row,dict):continue
+   code=str(row.get('f12',''));name=clean(row.get('f14'))
+   price=row.get('f2');change=row.get('f3');amount=row.get('f6')
+   if not re.fullmatch(r'\d{6}',code) or not name or not numeric(price) or not numeric(change):continue
+   market='sh' if code.startswith(('6','9')) else 'bj' if code.startswith(('8','4')) else 'sz'
+   parts=[f'{price:g} 元',f'{change:+.2f}%']
+   if numeric(amount) and amount>0:
+    parts.append('成交 '+(f'{amount/1e8:.2f} 亿' if amount>=1e8 else f'{amount/1e4:.0f} 万'))
+   add(f'{name} {code}','https://quote.eastmoney.com/'+market+code+'.html',' · '.join(parts))
  elif key=='bilibili':
   data=json.loads(body)
   if not isinstance(data,dict) or type(data.get('code')) is not int or data['code']!=0:raise ValueError('Invalid Bilibili response')
@@ -1040,7 +1091,7 @@ def fetch(key):
  if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
- if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():

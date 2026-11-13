@@ -8,6 +8,10 @@ CG_IDS['GRAM']=CG_IDS['TON']
 # CoinGecko kept the asset ID when Toncoin (TON) became Gram (GRAM).
 CG_SYMBOL_ALIASES={'the-open-network':{'TON','GRAM'}}
 STOCKS={'600519.SS':('600519',1,'CNY'),'300750.SZ':('300750',0,'CNY'),'AAPL':('AAPL',105,'USD'),'MSFT':('MSFT',105,'USD'),'NVDA':('NVDA',105,'USD')}
+def stock_identity(symbol):
+ if symbol.endswith('.SS'):return (symbol[:-3],1,'CNY')
+ if symbol.endswith('.SZ'):return (symbol[:-3],0,'CNY')
+ return (symbol,105,'USD')
 FIELDS=['marketCapUsd','marketCap','marketCapCurrency','marketCapSource','marketCapFetchedAt','marketCapQuoteAt','marketCapFxAt']
 def positive(value):return isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value) and value>0
 def request_json(url):
@@ -36,10 +40,11 @@ def crypto_caps(rows,tickers):
   except ValueError:pass
   caps[ticker]=entry
  return caps
-def stock_caps(payload,fx):
+def stock_caps(payload,fx,stocks=None):
  if not isinstance(payload,dict) or payload.get('rc')!=0 or not isinstance((payload.get('data') or {}).get('diff'),list):raise ValueError('Invalid Eastmoney data')
  rates=fx.get('rates',{}) if isinstance(fx,dict) and fx.get('base')=='USD' else {};cny=rates.get('CNY');caps={};now=datetime.now(timezone.utc).isoformat()
- reverse={(code,market):(symbol,currency) for symbol,(code,market,currency) in STOCKS.items()}
+ identities=STOCKS if stocks is None else stocks
+ reverse={(code,market):(symbol,currency) for symbol,(code,market,currency) in identities.items()}
  for row in payload['data']['diff']:
   if not isinstance(row,dict):continue
   config=reverse.get((str(row.get('f12')),row.get('f13')));value=row.get('f20')
@@ -53,7 +58,7 @@ def stock_caps(payload,fx):
  return caps
 def nasdaq_cap(payload,symbol):
  data=payload.get('data') if isinstance(payload,dict) else None
- if not isinstance(data,dict) or data.get('symbol')!=symbol or symbol not in ['AAPL','MSFT','NVDA']:raise ValueError('Invalid Nasdaq identity')
+ if not isinstance(data,dict) or data.get('symbol')!=symbol:raise ValueError('Invalid Nasdaq identity')
  raw=(data.get('summaryData') or {}).get('MarketCap',{}).get('value','')
  try:value=float(str(raw).replace(',','').replace('$',''))
  except ValueError:raise ValueError('Invalid Nasdaq market cap')
@@ -69,11 +74,12 @@ def enrich_market_caps(items,previous,fx_path):
  def get_stocks():
   try:fx=json.loads(Path(fx_path).read_text(encoding='utf-8-sig'))
   except (OSError,ValueError):fx={}
-  ids=','.join(str(STOCKS[r['symbol']][1])+'.'+STOCKS[r['symbol']][0] for r in items if r.get('symbol') in STOCKS)
+  stocks={r['symbol']:stock_identity(r['symbol']) for r in items if r.get('kind')=='stock' and isinstance(r.get('symbol'),str)}
+  ids=','.join(str(market)+'.'+code for code,market,currency in stocks.values())
   if not ids:return {}
-  try:result=stock_caps(request_json('https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&fields=f12,f14,f20,f13&secids='+ids),fx)
+  try:result=stock_caps(request_json('https://push2.eastmoney.com/api/qt/ulist.np/get?fltt=2&fields=f12,f14,f20,f13&secids='+ids),fx,stocks)
   except Exception as e:print('EASTMONEY_CAP_PRESERVED '+str(e));result={}
-  missing=[r['symbol'] for r in items if r.get('symbol') in ['AAPL','MSFT','NVDA'] and r['symbol'] not in result]
+  missing=[symbol for symbol in stocks if not symbol.endswith(('.SS','.SZ')) and symbol not in result]
   def nasdaq(symbol):
    try:return symbol,nasdaq_cap(request_json('https://api.nasdaq.com/api/quote/'+symbol+'/summary?assetclass=stocks'),symbol)
    except Exception:return symbol,None

@@ -54,6 +54,8 @@ class WiringTests(unittest.TestCase):
    self.assertIn(key,SOURCES)
    self.assertTrue(SOURCES[key]['endpoint'].startswith('https://'))
  def test_frontend_wiring(self):
+  if not (self.root/'src/components/NavigationLinks.vue').is_file():
+   self.skipTest('frontend source files are not part of the published static site')
   nav=(self.root/'src/components/NavigationLinks.vue').read_text(encoding='utf8')
   card=(self.root/'src/components/SourceNewsCard.vue').read_text(encoding='utf8')
   themes=(self.root/'src/utils/source-card-themes.mjs').read_text(encoding='utf8')

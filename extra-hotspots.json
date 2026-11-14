@@ -7700,6 +7700,1367 @@
         "lastSuccessAt": "2026-11-13T08:06:51.300654+00:00",
         "error": ""
       }
+    },
+    "nvd": {
+      "name": "NVD 最新漏洞",
+      "kind": "美国国家漏洞库 · 最新披露",
+      "url": "https://nvd.nist.gov/vuln/search",
+      "icon": "https://nvd.nist.gov/favicon.ico",
+      "sourceUrlUsed": "https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=2026-11-12T05:59:43.000&pubEndDate=2026-11-14T05:59:43.000&resultsPerPage=2000",
+      "updatedAt": "2026-11-14T05:59:51.027719+00:00",
+      "items": [
+        {
+          "title": "CVE-2026-126173 · The AutomatorWP Pro plugin for WordPress' webhook addon is vulnerable to authori",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126173",
+          "meta": "英文原题 · 翻译待更新 · 严重 · CVSS 9.8 · 2026-11-14",
+          "originalTitle": "CVE-2026-126173 · The AutomatorWP Pro plugin for WordPress' webhook addon is vulnerable to authori",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-124969 · The Optimole – Optimize Images | Convert WebP & AVIF | CDN & Lazy Load | Image O",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124969",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 7.1 · 2026-11-14",
+          "originalTitle": "CVE-2026-124969 · The Optimole – Optimize Images | Convert WebP & AVIF | CDN & Lazy Load | Image O",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-71531 · PrestaShop before 8.2.9 and 9.2.1 contains an authorization flaw in the Webservi",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71531",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 8.6 · 2026-11-13",
+          "originalTitle": "CVE-2026-71531 · PrestaShop before 8.2.9 and 9.2.1 contains an authorization flaw in the Webservi",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-71519 · PrestaShop before 8.2.9 and 9.2.1 contains a broken access control vulnerability",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-71519",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 8.6 · 2026-11-13",
+          "originalTitle": "CVE-2026-71519 · PrestaShop before 8.2.9 and 9.2.1 contains a broken access control vulnerability",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-129180 · A flaw has been found in projectworlds Visitor Management System 1.0. This vulne",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129180",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 5.5 · 2026-11-13",
+          "originalTitle": "CVE-2026-129180 · A flaw has been found in projectworlds Visitor Management System 1.0. This vulne",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-129173 · A security flaw has been discovered in Stirling-Tools Stirling-PDF up to 3.3.0.",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129173",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 6.9 · 2026-11-13",
+          "originalTitle": "CVE-2026-129173 · A security flaw has been discovered in Stirling-Tools Stirling-PDF up to 3.3.0.",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-128134 · NLTK (Natural Language Toolkit) is a suite of open source Python modules, data s",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-128134",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 7.8 · 2026-11-13",
+          "originalTitle": "CVE-2026-128134 · NLTK (Natural Language Toolkit) is a suite of open source Python modules, data s",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-9870 · IBM Cyber Fraud 1.0.0 through 1.1.0 is vulnerable to cross-site scripting. This",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9870",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 6.1 · 2026-11-13",
+          "originalTitle": "CVE-2026-9870 · IBM Cyber Fraud 1.0.0 through 1.1.0 is vulnerable to cross-site scripting. This",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-9821 · IBM Cyber Fraud 1.0.0 through 1.1.0 could allow an unauthorized user to inject d",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9821",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 5.3 · 2026-11-13",
+          "originalTitle": "CVE-2026-9821 · IBM Cyber Fraud 1.0.0 through 1.1.0 could allow an unauthorized user to inject d",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-9661 · Poste Italiane Postecert FIRMAOK! 1.6.29 on Windows contains a local privilege e",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9661",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 7.3 · 2026-11-13",
+          "originalTitle": "CVE-2026-9661 · Poste Italiane Postecert FIRMAOK! 1.6.29 on Windows contains a local privilege e",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-97683 · IBM Cyber Fraud 1.0.0 through 1.1.0 could allow a local attacker to bypass secur",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97683",
+          "meta": "英文原题 · 翻译待更新 · 低危 · CVSS 2.5 · 2026-11-13",
+          "originalTitle": "CVE-2026-97683 · IBM Cyber Fraud 1.0.0 through 1.1.0 could allow a local attacker to bypass secur",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-94407 · IBM ContextForge MCP Gateway 1.0.0 through 1.0.11 is potentially vulnerable to d",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94407",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 6.5 · 2026-11-13",
+          "originalTitle": "CVE-2026-94407 · IBM ContextForge MCP Gateway 1.0.0 through 1.0.11 is potentially vulnerable to d",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-91869 · IBM Security QRadar EDR 3.12 through 3.12.26 could allow a remote authenticated",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91869",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 8.1 · 2026-11-13",
+          "originalTitle": "CVE-2026-91869 · IBM Security QRadar EDR 3.12 through 3.12.26 could allow a remote authenticated",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-91868 · IBM Security QRadar EDR 3.12 through 3.12.26 could allow a remote authenticated",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-91868",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 6.5 · 2026-11-13",
+          "originalTitle": "CVE-2026-91868 · IBM Security QRadar EDR 3.12 through 3.12.26 could allow a remote authenticated",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-82102 · IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated a",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82102",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 6.4 · 2026-11-13",
+          "originalTitle": "CVE-2026-82102 · IBM DataStage on Cloud Pak for Data 5.4.0.0 could allow a remote authenticated a",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-5514 · IBM Bob 2.0.3 allows unauthorized extensions to retrieve session tokens via the",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-5514",
+          "meta": "英文原题 · 翻译待更新 · 低危 · CVSS 3.3 · 2026-11-13",
+          "originalTitle": "CVE-2026-5514 · IBM Bob 2.0.3 allows unauthorized extensions to retrieve session tokens via the",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-19194 · The HashiCorp cap JWT validation library before version 0.14.0 is vulnerable to",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19194",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 5.9 · 2026-11-13",
+          "originalTitle": "CVE-2026-19194 · The HashiCorp cap JWT validation library before version 0.14.0 is vulnerable to",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-129137 · Incorrect default permissions in the agent configuration folder in Devolutions P",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-129137",
+          "meta": "英文原题 · 翻译待更新 · 2026-11-13",
+          "originalTitle": "CVE-2026-129137 · Incorrect default permissions in the agent configuration folder in Devolutions P",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-128886 · A flaw was found in dbus when configured with the nonce-tcp transport. An unauth",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-128886",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 6.2 · 2026-11-13",
+          "originalTitle": "CVE-2026-128886 · A flaw was found in dbus when configured with the nonce-tcp transport. An unauth",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-124021 · Control Web Panel (CWP) before webpanel_version 1.30.6 contains an authorization",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124021",
+          "meta": "英文原题 · 翻译待更新 · 严重 · CVSS 9.2 · 2026-11-13",
+          "originalTitle": "CVE-2026-124021 · Control Web Panel (CWP) before webpanel_version 1.30.6 contains an authorization",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-124020 · Control Web Panel (CWP) before webpanel_version 1.30.6 contains a host header in",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-124020",
+          "meta": "英文原题 · 翻译待更新 · 严重 · CVSS 9.2 · 2026-11-13",
+          "originalTitle": "CVE-2026-124020 · Control Web Panel (CWP) before webpanel_version 1.30.6 contains a host header in",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-123628 · IBM webMethods Integration Server 10.15 and 11.1 could allow a remote attacker t",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123628",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 7.5 · 2026-11-13",
+          "originalTitle": "CVE-2026-123628 · IBM webMethods Integration Server 10.15 and 11.1 could allow a remote attacker t",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-115788 · IBM App Connect Operator and IBM App Connect Enterprise Certified Containers Ope",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115788",
+          "meta": "英文原题 · 翻译待更新 · 高危 · CVSS 8.1 · 2026-11-13",
+          "originalTitle": "CVE-2026-115788 · IBM App Connect Operator and IBM App Connect Enterprise Certified Containers Ope",
+          "translationStatus": "original"
+        },
+        {
+          "title": "CVE-2026-115501 · IBM i 7.3 7.4, 7.5, and 7.6 is vulnerable to a stack buffer overflow, caused by",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115501",
+          "meta": "英文原题 · 翻译待更新 · 中危 · CVSS 5.3 · 2026-11-13",
+          "originalTitle": "CVE-2026-115501 · IBM i 7.3 7.4, 7.5, and 7.6 is vulnerable to a stack buffer overflow, caused by",
+          "translationStatus": "original"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T05:59:43.814287+00:00",
+        "lastSuccessAt": "2026-11-14T05:59:51.027719+00:00",
+        "error": ""
+      }
+    },
+    "exploitdb": {
+      "name": "Exploit-DB",
+      "kind": "公开漏洞利用库 · 最新条目",
+      "url": "https://www.exploit-db.com/",
+      "icon": "https://www.exploit-db.com/favicon.ico",
+      "sourceUrlUsed": "https://www.exploit-db.com/rss.xml",
+      "updatedAt": "2026-11-14T05:59:44.238426+00:00",
+      "items": [
+        {
+          "title": "[remote] Ruflo MCP Bridge 3.16.2 - Remote Code Execution",
+          "url": "https://www.exploit-db.com/exploits/52705",
+          "meta": "英文原题 · 翻译待更新 · Wed, 11 Nov 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Ruflo MCP Bridge 3.16.2 - Remote Code Execution",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] PHP2Shell (CVE-2026-109618) - PHP core versions after v5.4 - RCE",
+          "url": "https://www.exploit-db.com/exploits/52704",
+          "meta": "英文原题 · 翻译待更新 · Thu, 22 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] PHP2Shell (CVE-2026-109618) - PHP core versions after v5.4 - RCE",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] pizzafy-1.0 - SQLi",
+          "url": "https://www.exploit-db.com/exploits/52703",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] pizzafy-1.0 - SQLi",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] South River Technologies Titan MFT Server 26.0.0 - code execution",
+          "url": "https://www.exploit-db.com/exploits/52701",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] South River Technologies Titan MFT Server 26.0.0 - code execution",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] Synametrics Syncrify 6.2 - command execution",
+          "url": "https://www.exploit-db.com/exploits/52700",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Synametrics Syncrify 6.2 - command execution",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] Keycloak 26.7.2 - Unauthenticated Account Takeover",
+          "url": "https://www.exploit-db.com/exploits/52699",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] Keycloak 26.7.2 - Unauthenticated Account Takeover",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] Open eClass 3.15 - RCE",
+          "url": "https://www.exploit-db.com/exploits/52698",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] Open eClass 3.15 - RCE",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] Automotive Shop Management System 1.0 - SQLi",
+          "url": "https://www.exploit-db.com/exploits/52697",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] Automotive Shop Management System 1.0 - SQLi",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] Edimax BR-6478AC firmware v2.20 - authenticated command injection",
+          "url": "https://www.exploit-db.com/exploits/52696",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Edimax BR-6478AC firmware v2.20 - authenticated command injection",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] Exasol Database 7.1.30 - command execution",
+          "url": "https://www.exploit-db.com/exploits/52695",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Exasol Database 7.1.30 - command execution",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] Parasoft Continuous Testing Platform 10.7.5 - JSP command execution",
+          "url": "https://www.exploit-db.com/exploits/52694",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Parasoft Continuous Testing Platform 10.7.5 - JSP command execution",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] ProSoft RLX-IFH24E v2.2.44 - Unsigned Firmware Upgrade Package Executed as Root",
+          "url": "https://www.exploit-db.com/exploits/52693",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] ProSoft RLX-IFH24E v2.2.44 - Unsigned Firmware Upgrade Package Executed as Root",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] Teltonika_RutOS 00.07.06.21 - command injection",
+          "url": "https://www.exploit-db.com/exploits/52692",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Teltonika_RutOS 00.07.06.21 - command injection",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] TigerGraph_Community_Edition 4.2.4 - arbitrary file write",
+          "url": "https://www.exploit-db.com/exploits/52691",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] TigerGraph_Community_Edition 4.2.4 - arbitrary file write",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] WordPress 7.0.2 - Path Travesal",
+          "url": "https://www.exploit-db.com/exploits/52690",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] WordPress 7.0.2 - Path Travesal",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] Food-Ordering 1.0 - LFI",
+          "url": "https://www.exploit-db.com/exploits/52689",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] Food-Ordering 1.0 - LFI",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] Ecava_ntegraXor IGX_16.0.701.10 - RCE",
+          "url": "https://www.exploit-db.com/exploits/52688",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[remote] Ecava_ntegraXor IGX_16.0.701.10 - RCE",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] Krayin CRM 2.2.4 - IDOR",
+          "url": "https://www.exploit-db.com/exploits/52687",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] Krayin CRM 2.2.4 - IDOR",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] SuiteCRM 8.10.1 - Authenticated SSRF",
+          "url": "https://www.exploit-db.com/exploits/52686",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] SuiteCRM 8.10.1 - Authenticated SSRF",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] InvoicePlane 1.7.1 - RCE",
+          "url": "https://www.exploit-db.com/exploits/52685",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] InvoicePlane 1.7.1 - RCE",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] POMS oretnom23v1.0 - SQLi vulnerabilities",
+          "url": "https://www.exploit-db.com/exploits/52684",
+          "meta": "英文原题 · 翻译待更新 · Thu, 01 Oct 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] POMS oretnom23v1.0 - SQLi vulnerabilities",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] MikroTrick, 7.24, 7.24.2, 7.0.0, 7.23.4, 6.0.0, 6.49.21 - RCE",
+          "url": "https://www.exploit-db.com/exploits/52683",
+          "meta": "英文原题 · 翻译待更新 · Thu, 24 Sep 2026 00:00:00 +0000",
+          "originalTitle": "[remote] MikroTrick, 7.24, 7.24.2, 7.0.0, 7.23.4, 6.0.0, 6.49.21 - RCE",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[remote] CVE-2026-80428 Unauthenticated PHP Object Injection via Shibboleth - ILIAS < 9.22, 10.0 < 10.10, 11.0 < 11.3 - RCE",
+          "url": "https://www.exploit-db.com/exploits/52682",
+          "meta": "英文原题 · 翻译待更新 · Fri, 11 Sep 2026 00:00:00 +0000",
+          "originalTitle": "[remote] CVE-2026-80428 Unauthenticated PHP Object Injection via Shibboleth - ILIAS < 9.22, 10.0 < 10.10, 11.0 < 11.3 - RCE",
+          "translationStatus": "original"
+        },
+        {
+          "title": "[webapps] FreePBX 17.0.2 - Remote Code Execution (RCE)",
+          "url": "https://www.exploit-db.com/exploits/52681",
+          "meta": "英文原题 · 翻译待更新 · Thu, 03 Sep 2026 00:00:00 +0000",
+          "originalTitle": "[webapps] FreePBX 17.0.2 - Remote Code Execution (RCE)",
+          "translationStatus": "original"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T05:59:43.814700+00:00",
+        "lastSuccessAt": "2026-11-14T05:59:44.238426+00:00",
+        "error": ""
+      }
+    },
+    "36kr": {
+      "name": "36氪",
+      "kind": "科技创投 · 24 小时热榜",
+      "url": "https://36kr.com/",
+      "icon": "https://36kr.com/favicon.ico",
+      "sourceUrlUsed": "https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot",
+      "updatedAt": "2026-11-14T05:59:44.415338+00:00",
+      "items": [
+        {
+          "title": "iPhone 20 爆料汇总：一整块玻璃，藏着苹果下一个十年",
+          "url": "https://36kr.com/p/4068130240697218",
+          "meta": "爱范儿 · 16,154 阅读"
+        },
+        {
+          "title": "英伟达，还有比黄仁勋离任更大的麻烦",
+          "url": "https://36kr.com/p/4068070220257154",
+          "meta": "降噪NoNoise · 11,919 阅读"
+        },
+        {
+          "title": "瑞幸越来越不像一家咖啡公司了",
+          "url": "https://36kr.com/p/4068115148068485",
+          "meta": "品牌棱镜 · 9,309 阅读"
+        },
+        {
+          "title": "“这是世代级错误”“不会再买英伟达股票”，黄仁勋走了，硅谷吵翻了，Twitter前CEO预测他3年后王者归来",
+          "url": "https://36kr.com/p/4068120653157256",
+          "meta": "36氪的朋友们 · 8,061 阅读"
+        },
+        {
+          "title": "9点1氪丨马斯克在X平台公开表态，将参与要求黄仁勋重返英伟达的请愿活动",
+          "url": "https://36kr.com/p/4068905666859912",
+          "meta": "8点1氪 · 7,846 阅读"
+        },
+        {
+          "title": "MiniMax，狂卷字节、OpenAI",
+          "url": "https://36kr.com/p/4068067240334466",
+          "meta": "AIX财经 · 7,237 阅读"
+        },
+        {
+          "title": "红果的“持械入宋”",
+          "url": "https://36kr.com/p/4068100410823560",
+          "meta": "壹娱观察 · 6,899 阅读"
+        },
+        {
+          "title": "“我是个烂人”，黄仁勋辞职前最后几小时的内幕曝光",
+          "url": "https://36kr.com/p/4067922320102273",
+          "meta": "36氪的朋友们 · 6,290 阅读"
+        },
+        {
+          "title": "腾讯不养闲人：姚顺雨拆墙，11万人换阵",
+          "url": "https://36kr.com/p/4068064828756868",
+          "meta": "凤凰网科技 · 6,044 阅读"
+        },
+        {
+          "title": "AI录音设备，正在争夺“最懂你”的位置",
+          "url": "https://36kr.com/p/4068082247701634",
+          "meta": "霞光社 · 5,975 阅读"
+        },
+        {
+          "title": "97%支持率，最怕黄仁勋离开的，为何是员工？",
+          "url": "https://36kr.com/p/4068057502831493",
+          "meta": "财经故事荟 · 5,759 阅读"
+        },
+        {
+          "title": "河南百亿市值“辣条一哥”换帅，90后CEO走向台前",
+          "url": "https://36kr.com/p/4068104598049667",
+          "meta": "天下网商 · 5,066 阅读"
+        },
+        {
+          "title": "Claude新旗舰刚发，95万字绝密提示词被扒光了",
+          "url": "https://36kr.com/p/4067967004562304",
+          "meta": "新智元 · 4,750 阅读"
+        },
+        {
+          "title": "中专生拍出《哈利·波特》爆款，欧美明星、好莱坞制片人集体点赞",
+          "url": "https://36kr.com/p/4068913769256064",
+          "meta": "量子位 · 4,419 阅读"
+        },
+        {
+          "title": "华尔街：算力生态下一轮融资将更难、更贵……",
+          "url": "https://36kr.com/p/4068135542199175",
+          "meta": "36氪的朋友们 · 4,396 阅读"
+        },
+        {
+          "title": "腾讯和百度，不再养“闲人”",
+          "url": "https://36kr.com/p/4067796327602051",
+          "meta": "木禾商业财经 · 4,358 阅读"
+        },
+        {
+          "title": "苹果憋了近10年的人形机器人，最后用上了宇树",
+          "url": "https://36kr.com/p/4067917144201095",
+          "meta": "蓝字计划 · 4,227 阅读"
+        },
+        {
+          "title": "如何打造一款高利润的数字产品（仅需 7 步）",
+          "url": "https://36kr.com/p/4041155404256137",
+          "meta": "神译局 · 4,057 阅读"
+        },
+        {
+          "title": "便宜档跑分反超旗舰：谷歌Gemini 4 Hydrogen全量开放，搜索AI Mode连夜换引擎",
+          "url": "https://36kr.com/p/4068060515997320",
+          "meta": "AI唱反调 · 4,003 阅读"
+        },
+        {
+          "title": "450亿“鞋王”家族问鼎“中山首富”，拟豪掷33亿“追光”",
+          "url": "https://36kr.com/p/4068130663290505",
+          "meta": "雷达财经 · 3,865 阅读"
+        },
+        {
+          "title": "国民火腿肠要被卖了",
+          "url": "https://36kr.com/p/4068006446896260",
+          "meta": "投资界 · 3,403 阅读"
+        },
+        {
+          "title": "脱下皮夹克，英伟达第一次有了董事长",
+          "url": "https://36kr.com/p/4067821090460809",
+          "meta": "盒饭财经 · 3,341 阅读"
+        },
+        {
+          "title": "为什么黄仁勋出轨直接下台，马斯克孩子都生了4个了也没事？",
+          "url": "https://36kr.com/p/4067690236007296",
+          "meta": "果壳 · 3,264 阅读"
+        },
+        {
+          "title": "腾讯“裁员”风波背后：物理AI正在重塑大厂的权力序列",
+          "url": "https://36kr.com/p/4068042997143430",
+          "meta": "针尖 · 2,995 阅读"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T05:59:43.815147+00:00",
+        "lastSuccessAt": "2026-11-14T05:59:44.415338+00:00",
+        "error": ""
+      }
+    },
+    "huxiu": {
+      "name": "虎嗅",
+      "kind": "科技与商业资讯",
+      "url": "https://www.huxiu.com/",
+      "icon": "https://www.huxiu.com/favicon.ico",
+      "sourceUrlUsed": "https://www.huxiu.com/",
+      "updatedAt": "2026-11-14T05:59:44.357386+00:00",
+      "items": [
+        {
+          "title": "AI进步属于全人类，凑合生活丢给普通人",
+          "url": "https://www.huxiu.com/article/4905084.html",
+          "meta": ""
+        },
+        {
+          "title": "这妹子拉了梁文锋一把",
+          "url": "https://www.huxiu.com/article/4905405.html",
+          "meta": ""
+        },
+        {
+          "title": "一小时10元，她把自己卖给机器人",
+          "url": "https://www.huxiu.com/article/4905184.html",
+          "meta": ""
+        },
+        {
+          "title": "“让黄仁勋回归，”马斯克带头，万人请愿挤爆服务器",
+          "url": "https://www.huxiu.com/article/4905570.html",
+          "meta": ""
+        },
+        {
+          "title": "马斯克：正在签署请求黄仁勋复职的请愿书",
+          "url": "https://www.huxiu.com/article/4905571.html",
+          "meta": ""
+        },
+        {
+          "title": "黄仁勋自嘲是“人渣”，英伟达员工集体喊话求回归",
+          "url": "https://www.huxiu.com/article/4905382.html",
+          "meta": ""
+        },
+        {
+          "title": "西西弗买了200块的书但咖啡区不让坐，合理吗？",
+          "url": "https://www.huxiu.com/article/4905575.html",
+          "meta": ""
+        },
+        {
+          "title": "同样是消费入座，凭什么星巴克得体谅，西西弗挨骂？",
+          "url": "https://www.huxiu.com/article/4905521.html",
+          "meta": ""
+        },
+        {
+          "title": "星巴克是一面镜子",
+          "url": "https://www.huxiu.com/article/4901266.html",
+          "meta": ""
+        },
+        {
+          "title": "我们已经能够创造未来，为什么还在重复过去？",
+          "url": "https://www.huxiu.com/article/4905574.html",
+          "meta": ""
+        },
+        {
+          "title": "打倒“骑墙派”黄仁勋",
+          "url": "https://www.huxiu.com/article/4905354.html",
+          "meta": ""
+        },
+        {
+          "title": "黄仁勋大可不必百口莫辩，英伟达实在无需如丧考妣",
+          "url": "https://www.huxiu.com/article/4905289.html",
+          "meta": ""
+        },
+        {
+          "title": "原创 字节旧部创业，在海外杀疯了",
+          "url": "https://www.huxiu.com/article/4902431.html",
+          "meta": ""
+        },
+        {
+          "title": "一朝天子一朝臣，激流勇退且藏身",
+          "url": "https://www.huxiu.com/article/4905198.html",
+          "meta": ""
+        },
+        {
+          "title": "聪明人的8个具象化特征",
+          "url": "https://www.huxiu.com/article/4904883.html",
+          "meta": ""
+        },
+        {
+          "title": "我认为，不是民主党干的，是美国小眼镜片干的",
+          "url": "https://www.huxiu.com/article/4905217.html",
+          "meta": ""
+        },
+        {
+          "title": "原创 路虎验牌比亚迪，这次彻底栽了",
+          "url": "https://www.huxiu.com/article/4905016.html",
+          "meta": ""
+        },
+        {
+          "title": "马斯克给黄仁勋留了个工位",
+          "url": "https://www.huxiu.com/article/4904976.html",
+          "meta": ""
+        },
+        {
+          "title": "我们正目睹乔布斯后科技史上最严重的逼宫",
+          "url": "https://www.huxiu.com/article/4904905.html",
+          "meta": ""
+        },
+        {
+          "title": "原创 黄仁勋的瓜是吃不完的，但钱能亏完",
+          "url": "https://www.huxiu.com/article/4905349.html",
+          "meta": ""
+        },
+        {
+          "title": "英伟达，还有比黄仁勋离任更大的麻烦",
+          "url": "https://www.huxiu.com/article/4905552.html",
+          "meta": ""
+        },
+        {
+          "title": "英伟达的技术、泡泡玛特的运营都不是看十年的护城河",
+          "url": "https://www.huxiu.com/article/4905572.html",
+          "meta": ""
+        },
+        {
+          "title": "清华教授李宁：AI强得可怕，人怎么办？",
+          "url": "https://www.huxiu.com/article/4905578.html",
+          "meta": ""
+        },
+        {
+          "title": "瑞幸越来越不像一家咖啡公司了",
+          "url": "https://www.huxiu.com/article/4905425.html",
+          "meta": ""
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T05:59:43.815436+00:00",
+        "lastSuccessAt": "2026-11-14T05:59:44.357386+00:00",
+        "error": ""
+      }
+    },
+    "so_hot": {
+      "name": "Stack Overflow 热问",
+      "kind": "开发者热门问题",
+      "url": "https://stackoverflow.com/questions",
+      "icon": "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico",
+      "sourceUrlUsed": "https://api.stackexchange.com/2.3/questions?order=desc&sort=hot&site=stackoverflow&pagesize=24",
+      "updatedAt": "2026-11-14T05:59:44.699120+00:00",
+      "items": [
+        {
+          "title": "Project suggestion for flask web dev",
+          "url": "https://stackoverflow.com/questions/80016594/project-suggestion-for-flask-web-dev",
+          "meta": "-7 分 · 1 回答 · #tooling-recommendation #javascript #python"
+        },
+        {
+          "title": "ts-node typescript error: cannot find module or its corresponding type declarations",
+          "url": "https://stackoverflow.com/questions/80016580/ts-node-typescript-error-cannot-find-module-or-its-corresponding-type-declarati",
+          "meta": "1 分 · 1 回答 · #typescript #tsconfig #ts-node"
+        },
+        {
+          "title": "Frame independent friction",
+          "url": "https://stackoverflow.com/questions/80016589/frame-independent-friction",
+          "meta": "-7 分 · 0 回答 · #game-development #gml #game-maker-studio-2"
+        },
+        {
+          "title": "JavaScript Synchronous Code",
+          "url": "https://stackoverflow.com/questions/80016596/javascript-synchronous-code",
+          "meta": "1 分 · 0 回答 · #javascript"
+        },
+        {
+          "title": "Why is there an error specifically on the true part?",
+          "url": "https://stackoverflow.com/questions/80016574/why-is-there-an-error-specifically-on-the-true-part",
+          "meta": "-6 分 · 2 回答 · #python"
+        },
+        {
+          "title": "Html page for populating a leaflet map page",
+          "url": "https://stackoverflow.com/questions/80016561/html-page-for-populating-a-leaflet-map-page",
+          "meta": "-1 分 · 1 回答 · #html #leaflet #openstreetmap"
+        },
+        {
+          "title": "How can I update an archived partition in PolarDB for MySQL without restoring the entire partition?",
+          "url": "https://stackoverflow.com/questions/80016579/how-can-i-update-an-archived-partition-in-polardb-for-mysql-without-restoring-th",
+          "meta": "2 分 · 0 回答 · #mysql #polardb"
+        },
+        {
+          "title": "Coursera assignment review",
+          "url": "https://stackoverflow.com/questions/80016582/coursera-assignment-review",
+          "meta": "-6 分 · 0 回答 · #advice"
+        },
+        {
+          "title": "iOS home-screen PWA: one video plays frames and audio, but currentTime stays 0, native controls are inert, and pause() has no effect",
+          "url": "https://stackoverflow.com/questions/80016563/ios-home-screen-pwa-one-video-plays-frames-and-audio-but-currenttime-stays-0",
+          "meta": "-4 分 · 0 回答 · #ios #html5-video #avfoundation"
+        },
+        {
+          "title": "How to make a Genre/Format Filter for Portfolio Website",
+          "url": "https://stackoverflow.com/questions/80016569/how-to-make-a-genre-format-filter-for-portfolio-website",
+          "meta": "-3 分 · 0 回答 · #javascript #html #css"
+        },
+        {
+          "title": "XSLT transformation and Spring Boot: how to preserve namespace prefix in XML document after XSLT transormation",
+          "url": "https://stackoverflow.com/questions/80016571/xslt-transformation-and-spring-boot-how-to-preserve-namespace-prefix-in-xml-doc",
+          "meta": "2 分 · 1 回答 · #spring-boot #xslt #xml-namespaces"
+        },
+        {
+          "title": "Player Locked Out Of Parrying After a Miss",
+          "url": "https://stackoverflow.com/questions/80016573/player-locked-out-of-parrying-after-a-miss",
+          "meta": "1 分 · 0 回答 · #c# #unity-game-engine #2d"
+        },
+        {
+          "title": "How to prevent Admob Ad dismissal from redrawing my view",
+          "url": "https://stackoverflow.com/questions/80016558/how-to-prevent-admob-ad-dismissal-from-redrawing-my-view",
+          "meta": "1 分 · 0 回答 · #swift #swiftui #admob"
+        },
+        {
+          "title": "Keycloak Introspection Requests all return \"active: false\" for valid tokens",
+          "url": "https://stackoverflow.com/questions/80016548/keycloak-introspection-requests-all-return-active-false-for-valid-tokens",
+          "meta": "1 分 · 2 回答 · #python #oauth-2.0 #keycloak"
+        },
+        {
+          "title": "In a Widget build method, which context is the right one to refer to?",
+          "url": "https://stackoverflow.com/questions/80016546/in-a-widget-build-method-which-context-is-the-right-one-to-refer-to",
+          "meta": "2 分 · 0 回答 · #best-practices #flutter #dart"
+        },
+        {
+          "title": "How to pass file path to jsonschema compile validator macro?",
+          "url": "https://stackoverflow.com/questions/80016517/how-to-pass-file-path-to-jsonschema-compile-validator-macro",
+          "meta": "3 分 · 1 回答 · #rust #jsonschema #json-schema-validator"
+        },
+        {
+          "title": "What is the dotted underline suggestion in VS Code?",
+          "url": "https://stackoverflow.com/questions/80016486/what-is-the-dotted-underline-suggestion-in-vs-code",
+          "meta": "1 分 · 0 回答 · #go #vs-code #intellisense"
+        },
+        {
+          "title": "How to navigate to a markdown tag in vanilla neovim/vim?",
+          "url": "https://stackoverflow.com/questions/80016514/how-to-navigate-to-a-markdown-tag-in-vanilla-neovim-vim",
+          "meta": "1 分 · 2 回答 · #vim #markdown #neovim"
+        },
+        {
+          "title": "Filter out duplicate lines from a log that have the same end pattern",
+          "url": "https://stackoverflow.com/questions/80016531/filter-out-duplicate-lines-from-a-log-that-have-the-same-end-pattern",
+          "meta": "-2 分 · 2 回答 · #bash #filter #cygwin"
+        },
+        {
+          "title": "Efficient way of adding borders with openpyxl",
+          "url": "https://stackoverflow.com/questions/80016537/efficient-way-of-adding-borders-with-openpyxl",
+          "meta": "1 分 · 1 回答 · #python #openpyxl"
+        },
+        {
+          "title": "How to call ShowModal on a Form but not show it to the user?",
+          "url": "https://stackoverflow.com/questions/80016484/how-to-call-showmodal-on-a-form-but-not-show-it-to-the-user",
+          "meta": "-3 分 · 1 回答 · #delphi #delphi-12-athens"
+        },
+        {
+          "title": "How do I use the latest CsvHelper 34.0.0 inside Linqpad 8?",
+          "url": "https://stackoverflow.com/questions/80016506/how-do-i-use-the-latest-csvhelper-34-0-0-inside-linqpad-8",
+          "meta": "2 分 · 1 回答 · #c# #linqpad #csvhelper"
+        },
+        {
+          "title": "Migration XLSB files to Google Sheets",
+          "url": "https://stackoverflow.com/questions/80016523/migration-xlsb-files-to-google-sheets",
+          "meta": "-6 分 · 0 回答 · #excel #google-sheets #file-conversion"
+        },
+        {
+          "title": "If you put a fat arrow or function inside an alert, prompt, or confirm, will it return it as a string?",
+          "url": "https://stackoverflow.com/questions/80016502/if-you-put-a-fat-arrow-or-function-inside-an-alert-prompt-or-confirm-will-it",
+          "meta": "-4 分 · 1 回答 · #javascript #confirm"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T05:59:43.815639+00:00",
+        "lastSuccessAt": "2026-11-14T05:59:44.699120+00:00",
+        "error": ""
+      }
+    },
+    "wallstreetcn": {
+      "name": "华尔街见闻",
+      "kind": "全球财经快讯",
+      "url": "https://wallstreetcn.com/live/global",
+      "icon": "https://wallstreetcn.com/favicon.ico",
+      "sourceUrlUsed": "https://api-one.wallstcn.com/apiv1/content/lives?channel=global-channel&limit=24",
+      "updatedAt": "2026-11-14T05:59:44.212665+00:00",
+      "items": [
+        {
+          "title": "美财长承认移居军事基地，斥责《华尔街日报》泄露住址信息",
+          "url": "https://wallstreetcn.com/livenews/3200111",
+          "meta": "11-14 13:54"
+        },
+        {
+          "title": "伊朗表示，在“非常时期”不会恢复核安全保障措施。",
+          "url": "https://wallstreetcn.com/livenews/3200110",
+          "meta": "11-14 13:51"
+        },
+        {
+          "title": "北京15日正式供暖",
+          "url": "https://wallstreetcn.com/livenews/3200109",
+          "meta": "11-14 13:40"
+        },
+        {
+          "title": "华为数字能源将出售给比亚迪？比亚迪声明：无任何事实依据，属于虚假信息",
+          "url": "https://wallstreetcn.com/livenews/3200108",
+          "meta": "11-14 13:24"
+        },
+        {
+          "title": "特朗普下周访问亚洲 被曝会带马斯克 回避提及英伟达、黄仁勋",
+          "url": "https://wallstreetcn.com/livenews/3200107",
+          "meta": "11-14 13:23"
+        },
+        {
+          "title": "伊朗方面称，一艘油轮周六凌晨在霍尔木兹海峡以东触雷。",
+          "url": "https://wallstreetcn.com/livenews/3200106",
+          "meta": "11-14 13:21"
+        },
+        {
+          "title": "盯上马斯克？美民主党人据称要求保留“星链”限速记录",
+          "url": "https://wallstreetcn.com/livenews/3200105",
+          "meta": "11-14 13:14"
+        },
+        {
+          "title": "英国央行首席经济学家Pill表示，需要进一步加息；致力于逐步将通胀率拉回2%的目标水平；加息等待的时间过长。（英国《金融时报》）",
+          "url": "https://wallstreetcn.com/livenews/3200104",
+          "meta": "11-14 13:03"
+        },
+        {
+          "title": "美国交通部长：空中交管系统“极其老旧”，不全面更新的话会出现更多中断",
+          "url": "https://wallstreetcn.com/livenews/3200103",
+          "meta": "11-14 12:56"
+        },
+        {
+          "title": "马斯克带头签署请愿书！万人联名呼吁英伟达“让创始人回归”",
+          "url": "https://wallstreetcn.com/livenews/3200102",
+          "meta": "11-14 12:55"
+        },
+        {
+          "title": "高质量数据集和数据标注先行先试现场会在厦门市召开",
+          "url": "https://wallstreetcn.com/livenews/3200101",
+          "meta": "11-14 12:53"
+        },
+        {
+          "title": "微软否认与全美航班停飞事件有关",
+          "url": "https://wallstreetcn.com/livenews/3200100",
+          "meta": "11-14 12:40"
+        },
+        {
+          "title": "吴清：资本市场改革要统筹好稳与进等关系",
+          "url": "https://wallstreetcn.com/livenews/3200099",
+          "meta": "11-14 12:14"
+        },
+        {
+          "title": "爱尔兰在多国领导人晚宴地点附近查获爆炸装置",
+          "url": "https://wallstreetcn.com/livenews/3200098",
+          "meta": "11-14 12:14"
+        },
+        {
+          "title": "我国10吨级电动商用飞机有人驾驶首飞成功",
+          "url": "https://wallstreetcn.com/livenews/3200097",
+          "meta": "11-14 12:02"
+        },
+        {
+          "title": "加拿大总理卡尼表示，加拿大和菲律宾已经结束自由贸易协定谈判，并计划于明年使该协定生效。",
+          "url": "https://wallstreetcn.com/livenews/3200096",
+          "meta": "11-14 12:01"
+        },
+        {
+          "title": "吴清：有效防范算法黑箱、AI网络攻击、提升金融基础设施韧性等重点问题，推动人工智能安全规范应用",
+          "url": "https://wallstreetcn.com/livenews/3200094",
+          "meta": "11-14 11:57"
+        },
+        {
+          "title": "吴清：科学把握节奏的同时加强对科技企业发行上市的制度适配性研究",
+          "url": "https://wallstreetcn.com/livenews/3200093",
+          "meta": "11-14 11:55"
+        },
+        {
+          "title": "吴清：进一步深化市场稳定长效机制研究",
+          "url": "https://wallstreetcn.com/livenews/3200092",
+          "meta": "11-14 11:55"
+        },
+        {
+          "title": "吴清：研究评估量化、减持等制度的优化和公平合理的监管安排",
+          "url": "https://wallstreetcn.com/livenews/3200091",
+          "meta": "11-14 11:53"
+        },
+        {
+          "title": "伏欣奇拜单抗（金蓓欣®）纳入国家医保，半年一针有望推动痛风实现临床治愈",
+          "url": "https://wallstreetcn.com/livenews/3200090",
+          "meta": "11-14 11:47"
+        },
+        {
+          "title": "百利天恒宜泽康®成功纳入2026年版国家医保药品目录",
+          "url": "https://wallstreetcn.com/livenews/3200089",
+          "meta": "11-14 11:43"
+        },
+        {
+          "title": "百万元级别CAR-T疗法首次进入国家基本医保目录，报销后患者自付价格或在10万以内",
+          "url": "https://wallstreetcn.com/livenews/3200088",
+          "meta": "11-14 11:35"
+        },
+        {
+          "title": "中证协启动券商财务数智化应用调研",
+          "url": "https://wallstreetcn.com/livenews/3200087",
+          "meta": "11-14 11:26"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T05:59:43.857229+00:00",
+        "lastSuccessAt": "2026-11-14T05:59:44.212665+00:00",
+        "error": ""
+      }
+    },
+    "steam_top": {
+      "name": "Steam 热销榜",
+      "kind": "全球热销 · 实时价格",
+      "url": "https://store.steampowered.com/search/?filter=topsellers",
+      "icon": "https://store.steampowered.com/favicon.ico",
+      "sourceUrlUsed": "https://store.steampowered.com/api/featuredcategories?cc=cn&l=zh",
+      "updatedAt": "2026-11-14T06:25:57.721576+00:00",
+      "items": [
+        {
+          "title": "影之刃零",
+          "url": "https://store.steampowered.com/app/4115450",
+          "meta": "¥268.00",
+          "cover": "source-covers/steam_top/13d23c507d7d5fb3e3b5f3de.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4115450/b1fe30d23b47032843e94c7e2f8e3573030ba98d/capsule_616x353_schinese.jpg?t=1793261976"
+        },
+        {
+          "title": "我带过的最差一届",
+          "url": "https://store.steampowered.com/app/5175310",
+          "meta": "¥18.20 · -35%",
+          "cover": "source-covers/steam_top/3e315d4a06ffd4d09b173fca.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5175310/d2f7de7b02f6815956d742f9508e6e3803b160b5/capsule_616x353_schinese.jpg?t=1794560465"
+        },
+        {
+          "title": "Slay the Spire 2",
+          "url": "https://store.steampowered.com/app/2868840",
+          "meta": "¥70.40 · -20%",
+          "cover": "source-covers/steam_top/0e62cc81b4dee75494286981.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2868840/6a19172e7bc3045dd4625018ca82dce8a18ed0ab/capsule_616x353.jpg?t=1787169309"
+        },
+        {
+          "title": "Euro Truck Simulator 2 - Coaches",
+          "url": "https://store.steampowered.com/app/3809270",
+          "meta": "¥75.39",
+          "cover": "source-covers/steam_top/9ba8fcfab3561daaba576455.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3809270/8a82641a57bdd6ee899c0b939f3e28d325ace749/capsule_616x353.jpg?t=1794576017"
+        },
+        {
+          "title": "深空当铺：可能是偷的",
+          "url": "https://store.steampowered.com/app/4348910",
+          "meta": "¥55.00",
+          "cover": "source-covers/steam_top/428541807267246ffbad01a7.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4348910/3ee8f9c3780cb703972e010e6eeb6b8b1308355a/capsule_616x353_alt_assets_3_schinese.jpg?t=1794554990"
+        },
+        {
+          "title": "Call of Duty®: Modern Warfare® 4",
+          "url": "https://store.steampowered.com/app/4435490",
+          "meta": "¥298.00",
+          "cover": "source-covers/steam_top/e28f5f533dbf89a31d3c1c82.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4435490/68e22b8dc7831505e43dd862807b1396007a5a49/capsule_616x353_alt_assets_4_schinese.jpg?t=1794339680"
+        },
+        {
+          "title": "EA SPORTS FC™ 27",
+          "url": "https://store.steampowered.com/app/4080220",
+          "meta": "¥248.00",
+          "cover": "source-covers/steam_top/d7a8194d3e2aadd05c200d72.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/d3e9a412983e68c39b5751a5fc9480129ce745b3/capsule_616x353.jpg?t=1793610006"
+        },
+        {
+          "title": "重生2我独自逆袭",
+          "url": "https://store.steampowered.com/app/3816120",
+          "meta": "¥46.40 · -20%",
+          "cover": "source-covers/steam_top/65390593b1362379e7ac6b18.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/0eb1078b221de86370e37d4d5b4a10198d1b58ee/capsule_616x353_schinese.jpg?t=1794634856"
+        },
+        {
+          "title": "足球经理27",
+          "url": "https://store.steampowered.com/app/4530370",
+          "meta": "¥268.00",
+          "cover": "source-covers/steam_top/ff95330d9999afb2ac7d2dca.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4530370/d4f7eff50df972fcf8e3a5e366377af405cb1853/capsule_616x353.jpg?t=1794483499"
+        },
+        {
+          "title": "Wallpaper Engine：壁纸引擎",
+          "url": "https://store.steampowered.com/app/431960",
+          "meta": "¥22.90",
+          "cover": "source-covers/steam_top/27d5f5616b143f22d2d02d03.jpg",
+          "originalCover": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/431960/capsule_616x353_schinese.jpg?t=1779452230"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T06:25:55.158937+00:00",
+        "lastSuccessAt": "2026-11-14T06:25:57.721576+00:00",
+        "error": ""
+      }
+    },
+    "steam_online": {
+      "name": "Steam 在线人数",
+      "kind": "同时在线与峰值人数",
+      "url": "https://steamcharts.com/top",
+      "icon": "https://steamcharts.com/favicon.ico",
+      "sourceUrlUsed": "https://steamcharts.com/top",
+      "updatedAt": "2026-11-14T06:26:00.452268+00:00",
+      "items": [
+        {
+          "title": "Counter-Strike 2",
+          "url": "https://store.steampowered.com/app/730",
+          "meta": "在线 524,602 · 峰值 1,359,296",
+          "cover": "source-covers/steam_online/b089330d3469fec8894d9053.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg"
+        },
+        {
+          "title": "Dota 2",
+          "url": "https://store.steampowered.com/app/570",
+          "meta": "在线 447,442 · 峰值 1,096,364",
+          "cover": "source-covers/steam_online/ccf155acf9a494ec6ba679ea.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_616x353.jpg"
+        },
+        {
+          "title": "PUBG: BATTLEGROUNDS",
+          "url": "https://store.steampowered.com/app/578080",
+          "meta": "在线 201,096 · 峰值 806,873",
+          "cover": "source-covers/steam_online/5cc122ecb9b0c6a3832a4f78.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/578080/capsule_616x353.jpg"
+        },
+        {
+          "title": "Phantom Blade Zero",
+          "url": "https://store.steampowered.com/app/4115450",
+          "meta": "在线 179,010 · 峰值 823,104",
+          "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/4115450/capsule_616x353.jpg"
+        },
+        {
+          "title": "Bongo Cat",
+          "url": "https://store.steampowered.com/app/3419430",
+          "meta": "在线 167,391 · 峰值 193,506",
+          "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3419430/capsule_616x353.jpg"
+        },
+        {
+          "title": "Call of Duty®",
+          "url": "https://store.steampowered.com/app/1938090",
+          "meta": "在线 157,171 · 峰值 226,679",
+          "cover": "source-covers/steam_online/cad1c916c7aa49a85eb837df.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1938090/capsule_616x353.jpg"
+        },
+        {
+          "title": "Slay the Spire 2",
+          "url": "https://store.steampowered.com/app/2868840",
+          "meta": "在线 150,226 · 峰值 223,703",
+          "cover": "source-covers/steam_online/6e4b02a2188fe61d2e6fb285.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/capsule_616x353.jpg"
+        },
+        {
+          "title": "WARDOGS",
+          "url": "https://store.steampowered.com/app/1867240",
+          "meta": "在线 100,188 · 峰值 336,202",
+          "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1867240/capsule_616x353.jpg"
+        },
+        {
+          "title": "Apex Legends™",
+          "url": "https://store.steampowered.com/app/1172470",
+          "meta": "在线 99,986 · 峰值 263,888",
+          "cover": "source-covers/steam_online/3359cd07c39340e29b8bdc56.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_616x353.jpg"
+        },
+        {
+          "title": "Team Fortress 2",
+          "url": "https://store.steampowered.com/app/440",
+          "meta": "在线 89,856 · 峰值 121,688",
+          "cover": "source-covers/steam_online/0588838b66d7bca1599a12ce.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/440/capsule_616x353.jpg"
+        },
+        {
+          "title": "Marvel Rivals",
+          "url": "https://store.steampowered.com/app/2767030",
+          "meta": "在线 86,630 · 峰值 93,014",
+          "cover": "source-covers/steam_online/6841958ff014fd913355dab3.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2767030/capsule_616x353.jpg"
+        },
+        {
+          "title": "Path of Exile",
+          "url": "https://store.steampowered.com/app/238960",
+          "meta": "在线 80,300 · 峰值 151,348",
+          "cover": "source-covers/steam_online/41a2579ecaaab350eb65366d.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/238960/capsule_616x353.jpg"
+        },
+        {
+          "title": "Cyberpunk 2077",
+          "url": "https://store.steampowered.com/app/1091500",
+          "meta": "在线 79,842 · 峰值 185,730",
+          "cover": "source-covers/steam_online/49b0d051c05fcbf8b93b3720.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg"
+        },
+        {
+          "title": "Wallpaper Engine",
+          "url": "https://store.steampowered.com/app/431960",
+          "meta": "在线 75,684 · 峰值 126,126",
+          "cover": "source-covers/steam_online/54da4bdc09b092ebc4acf033.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/431960/capsule_616x353.jpg"
+        },
+        {
+          "title": "Limbus Company",
+          "url": "https://store.steampowered.com/app/1973530",
+          "meta": "在线 74,089 · 峰值 164,538",
+          "cover": "source-covers/steam_online/e7e628e217eab27fb6262892.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1973530/capsule_616x353.jpg"
+        },
+        {
+          "title": "Tom Clancy's Rainbow Six Siege",
+          "url": "https://store.steampowered.com/app/359550",
+          "meta": "在线 65,938 · 峰值 94,032",
+          "cover": "source-covers/steam_online/42696fc42f5aaf4a4fc517e5.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/359550/capsule_616x353.jpg"
+        },
+        {
+          "title": "Rust",
+          "url": "https://store.steampowered.com/app/252490",
+          "meta": "在线 65,658 · 峰值 156,861",
+          "cover": "source-covers/steam_online/f5b897db70bf2b7caddf4c02.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/252490/capsule_616x353.jpg"
+        },
+        {
+          "title": "VRChat",
+          "url": "https://store.steampowered.com/app/438100",
+          "meta": "在线 59,053 · 峰值 67,042",
+          "cover": "source-covers/steam_online/161a5e8e464895a4ac4a320e.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/438100/capsule_616x353.jpg"
+        },
+        {
+          "title": "Warframe",
+          "url": "https://store.steampowered.com/app/230410",
+          "meta": "在线 58,479 · 峰值 103,173",
+          "cover": "source-covers/steam_online/0a4062036b5102c0f9cedbc6.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/230410/capsule_616x353.jpg"
+        },
+        {
+          "title": "Delta Force",
+          "url": "https://store.steampowered.com/app/2507950",
+          "meta": "在线 57,599 · 峰值 131,552",
+          "cover": "source-covers/steam_online/eaa9311353d7f8d81bdcf09e.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2507950/capsule_616x353.jpg"
+        },
+        {
+          "title": "TBH: Task Bar Hero",
+          "url": "https://store.steampowered.com/app/3678970",
+          "meta": "在线 56,393 · 峰值 77,575",
+          "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3678970/capsule_616x353.jpg"
+        },
+        {
+          "title": "War Thunder",
+          "url": "https://store.steampowered.com/app/236390",
+          "meta": "在线 51,544 · 峰值 108,197",
+          "cover": "source-covers/steam_online/512c8980042cdcdacc8e1000.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/236390/capsule_616x353.jpg"
+        },
+        {
+          "title": "Overwatch®",
+          "url": "https://store.steampowered.com/app/2357570",
+          "meta": "在线 51,162 · 峰值 76,599",
+          "cover": "source-covers/steam_online/1d28b17d94c637d64c5f3cba.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/capsule_616x353.jpg"
+        },
+        {
+          "title": "Stardew Valley",
+          "url": "https://store.steampowered.com/app/413150",
+          "meta": "在线 47,771 · 峰值 103,664",
+          "cover": "source-covers/steam_online/da31f966d850fcce930e8d34.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/capsule_616x353.jpg"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T06:25:55.159330+00:00",
+        "lastSuccessAt": "2026-11-14T06:26:00.452268+00:00",
+        "error": ""
+      }
+    },
+    "steam_free": {
+      "name": "Steam 免费榜",
+      "kind": "免费开玩 · 热销排序",
+      "url": "https://store.steampowered.com/search/?maxprice=free",
+      "icon": "https://store.steampowered.com/favicon.ico",
+      "sourceUrlUsed": "https://store.steampowered.com/search/results/?query&start=0&count=24&maxprice=free&filter=topsellers&infinite=1&json=1&cc=cn&l=zh",
+      "updatedAt": "2026-11-14T06:31:37.531989+00:00",
+      "items": [
+        {
+          "title": "Apex Legends™",
+          "url": "https://store.steampowered.com/app/1172470",
+          "meta": "免费开玩 · 好评率 45%",
+          "cover": "source-covers/steam_free/3359cd07c39340e29b8bdc56.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_616x353.jpg"
+        },
+        {
+          "title": "PUBG: BATTLEGROUNDS",
+          "url": "https://store.steampowered.com/app/578080",
+          "meta": "免费开玩 · 好评率 50%",
+          "cover": "source-covers/steam_free/5cc122ecb9b0c6a3832a4f78.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/578080/capsule_616x353.jpg"
+        },
+        {
+          "title": "三角洲行动",
+          "url": "https://store.steampowered.com/app/2507950",
+          "meta": "免费开玩 · 好评率 40%",
+          "cover": "source-covers/steam_free/eaa9311353d7f8d81bdcf09e.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2507950/capsule_616x353.jpg"
+        },
+        {
+          "title": "Limbus Company",
+          "url": "https://store.steampowered.com/app/1973530",
+          "meta": "免费开玩 · 好评率 80%",
+          "cover": "source-covers/steam_free/e7e628e217eab27fb6262892.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1973530/capsule_616x353.jpg"
+        },
+        {
+          "title": "Counter-Strike 2",
+          "url": "https://store.steampowered.com/app/730",
+          "meta": "免费开玩 · 好评率 88%",
+          "cover": "source-covers/steam_free/b089330d3469fec8894d9053.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg"
+        },
+        {
+          "title": "Warframe 星际战甲",
+          "url": "https://store.steampowered.com/app/230410",
+          "meta": "免费开玩 · 好评率 71%",
+          "cover": "source-covers/steam_free/0a4062036b5102c0f9cedbc6.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/230410/capsule_616x353.jpg"
+        },
+        {
+          "title": "Dota 2",
+          "url": "https://store.steampowered.com/app/570",
+          "meta": "免费开玩 · 好评率 78%",
+          "cover": "source-covers/steam_free/ccf155acf9a494ec6ba679ea.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_616x353.jpg"
+        },
+        {
+          "title": "使命召唤®：战争地带™",
+          "url": "https://store.steampowered.com/app/1962663",
+          "meta": "免费开玩 · 好评率 25%",
+          "cover": "source-covers/steam_free/e55912b56dab90be6b09fb47.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1962663/capsule_616x353.jpg"
+        },
+        {
+          "title": "使命召唤®",
+          "url": "https://store.steampowered.com/app/1938090",
+          "meta": "免费开玩 · 好评率 41%",
+          "cover": "source-covers/steam_free/cad1c916c7aa49a85eb837df.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1938090/capsule_616x353.jpg"
+        },
+        {
+          "title": "漫威争锋",
+          "url": "https://store.steampowered.com/app/2767030",
+          "meta": "免费开玩 · 好评率 57%",
+          "cover": "source-covers/steam_free/6841958ff014fd913355dab3.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2767030/capsule_616x353.jpg"
+        },
+        {
+          "title": "Yu-Gi-Oh! Master Duel",
+          "url": "https://store.steampowered.com/app/1449850",
+          "meta": "免费开玩 · 好评率 60%",
+          "cover": "source-covers/steam_free/8467108c13839c62159cca9b.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1449850/capsule_616x353.jpg"
+        },
+        {
+          "title": "永劫无间",
+          "url": "https://store.steampowered.com/app/1203220",
+          "meta": "免费开玩 · 好评率 71%",
+          "cover": "source-covers/steam_free/072b25391f1fb4e950351a6d.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1203220/capsule_616x353.jpg"
+        },
+        {
+          "title": "World of Warships",
+          "url": "https://store.steampowered.com/app/552990",
+          "meta": "免费开玩 · 好评率 65%",
+          "cover": "source-covers/steam_free/8bf4cd83856479675708d723.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/552990/capsule_616x353.jpg"
+        },
+        {
+          "title": "战争雷霆",
+          "url": "https://store.steampowered.com/app/236390",
+          "meta": "免费开玩 · 好评率 45%",
+          "cover": "source-covers/steam_free/512c8980042cdcdacc8e1000.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/236390/capsule_616x353.jpg"
+        },
+        {
+          "title": "吉星派对",
+          "url": "https://store.steampowered.com/app/2622000",
+          "meta": "免费开玩 · 好评率 48%",
+          "cover": "source-covers/steam_free/8d8931f893622ffe50bef623.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2622000/capsule_616x353.jpg"
+        },
+        {
+          "title": "雀魂麻将",
+          "url": "https://store.steampowered.com/app/1329410",
+          "meta": "免费开玩 · 好评率 43%",
+          "cover": "source-covers/steam_free/986ce5a558fbdc34d28123c5.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1329410/capsule_616x353.jpg"
+        },
+        {
+          "title": "StarSavior",
+          "url": "https://store.steampowered.com/app/3609080",
+          "meta": "免费开玩 · 好评率 55%",
+          "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3609080/capsule_616x353.jpg"
+        },
+        {
+          "title": "七日世界",
+          "url": "https://store.steampowered.com/app/2139460",
+          "meta": "免费开玩 · 好评率 55%",
+          "cover": "source-covers/steam_free/0f6d899fda38c7c964bcec87.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2139460/capsule_616x353.jpg"
+        },
+        {
+          "title": "战地风云™ 6",
+          "url": "https://store.steampowered.com/app/2807960",
+          "meta": "免费开玩 · 好评率 34%",
+          "cover": "source-covers/steam_free/b72321af0dd610f2be8c39b3.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2807960/capsule_616x353.jpg"
+        },
+        {
+          "title": "战地之王-国际",
+          "url": "https://store.steampowered.com/app/1473480",
+          "meta": "免费开玩 · 好评率 46%",
+          "cover": "source-covers/steam_free/962c556710b22dae340420db.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1473480/capsule_616x353.jpg"
+        },
+        {
+          "title": "永恒轮回",
+          "url": "https://store.steampowered.com/app/1049590",
+          "meta": "免费开玩 · 好评率 73%",
+          "cover": "source-covers/steam_free/65f78445da6ca77dadcc1383.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1049590/capsule_616x353.jpg"
+        },
+        {
+          "title": "KARDS - 二战卡牌游戏",
+          "url": "https://store.steampowered.com/app/544810",
+          "meta": "免费开玩 · 好评率 58%",
+          "cover": "source-covers/steam_free/9faf103bb70073b9a4060a14.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/544810/capsule_616x353.jpg"
+        },
+        {
+          "title": "暗区突围：无限",
+          "url": "https://store.steampowered.com/app/2073620",
+          "meta": "免费开玩 · 好评率 62%",
+          "cover": "source-covers/steam_free/e26c400e856dd0e648be4683.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2073620/capsule_616x353.jpg"
+        },
+        {
+          "title": "彩虹六号：围攻",
+          "url": "https://store.steampowered.com/app/359550",
+          "meta": "免费开玩 · 好评率 75%",
+          "cover": "source-covers/steam_free/42696fc42f5aaf4a4fc517e5.jpg",
+          "originalCover": "https://cdn.cloudflare.steamstatic.com/steam/apps/359550/capsule_616x353.jpg"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-14T06:31:36.092176+00:00",
+        "lastSuccessAt": "2026-11-14T06:31:37.531989+00:00",
+        "error": ""
+      }
     }
   }
 }

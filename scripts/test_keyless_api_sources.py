@@ -60,7 +60,7 @@ class WiringTests(unittest.TestCase):
   card=(self.root/'src/components/SourceNewsCard.vue').read_text(encoding='utf8')
   themes=(self.root/'src/utils/source-card-themes.mjs').read_text(encoding='utf8')
   self.assertIn("sources:['yicai','sinafinance','woshipm','fng','eastmoney','xueqiu']",nav)
-  self.assertIn("'pcauto','fng','eastmoney']",nav)
+  self.assertIn("'pojie52','yicai','woshipm'",nav)
   self.assertIn("fng:{name:'恐惧贪婪指数'",card)
   self.assertIn("eastmoney:{name:'东方财富",card)
   self.assertIn("'fng', 'eastmoney'",themes)

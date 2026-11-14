@@ -98,7 +98,16 @@ SOURCES={
  'qq':{'name':'腾讯新闻','kind':'热点榜','url':'https://news.qq.com/','endpoint':'https://r.inews.qq.com/gw/event/hot_ranking_list?page_size=20','icon':'https://news.qq.com/favicon.ico'},
  'netease':{'name':'网易新闻','kind':'最新资讯','url':'https://news.163.com/','endpoint':'https://news.163.com/special/0001220O/news_json.js','icon':'https://www.163.com/favicon.ico'},
  'hellogithub':{'name':'HelloGitHub','kind':'开源月刊','url':'https://hellogithub.com/','endpoint':'https://hellogithub.com/rss','icon':'https://hellogithub.com/favicon.ico'},
- 'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'}
+ 'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'},
+ 'nvd':{'name':'NVD 最新漏洞','kind':'美国国家漏洞库 · 最新披露','url':'https://nvd.nist.gov/vuln/search','endpoint':'https://services.nvd.nist.gov/rest/json/cves/2.0','icon':'https://nvd.nist.gov/favicon.ico'},
+ 'exploitdb':{'name':'Exploit-DB','kind':'公开漏洞利用库 · 最新条目','url':'https://www.exploit-db.com/','endpoint':'https://www.exploit-db.com/rss.xml','icon':'https://www.exploit-db.com/favicon.ico'},
+ '36kr':{'name':'36氪','kind':'科技创投 · 24 小时热榜','url':'https://36kr.com/','endpoint':'https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot','icon':'https://36kr.com/favicon.ico'},
+ 'huxiu':{'name':'虎嗅','kind':'科技与商业资讯','url':'https://www.huxiu.com/','endpoint':'https://www.huxiu.com/','icon':'https://www.huxiu.com/favicon.ico'},
+ 'so_hot':{'name':'Stack Overflow 热问','kind':'开发者热门问题','url':'https://stackoverflow.com/questions','endpoint':'https://api.stackexchange.com/2.3/questions?order=desc&sort=hot&site=stackoverflow&pagesize=24','icon':'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico'},
+ 'wallstreetcn':{'name':'华尔街见闻','kind':'全球财经快讯','url':'https://wallstreetcn.com/live/global','endpoint':'https://api-one.wallstcn.com/apiv1/content/lives?channel=global-channel&limit=24','icon':'https://wallstreetcn.com/favicon.ico'},
+ 'steam_top':{'name':'Steam 热销榜','kind':'全球热销 · 实时价格','url':'https://store.steampowered.com/search/?filter=topsellers','endpoint':'https://store.steampowered.com/api/featuredcategories?cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
+ 'steam_free':{'name':'Steam 免费榜','kind':'免费开玩 · 热销排序','url':'https://store.steampowered.com/search/?maxprice=free','endpoint':'https://store.steampowered.com/search/results/?query&start=0&count=24&maxprice=free&filter=topsellers&infinite=1&json=1&cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
+ 'steam_online':{'name':'Steam 在线人数','kind':'同时在线与峰值人数','url':'https://steamcharts.com/top','endpoint':'https://steamcharts.com/top','icon':'https://steamcharts.com/favicon.ico'}
 }
 CN_AI_SOURCES={'deepseek_news','bytedance_news','kimi_news','tencent_ai_news','qwen_news'}
 AI_OFFICIAL_SOURCES={'openai_news','anthropic_news','deepmind_news'}
@@ -838,7 +847,7 @@ def parse_source(key,body):
    url=clean(item.findtext('link'))
    if not re.fullmatch(r'https://thehackernews\.com/\d{4}/\d{2}/[a-zA-Z0-9_%-]+\.html',url):continue
    add(item.findtext('title'),url,item.findtext('pubDate') or '')
- elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
+ elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf','exploitdb']:
   root=ET.fromstring(body)
   for item in root.findall('.//item'):add(item.findtext('title'),item.findtext('link') or '',item.findtext('pubDate') or '')
  elif key=='juejin':
@@ -915,6 +924,104 @@ def parse_source(key,body):
   for url,title in parser.links:
    url=urljoin(SOURCES[key]['url'],url)
    if re.fullmatch(r'https?://(?:www\.)?gamersky\.com/news/\d{6}/\d+\.shtml',url):add(title,url)
+ elif key=='nvd':
+  data=json.loads(body)
+  vulns=data.get('vulnerabilities') if isinstance(data,dict) else None
+  if not isinstance(vulns,list):raise ValueError('Invalid NVD response')
+  labels={'CRITICAL':'严重','HIGH':'高危','MEDIUM':'中危','LOW':'低危'}
+  for row in reversed(vulns):
+   cve=(row or {}).get('cve') if isinstance(row,dict) else None
+   if not isinstance(cve,dict):continue
+   cve_id=str(cve.get('id') or '')
+   if not re.fullmatch(r'CVE-\d{4}-\d{4,}',cve_id):continue
+   desc=next((d.get('value') for d in cve.get('descriptions') or [] if isinstance(d,dict) and d.get('lang')=='en'),'')
+   desc=clean(desc or '')
+   title=cve_id+(f' · {desc[:80]}' if desc else '')
+   score=None;severity=''
+   for group in ('cvssMetricV40','cvssMetricV31','cvssMetricV30','cvssMetricV2'):
+    entries=(cve.get('metrics') or {}).get(group) or []
+    if entries and isinstance(entries[0],dict):
+     data_item=entries[0].get('cvssData') or {}
+     score=data_item.get('baseScore');severity=labels.get(str(data_item.get('baseSeverity') or entries[0].get('baseSeverity') or '').upper(),'')
+     break
+   meta=[p for p in [severity,(f'CVSS {score}' if isinstance(score,(int,float)) else ''),str(cve.get('published') or '')[:10]] if p]
+   add(title,'https://nvd.nist.gov/vuln/detail/'+cve_id,' · '.join(meta))
+ elif key=='36kr':
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('code')!=0:raise ValueError('Invalid 36Kr response')
+  for row in (data.get('data') or {}).get('hotRankList') or []:
+   material=(row or {}).get('templateMaterial') if isinstance(row,dict) else None
+   if not isinstance(material,dict):continue
+   item_id=str(material.get('itemId') or row.get('itemId') or '')
+   title=clean(material.get('widgetTitle') or material.get('title') or '')
+   if not item_id.isdigit() or not title:continue
+   read=material.get('statRead');author=clean(material.get('authorName') or '')
+   meta=[p for p in [author,(f'{read:,} 阅读' if isinstance(read,int) and not isinstance(read,bool) and read>=0 else '')] if p]
+   add(title,'https://36kr.com/p/'+item_id,' · '.join(meta) or '36氪热榜')
+ elif key=='huxiu':
+  try:text=body.decode('utf-8')
+  except UnicodeDecodeError:text=body.decode('gb18030')
+  parser=Links();parser.feed(text)
+  for href,title in parser.links:
+   url=urljoin(SOURCES[key]['url'],href)
+   if re.fullmatch(r'https://www\.huxiu\.com/article/\d+\.html',url) and len(title)>6:add(title,url)
+ elif key=='so_hot':
+  data=json.loads(body)
+  items=data.get('items') if isinstance(data,dict) else None
+  if not isinstance(items,list):raise ValueError('Invalid Stack Overflow response')
+  for row in items:
+   if not isinstance(row,dict):continue
+   title=clean(unescape(str(row.get('title') or '')))
+   url=str(row.get('link') or '')
+   if not title or not re.fullmatch(r'https://stackoverflow\.com/questions/\d+/[^?#]+',url):continue
+   tags=[str(t) for t in row.get('tags') or [] if isinstance(t,str)]
+   meta=[f"{row.get('score',0)} 分",f"{row.get('answer_count',0)} 回答"]+([' '.join('#'+t for t in tags[:3])] if tags else [])
+   add(title,url,' · '.join(meta))
+ elif key=='wallstreetcn':
+  data=json.loads(body)
+  items=(data.get('data') or {}).get('items') if isinstance(data,dict) else None
+  if not isinstance(items,list):raise ValueError('Invalid Wallstreetcn response')
+  for row in items:
+   if not isinstance(row,dict):continue
+   title=clean(str(row.get('title') or row.get('content_text') or ''))
+   url=str(row.get('uri') or ('https://wallstreetcn.com/livenews/'+str(row.get('id') or '')))
+   if not title or not re.fullmatch(r'https://wallstreetcn\.com/(?:livenews|articles)/\d+',url):continue
+   stamp=row.get('display_time');meta=''
+   if isinstance(stamp,int) and not isinstance(stamp,bool):meta=datetime.fromtimestamp(stamp).strftime('%m-%d %H:%M')
+   add(title[:120],url,meta)
+ elif key=='steam_top':
+  data=json.loads(body)
+  if not isinstance(data,dict):raise ValueError('Invalid Steam response')
+  entries=data.get('top_sellers',{}).get('items') or data.get('specials',{}).get('items') or []
+  for row in entries:
+   if not isinstance(row,dict):continue
+   appid=row.get('id');name=clean(str(row.get('name') or ''))
+   if isinstance(appid,bool) or not isinstance(appid,int) or appid<=0 or not name:continue
+   parts=[];price=row.get('final_price',row.get('original_price'))
+   if isinstance(price,int) and not isinstance(price,bool) and price>=0:parts.append('免费' if price==0 else f'¥{price/100:.2f}')
+   discount=row.get('discount_percent')
+   if isinstance(discount,int) and not isinstance(discount,bool) and discount>0:parts.append(f'-{discount}%')
+   cover=row.get('large_capsule_image') if isinstance(row.get('large_capsule_image'),str) else ''
+   add(name,f'https://store.steampowered.com/app/{appid}',' · '.join(parts) or 'Steam 热销',cover or f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
+ elif key=='steam_free':
+  data=json.loads(body)
+  if not isinstance(data,dict):raise ValueError('Invalid Steam response')
+  html=str(data.get('results_html') or '')
+  for block in re.split(r'<a href="https://store\.steampowered\.com/app/',html)[1:]:
+   appid=block.split('/')[0]
+   if not appid.isdigit():continue
+   match=re.search(r'<span class="title">(.*?)</span>',block,flags=re.S)
+   if not match:continue
+   title=clean(unescape(match.group(1)))
+   if not title:continue
+   pct=re.search(r'data-tooltip-html="[^"]*?(\d+)%',block)
+   meta='免费开玩'+(f' · 好评率 {pct.group(1)}%' if pct else '')
+   add(title[:120],f'https://store.steampowered.com/app/{appid}',meta,f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
+ elif key=='steam_online':
+  text=body.decode('utf-8')
+  for appid,name,current,peak in re.findall(r'<tr[^>]*>\s*<td>\d+\.</td>\s*<td class="game-name left">\s*<a href="/app/(\d+)">\s*(.*?)\s*</a>.*?<td class="num">([\d,]+)</td>.*?<td class="num period-col peak-concurrent">([\d,]+)</td>',text,flags=re.S):
+   title=clean(re.sub(r'<[^>]+>','',unescape(name)));current=int(current.replace(',',''));peak=int(peak.replace(',',''))
+   add(title,f'https://store.steampowered.com/app/{appid}',f'在线 {current:,} · 峰值 {peak:,}',f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
  seen=set();unique=[]
  for row in rows:
   if row['url'] not in seen:seen.add(row['url']);unique.append(row)
@@ -925,9 +1032,13 @@ FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href
 FREEBUF_FEEDS = ('https://www.freebuf.com/feed','https://www.freebuf.com/rss')
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
+def nvd_endpoint():
+ end=datetime.now(timezone.utc);start=end-timedelta(days=2)
+ return f"https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate={start:%Y-%m-%dT%H:%M:%S.000}&pubEndDate={end:%Y-%m-%dT%H:%M:%S.000}&resultsPerPage=2000"
+
 def request_body(url,timeout=25):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
- with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
+ with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co','services.nvd.nist.gov'] else 4_000_000)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -1067,11 +1178,14 @@ def fetch(key):
   else:items=fetch_freebuf_items();used=source['endpoint']
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
  try:
-  used=source['endpoint']
+  used=nvd_endpoint() if key=='nvd' else source['endpoint']
   try:
    if key=='meta_ai_news':
     req=urllib.request.Request(used,headers={'User-Agent':'Mozilla/5.0'})
     with urllib.request.urlopen(req,timeout=15) as response:body=response.read(2_000_000)
+   elif key=='36kr':
+    req=urllib.request.Request(used,data=json.dumps({'partner_id':'wap','param':{'siteId':1,'platformId':2},'timestamp':int(datetime.now().timestamp()*1000)}).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
+    with urllib.request.urlopen(req,timeout=25) as response:body=response.read(4_000_000)
    else:body=request_body(used)
   except (URLError,TimeoutError) as error:
    if key!='douban' or isinstance(error,HTTPError):raise
@@ -1088,7 +1202,7 @@ def fetch(key):
   if key in {'mistral_news','meta_ai_news','mistral_api','minimax_api'}:items=translate_security_titles(items)
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  if key=='hf_trending':items=enrich_hf_trending(items)
- if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
+ if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program','nvd','exploitdb') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
  if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}

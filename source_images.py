@@ -12,7 +12,8 @@ DOMAINS={
 'geekpark':('geekpark.net','geekpark.com'),'qbitai':('qbitai.com',),'juejin':('byteimg.com','juejin.cn','juejin.im'),'toutiao':('toutiaoimg.com','toutiao.com','byteimg.com'),
 'qq':('gtimg.com','qq.com'),'netease':('126.net','163.com'),'hellogithub':('cheatsheet.store','hellogithub.com','githubusercontent.com'),
 'ithome':('ithome.com','ithome.net','ithomeimg.com','ithome.cn'),'huggingface':('huggingface.co','hf.co'),'github':('githubassets.com','githubusercontent.com','github.com'),
-'v2ex':('v2ex.com','v2ex.co','imgur.com','jsdelivr.net'),'xglobal':('twimg.com',)}
+'v2ex':('v2ex.com','v2ex.co','imgur.com','jsdelivr.net'),'xglobal':('twimg.com',),
+'steam_top':('steamstatic.com','steamcdn-a.akamaihd.net'),'steam_free':('steamstatic.com','steamcdn-a.akamaihd.net'),'steam_online':('steamstatic.com','steamcdn-a.akamaihd.net')}
 IMAGE_SOURCES=set(DOMAINS)
 
 def clean_cover(key,value,base=''):

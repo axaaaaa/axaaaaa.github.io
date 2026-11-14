@@ -132,7 +132,7 @@ jobs:
           done
           cp -R css img js _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
-          for dir in country-flags engine-icons fingerprint-lab source-icons; do
+          for dir in country-flags engine-icons fingerprint-lab source-icons brand-logos; do
             if [ -d "$dir" ]; then cp -R "$dir" _site/; fi
           done
           touch _site/.nojekyll

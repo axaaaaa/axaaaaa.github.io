@@ -9722,6 +9722,664 @@
         "lastSuccessAt": "2026-11-15T06:59:27.517548+00:00",
         "error": ""
       }
+    },
+    "wegame": {
+      "name": "WeGame 网吧热度榜",
+      "kind": "网吧热度 · 新游榜",
+      "url": "https://www.wegame.com.cn/rail/rank_detail.html?ranktype=most_newbie&netbar=true",
+      "icon": "https://www.wegame.com.cn/favicon.ico",
+      "sourceUrlUsed": "https://www.wegame.com.cn/api/rail/web/data_filter/game_info/filter",
+      "updatedAt": "2026-11-15T15:06:27.944209+00:00",
+      "items": [
+        {
+          "title": "三角洲行动",
+          "url": "https://www.wegame.com.cn/store/2001918/",
+          "meta": "天美工作室琳琅天上团队",
+          "cover": "source-covers/wegame/92b32589cfa08881b0a0ae07.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2001918-r.ea725/info/45d72dfaf71c7b2ef9b45b801ebb4480.jpg"
+        },
+        {
+          "title": "英雄联盟",
+          "url": "https://www.wegame.com.cn/store/26/",
+          "meta": "网吧热度 1000 · Riot Games"
+        },
+        {
+          "title": "和平精英模拟器",
+          "url": "https://www.wegame.com.cn/store/2002291/",
+          "meta": "光子工作室",
+          "cover": "source-covers/wegame/f4013ab3c66b12eccfd93b6c.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002291-r.375d9/info/d6fc57511b90257c024a46e54ea3371d.jpg"
+        },
+        {
+          "title": "王者万象棋",
+          "url": "https://www.wegame.com.cn/store/2002548/",
+          "meta": "深圳市腾讯计算机系统有限公司",
+          "cover": "source-covers/wegame/73f946ca04977772786fb1a7.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002548-r.6cf3b/info/61a3638cbd8d142c3e4adb61910b942e.jpg"
+        },
+        {
+          "title": "暗区突围：无限",
+          "url": "https://www.wegame.com.cn/store/2001688/",
+          "meta": "魔方工作室",
+          "cover": "source-covers/wegame/36d5e7b529cc69918ab6b1f1.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2001688-r.51a44/info/a82b899aefc4ad98acb9f82d0aa22bfc.jpg"
+        },
+        {
+          "title": "穿越火线",
+          "url": "https://www.wegame.com.cn/store/2/",
+          "meta": "网吧热度 999 · Smile Gate"
+        },
+        {
+          "title": "无畏契约",
+          "url": "https://www.wegame.com.cn/store/2001715/",
+          "meta": "Riot Games",
+          "cover": "source-covers/wegame/e7589c2bb9c5a96a1cb16b74.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2001715-r.9a324/info/26265cc14a9e9684034b381d129612f8.jpg"
+        },
+        {
+          "title": "逆战：未来",
+          "url": "https://www.wegame.com.cn/store/2002130/",
+          "meta": "深圳市腾讯计算机系统有限公司",
+          "cover": "source-covers/wegame/45aaa0df5d8d061094e3d50d.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002130-r.81489/info/062ce7946d319071999f4742ac34ab1b.jpg"
+        },
+        {
+          "title": "QQ飞车",
+          "url": "https://www.wegame.com.cn/store/17/",
+          "meta": "网吧热度 995 · 琳琅天上工作室"
+        },
+        {
+          "title": "洛克王国：世界",
+          "url": "https://www.wegame.com.cn/store/2002304/",
+          "meta": "深圳市腾讯计算机系统有限公司",
+          "cover": "source-covers/wegame/9ae5dfd6d8c9fe79e8ff1030.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002304-r.f4d78/info/abd9a0365b6adfb6c03de9478b4ae81a.jpg"
+        },
+        {
+          "title": "NBA2KOL2",
+          "url": "https://www.wegame.com.cn/store/2000352/",
+          "meta": "Visual Concepts",
+          "cover": "source-covers/wegame/a491f139d7ad5bdf449d9b31.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2000352-r.4ef73/info/d4b7777209ce710d20c537ff7a1b8f16.jpg"
+        },
+        {
+          "title": "足球在线4（FC ONLINE）",
+          "url": "https://www.wegame.com.cn/store/524/",
+          "meta": "EA Sports"
+        },
+        {
+          "title": "地下城与勇士：创新世纪",
+          "url": "https://www.wegame.com.cn/store/1/",
+          "meta": "网吧热度 998 · Neople"
+        },
+        {
+          "title": "CFHD高清大区",
+          "url": "https://www.wegame.com.cn/store/2000797/",
+          "meta": "Smilegate Entertainment",
+          "cover": "source-covers/wegame/c5819f917ce6aea0afa43d74.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2000797-r.57462/info/aae27af83de5759425b01ba330d0b5e8.jpg"
+        },
+        {
+          "title": "失控进化",
+          "url": "https://www.wegame.com.cn/store/2002423/",
+          "meta": "腾讯",
+          "cover": "source-covers/wegame/33eb3218121bef9b5df1095b.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002423-r.af5d3/info/5ca7f3585e7b80095d370bcb04832ff6.jpg"
+        },
+        {
+          "title": "QQ炫舞",
+          "url": "https://www.wegame.com.cn/store/10/",
+          "meta": "北京永航科技有限公司"
+        },
+        {
+          "title": "生死狙击2",
+          "url": "https://www.wegame.com.cn/store/2001462/",
+          "meta": "浙江无端科技股份有限公司",
+          "cover": "source-covers/wegame/18f1c50e8f4da6d636ab180f.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2001462-r.13beb/info/dcbbff60078f74f1274ca69d10fc9abf.jpg"
+        },
+        {
+          "title": "王者荣耀世界",
+          "url": "https://www.wegame.com.cn/store/2001829/",
+          "meta": "深圳市腾讯计算机系统有限公司",
+          "cover": "source-covers/wegame/f48e50727852690c62416df8.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2001829-r.497bc/info/9fe73786f72761fc2d12c81ccc5129d7.jpg"
+        },
+        {
+          "title": "终极角逐",
+          "url": "https://www.wegame.com.cn/store/2002270/",
+          "meta": "Embark Studios",
+          "cover": "source-covers/wegame/f3e10f6ab2bb7beb4f40acfe.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002270-r.8271b/info/19f414ac329b7b04de3c5ee2eb17c4f6.jpg"
+        },
+        {
+          "title": "劲舞团",
+          "url": "https://www.wegame.com.cn/store/2002682/",
+          "meta": "上海久游网络科技有限公司",
+          "cover": "source-covers/wegame/fabbcbb86b6f4d2f7b106277.webp",
+          "originalCover": "https://wegame.gtimg.com/g.2002682-r.b5718/info/be62275eaba0f2b8a74b4d89732bdbf3.jpg"
+        },
+        {
+          "title": "NBA2K OL",
+          "url": "https://www.wegame.com.cn/store/31/",
+          "meta": "网吧热度 993 · 2K Sports"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T15:06:26.414891+00:00",
+        "lastSuccessAt": "2026-11-15T15:06:27.944209+00:00",
+        "error": ""
+      }
+    },
+    "tx_video": {
+      "name": "腾讯视频",
+      "kind": "电视剧热搜榜 · 热度值",
+      "url": "https://v.qq.com/channel/tv",
+      "icon": "https://v.qq.com/favicon.ico",
+      "sourceUrlUsed": "https://pbaccess.video.qq.com/trpc.tencentvideohotlistdata.hotlistdata.DoSearchHotListHttp/getSearchHotListHttp",
+      "updatedAt": "2026-11-15T15:37:22.656520+00:00",
+      "items": [
+        {
+          "title": "走马上任",
+          "url": "https://v.qq.com/x/cover/mzc00200zsqz54y.html",
+          "meta": "热度 9.9万 · 赵家班新爆笑喜剧",
+          "cover": "source-covers/tx_video/31a3b5a45a2ea57703bbfa8b.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200zsqz54y1788778827069/0"
+        },
+        {
+          "title": "她能看见",
+          "url": "https://v.qq.com/x/cover/mzc00200njh6yf6.html",
+          "meta": "热度 8.8万 · 少女阴阳眼看见上古妖兽",
+          "cover": "source-covers/tx_video/6ad66e5989f334277269fec8.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200njh6yf61794473060505/0"
+        },
+        {
+          "title": "兰香如故",
+          "url": "https://v.qq.com/x/cover/mzc00200803dr6b.html",
+          "meta": "热度 5.0万 · 高门跌落！婢女深宅挣生机",
+          "cover": "source-covers/tx_video/1ada025bd237b9cde5facebd.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200803dr6b1788322341613/0"
+        },
+        {
+          "title": "伟大的长征",
+          "url": "https://v.qq.com/x/cover/mzc00200p1ilkw3.html",
+          "meta": "热度 4.6万 · 英雄史诗不朽丰碑",
+          "cover": "source-covers/tx_video/5976dd70c159fd4ffe0c4845.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200p1ilkw31791453831333/0"
+        },
+        {
+          "title": "尚公主",
+          "url": "https://v.qq.com/x/cover/mzc002001w361jz.html",
+          "meta": "热度 4.5万 · 扶摇直尚险途携手破危局",
+          "cover": "source-covers/tx_video/c1d0dd9365efd946f446cc66.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002001w361jz1756623937698/0"
+        },
+        {
+          "title": "玫瑰战争[普通话版]",
+          "url": "https://v.qq.com/x/cover/mzc0020005aceo2.html",
+          "meta": "热度 2.9万 · 娱乐圈致命游戏刺激上演",
+          "cover": "source-covers/tx_video/8331ae9c943be51e1b586e12.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc0020005aceo21793329107650/0"
+        },
+        {
+          "title": "嫁金枝",
+          "url": "https://v.qq.com/x/cover/mzc00200hsn6dio.html",
+          "meta": "热度 1.7万 · 钓系庶女入宫改命夺帝心",
+          "cover": "source-covers/tx_video/3113fc48c666a52a300b56c6.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200hsn6dio1777454742111/0"
+        },
+        {
+          "title": "蒸蒸日上",
+          "url": "https://v.qq.com/x/cover/mzc002004k31fxg.html",
+          "meta": "热度 1.6万 · 澡堂楼上开律所，烟火人间",
+          "cover": "source-covers/tx_video/fd0b31286c17f77cd5320679.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002004k31fxg1792120818540/0"
+        },
+        {
+          "title": "九重紫",
+          "url": "https://v.qq.com/x/cover/mzc00200vkqr54u.html",
+          "meta": "热度 1.5万 · 孟子义李昀锐两世因果",
+          "cover": "source-covers/tx_video/cf96fe0355db891a0b19c914.jpg",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200vkqr54u1711002364840/0"
+        },
+        {
+          "title": "美人余",
+          "url": "https://v.qq.com/x/cover/mzc00200xqdobf5.html",
+          "meta": "热度 1.4万 · 李一桐撕开好命女人糖衣",
+          "cover": "source-covers/tx_video/afcd44f33e93b3d4cd7fb8e5.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200xqdobf51791553824424/0"
+        },
+        {
+          "title": "庆余年第二季",
+          "url": "https://v.qq.com/x/cover/mzc002002kqssyu.html",
+          "meta": "热度 1.4万 · 与范闲再探庙堂江湖",
+          "cover": "source-covers/tx_video/71e1fa14f0d037b4cffb0318.jpg",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002002kqssyu1715825945872/0"
+        },
+        {
+          "title": "多喜一家人",
+          "url": "https://v.qq.com/x/cover/mzc002006266llu.html",
+          "meta": "热度 1.3万 · 蒋欣李光洁叔嫂争拆迁款",
+          "cover": "source-covers/tx_video/ceebf91b8876372b7ef64967.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002006266llu1794471075049/0"
+        },
+        {
+          "title": "你是我的荣耀",
+          "url": "https://v.qq.com/x/cover/mzc00200xh9313v.html",
+          "meta": "热度 1.2万 · 杨洋迪丽热巴共谱浪漫爱情",
+          "cover": "source-covers/tx_video/cefcf31ee8f93756acbc8bc4.webp",
+          "originalCover": "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200xh9313v1625146288229/0"
+        },
+        {
+          "title": "骄阳似我",
+          "url": "https://v.qq.com/x/cover/mzc00200xntoaip.html",
+          "meta": "热度 1.2万 · 宋威龙赵今麦演绎顾漫经典",
+          "cover": "source-covers/tx_video/5beffbb3fe34014bb43bece5.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200xntoaip1784001999653/0"
+        },
+        {
+          "title": "爱情公寓3",
+          "url": "https://v.qq.com/x/cover/zaasslvhhyy1sg7.html",
+          "meta": "热度 1.0万 · 合租男女囧事多",
+          "cover": "source-covers/tx_video/5d50ceb739ad0bf2f7b5937d.webp",
+          "originalCover": "https://puui.qpic.cn/vcover_hz_pic/0/zaasslvhhyy1sg71689741001811/0"
+        },
+        {
+          "title": "百花杀",
+          "url": "https://v.qq.com/x/cover/mzc00200nfe7al6.html",
+          "meta": "热度 1.0万 · 冷情郡主绿茶太子谋真心",
+          "cover": "source-covers/tx_video/c11281babd3b770cef53bb06.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200nfe7al61782967423677/0"
+        },
+        {
+          "title": "月升沧海",
+          "url": "https://v.qq.com/x/cover/mzc00200vmd652y.html",
+          "meta": "热度 9803 · 吴磊赵露思“甜虐”救赎",
+          "cover": "source-covers/tx_video/616872a8be0c81ebd5ce0159.webp",
+          "originalCover": "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200vmd652y1656904220599/0"
+        },
+        {
+          "title": "玫瑰的故事",
+          "url": "https://v.qq.com/x/cover/mzc002002s2ark5.html",
+          "meta": "热度 9640 · 刘亦菲人生无畏爱够再说",
+          "cover": "source-covers/tx_video/d8aab46925e21189ffdaf5a7.jpg",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002002s2ark51717845906553/0"
+        },
+        {
+          "title": "京城奇探",
+          "url": "https://v.qq.com/x/cover/mzc00200b0an1br.html",
+          "meta": "热度 9375 · 马思超翟子路民国探案",
+          "cover": "source-covers/tx_video/809e6fcf3884d4c324153cfc.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200b0an1br1783140570639/0"
+        },
+        {
+          "title": "陷入我们的热恋",
+          "url": "https://v.qq.com/x/cover/mzc00200vvr86iv.html",
+          "meta": "热度 9207 · 刘浩存王安宇上演青春纯爱",
+          "cover": "source-covers/tx_video/28db6ca86fb1596047002504.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc00200vvr86iv1747732488399/0"
+        },
+        {
+          "title": "庆余年",
+          "url": "https://v.qq.com/x/cover/rjae621myqca41h.html",
+          "meta": "热度 9029 · 张若昀身陷棋局绝处逢生",
+          "cover": "source-covers/tx_video/aba26c09513c0abad63500e7.webp",
+          "originalCover": "https://puui.qpic.cn/vcover_hz_pic/0/rjae621myqca41h1674983406182/0"
+        },
+        {
+          "title": "重生密码",
+          "url": "https://v.qq.com/x/cover/mzc002003lx2o96.html",
+          "meta": "热度 8758 · 邱泽陈意涵揭秘永生阴谋",
+          "cover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002003lx2o961793254413371/0"
+        },
+        {
+          "title": "庆余年第三季",
+          "url": "https://v.qq.com/x/cover/mzc002001wf6pjn.html",
+          "meta": "热度 8712 · 余年不尽共赴一梦",
+          "cover": "source-covers/tx_video/fc5a463b0d0e75cf7c92fd45.webp",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/mzc002001wf6pjn1750641963839/0"
+        },
+        {
+          "title": "西游记",
+          "url": "https://v.qq.com/x/cover/aav44xv50k8sfjb.html",
+          "meta": "热度 8506 · 六小龄童演活美猴王",
+          "cover": "source-covers/tx_video/0db2be4f8460c942cc1617d3.jpg",
+          "originalCover": "https://vcover-hz-pic.puui.qpic.cn/vcover_hz_pic/0/aav44xv50k8sfjb1724126322884/0"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T15:37:19.652330+00:00",
+        "lastSuccessAt": "2026-11-15T15:37:22.656520+00:00",
+        "error": ""
+      }
+    },
+    "iqiyi": {
+      "name": "爱奇艺",
+      "kind": "电视剧推荐榜 · 爱奇艺评分",
+      "url": "https://www.iqiyi.com/dianshiju/",
+      "icon": "https://www.iqiyi.com/favicon.ico",
+      "sourceUrlUsed": "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=2&data_type=1&mode=11&page_id=1&ret_num=30",
+      "updatedAt": "2026-11-15T15:37:22.140034+00:00",
+      "items": [
+        {
+          "title": "小城良方",
+          "url": "https://www.iqiyi.com/v_eienwprun0.html",
+          "meta": "爱奇艺 8.8 分 · 更新至 29 集",
+          "cover": "source-covers/iqiyi/c32cfccd2b58e4b39dd06a4a.jpg",
+          "originalCover": "https://pic6.iqiyipic.com/image/20261102/1e/06/a_100692840_m_601_m8.jpg"
+        },
+        {
+          "title": "折月亮",
+          "url": "https://www.iqiyi.com/v_1nj820ys5vg.html",
+          "meta": "更新至 27 集",
+          "cover": "source-covers/iqiyi/d70eea8d306fc8ee47cf323e.jpg",
+          "originalCover": "https://pic8.iqiyipic.com/image/20261106/4d/10/a_100671203_m_601_m7.jpg"
+        },
+        {
+          "title": "伟大的长征",
+          "url": "https://www.iqiyi.com/v_1jm50v4hx7c.html",
+          "meta": "更新至 60 集",
+          "cover": "source-covers/iqiyi/ad26279e981889484e79dd72.jpg",
+          "originalCover": "https://pic5.iqiyipic.com/image/20261009/f0/68/a_100688277_m_601_m6.jpg"
+        },
+        {
+          "title": "蒸蒸日上",
+          "url": "https://www.iqiyi.com/v_15ubqc0ao88.html",
+          "meta": "更新至 22 集",
+          "cover": "source-covers/iqiyi/bd4ab0df8c0969b8073b090c.jpg",
+          "originalCover": "https://pic3.iqiyipic.com/image/20261023/db/5e/a_101548097_m_601_m5.jpg"
+        },
+        {
+          "title": "自首真相",
+          "url": "https://www.iqiyi.com/v_oxhivuglmk.html",
+          "meta": "更新至 35 集",
+          "cover": "source-covers/iqiyi/7cb387d500778e78286e2433.jpg",
+          "originalCover": "https://pic7.iqiyipic.com/image/20261113/a3/87/a_101317864_m_601_m8.jpg"
+        },
+        {
+          "title": "余红旧事",
+          "url": "https://www.iqiyi.com/v_1gu30dui6vo.html",
+          "meta": "爱奇艺 8.1 分 · 更新至 34 集",
+          "cover": "source-covers/iqiyi/086eb5b33b37630347f90168.jpg",
+          "originalCover": "https://pic6.iqiyipic.com/image/20260929/fd/8f/a_100801066_m_601_m5.jpg"
+        },
+        {
+          "title": "魅影神捕",
+          "url": "https://www.iqiyi.com/v_1rmaujniibk.html",
+          "meta": "爱奇艺 7.7 分 · 更新至 30 集",
+          "cover": "source-covers/iqiyi/47b2a19c9181585d4ec30125.jpg",
+          "originalCover": "https://pic6.iqiyipic.com/image/20260929/ba/97/a_100623574_m_601_m3.jpg"
+        },
+        {
+          "title": "成何体统",
+          "url": "https://www.iqiyi.com/v_1xghiumsit0.html",
+          "meta": "爱奇艺 8.5 分 · 更新至 32 集",
+          "cover": "source-covers/iqiyi/66bec62bc6424ce120dc613c.jpg",
+          "originalCover": "https://pic2.iqiyipic.com/image/20260206/31/1c/a_100604014_m_601_m9.jpg"
+        },
+        {
+          "title": "夺金战",
+          "url": "https://www.iqiyi.com/v_273cj0bkq0k.html",
+          "meta": "更新至 40 集",
+          "cover": "source-covers/iqiyi/f938969b1d730470eebe5c39.jpg",
+          "originalCover": "https://pic6.iqiyipic.com/image/20261012/9a/2c/a_101470782_m_601_m3.jpg"
+        },
+        {
+          "title": "武林外传",
+          "url": "https://www.iqiyi.com/v_19rrk2h4f8.html",
+          "meta": "爱奇艺 9.6 分 · 更新至 81 集",
+          "cover": "source-covers/iqiyi/f2eac27c92c8366ef0b52ab4.jpg",
+          "originalCover": "https://pic5.iqiyipic.com/image/20231109/65/80/a_50133980_m_601_m15.jpg"
+        },
+        {
+          "title": "唐朝诡事录之长安",
+          "url": "https://www.iqiyi.com/v_16ne2x4z6zc.html",
+          "meta": "爱奇艺 9.3 分 · 更新至 40 集",
+          "cover": "source-covers/iqiyi/1aaef199467dfb83015319a1.jpg",
+          "originalCover": "https://pic8.iqiyipic.com/image/20251118/fb/43/a_100594050_m_601_m7.jpg"
+        },
+        {
+          "title": "低智商犯罪",
+          "url": "https://www.iqiyi.com/v_273nwjut4mk.html",
+          "meta": "爱奇艺 8.8 分 · 更新至 24 集",
+          "cover": "source-covers/iqiyi/a45fcbf6f367243ad9a1a716.jpg",
+          "originalCover": "https://pic2.iqiyipic.com/image/20260428/3d/35/a_100577495_m_601_m9.jpg"
+        },
+        {
+          "title": "唐朝诡事录之西行",
+          "url": "https://www.iqiyi.com/v_186njga2r64.html",
+          "meta": "爱奇艺 9.4 分 · 更新至 40 集",
+          "cover": "source-covers/iqiyi/b0808d96a0769936693d878a.jpg",
+          "originalCover": "https://pic4.iqiyipic.com/image/20241025/77/aa/a_100533301_m_601_m12.jpg"
+        },
+        {
+          "title": "琅琊榜",
+          "url": "https://www.iqiyi.com/v_19rroc615w.html",
+          "meta": "爱奇艺 9.5 分 · 更新至 54 集",
+          "cover": "source-covers/iqiyi/707b9a76a058af05302f357e.jpg",
+          "originalCover": "https://pic1.iqiyipic.com/image/20231212/38/72/a_100006840_m_601_m25.jpg"
+        },
+        {
+          "title": "爱情有烟火",
+          "url": "https://www.iqiyi.com/v_h4lrzbfteg.html",
+          "meta": "爱奇艺 8.0 分 · 更新至 36 集",
+          "cover": "source-covers/iqiyi/0f72204e5ec3d4943849d262.jpg",
+          "originalCover": "https://pic9.iqiyipic.com/image/20260625/77/a2/a_100838690_m_601_m8.jpg"
+        },
+        {
+          "title": "唐朝诡事录",
+          "url": "https://www.iqiyi.com/v_nvusov4apo.html",
+          "meta": "爱奇艺 9.0 分 · 更新至 36 集",
+          "cover": "source-covers/iqiyi/e2f6c532f3a3ffd6144a71e8.jpg",
+          "originalCover": "https://pic9.iqiyipic.com/image/20241025/6f/7d/a_100443951_m_601_m21.jpg"
+        },
+        {
+          "title": "卿卿日常",
+          "url": "https://www.iqiyi.com/v_1z1joox3i38.html",
+          "meta": "爱奇艺 8.9 分 · 更新至 40 集",
+          "cover": "source-covers/iqiyi/7a0c2b7b540f99c4a200bbd8.jpg",
+          "originalCover": "https://pic1.iqiyipic.com/image/20231110/ab/2d/a_100517625_m_601_m30.jpg"
+        },
+        {
+          "title": "东北有个周东北",
+          "url": "https://www.iqiyi.com/v_z6f84qt81s.html",
+          "meta": "更新至 24 集",
+          "cover": "source-covers/iqiyi/79777a0632ae548dd7d88407.jpg",
+          "originalCover": "https://pic5.iqiyipic.com/image/20260922/c8/96/a_100774705_m_601_m3.jpg"
+        },
+        {
+          "title": "假面归来",
+          "url": "https://www.iqiyi.com/v_2fr3h73nfyo.html",
+          "meta": "更新至 14 集",
+          "cover": "source-covers/iqiyi/5a3b9264827962d95ca4c89e.jpg",
+          "originalCover": "https://pic9.iqiyipic.com/image/20261104/6d/1d/a_101747618_m_601_m2.jpg"
+        },
+        {
+          "title": "把黑夜点燃",
+          "url": "https://www.iqiyi.com/v_1ztrw7uti1g.html",
+          "meta": "更新至 12 集",
+          "cover": "source-covers/iqiyi/fa755f79cef6332ecaff1800.jpg",
+          "originalCover": "https://pic2.iqiyipic.com/image/20261015/d3/bf/a_100621514_m_601_m4.jpg"
+        },
+        {
+          "title": "我是刑警",
+          "url": "https://www.iqiyi.com/v_mscze4lfao.html",
+          "meta": "爱奇艺 9.2 分 · 更新至 38 集",
+          "cover": "source-covers/iqiyi/4cec8e0ec9d8b47408b9b2ba.jpg",
+          "originalCover": "https://pic4.iqiyipic.com/image/20241213/65/34/a_100480740_m_601_m13.jpg"
+        },
+        {
+          "title": "重案六组：消失的警号",
+          "url": "https://www.iqiyi.com/v_1p7uol7yaq0.html",
+          "meta": "爱奇艺 7.6 分 · 更新至 26 集",
+          "cover": "source-covers/iqiyi/863818d0a700f9097db659e0.jpg",
+          "originalCover": "https://pic4.iqiyipic.com/image/20261012/1d/cd/a_101315007_m_601_m10.jpg"
+        },
+        {
+          "title": "一瓯春",
+          "url": "https://www.iqiyi.com/v_290syr52zds.html",
+          "meta": "更新至 30 集",
+          "cover": "source-covers/iqiyi/46df374e3356017d3bae440d.jpg",
+          "originalCover": "https://pic9.iqiyipic.com/image/20261010/28/fb/a_100801025_m_601_m12.jpg"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T15:37:19.652933+00:00",
+        "lastSuccessAt": "2026-11-15T15:37:22.140034+00:00",
+        "error": ""
+      }
+    },
+    "youku": {
+      "name": "优酷",
+      "kind": "电视剧热度榜 · TOP 排名",
+      "url": "https://www.youku.com/ku/webtv",
+      "icon": "https://www.youku.com/favicon.ico",
+      "sourceUrlUsed": "https://www.youku.com/ku/webtv",
+      "updatedAt": "2026-11-15T15:37:21.772767+00:00",
+      "items": [
+        {
+          "title": "嫁金钗",
+          "url": "https://www.youku.com/show_page/id_bcaa87c7834c46f99e7b.html",
+          "meta": "电视剧热度榜·TOP2",
+          "cover": "source-covers/youku/6c4f0201e97a8391a3b609ee.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/f7cd24a66b9c44319ade5bb1ebb0d2a8.webp.jpg"
+        },
+        {
+          "title": "十万狂花入梦来",
+          "url": "https://www.youku.com/show_page/id_adcf514e1f7b412a91e3.html",
+          "meta": "电视剧热度榜·TOP3",
+          "cover": "source-covers/youku/4cce4528418cfa0f9df56d72.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/7d83f92563524ba9aae66b1421512c64.webp.jpg"
+        },
+        {
+          "title": "早春晴朗",
+          "url": "https://www.youku.com/show_page/id_ffefaad54c434973b4d6.html",
+          "meta": "电视剧热度榜·TOP4",
+          "cover": "source-covers/youku/f6ba71398dbd66feabc4bb62.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/da604ef5c96e4b6c8e4fc3818c9dc535.webp.jpg"
+        },
+        {
+          "title": "正义女神",
+          "url": "https://www.youku.com/show_page/id_fcdb12eb44964d8e948d.html",
+          "meta": "律政剧热度榜·TOP1",
+          "cover": "source-covers/youku/480ce03d3972e5066fa411c8.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/f13f0c1910a046738c55bca197892122.webp.jpg"
+        },
+        {
+          "title": "金色光芒",
+          "url": "https://www.youku.com/show_page/id_ffad4fdb5cfb4c4e8e0b.html",
+          "meta": "泰剧热度榜·TOP1",
+          "cover": "source-covers/youku/21de0fb6c721b21d29053369.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/e31f7cf9c2b941de83d759368065ae87.webp.jpg"
+        },
+        {
+          "title": "一笑倾城",
+          "url": "https://www.youku.com/show_page/id_abfd7ec3ec4344b7bfeb.html",
+          "meta": "校园剧热度榜·TOP3",
+          "cover": "source-covers/youku/80b7331572cf84e56995fd8d.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/b9eb1a1aa5c24efeb1d3b17419e1cd24.webp.jpg"
+        },
+        {
+          "title": "东游记",
+          "url": "https://www.youku.com/show_page/id_cbff9f68962411de83b1.html",
+          "meta": "神话剧热度榜·TOP3",
+          "cover": "source-covers/youku/cd20ce97bcbeba2388a05d92.jpg",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/e353a6d34a3040b5bf2714e6f5a7c7e3.webp.jpg"
+        },
+        {
+          "title": "非常检控观",
+          "url": "https://www.youku.com/show_page/id_adec08cdba8c4034a26d.html",
+          "meta": "律政剧热度榜·TOP3",
+          "cover": "source-covers/youku/ce5349db0b7c1b462929fbc2.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/9a11139aa1cb4e688b4cccb7c8fa9906.webp.jpg"
+        },
+        {
+          "title": "决胜法庭",
+          "url": "https://www.youku.com/show_page/id_2bd6c44166b74ebfb2b5.html",
+          "meta": "律政剧热度榜·TOP4",
+          "cover": "source-covers/youku/99f480f442659cf1ce525fdc.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/8c5d6e1c6a4c42159b89d58eee1db42c.webp.jpg"
+        },
+        {
+          "title": "大理石厅谋杀案",
+          "url": "https://www.youku.com/show_page/id_edede035d87b49389a86.html",
+          "meta": "欧美剧热度榜·TOP4",
+          "cover": "source-covers/youku/a8dea3dd74363230f51b2043.jpg",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/755070a17d7d44bcba57231c05e64e88.webp.jpg"
+        },
+        {
+          "title": "作秀公审 第二季",
+          "url": "https://www.youku.com/show_page/id_ebde57378dfb42ce945b.html",
+          "meta": "庭审博弈真相难辨",
+          "cover": "source-covers/youku/04277e519f07db1e9515d575.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/2ee3a13811fd4702bab685fafe203273.webp.jpg"
+        },
+        {
+          "title": "从零到一的爱情",
+          "url": "https://www.youku.com/show_page/id_cdee6aea1c5d41d09d02.html",
+          "meta": "男强女强超爽甜恋",
+          "cover": "source-covers/youku/0481445c93e43c9d76a19775.jpg",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/1d6289a2f80940d1b2149802cf802fd0.webp.jpg"
+        },
+        {
+          "title": "名门绅士之珍爱妙方",
+          "url": "https://www.youku.com/show_page/id_bff21118a70711e29498.html",
+          "meta": "腹黑公子一见钟情",
+          "cover": "source-covers/youku/f9eb12619e7571fd2c79c08a.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/1748015bdb3a45a2a4f373fd78477f18.webp.jpg"
+        },
+        {
+          "title": "柜中美人",
+          "url": "https://www.youku.com/show_page/id_35efbfbd431c047111ef.html",
+          "meta": "狐族美人凡间历劫",
+          "cover": "source-covers/youku/0e953dc4246af5e6a9b66031.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/5a32234b12c744598eb444a25cb3a4e6.webp.jpg"
+        },
+        {
+          "title": "此处通往繁星",
+          "url": "https://www.youku.com/show_page/id_efee3eb447f34012b877.html",
+          "meta": "优酷电视剧",
+          "cover": "source-covers/youku/f3e5c3c8a8c7fd07062e697d.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/ce297331312443c9813c3bf88b20e604.webp.jpg"
+        },
+        {
+          "title": "无可替代",
+          "url": "https://www.youku.com/show_page/id_cecc549f56364534bebf.html",
+          "meta": "优酷电视剧",
+          "cover": "source-covers/youku/f7bdacbb4fdfc1af771e7e1a.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/d405a2721afd4b06963fc8b247096e9f.webp.jpg"
+        },
+        {
+          "title": "《点燃我，温暖你》命韵峋环CP版",
+          "url": "https://www.youku.com/show_page/id_aace2910c3784944a0ad.html",
+          "meta": "优酷电视剧",
+          "cover": "source-covers/youku/ad5d89089f5d9b62a14807c9.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/b483f362d2aa4a9db8545c6616cca931.webp.png"
+        },
+        {
+          "title": "《珠帘玉幕》高光版",
+          "url": "https://www.youku.com/show_page/id_cbbbb28563074d80b736.html",
+          "meta": "优酷电视剧",
+          "cover": "source-covers/youku/3a445c2c62b4ee87552d0c09.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/22b5e3a3f3cf429ba5f13032c13c545d.webp.jpg"
+        },
+        {
+          "title": "象牙山的好人们",
+          "url": "https://www.youku.com/show_page/id_afefadf99ed3441a8261.html",
+          "meta": "优酷电视剧",
+          "cover": "source-covers/youku/b9ce4380d0e7470873c02df1.webp",
+          "originalCover": "https://liangcang-material.alicdn.com/prod/upload/771048a8e1ce4785a517f0a8db9e0032.webp.jpg"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T15:37:19.653234+00:00",
+        "lastSuccessAt": "2026-11-15T15:37:21.772767+00:00",
+        "error": ""
+      }
     }
   }
 }

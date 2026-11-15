@@ -13,7 +13,9 @@ DOMAINS={
 'qq':('gtimg.com','qq.com'),'netease':('126.net','163.com'),'hellogithub':('cheatsheet.store','hellogithub.com','githubusercontent.com'),
 'ithome':('ithome.com','ithome.net','ithomeimg.com','ithome.cn'),'huggingface':('huggingface.co','hf.co'),'github':('githubassets.com','githubusercontent.com','github.com'),
 'v2ex':('v2ex.com','v2ex.co','imgur.com','jsdelivr.net'),'xglobal':('twimg.com',),
-'steam_top':('steamstatic.com','steamcdn-a.akamaihd.net'),'steam_free':('steamstatic.com','steamcdn-a.akamaihd.net'),'steam_online':('steamstatic.com','steamcdn-a.akamaihd.net')}
+'steam_top':('steamstatic.com','steamcdn-a.akamaihd.net'),'steam_free':('steamstatic.com','steamcdn-a.akamaihd.net'),'steam_online':('steamstatic.com','steamcdn-a.akamaihd.net'),
+'wegame':('wegame.gtimg.com',),
+'tx_video':('qpic.cn',),'iqiyi':('iqiyipic.com',),'youku':('alicdn.com',)}
 IMAGE_SOURCES=set(DOMAINS)
 
 def clean_cover(key,value,base=''):
@@ -102,6 +104,22 @@ def public_directory():
  return folder.parent/'public' if folder.name=='scripts' else folder
 
 
+def shrink_cover(content,ext,limit=260_000,width=520):
+ """Downscale oversized CDN covers (Tencent banners are 1080x607 / ~1MB) before caching."""
+ if len(content)<=limit:return content,ext
+ import shutil,subprocess,tempfile
+ from pathlib import Path
+ if not shutil.which('ffmpeg'):return content,ext
+ try:
+  with tempfile.TemporaryDirectory() as folder:
+   source=Path(folder)/('in.'+ext);target=Path(folder)/'out.webp'
+   source.write_bytes(content)
+   subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(source),'-vf','scale=%d:-2'%width,'-quality','80',str(target)],check=True,timeout=60)
+   small=target.read_bytes()
+   if small and len(small)<len(content):return small,'webp'
+ except Exception:pass
+ return content,ext
+
 def cache_source_covers(key,items):
  import hashlib
  from pathlib import Path
@@ -125,6 +143,7 @@ def cache_source_covers(key,items):
    if len(content)>2_000_000:raise ValueError('Image size limit')
    ext='jpg' if content.startswith(b'\xff\xd8\xff') else 'png' if content.startswith(b'\x89PNG\r\n\x1a\n') else 'webp' if content[:4]==b'RIFF' and content[8:12]==b'WEBP' else 'gif' if content[:6] in [b'GIF87a',b'GIF89a'] else ''
    if not ext:raise ValueError('Unexpected image body')
+   content,ext=shrink_cover(content,ext)
    root.mkdir(parents=True,exist_ok=True);path=root/(token+'.'+ext);temp=path.with_suffix('.tmp');temp.write_bytes(content);temp.replace(path)
    return {**row,'originalCover':image,'cover':'source-covers/'+key+'/'+path.name}
   except Exception:return row

@@ -115,7 +115,11 @@ SOURCES={
  'wallstreetcn':{'name':'华尔街见闻','kind':'全球财经快讯','url':'https://wallstreetcn.com/live/global','endpoint':'https://api-one.wallstcn.com/apiv1/content/lives?channel=global-channel&limit=24','icon':'https://wallstreetcn.com/favicon.ico'},
  'steam_top':{'name':'Steam 热销榜','kind':'全球热销 · 实时价格','url':'https://store.steampowered.com/search/?filter=topsellers','endpoint':'https://store.steampowered.com/api/featuredcategories?cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
  'steam_free':{'name':'Steam 免费榜','kind':'免费开玩 · 热销排序','url':'https://store.steampowered.com/search/?maxprice=free','endpoint':'https://store.steampowered.com/search/results/?query&start=0&count=24&maxprice=free&filter=topsellers&infinite=1&json=1&cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
- 'steam_online':{'name':'Steam 在线人数','kind':'同时在线与峰值人数','url':'https://steamcharts.com/top','endpoint':'https://steamcharts.com/top','icon':'https://steamcharts.com/favicon.ico'}
+ 'steam_online':{'name':'Steam 在线人数','kind':'同时在线与峰值人数','url':'https://steamcharts.com/top','endpoint':'https://steamcharts.com/top','icon':'https://steamcharts.com/favicon.ico'},
+ 'wegame':{'name':'WeGame 网吧热度榜','kind':'网吧热度 · 新游榜','url':'https://www.wegame.com.cn/rail/rank_detail.html?ranktype=most_newbie&netbar=true','endpoint':'https://www.wegame.com.cn/api/rail/web/data_filter/game_info/filter','icon':'https://www.wegame.com.cn/favicon.ico'},
+ 'tx_video':{'name':'腾讯视频','kind':'电视剧热搜榜 · 热度值','url':'https://v.qq.com/channel/tv','endpoint':'https://pbaccess.video.qq.com/trpc.tencentvideohotlistdata.hotlistdata.DoSearchHotListHttp/getSearchHotListHttp','icon':'https://v.qq.com/favicon.ico'},
+ 'iqiyi':{'name':'爱奇艺','kind':'电视剧推荐榜 · 爱奇艺评分','url':'https://www.iqiyi.com/dianshiju/','endpoint':'https://pcw-api.iqiyi.com/search/recommend/list?channel_id=2&data_type=1&mode=11&page_id=1&ret_num=30','icon':'https://www.iqiyi.com/favicon.ico'},
+ 'youku':{'name':'优酷','kind':'电视剧热度榜 · TOP 排名','url':'https://www.youku.com/ku/webtv','endpoint':'https://www.youku.com/ku/webtv','icon':'https://www.youku.com/favicon.ico'}
 }
 CN_AI_SOURCES={'deepseek_news','bytedance_news','kimi_news','tencent_ai_news','qwen_news'}
 AI_OFFICIAL_SOURCES={'openai_news','anthropic_news','deepmind_news'}
@@ -764,6 +768,50 @@ def parse_kuaishou_hot(body):
  if not items:raise ValueError('No valid 快手 hot rank entries')
  return items
 
+def parse_youku_rank(body):
+ text=body.decode('utf-8','replace');marker='window.__INITIAL_DATA__'
+ start=text.find(marker)
+ if start<0:raise ValueError('Youku page missing initial data')
+ start=text.find('{',start)
+ depth=0;end=start;instr=False;esc=False
+ for pos in range(start,len(text)):
+  char=text[pos]
+  if instr:
+   if esc:esc=False
+   elif char=='\\':esc=True
+   elif char=='"':instr=False
+   continue
+  if char=='"':instr=True
+  elif char=='{':depth+=1
+  elif char=='}':
+   depth-=1
+   if depth==0:end=pos;break
+ if depth!=0 or end<=start:raise ValueError('Youku initial data truncated')
+ raw=text[start:end+1].replace(':undefined',':null').replace(',undefined',',null')
+ data=json.loads(raw)
+ ranked={};others=[];seen=set()
+ for module in data.get('moduleList') or []:
+  for component in module.get('components') or []:
+   for row in component.get('itemList') or []:
+    if not isinstance(row,dict):continue
+    title=clean(str(row.get('title') or ''));token=str(row.get('action_value') or '')
+    if len(title)<2 or not re.fullmatch(r'[0-9a-f]{20,24}',token) or token in seen:continue
+    seen.add(token)
+    url='https://www.youku.com/show_page/id_'+token+'.html'
+    cover=row.get('img') if isinstance(row.get('img'),str) else ''
+    reason=row.get('reason') if isinstance(row.get('reason'),dict) else {}
+    text_node=reason.get('text') if isinstance(reason.get('text'),dict) else {}
+    badge=clean(str(text_node.get('title') or ''))
+    if '热度榜' in badge:
+     match=re.search(r'TOP\s*(\d+)',badge)
+     ranked[token]=(int(match.group(1)) if match else 999,badge,title,url,cover)
+     continue
+    others.append((title,url,clean(str(row.get('subtitle') or '')) or '优酷电视剧',cover))
+ items=[(title,url,meta,cover) for _,meta,title,url,cover in sorted(ranked.values(),key=lambda row:(0 if '电视剧热度榜' in row[1] else 1,row[0],row[2]))]
+ items+=[(title,url,meta,cover) for title,url,meta,cover in others]
+ if not items:raise ValueError('No valid Youku entries')
+ return items[:24]
+
 def parse_source(key,body):
  if key in EXTRA_MODEL_SOURCES:return parse_extra_model_source(key,body)
  if key=='hf_trending':return parse_hf_trending(body)
@@ -1121,6 +1169,58 @@ def parse_source(key,body):
   for appid,name,current,peak in re.findall(r'<tr[^>]*>\s*<td>\d+\.</td>\s*<td class="game-name left">\s*<a href="/app/(\d+)">\s*(.*?)\s*</a>.*?<td class="num">([\d,]+)</td>.*?<td class="num period-col peak-concurrent">([\d,]+)</td>',text,flags=re.S):
    title=clean(re.sub(r'<[^>]+>','',unescape(name)));current=int(current.replace(',',''));peak=int(peak.replace(',',''))
    add(title,f'https://store.steampowered.com/app/{appid}',f'在线 {current:,} · 峰值 {peak:,}',f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
+ elif key=='wegame':
+  data=json.loads(body)
+  entries=data.get('items') if isinstance(data,dict) else None
+  if not isinstance(entries,list):raise ValueError('Invalid WeGame response')
+  for row in entries:
+   if not isinstance(row,dict):continue
+   game_id=str(row.get('game_id') or '');title=clean(str(row.get('game_name') or ''))
+   if not game_id.isdigit() or game_id=='0' or not title:continue
+   parts=[]
+   try:
+    score=int(row.get('netbar_popularity'))
+    if score>0:parts.append(f'网吧热度 {score}')
+   except (TypeError,ValueError):pass
+   developer=clean(str(row.get('developer_name') or ''))
+   if developer:parts.append(developer)
+   cover=row.get('img_cover') if isinstance(row.get('img_cover'),str) else ''
+   add(title[:120],f'https://www.wegame.com.cn/store/{game_id}/',' · '.join(parts) or 'WeGame 网吧榜',cover)
+ elif key=='tx_video':
+  data=json.loads(body)
+  blocks=(data.get('data') or {}).get('Results') if isinstance(data,dict) else None
+  if not isinstance(blocks,list) or not blocks:raise ValueError('Invalid Tencent Video hot list response')
+  for row in (blocks[0].get('Result') or {}).get('ListInfo') or []:
+   if not isinstance(row,dict):continue
+   title=clean(str(row.get('Query') or ''));ident=str(row.get('ID') or '')
+   if len(title)<2 or not re.fullmatch(r'[A-Za-z0-9]{6,24}',ident):continue
+   parts=[]
+   hot=format_hot_value(row.get('HotLevel'))
+   if hot:parts.append('热度 '+hot)
+   detail=clean(str(row.get('SecondTitle') or ''))
+   if detail:parts.append(detail)
+   cover=row.get('HzImgURL') if isinstance(row.get('HzImgURL'),str) else ''
+   add(title[:80],f'https://v.qq.com/x/cover/{ident}.html',' · '.join(parts) or '腾讯视频热搜',cover)
+ elif key=='iqiyi':
+  data=json.loads(body)
+  entries=(data.get('data') or {}).get('list') if isinstance(data,dict) else None
+  if not isinstance(entries,list):raise ValueError('Invalid iQiyi list response')
+  for row in entries:
+   if not isinstance(row,dict):continue
+   title=clean(str(row.get('name') or ''));url=str(row.get('playUrl') or '')
+   if url.startswith('http://'):url='https://'+url[len('http://'):]
+   if len(title)<2 or not re.fullmatch(r'https://www\.iqiyi\.com/v_[A-Za-z0-9]+\.html',url):continue
+   parts=[]
+   try:
+    score=float(row.get('score') or 0)
+    if 0<score<=10:parts.append('爱奇艺 %.1f 分'%score)
+   except (TypeError,ValueError):pass
+   episode=row.get('latestOrder')
+   if isinstance(episode,int) and not isinstance(episode,bool) and episode>0:parts.append(f'更新至 {episode} 集')
+   cover=row.get('imageUrl') if isinstance(row.get('imageUrl'),str) else ''
+   add(title[:80],url,' · '.join(parts) or '爱奇艺电视剧推荐',cover)
+ elif key=='youku':
+  for title,url,meta,cover in parse_youku_rank(body):add(title,url,meta,cover)
  seen=set();unique=[]
  for row in rows:
   if row['url'] not in seen:seen.add(row['url']);unique.append(row)
@@ -1453,6 +1553,14 @@ def fetch(key):
     with urllib.request.urlopen(req,timeout=15) as response:body=response.read(2_000_000)
    elif key=='36kr':
     req=urllib.request.Request(used,data=json.dumps({'partner_id':'wap','param':{'siteId':1,'platformId':2},'timestamp':int(datetime.now().timestamp()*1000)}).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
+    with urllib.request.urlopen(req,timeout=25) as response:body=response.read(4_000_000)
+   elif key=='wegame':
+    payload={'property':[],'rank_name':'most_newbie','filters':[],'stamp':{'agent_client_language':'zh_CN'},'response_format':0,'start_page':0,'items_per_pager':24,'netbar':True}
+    req=urllib.request.Request(used,data=json.dumps(payload).encode(),method='POST',headers={'Content-Type':'application/json','Origin':'https://www.wegame.com.cn','Referer':SOURCES['wegame']['url'],'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'})
+    with urllib.request.urlopen(req,timeout=30) as response:body=response.read(4_000_000)
+   elif key=='tx_video':
+    payload={'ChannelID':'2','PageSize':30,'SceneID':29}
+    req=urllib.request.Request(used,data=json.dumps(payload).encode(),method='POST',headers={'Content-Type':'application/json','Origin':'https://v.qq.com','Referer':'https://v.qq.com/channel/tv','User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'})
     with urllib.request.urlopen(req,timeout=25) as response:body=response.read(4_000_000)
    else:body=request_body(used)
   except (URLError,TimeoutError) as error:

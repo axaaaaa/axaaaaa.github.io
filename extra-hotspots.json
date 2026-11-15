@@ -9384,6 +9384,344 @@
         "lastSuccessAt": "2026-11-15T03:42:21.649517+00:00",
         "error": ""
       }
+    },
+    "netflix": {
+      "name": "Netflix Top 10",
+      "kind": "官方周榜 · 全球电影",
+      "url": "https://www.netflix.com/tudum/top10",
+      "icon": "https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico",
+      "sourceUrlUsed": "https://www.netflix.com/tudum/top10",
+      "updatedAt": "2026-11-15T06:59:19.511309+00:00",
+      "items": [
+        {
+          "title": "A Dog's Perfect Christmas",
+          "url": "https://www.netflix.com/search?q=A%20Dog%27s%20Perfect%20Christmas",
+          "meta": "观看 860 万次 · 在榜 1 周"
+        },
+        {
+          "title": "Heist",
+          "url": "https://www.netflix.com/search?q=Heist",
+          "meta": "观看 630 万次 · 在榜 1 周"
+        },
+        {
+          "title": "Final Destination: Bloodlines",
+          "url": "https://www.netflix.com/search?q=Final%20Destination%3A%20Bloodlines",
+          "meta": "观看 580 万次 · 在榜 1 周"
+        },
+        {
+          "title": "The Day After Tomorrow",
+          "url": "https://www.netflix.com/search?q=The%20Day%20After%20Tomorrow",
+          "meta": "观看 440 万次 · 在榜 2 周"
+        },
+        {
+          "title": "Sing 2",
+          "url": "https://www.netflix.com/search?q=Sing%202",
+          "meta": "观看 430 万次 · 在榜 14 周"
+        },
+        {
+          "title": "Sniper: The Last Stand",
+          "url": "https://www.netflix.com/search?q=Sniper%3A%20The%20Last%20Stand",
+          "meta": "观看 390 万次 · 在榜 1 周"
+        },
+        {
+          "title": "Thanksgiving",
+          "url": "https://www.netflix.com/search?q=Thanksgiving",
+          "meta": "观看 380 万次 · 在榜 2 周"
+        },
+        {
+          "title": "Sing",
+          "url": "https://www.netflix.com/search?q=Sing",
+          "meta": "观看 320 万次 · 在榜 18 周"
+        },
+        {
+          "title": "Kidnapped in Her Own Home: The Martha Carelli Story",
+          "url": "https://www.netflix.com/search?q=Kidnapped%20in%20Her%20Own%20Home%3A%20The%20Martha%20Carelli%20Story",
+          "meta": "观看 310 万次 · 在榜 1 周"
+        },
+        {
+          "title": "KPop Demon Hunters",
+          "url": "https://www.netflix.com/search?q=KPop%20Demon%20Hunters",
+          "meta": "观看 280 万次 · 在榜 69 周"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T06:59:18.041564+00:00",
+        "lastSuccessAt": "2026-11-15T06:59:19.511309+00:00",
+        "error": ""
+      }
+    },
+    "youtube_trending": {
+      "name": "YouTube 热门",
+      "kind": "全球趋势榜 · 多国在榜",
+      "url": "https://www.youtube.com/",
+      "icon": "https://www.youtube.com/favicon.ico",
+      "sourceUrlUsed": "https://kworb.net/youtube/trending.html",
+      "updatedAt": "2026-11-15T06:59:19.776403+00:00",
+      "items": [
+        {
+          "title": "ENHYPEN (엔하이픈) 'I Want You' Official MV",
+          "url": "https://www.youtube.com/watch?v=dE_Ro8Sac2M",
+          "meta": "35 个国家/地区在榜"
+        },
+        {
+          "title": "O.M - Trailer | Dhanush | Mammootty | Sai Pallavi | Sreeleela | Rajkumar Periasamy | Sai Abhyankkar",
+          "url": "https://www.youtube.com/watch?v=aGSOpb_6kv8",
+          "meta": "27 个国家/地区在榜"
+        },
+        {
+          "title": "Daddy Yankee en vivo Premio Latin GRAMMY 2026",
+          "url": "https://www.youtube.com/watch?v=YSceJfZ-h0w",
+          "meta": "19 个国家/地区在榜"
+        },
+        {
+          "title": "ATEEZ(에이티즈) - 'UP' Official MV",
+          "url": "https://www.youtube.com/watch?v=SGovymtCzvA",
+          "meta": "29 个国家/地区在榜"
+        },
+        {
+          "title": "TAF - The Aura Farmer ft. Larper Larry (official song)",
+          "url": "https://www.youtube.com/watch?v=RVsMPZ-EE5Y",
+          "meta": "36 个国家/地区在榜"
+        },
+        {
+          "title": "Te Quiero on Repeat - Jack Hit (Official Music Video)",
+          "url": "https://www.youtube.com/watch?v=tKZJ-nTo0TI",
+          "meta": "7 个国家/地区在榜"
+        },
+        {
+          "title": "The Weeknd - Hong Kong (feat. 王菲季候風) (Official Music Video)",
+          "url": "https://www.youtube.com/watch?v=hX9S94XsySk",
+          "meta": "16 个国家/地区在榜"
+        },
+        {
+          "title": "Plan B - Si No Le Contesto (Letra)",
+          "url": "https://www.youtube.com/watch?v=tDH5ec1F_uQ",
+          "meta": "7 个国家/地区在榜"
+        },
+        {
+          "title": "Shubh - Never Left (Official Music Video)",
+          "url": "https://www.youtube.com/watch?v=zdz8swOQUqw",
+          "meta": "9 个国家/地区在榜"
+        },
+        {
+          "title": "IDK & Eminem — WELCOME (Prd. By J Dilla) [Official Music Video]",
+          "url": "https://www.youtube.com/watch?v=zT104EktdOc",
+          "meta": "13 个国家/地区在榜"
+        },
+        {
+          "title": "Becky G, KAROL G - MAMIII (Letra/Lyrics)",
+          "url": "https://www.youtube.com/watch?v=EyLQ3HVnbqU",
+          "meta": "7 个国家/地区在榜"
+        },
+        {
+          "title": "Top Christmas Songs of All Time Playlist 🎄 Best Christmas Music 2027 🎅 Christmas Songs Playlist",
+          "url": "https://www.youtube.com/watch?v=caqb_ytB80U",
+          "meta": "5 个国家/地区在榜"
+        },
+        {
+          "title": "Vicente Fernández - Volver, Volver (Letra)",
+          "url": "https://www.youtube.com/watch?v=dOiJxF41Ns4",
+          "meta": "5 个国家/地区在榜"
+        },
+        {
+          "title": "Rathinamo - Official Music Video | Saurav Srisan | Tanisha Gnanavel | Vidhu, Yogalakshmi |TamilIndie",
+          "url": "https://www.youtube.com/watch?v=Wjew3Rc1PYI",
+          "meta": "5 个国家/地区在榜"
+        },
+        {
+          "title": "LANY - Stuck (Lyrics)",
+          "url": "https://www.youtube.com/watch?v=LHeymu2NSzo",
+          "meta": "2 个国家/地区在榜"
+        },
+        {
+          "title": "MENTIRA - El Americano 4KT (Video Oficial)",
+          "url": "https://www.youtube.com/watch?v=oazzSnw5WV0",
+          "meta": "6 个国家/地区在榜"
+        },
+        {
+          "title": "DJ Premier x Feid feat. Lil Supa - Bello Love (Official Music Video)",
+          "url": "https://www.youtube.com/watch?v=bzDj2CLM4NI",
+          "meta": "5 个国家/地区在榜"
+        },
+        {
+          "title": "Espinosa Paz - Lo Intentamos (Letra / Lyrics) | \"Yo sí me enamoré...\"",
+          "url": "https://www.youtube.com/watch?v=EpSpoCSN4xE",
+          "meta": "3 个国家/地区在榜"
+        },
+        {
+          "title": "Sharda Sinha Chhath Puja Songs 2026 | शारदा सिन्हा के छठ गीत | Nonstop Chhath Jukebox",
+          "url": "https://www.youtube.com/watch?v=31vEPxGGg8w",
+          "meta": "2 个国家/地区在榜"
+        },
+        {
+          "title": "#Video | होई गईलें भोर | Power Star #Pawan Singh | Hoi Gaile Bhor | New Chhath Geet 2026 | छठ",
+          "url": "https://www.youtube.com/watch?v=MPTaStdbVuw",
+          "meta": "2 个国家/地区在榜"
+        },
+        {
+          "title": "P I S T O L A ❌ R O S A S 2",
+          "url": "https://www.youtube.com/watch?v=rNZ_ixK5Z6I",
+          "meta": "2 个国家/地区在榜"
+        },
+        {
+          "title": "По барам",
+          "url": "https://www.youtube.com/watch?v=N8yKK-nHIgE",
+          "meta": "8 个国家/地区在榜"
+        },
+        {
+          "title": "Prince Royce - Rechazame (Lyrics)",
+          "url": "https://www.youtube.com/watch?v=XbB6iDMn3Ik",
+          "meta": "9 个国家/地区在榜"
+        },
+        {
+          "title": "Sathyavan Savithiri Official Trailer (Tamil) | Keerthy Suresh | Mysskin | Praveen | 20th Nov 2026",
+          "url": "https://www.youtube.com/watch?v=43hxXUSCIYs",
+          "meta": "4 个国家/地区在榜"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T06:59:18.042757+00:00",
+        "lastSuccessAt": "2026-11-15T06:59:19.776403+00:00",
+        "error": ""
+      }
+    },
+    "imdb": {
+      "name": "IMDb",
+      "kind": "最受欢迎电影榜 · 用户热度",
+      "url": "https://www.imdb.com/chart/moviemeter/",
+      "icon": "https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png",
+      "sourceUrlUsed": "https://www.imdb.com/chart/moviemeter/",
+      "updatedAt": "2026-11-15T06:59:27.517548+00:00",
+      "items": [
+        {
+          "title": "You Can See Everything",
+          "url": "https://www.imdb.com/title/tt45368240/",
+          "meta": "IMDb 9.0 · 3.4 万人评分"
+        },
+        {
+          "title": "Godzilla Minus Zero",
+          "url": "https://www.imdb.com/title/tt34384661/",
+          "meta": "IMDb 7.9 · 2.5 万人评分"
+        },
+        {
+          "title": "Heart of the Beast",
+          "url": "https://www.imdb.com/title/tt7526136/",
+          "meta": "IMDb 7.1 · 5.6 万人评分"
+        },
+        {
+          "title": "Resident Evil",
+          "url": "https://www.imdb.com/title/tt35538033/",
+          "meta": "IMDb 7.4 · 16.5 万人评分"
+        },
+        {
+          "title": "The Odyssey",
+          "url": "https://www.imdb.com/title/tt33764258/",
+          "meta": "IMDb 8.4 · 56.8 万人评分"
+        },
+        {
+          "title": "Ramayana",
+          "url": "https://www.imdb.com/title/tt27988879/",
+          "meta": "IMDb 8.3 · 3.8 万人评分"
+        },
+        {
+          "title": "Wild Horse Nine",
+          "url": "https://www.imdb.com/title/tt15799564/",
+          "meta": "IMDb 8.1 · 1.7 万人评分"
+        },
+        {
+          "title": "Wildwood",
+          "url": "https://www.imdb.com/title/tt2056785/",
+          "meta": "IMDb 8.6 · 2.9 万人评分"
+        },
+        {
+          "title": "Clayface",
+          "url": "https://www.imdb.com/title/tt34890576/",
+          "meta": "IMDb 7.5 · 5.2 万人评分"
+        },
+        {
+          "title": "Primetime",
+          "url": "https://www.imdb.com/title/tt34206385/",
+          "meta": "IMDb 6.9 · 4.4 万人评分"
+        },
+        {
+          "title": "Obsession",
+          "url": "https://www.imdb.com/title/tt37287335/",
+          "meta": "IMDb 7.8 · 43.2 万人评分"
+        },
+        {
+          "title": "Wicker",
+          "url": "https://www.imdb.com/title/tt29611136/",
+          "meta": "IMDb 7.4 · 8,300人评分"
+        },
+        {
+          "title": "A Dog's Perfect Christmas",
+          "url": "https://www.imdb.com/title/tt38515310/",
+          "meta": "IMDb 6.4 · 2,700人评分"
+        },
+        {
+          "title": "Verity",
+          "url": "https://www.imdb.com/title/tt32261958/",
+          "meta": "IMDb 6.0 · 3.8 万人评分"
+        },
+        {
+          "title": "I Play Rocky",
+          "url": "https://www.imdb.com/title/tt11995650/",
+          "meta": "IMDb 8.1 · 3,900人评分"
+        },
+        {
+          "title": "Drummer Boy",
+          "url": "https://www.imdb.com/title/tt10098420/",
+          "meta": "IMDb 7.7 · 2,400人评分"
+        },
+        {
+          "title": "The Cat in the Hat",
+          "url": "https://www.imdb.com/title/tt2321555/",
+          "meta": "IMDb 6.6 · 1,600人评分"
+        },
+        {
+          "title": "Spider-Man: Brand New Day",
+          "url": "https://www.imdb.com/title/tt22084616/",
+          "meta": "IMDb 7.9 · 38.7 万人评分"
+        },
+        {
+          "title": "The Invite",
+          "url": "https://www.imdb.com/title/tt14173636/",
+          "meta": "IMDb 7.4 · 10.4 万人评分"
+        },
+        {
+          "title": "The Hunger Games: Sunrise on the Reaping",
+          "url": "https://www.imdb.com/title/tt32558705/",
+          "meta": ""
+        },
+        {
+          "title": "The Mongoose",
+          "url": "https://www.imdb.com/title/tt13611778/",
+          "meta": "IMDb 5.0 · 4,700人评分"
+        },
+        {
+          "title": "Godzilla Minus One",
+          "url": "https://www.imdb.com/title/tt23289160/",
+          "meta": "IMDb 7.7 · 24 万人评分"
+        },
+        {
+          "title": "Collision Course",
+          "url": "https://www.imdb.com/title/tt38793125/",
+          "meta": "IMDb 5.7 · 3,400人评分"
+        },
+        {
+          "title": "Ebenezer",
+          "url": "https://www.imdb.com/title/tt38773219/",
+          "meta": "IMDb 7.2 · 4,400人评分"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T06:59:18.042312+00:00",
+        "lastSuccessAt": "2026-11-15T06:59:27.517548+00:00",
+        "error": ""
+      }
     }
   }
 }

@@ -56,6 +56,9 @@ SOURCES={
  'maoyan':{'name':'猫眼','kind':'国内票房榜','url':'https://www.maoyan.com/board/1','endpoint':'https://www.maoyan.com/board/1','icon':'https://www.maoyan.com/favicon.ico'},
  'douban_book':{'name':'豆瓣读书','kind':'新书速递','url':'https://book.douban.com/latest','endpoint':'https://book.douban.com/','icon':'https://img3.doubanio.com/favicon.ico'},
  'douban':{'name': '豆瓣电影', 'kind': '热门电影 · 豆瓣评分', 'url': 'https://movie.douban.com/explore', 'endpoint': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=24&page_start=0', 'icon': 'https://movie.douban.com/favicon.ico'},
+ 'imdb':{'name':'IMDb','kind':'最受欢迎电影榜 · 用户热度','url':'https://www.imdb.com/chart/moviemeter/','endpoint':'https://www.imdb.com/chart/moviemeter/','icon':'https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png'},
+ 'youtube_trending':{'name':'YouTube 热门','kind':'全球趋势榜 · 多国在榜','url':'https://www.youtube.com/','endpoint':'https://kworb.net/youtube/trending.html','icon':'https://www.youtube.com/favicon.ico'},
+ 'netflix':{'name':'Netflix Top 10','kind':'官方周榜 · 全球电影','url':'https://www.netflix.com/tudum/top10','endpoint':'https://www.netflix.com/tudum/top10','icon':'https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico'},
  'microsoft':{'name': '微软安全博客', 'kind': '安全研究与资讯 · 中文机译', 'url': 'https://www.microsoft.com/en-us/security/blog/', 'endpoint': 'https://www.microsoft.com/en-us/security/blog/feed/', 'icon': 'https://www.microsoft.com/favicon.ico'},
  'seebug':{'name': 'Seebug 漏洞库', 'kind': '最新漏洞情报', 'url': 'https://www.seebug.org/', 'endpoint': 'https://www.seebug.org/', 'icon': 'https://www.seebug.org/favicon.ico'},
 
@@ -687,6 +690,7 @@ def parse_source(key,body):
  if key in AUTO_NEWS:return parse_auto_news(key,body)
  if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
  if key=='maoyan':return parse_maoyan_board(body)
+ if key=='netflix':return parse_netflix_top10(body)
  if key=='douban_book':return parse_douban_books(body)
  if key=='douban':
   data=json.loads(body)
@@ -1096,6 +1100,152 @@ def fetch_freebuf_items():
    return normalize_freebuf_rows(rows)
   finally:browser.close()
 
+YOUTUBE_TRENDING_ENDPOINTS=(
+ ('https://kworb.net/youtube/trending.html','kworb'),
+ ('https://api.piped.private.coffee/trending?region=US','piped'),
+ ('https://pipedapi.ducks.party/trending?region=US','piped'),
+ ('https://invidious.materialio.us/api/v1/trending?region=US','invidious'),
+)
+IMDB_CHART='https://www.imdb.com/chart/moviemeter/'
+IMDB_ROWS_JS="""() => [...document.querySelectorAll('li.ipc-metadata-list-summary-item')].map(li => {
+ const link = li.querySelector('a[href*="/title/tt"]');
+ return {url: link ? link.getAttribute('href') : '', text: li.innerText};
+})"""
+
+def compact_count(value):
+ """把 8,600,000 / 34K / 1.2M 统一成中文万、亿写法。"""
+ if isinstance(value,str):
+  text=value.replace(',','').strip('() ')
+  match=re.fullmatch(r'(\d+(?:\.\d+)?)([KM]?)',text)
+  if not match:return text
+  number=float(match.group(1))*{'':1,'K':1_000,'M':1_000_000}[match.group(2)]
+ elif isinstance(value,bool) or not isinstance(value,(int,float)):return ''
+ else:number=float(value)
+ if number>=100_000_000:return f'{number/100_000_000:.1f}'.rstrip('0').rstrip('.')+' 亿'
+ if number>=10_000:return f'{number/10_000:.1f}'.rstrip('0').rstrip('.')+' 万'
+ return f'{int(number):,}'
+
+def duration_text(seconds):
+ if isinstance(seconds,bool) or not isinstance(seconds,(int,float)) or seconds<=0:return ''
+ seconds=int(seconds);hours,remainder=divmod(seconds,3600);minutes,second=divmod(remainder,60)
+ return f'{hours}:{minutes:02d}:{second:02d}' if hours else f'{minutes}:{second:02d}'
+
+def parse_netflix_top10(body):
+ text=body.decode('utf-8')
+ table=re.search(r'<table\b[^>]*>(.*?)</table>',text,re.S)
+ if not table:raise ValueError('Missing Netflix Top 10 table')
+ def cell(row,marker):
+  match=re.search(r'<td\b[^>]*'+marker+r'[^>]*>(.*?)</td>',row,re.S)
+  return clean(unescape(re.sub(r'<[^>]+>','',match.group(1)))) if match else ''
+ rows=[]
+ for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',table.group(1),re.S):
+  title_cell=re.search(r'<td\b[^>]*class="title"[^>]*>(.*?)</td>',row,re.S)
+  if not title_cell:continue
+  block=title_cell.group(1)
+  name=re.search(r'<button\b[^>]*>(.*?)</button>',block,re.S)
+  title=clean(unescape(re.sub(r'<[^>]+>','',name.group(1)))) if name else ''
+  rank=re.search(r'<span\b[^>]*class="rank"[^>]*>\s*(\d+)\s*</span>',block)
+  if not title or not rank:continue
+  meta=[]
+  views=cell(row,'data-uia="top10-table-row-views"')
+  weeks=cell(row,'data-uia="top10-table-row-weeks"')
+  if views:meta.append('观看 '+compact_count(views)+'次')
+  if weeks.isdigit():meta.append('在榜 '+weeks+' 周')
+  item={'title':title,'url':'https://www.netflix.com/search?q='+quote(title),'meta':' · '.join(meta)}
+  rows.append((int(rank.group(1)),item))
+ if not rows:raise ValueError('No valid Netflix Top 10 rows')
+ rows.sort(key=lambda pair:pair[0])
+ return [item for _,item in rows]
+
+def parse_kworb_trending(body):
+ text=body.decode('utf-8')
+ table=re.search(r'<table\b[^>]*>(.*?)</table>',text,re.S)
+ if not table:raise ValueError('Missing kworb trending table')
+ items=[]
+ for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',table.group(1),re.S):
+  link=re.search(r'<a\b[^>]*href="/youtube/trending/video/([A-Za-z0-9_-]{11})\.html"[^>]*>(.*?)</a>',row,re.S)
+  if not link:continue
+  title=clean(unescape(re.sub(r'<[^>]+>','',link.group(2))))
+  if len(title)<2:continue
+  cells=[clean(unescape(re.sub(r'<[^>]+>','',cell))) for cell in re.findall(r'<td\b[^>]*>(.*?)</td>',row,re.S)]
+  countries=cells[3] if len(cells)>3 and cells[3].isdigit() else ''
+  meta=countries+' 个国家/地区在榜' if countries else 'YouTube 全球趋势'
+  items.append({'title':title,'url':'https://www.youtube.com/watch?v='+link.group(1),'meta':meta})
+  if len(items)==24:break
+ if not items:raise ValueError('No valid kworb trending rows')
+ return items
+
+def parse_youtube_trending(body,flavor='piped'):
+ if flavor=='kworb':return parse_kworb_trending(body)
+ data=json.loads(body)
+ if not isinstance(data,list):raise ValueError('Invalid YouTube trending response')
+ items=[]
+ for row in data:
+  if not isinstance(row,dict):continue
+  if flavor=='piped':
+   url=row.get('url') or '';title=clean(row.get('title'));author=clean(row.get('uploaderName'))
+   views=row.get('views');duration=row.get('duration')
+  else:
+   video_id=clean(row.get('videoId')) if row.get('type','video')=='video' else ''
+   url='/watch?v='+video_id if video_id else ''
+   title=clean(row.get('title'));author=clean(row.get('author'))
+   views=row.get('viewCount');duration=row.get('lengthSeconds')
+  match=re.fullmatch(r'(?:https://www\.youtube\.com)?/watch\?v=([A-Za-z0-9_-]{11})',url)
+  if not match or not title:continue
+  meta=[part for part in (author,'观看 '+compact_count(views)+'次' if compact_count(views) else '','时长 '+duration_text(duration) if duration_text(duration) else '直播') if part]
+  items.append({'title':title,'url':'https://www.youtube.com/watch?v='+match.group(1),'meta':' · '.join(meta)})
+ if not items:raise ValueError('No valid YouTube trending videos')
+ return items[:24]
+
+def fetch_youtube_trending():
+ errors=[]
+ for endpoint,flavor in YOUTUBE_TRENDING_ENDPOINTS:
+  try:return parse_youtube_trending(request_body(endpoint),flavor),endpoint
+  except Exception as error:errors.append(f'{urlparse(endpoint).hostname or endpoint} {type(error).__name__}')
+ raise ValueError('YouTube trending unavailable: '+'; '.join(errors))
+
+def parse_imdb_rows(rows):
+ items=[]
+ for row in rows:
+  match=re.match(r'(?:https://www\.imdb\.com)?/title/(tt\d+)/',clean(row.get('url')))
+  if not match:continue
+  lines=[clean(part) for part in str(row.get('text') or '').split('\n') if clean(part)]
+  if len(lines)<2 or not re.fullmatch(r'#\d+',lines[0]):continue
+  title=lines[1]
+  if len(title)<2:continue
+  rating=votes=''
+  if len(lines)>3 and re.fullmatch(r'\d{1,2}\.\d',lines[3]):rating=lines[3]
+  if len(lines)>4 and re.fullmatch(r'\([\d.,]+[KM]?\)',lines[4]):votes=lines[4]
+  meta=[]
+  if rating:meta.append('IMDb '+rating)
+  if votes:meta.append(compact_count(votes)+'人评分')
+  item={'title':title,'url':'https://www.imdb.com/title/'+match.group(1)+'/','meta':' · '.join(meta)}
+  items.append(item)
+  if len(items)==24:break
+ if not items:raise ValueError('No valid IMDb chart rows')
+ return items
+
+def fetch_imdb_items():
+ import tempfile
+ from playwright.sync_api import sync_playwright
+ profile=os.environ.get('IMDB_BROWSER_PROFILE') or str(Path(tempfile.gettempdir())/'ainavigation-imdb-profile')
+ with sync_playwright() as playwright:
+  context=playwright.chromium.launch_persistent_context(profile,headless=os.environ.get('IMDB_HEADLESS')=='1',channel=os.environ.get('IMDB_BROWSER_CHANNEL') or None,locale='en-US',viewport={'width':1440,'height':900},args=['--disable-blink-features=AutomationControlled'])
+  try:
+   page=context.pages[0] if context.pages else context.new_page()
+   page.goto('https://www.imdb.com/',wait_until='domcontentloaded',timeout=60000)
+   page.wait_for_timeout(2000)
+   rows=[]
+   for _ in range(3):
+    page.goto(IMDB_CHART,wait_until='domcontentloaded',timeout=60000)
+    for _ in range(4):
+     page.wait_for_timeout(3000)
+     rows=page.evaluate(IMDB_ROWS_JS) or []
+     if len(rows)>=10:break
+    if len(rows)>=10:break
+   return parse_imdb_rows(rows)
+  finally:context.close()
+
 _translation_lock=Lock()
 _offline_translator=None
 ARGOS_MODEL_URL='https://github.com/axaaaaa/axaaaaa.github.io/releases/download/argos-en-zh-1.9/translate-en_zh-1_9.argosmodel'
@@ -1182,6 +1332,12 @@ def fetch(key):
    except Exception as error:print(f'FREEBUF_FEED_FALLBACK {feed}: {type(error).__name__}: {error}')
   else:items=fetch_freebuf_items();used=source['endpoint']
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
+ if key=='imdb':
+  items=cache_source_covers(key,fetch_imdb_items())
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key=='youtube_trending':
+  items,used=fetch_youtube_trending()
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  try:
   used=nvd_endpoint() if key=='nvd' else source['endpoint']
   try:

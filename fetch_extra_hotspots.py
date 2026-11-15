@@ -78,6 +78,9 @@ SOURCES={
  'ijingyi_new':{'name':'精易论坛 · 最新帖','kind':'最新帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/forum.php','icon':'https://bbs.ijingyi.com/favicon.ico'},
  'ijingyi_hot':{'name':'精易论坛 · 本周热帖','kind':'本周热帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/forum.php','icon':'https://bbs.ijingyi.com/favicon.ico'},
  'bilibili':{'name':'哔哩哔哩（B站）','kind':'热门视频 · 非播放量排行','url':'https://www.bilibili.com/v/popular/all','endpoint':'https://api.bilibili.com/x/web-interface/popular?pn=1&ps=24','icon':'https://www.bilibili.com/favicon.ico'},
+ 'ithome_rank':{'name':'IT之家 · 日榜','kind':'24 小时阅读热度日榜','url':'https://www.ithome.com/','endpoint':'https://www.ithome.com/','icon':'https://www.ithome.com/favicon.ico'},
+ 'douyin':{'name':'抖音热榜','kind':'实时热点 · 热度值','url':'https://www.douyin.com/hot','endpoint':'https://aweme.snssdk.com/aweme/v1/hot/search/list/','icon':'https://www.douyin.com/favicon.ico'},
+ 'kuaishou':{'name':'快手热榜','kind':'光辉榜 · 热度值','url':'https://www.kuaishou.com/brilliant','endpoint':'https://www.kuaishou.com/brilliant','icon':'https://www.kuaishou.com/favicon.ico'},
  'tieba':{'name':'百度贴吧','kind':'热议话题榜','url':'https://tieba.baidu.com/','endpoint':'https://tieba.baidu.com/hottopic/browse/topicList','icon':'https://tieba.baidu.com/favicon.ico'},
  'woshipm':{'name':'人人都是产品经理','kind':'产品与运营文章','url':'https://www.woshipm.com/','endpoint':'https://www.woshipm.com/feed','icon':'https://www.woshipm.com/favicon.ico'},
  'csdn':{'name':'CSDN 博客','kind':'最新技术文章','url':'https://blog.csdn.net/','endpoint':'https://blog.csdn.net/nav/newarticles','icon':'https://blog.csdn.net/favicon.ico'},
@@ -686,6 +689,81 @@ def parse_extra_model_source(key,body):
  if key=='aa_models':entries.sort(key=lambda row:float(row['meta'].split()[1]),reverse=True)
  return entries[:12]
 
+def format_hot_value(value):
+ raw=str(value).replace(',','').strip()
+ if re.fullmatch(r'[\d.]+[万亿]',raw):return raw
+ try:number=float(raw)
+ except (TypeError,ValueError):return ''
+ if number>=100_000_000:return '%.1f亿'%(number/100_000_000)
+ if number>=10_000:return '%.1f万'%(number/10_000)
+ return str(int(number))
+
+def parse_ithome_rank(body):
+ """IT之家首页右下角「日榜」：id=d-1 的列表（服务端直出，不需要浏览器）。"""
+ html=body.decode('utf-8','replace') if isinstance(body,(bytes,bytearray)) else body
+ start=html.find('id="rank"')
+ if start<0:raise ValueError('Missing IT之家 rank section')
+ # 页面里有两处 id="d-1"（软媒产品 / 排行榜），必须先从 #rank 区块里找
+ block=re.search(r'id="d-1"[^>]*>(.*?)</ul>',html[start:],re.S)
+ if not block:raise ValueError('Missing IT之家 daily ranking list')
+ items=[];seen=set()
+ for tag in re.findall(r'<a\b[^>]*>',block.group(1)):
+  href=re.search(r'href="([^"]+)"',tag);label=re.search(r'title="([^"]+)"',tag)
+  if not href or not label:continue
+  url=urljoin('https://www.ithome.com/',href.group(1))
+  if not re.fullmatch(r'https://www\.ithome\.com/\d+/\d+/\d+\.html?',url):continue
+  name=clean(unescape(label.group(1)))
+  if len(name)<4 or url in seen:continue
+  seen.add(url);items.append({'title':name,'url':url,'meta':'日榜 %d'%(len(items)+1)})
+ if not items:raise ValueError('No valid IT之家 daily ranking entries')
+ return items[:20]
+
+def parse_douyin_hot(body):
+ data=json.loads(body)
+ words=data.get('word_list') if isinstance(data,dict) else None
+ if not words and isinstance(data,dict):words=(data.get('data') or {}).get('word_list')
+ if not isinstance(words,list) or not words:raise ValueError('Invalid 抖音热榜 response')
+ items=[]
+ for row in words:
+  if not isinstance(row,dict):continue
+  name=clean(row.get('word'))
+  if len(name)<2:continue
+  meta='热度 '+format_hot_value(row.get('hot_value')) if format_hot_value(row.get('hot_value')) else '抖音热点'
+  videos=row.get('video_count')
+  if isinstance(videos,int) and videos>0:meta+=' · %d 个视频'%videos
+  sid=str(row.get('sentence_id') or '').strip()
+  url='https://www.douyin.com/hot/'+sid if sid.isdigit() else 'https://www.douyin.com/search/'+quote(name)
+  items.append({'title':name,'url':url,'meta':meta})
+ if not items:raise ValueError('No valid 抖音热榜 entries')
+ return items[:24]
+
+def parse_kuaishou_hot(body):
+ """快手「光辉榜」页把热榜数据内嵌在 window.__APOLLO_STATE__ 里，直接读这段 JSON。"""
+ html=body.decode('utf-8','replace') if isinstance(body,(bytes,bytearray)) else body
+ marker='window.__APOLLO_STATE__='
+ index=html.find(marker)
+ if index<0:raise ValueError('Missing 快手 hot rank state')
+ try:state,_=json.JSONDecoder().raw_decode(html,index+len(marker))
+ except ValueError:raise ValueError('Unreadable 快手 hot rank state')
+ client=(state or {}).get('defaultClient') or {}
+ rank=next((v for k,v in client.items() if k.startswith('$ROOT_QUERY.visionHotRank')),None)
+ refs=(rank or {}).get('items') if isinstance(rank,dict) else None
+ if not isinstance(refs,list) or not refs:raise ValueError('No 快手 hot rank items')
+ items=[];seen=set()
+ for ref in refs:
+  entry=client.get(ref.get('id')) if isinstance(ref,dict) else None
+  if not isinstance(entry,dict):continue
+  name=clean(entry.get('name'))
+  if len(name)<2 or name in seen:continue
+  photos=(entry.get('photoIds') or {}).get('json') if isinstance(entry.get('photoIds'),dict) else None
+  photo=photos[0] if isinstance(photos,list) and photos else ''
+  url='https://www.kuaishou.com/short-video/'+quote(str(photo)) if photo else 'https://www.kuaishou.com/search/video?searchKey='+quote(name)
+  hot=format_hot_value(entry.get('hotValue'))
+  seen.add(name);items.append({'title':name,'url':url,'meta':'热度 '+hot if hot else '快手热榜'})
+  if len(items)>=24:break
+ if not items:raise ValueError('No valid 快手 hot rank entries')
+ return items
+
 def parse_source(key,body):
  if key in EXTRA_MODEL_SOURCES:return parse_extra_model_source(key,body)
  if key=='hf_trending':return parse_hf_trending(body)
@@ -700,6 +778,9 @@ def parse_source(key,body):
  if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
  if key=='maoyan':return parse_maoyan_board(body)
  if key=='netflix':return parse_netflix_top10(body)
+ if key=='ithome_rank':return parse_ithome_rank(body)
+ if key=='douyin':return parse_douyin_hot(body)
+ if key=='kuaishou':return parse_kuaishou_hot(body)
  if key=='douban_book':return parse_douban_books(body)
  if key=='douban':
   data=json.loads(body)
@@ -1392,7 +1473,7 @@ def fetch(key):
  if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program','nvd','exploitdb') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
- if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ithome_rank','douyin','kuaishou','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():

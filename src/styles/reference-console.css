@@ -38,8 +38,8 @@ body #shortcut-library kbd {
 body.dark #shortcut-library kbd {
  background:linear-gradient(180deg,#294734 0%,#1d3325 45%,#122219 100%);
  color:#d4ebdc; border-color:#45654f; border-bottom-color:#0c160f;
- box-shadow:0 3px 0 #050a07,0 4px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(157,198,168,.25),inset 1px 0 0 rgba(157,198,168,.08);
- text-shadow:0 1px 0 #08120c;
+ box-shadow:0 3px 0 #020a06,0 4px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(157,198,168,.25),inset 1px 0 0 rgba(157,198,168,.08);
+ text-shadow:0 1px 0 #04120a;
 }
 body #utility-toolbox .basic-keys .basic-equals { background: var(--el-color-primary-light-9)!important; color: var(--console-selected)!important; border-color: var(--console-hover-border); }
 @media(max-width:680px) { body :is(#shortcut-library, #utility-toolbox, #electricity-library, #daily-food) h2 { font-size: 16px; } }
@@ -54,7 +54,7 @@ body #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) button {
 body.dark #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) button {
  background:linear-gradient(180deg,#294734 0%,#1d3325 45%,#122219 100%);color:#d4ebdc;
  border-color:#45654f;border-bottom-color:#0c160f;
- box-shadow:0 3px 0 #050a07,0 4px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(157,198,168,.25);text-shadow:0 1px 0 #08120c;
+ box-shadow:0 3px 0 #020a06,0 4px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(157,198,168,.25);text-shadow:0 1px 0 #04120a;
 }
 body #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) :is(button[aria-pressed="true"],button[aria-selected="true"],button:active) {
  transform:translateY(2px);background:linear-gradient(180deg,#dcebe0,#eaf3ed);color:#244f35;
@@ -62,7 +62,7 @@ body #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) :is(button
 }
 body.dark #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) :is(button[aria-pressed="true"],button[aria-selected="true"],button:active) {
  background:linear-gradient(180deg,#112519,#1c3826);color:#e0f3e5;border-color:#739b7e;border-bottom-color:#233c2b;
- box-shadow:0 1px 0 #050a07,inset 0 1px 4px rgba(0,0,0,.4);
+ box-shadow:0 1px 0 #020a06,inset 0 1px 4px rgba(0,0,0,.4);
 }
 body #shortcut-library :is(.shortcut-categories,.shortcut-topic-tabs) button:focus-visible {outline:2px solid var(--ui-focus);outline-offset:4px;}
 body #shortcut-library .shortcut-categories {row-gap:11px;padding-bottom:3px;}
@@ -139,6 +139,8 @@ body.dark #app .navigation-container :is(input,textarea,select){color-scheme:dar
 #app .navigation-container .search-bar-compact .engine-search-item{background:transparent;--engine-hover:rgb(69 98 83 / 12%)}
 #app .navigation-container .dark-theme .search-bar-compact .engine-search-item{--engine-hover:rgb(165 213 179 / 13%)}
 #app .navigation-container .search-bar-compact .engine-search-item .unified-search-control{background:transparent!important}
+/* 搜索引擎下拉框与「展开全部引擎」按钮透明 */
+#app .navigation-container .search-bar-compact .engine-unified-bar .engine-select .el-select__wrapper{background:transparent!important}
 #app .navigation-container .search-cosmic-panel > .search-wave ~ .search-bar-compact .engine-search-item > summary{color:#fff}
 /* Element Plus menus are teleported under body, outside the main container. */
 :is(.homepage-engine-dropdown,.el-autocomplete-suggestion){--el-bg-color-overlay:#fff;--el-text-color-regular:#294c38;--el-text-color-primary:#294c38;--el-fill-color-light:#edf4ef;--el-color-primary:#386a50;--el-border-color-light:#b9cfc1;background:#fff!important;color:#294c38!important;border-color:#b9cfc1!important;border-radius:3px!important;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
@@ -158,4 +160,3 @@ body.dark :is(.homepage-engine-dropdown,.el-autocomplete-suggestion) .el-popper_
  input[type="range"] {cursor:ew-resize;}
  :is(input[type="checkbox"],input[type="radio"],input[type="color"],input[type="file"]) {cursor:pointer;}
 }
-

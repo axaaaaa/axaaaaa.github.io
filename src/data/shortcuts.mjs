@@ -1,6 +1,7 @@
 import { devtoolsShortcuts } from './devtools-shortcuts.mjs';
 import { extendedShortcuts } from './extended-shortcuts.mjs';
 import {photoshopShortcuts} from './photoshop-shortcuts.mjs';
+import { officeShortcuts } from './office-shortcuts.mjs';
 import { supplementalShortcuts } from './reference-shortcut-additions.mjs';
 // Default shortcuts; customized keymaps and OS settings may override these.
 export const shortcuts = [
@@ -1289,4 +1290,4 @@ export const shortcuts = [
     "note": "",
     "source": "https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf"
   }
-].concat(supplementalShortcuts,photoshopShortcuts,extendedShortcuts,devtoolsShortcuts);
+].concat(supplementalShortcuts,photoshopShortcuts,officeShortcuts,extendedShortcuts,devtoolsShortcuts);

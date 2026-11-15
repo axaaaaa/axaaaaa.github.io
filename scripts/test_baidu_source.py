@@ -26,6 +26,7 @@ class BaiduTests(unittest.TestCase):
  @unittest.skipUnless((Path(__file__).resolve().parents[1]/'src/components/SourceNewsCard.vue').is_file(),'Vue integration requires source checkout')
  def test_integration(self):
   root=Path(__file__).resolve().parents[1]
-  self.assertIn("'bilibili','baidu','tieba'",(root/'src/components/NavigationLinks.vue').read_text(encoding='utf8'))
+  self.assertIn("baidu: { label: '百度热搜'",(root/'src/components/NewsHotspotHub.vue').read_text(encoding='utf8'))
+  self.assertIn("<NewsHotspotHub",(root/'src/components/NavigationLinks.vue').read_text(encoding='utf8'))
   self.assertIn("baidu:{name:'百度热搜'",(root/'src/components/SourceNewsCard.vue').read_text(encoding='utf8'))
 if __name__=='__main__':unittest.main()

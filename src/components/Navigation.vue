@@ -28,6 +28,8 @@
       @open-shortcuts="scrollToShortcuts"
       @open-network="scrollToNetworkReference"
         @open-fundamentals="scrollToComputerFundamentals"
+        @open-ai-knowledge="scrollToAIKnowledge"
+        @open-hardware-tiers="scrollToHardwareTiers"
       @open-installation="scrollToSystemInstallation"
       @open-tools="scrollToUtilityTools" @open-image-tools="scrollToToolModule('imageTools','image-tools')" @open-text-tools="scrollToToolModule('textTools','text-tools')"
         @open-system="scrollToSystemTools"
@@ -42,25 +44,56 @@
       <NavigationLinks
         ref="navLinks"
         @located="weatherLocation = $event"
+        @module-jump="jumpToModule"
         :categories="categories"
         :current-theme="currentTheme"
       />
 
-      <div class="module-collapse-bar"><button type="button" class="collapse-all-modules" @click="collapseAllContent"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m7 8 5-5 5 5M7 16l5 5 5-5M4 12h16"/></svg>全部收缩</button><span>收起各模块内容，保留输入与收藏</span></div>
-      <CryptoPlayground ref="cryptoPlayground" />
-      <CommandLibrary ref="commandLibrary" />
-      <ShortcutLibrary ref="shortcutLibrary" />
-      <NetworkReference ref="networkReference" />
+      <nav ref="moduleNav" class="module-nav" aria-label="模块导航">
+        <div class="module-nav-head">
+          <div class="module-nav-zones">
+            <button v-for="group in moduleGroups" :key="group.id" type="button" @click="scrollToZone(group.id)">{{ group.title }}</button>
+          </div>
+          <div class="module-nav-actions">
+            <button type="button" @click="collapseAllContent">收起全部</button>
+            <button type="button" @click="expandAllContent">展开全部</button>
+          </div>
+        </div>
+        <div class="module-nav-chips">
+          <template v-for="(group, index) in moduleGroups" :key="group.id">
+            <span v-if="index" class="module-nav-sep" aria-hidden="true"></span>
+            <button v-for="item in group.items" :key="item.id" type="button" class="module-chip" @click="jumpToModule(item)">
+              <component :is="item.icon" class="module-chip-icon" aria-hidden="true" />{{ item.label }}
+            </button>
+          </template>
+        </div>
+      </nav>
+
+      <section id="knowledge-zone" class="module-zone" aria-labelledby="knowledge-zone-title">
+        <header class="module-zone-heading"><h2 id="knowledge-zone-title" class="zone-title">知识区</h2><span>底层原理 · 数据结构 · 编程语言 · 人工智能 · 网络与安全</span></header>
+        <CommandLibrary ref="commandLibrary" />
+        <ShortcutLibrary ref="shortcutLibrary" />
+        <NetworkReference ref="networkReference" />
         <ComputerFundamentals ref="computerFundamentals" />
-      <SystemInstallation ref="systemInstallation" />
-      <UtilityToolbox ref="imageTools" group="image" />
-      <UtilityToolbox ref="textTools" group="text" />
-      <UtilityToolbox ref="utilityToolbox" />
-        <SystemTools ref="systemTools" />
-        <ElectricityLibrary ref="electricityLibrary" />
+        <AIKnowledge ref="aiKnowledge" />
+        <HardwareTierList ref="hardwareTiers" />
+        <SystemInstallation ref="systemInstallation" />
         <ReverseHandbook ref="reverseHandbook" />
         <VulnerabilityHandbook ref="vulnerabilityHandbook" />
+        <DataStructures ref="dataStructures" />
+        <ProgrammingLanguages ref="programmingLanguages" />
+      </section>
+
+      <section id="tools-zone" class="module-zone" aria-labelledby="tools-zone-title">
+        <header class="module-zone-heading"><h2 id="tools-zone-title" class="zone-title">工具区</h2><span>密码学 · 实用工具 · 系统维护 · 终端练习</span></header>
+        <CryptoPlayground ref="cryptoPlayground" />
+        <UtilityToolbox ref="imageTools" group="image" />
+        <UtilityToolbox ref="textTools" group="text" />
+        <UtilityToolbox ref="utilityToolbox" />
+        <SystemTools ref="systemTools" />
+        <ElectricityLibrary ref="electricityLibrary" />
         <LinuxTerminal ref="linuxTerminal" />
+      </section>
 
       <NavigationFooter 
         ref="footer"
@@ -165,6 +198,7 @@ import NavigationHeader from './NavigationHeader.vue'
 import NavigationLinks from './NavigationLinks.vue'
 import NavigationFooter from './NavigationFooter.vue'
 import SideNavigation from './SideNavigation.vue'
+import { moduleGroups, allModules } from '../data/module-index.mjs'
 
 
 
@@ -174,11 +208,15 @@ export default {
     LinuxTerminal: defineAsyncComponent(() => import('./LinuxTerminal.vue')),
     ReverseHandbook: defineAsyncComponent(() => import('./ReverseHandbook.vue')),
     VulnerabilityHandbook: defineAsyncComponent(() => import('./VulnerabilityHandbook.vue')),
+    DataStructures: defineAsyncComponent(() => import('./DataStructures.vue')),
+    ProgrammingLanguages: defineAsyncComponent(() => import('./ProgrammingLanguages.vue')),
     ElectricityLibrary: defineAsyncComponent(() => import('./ElectricityLibrary.vue')),
     SystemTools: defineAsyncComponent(() => import('./SystemTools.vue')),
     UtilityToolbox: defineAsyncComponent(() => import('./UtilityToolbox.vue')),
     SystemInstallation: defineAsyncComponent(() => import('./SystemInstallation.vue')),
     ComputerFundamentals: defineAsyncComponent(() => import('./ComputerFundamentals.vue')),
+    AIKnowledge: defineAsyncComponent(() => import('./AIKnowledge.vue')),
+    HardwareTierList: defineAsyncComponent(() => import('./HardwareTierList.vue')),
       NetworkReference: defineAsyncComponent(() => import('./NetworkReference.vue')),
     ShortcutLibrary: defineAsyncComponent(() => import('./ShortcutLibrary.vue')),
     CommandLibrary: defineAsyncComponent(() => import('./CommandLibrary.vue')),
@@ -209,6 +247,7 @@ export default {
       showBackToTop: false, 
       showGoToBottom: true, // 默认显示底部按钮
       scrollTimer: null, // 滚动节流定时器
+      moduleGroups,
     }
   },
 
@@ -219,6 +258,8 @@ export default {
       else if (action === 'tools') this.scrollToUtilityTools();
       else if (action === 'installation') this.scrollToSystemInstallation();
       else if (action === 'fundamentals') this.scrollToComputerFundamentals();
+      else if (action === 'ai') this.scrollToAIKnowledge();
+      else if (action === 'hardware') this.scrollToHardwareTiers();
       else if (action === 'terminal') this.scrollToLinuxTerminal();
       else if (action === 'radio') { const button = document.querySelector('.radio-trigger'); if (button?.getAttribute('aria-expanded') !== 'true') button?.click(); button?.focus(); }
       else if (action === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); this.$refs.scrollContainer?.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -240,11 +281,28 @@ export default {
       }
       const commands = this.$refs.commandLibrary;
       if (commands) { commands.libraryExpanded = false; commands.expanded = {}; }
-      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','reverseHandbook','vulnerabilityHandbook','linuxTerminal']) {
+      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','aiKnowledge','hardwareTiers','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','reverseHandbook','vulnerabilityHandbook','dataStructures','programmingLanguages','linuxTerminal']) {
         if (this.$refs[refName]) this.$refs[refName].opened = false;
       }
       // Native details can live under v-show panels; close without clearing inputs.
       this.$el.querySelectorAll('.main-content details[open]').forEach(detail => { detail.open = false; });
+    },
+    expandAllContent() {
+      for (const item of allModules) {
+        const panel = this.$refs[item.ref];
+        if (panel) panel[item.openKey] = true;
+      }
+    },
+    jumpToModule(item) {
+      return this.scrollToModule(item.component, item.ref, item.id, item.openKey);
+    },
+    scrollToZone(id) {
+      const container = this.$refs.scrollContainer;
+      const target = document.getElementById(id);
+      if (!container || !target) return;
+      const offset = (this.$refs.navHeader?.$el?.getBoundingClientRect().height || 0) + (this.$refs.moduleNav?.offsetHeight || 0);
+      const top = container.scrollTop + target.getBoundingClientRect().top - container.getBoundingClientRect().top - offset - 8;
+      container.scrollTo({ top: Math.max(0, top), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     },
     async scrollToElectricity() { return this.scrollToModule('ElectricityLibrary','electricityLibrary','electricity-library','opened');
     },
@@ -256,6 +314,8 @@ export default {
     },
     async scrollToSystemInstallation() { return this.scrollToModule('SystemInstallation','systemInstallation','system-installation','opened'); },
     async scrollToComputerFundamentals() { return this.scrollToModule('ComputerFundamentals','computerFundamentals','computer-fundamentals','opened'); },
+    async scrollToAIKnowledge() { return this.scrollToModule('AIKnowledge','aiKnowledge','ai-knowledge','opened'); },
+    async scrollToHardwareTiers() { return this.scrollToModule('HardwareTierList','hardwareTiers','hardware-tiers','opened'); },
       async scrollToNetworkReference() { return this.scrollToModule('NetworkReference','networkReference','network-reference','opened');
     },
     async scrollToShortcuts() { return this.scrollToModule('ShortcutLibrary','shortcutLibrary','shortcut-library','opened');
@@ -281,7 +341,7 @@ export default {
       const container = this.$refs.scrollContainer;
       if (!target || !container) return;
       const header = this.$refs.navHeader?.$el;
-      const offset = header?.getBoundingClientRect().height || 0;
+      const offset = (header?.getBoundingClientRect().height || 0) + (this.$refs.moduleNav?.offsetHeight || 0);
       const top = container.scrollTop + target.getBoundingClientRect().top - container.getBoundingClientRect().top - offset - 16;
       container.scrollTo({top:Math.max(0,top),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
       await new Promise(resolve=>setTimeout(resolve,700));
@@ -774,5 +834,129 @@ body:not(.dark) {
 .main-content > .module-collapse-bar ~ section {
   margin-top: 6px !important;
   margin-bottom: 6px !important;
+}
+/* 模块区 sticky 导航 */
+.module-nav {
+  position: sticky;
+  top: 60px;
+  z-index: 900;
+  padding: 8px 20px 10px;
+  background: var(--el-bg-color, #fff);
+  border-bottom: 1px solid var(--el-border-color-light, #e2e8e4);
+  box-shadow: 0 6px 12px -10px rgba(0, 0, 0, 0.28);
+}
+.module-nav-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.module-nav-zones {
+  display: flex;
+  gap: 6px;
+}
+.module-nav-zones button {
+  padding: 4px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--el-fill-color-light, #f1f5f2);
+  color: var(--el-text-color-regular, #40524a);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.module-nav-zones button:hover {
+  color: var(--ui-accent, #2f6b4f);
+  background: var(--ui-accent-soft, #eef6f1);
+}
+.module-nav-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.module-nav-actions button {
+  padding: 3px 9px;
+  border: 1px solid var(--el-border-color-light, #dbe4dd);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--el-text-color-secondary, #65746c);
+  font-size: 12px;
+  cursor: pointer;
+}
+.module-nav-actions button:hover {
+  color: var(--ui-accent, #2f6b4f);
+  border-color: var(--ui-accent, #2f6b4f);
+}
+.module-nav-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.module-nav-chips::-webkit-scrollbar { display: none; }
+.module-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  padding: 5px 9px;
+  border: 1px solid var(--el-border-color-light, #dbe4dd);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--el-text-color-regular, #40524a);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.module-chip:hover {
+  color: var(--ui-accent, #2f6b4f);
+  background: var(--ui-accent-soft, #eef6f1);
+  border-color: transparent;
+}
+.module-chip-icon { width: 13px; height: 13px; }
+.module-nav-sep {
+  flex: none;
+  width: 1px;
+  height: 16px;
+  margin: 0 2px;
+  background: var(--el-border-color-light, #dbe4dd);
+}
+.module-nav button:focus-visible { outline: 2px solid var(--ui-accent, #2f6b4f); outline-offset: 2px; }
+
+/* 知识区 / 工具区 分区标题 */
+.module-zone-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 26px 20px 0;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--el-border-color-light, #d7e4dc);
+}
+.module-zone-heading::before {
+  content: "";
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--ui-accent, #386a50);
+}
+.module-zone-heading .zone-title {
+  margin: 0;
+  font-size: 18px !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--el-text-color-primary);
+}
+.module-zone-heading > span {
+  font-size: 11px;
+  color: var(--el-text-color-secondary);
+}
+@media (max-width: 760px) {
+  .module-nav { padding: 8px 12px; }
+  .module-zone-heading { margin: 20px 12px 0; }
+  .module-zone-heading .zone-title { font-size: 16px !important; }
 }
 </style>

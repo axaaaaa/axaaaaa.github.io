@@ -20,6 +20,8 @@
 
     </el-menu>
 
+    <div id="header-site-search" class="header-site-search"></div>
+
 
 
 
@@ -28,14 +30,14 @@
     </a>
 
     <BookmarkSite />
-    <SponsorButton />
     <el-dropdown class="header-tools" popper-class="site-tools-win95" trigger="click" placement="bottom-start" :max-height="420" @command="$emit($event)">
       <button type="button" class="header-tools-trigger" aria-label="工具菜单">
         <svg class="toolbar-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/></svg>
-        <span>工具</span>
       </button>
       <template #dropdown><el-dropdown-menu>
         <el-dropdown-item command="open-fundamentals"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg><span>计算机底层知识</span></el-dropdown-item>
+        <el-dropdown-item command="open-ai-knowledge"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M9 12v2M15 12v2M12 4v3M8 19v2M16 19v2M2 11v4M22 11v4"/></svg><span>人工智能知识</span></el-dropdown-item>
+        <el-dropdown-item command="open-hardware-tiers"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><span>硬件天梯图</span></el-dropdown-item>
         <el-dropdown-item command="open-installation"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H4zM8 20h8M12 16v4M12 7v6M9 10l3 3 3-3"/></svg><span>系统安装</span></el-dropdown-item>
         <el-dropdown-item command="open-commands"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4zM7 9l3 3-3 3M13 15h4"/></svg><span>命令速查</span></el-dropdown-item>
         <el-dropdown-item command="open-shortcuts"><svg class="site-tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3zM6 9h1M10 9h1M14 9h1M18 9h0M6 12h1M10 12h1M14 12h1M18 12h0M7 15h10"/></svg><span>快捷键速查</span></el-dropdown-item>
@@ -82,7 +84,6 @@ import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus';
 import 'element-plus/es/components/dropdown/style/css.mjs';
 import 'element-plus/es/components/dropdown-menu/style/css.mjs';
 import 'element-plus/es/components/dropdown-item/style/css.mjs';
-import SponsorButton from './SponsorButton.vue';
 import BookmarkSite from './BookmarkSite.vue';
 import PersonalGreeting from './PersonalGreeting.vue';
 import HeaderRadio from './HeaderRadio.vue';
@@ -94,7 +95,7 @@ import { Sunny, Moon } from '@element-plus/icons-vue'
 
 export default {
   name: 'NavigationHeader',
-  components: { ElDropdown, ElDropdownMenu, ElDropdownItem, SponsorButton, BookmarkSite, HeaderRadio, PersonalGreeting, LocalMusicPlayer, HeaderWeather, FlipClock, Sunny, Moon },
+  components: { ElDropdown, ElDropdownMenu, ElDropdownItem, BookmarkSite, HeaderRadio, PersonalGreeting, LocalMusicPlayer, HeaderWeather, FlipClock, Sunny, Moon },
 
   props: {
     activeIndex: { type: String, default: '' },
@@ -102,7 +103,7 @@ export default {
     weatherLocation: { type: Object, default: null }
   },
 
-  emits: ['toggle-theme', 'toggle-mobile-menu', 'open-fundamentals', 'open-installation', 'open-commands', 'open-shortcuts', 'open-network', 'open-image-tools', 'open-text-tools', 'open-tools', 'open-system', 'open-electricity', 'open-reverse', 'open-vulnerability', 'open-terminal'],
+  emits: ['toggle-theme', 'toggle-mobile-menu', 'open-fundamentals', 'open-ai-knowledge', 'open-hardware-tiers', 'open-installation', 'open-commands', 'open-shortcuts', 'open-network', 'open-image-tools', 'open-text-tools', 'open-tools', 'open-system', 'open-electricity', 'open-reverse', 'open-vulnerability', 'open-terminal'],
 
   data() {
     return {
@@ -437,12 +438,12 @@ export default {
 /* Shared toolbar tokens override the individual widget trigger styles, never their panels. */
 .header-wrapper { --toolbar-icon-color: var(--ui-accent, #386a50); --toolbar-icon-hover: var(--ui-accent-soft, #edf4ef); }
 .header-wrapper.dark-theme { --toolbar-icon-color: #94bca4; --toolbar-icon-hover: rgba(148,188,164,.12); }
-.header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger) {
+.header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger) {
   display: inline-flex; align-items: center; justify-content: center; flex: 0 0 32px; width: 32px; height: 32px; min-height: 32px; padding: 6px; box-sizing: border-box; border: 0; border-radius: 8px; background: transparent; color: var(--toolbar-icon-color); cursor: pointer; line-height: 1;
 }
-.header-wrapper :deep(.header-contact:hover), .header-wrapper :deep(.bookmark-site-button:hover), .header-wrapper :deep(.sponsor-button:hover), .header-wrapper :deep(.header-music-button:hover), .header-wrapper :deep(.radio-trigger:hover) { background: var(--toolbar-icon-hover); }
-.header-wrapper :deep(.header-contact:focus-visible), .header-wrapper :deep(.bookmark-site-button:focus-visible), .header-wrapper :deep(.sponsor-button:focus-visible), .header-wrapper :deep(.header-music-button:focus-visible), .header-wrapper :deep(.radio-trigger:focus-visible) { outline: 2px solid var(--toolbar-icon-color); outline-offset: 2px; }
-.toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg) { display: block; width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.header-wrapper :deep(.header-contact:hover), .header-wrapper :deep(.bookmark-site-button:hover), .header-wrapper :deep(.header-music-button:hover), .header-wrapper :deep(.radio-trigger:hover) { background: var(--toolbar-icon-hover); }
+.header-wrapper :deep(.header-contact:focus-visible), .header-wrapper :deep(.bookmark-site-button:focus-visible), .header-wrapper :deep(.header-music-button:focus-visible), .header-wrapper :deep(.radio-trigger:focus-visible) { outline: 2px solid var(--toolbar-icon-color); outline-offset: 2px; }
+.toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg) { display: block; width: 20px; height: 20px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .header-wrapper :deep(.home-menu-item), .header-wrapper :deep(.mobile-menu-toggle) { color: var(--toolbar-icon-color); }
 .home-pixel-icon {
   display: block;
@@ -455,8 +456,8 @@ export default {
 }
 .header-wrapper :deep(.home-menu-item:hover), .header-wrapper :deep(.mobile-menu-toggle:hover) { background: var(--toolbar-icon-hover); }
 @media(max-width:768px) {
- .header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.sponsor-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger) { flex-basis: 26px; width: 26px; height: 30px; min-height: 30px; padding: 4px; }
- .toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.sponsor-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg) { width: 18px; height: 18px; }
+ .header-wrapper :deep(.header-contact), .header-wrapper :deep(.bookmark-site-button), .header-wrapper :deep(.header-music-button), .header-wrapper :deep(.radio-trigger) { flex-basis: 26px; width: 26px; height: 30px; min-height: 30px; padding: 4px; }
+ .toolbar-line-icon, .header-wrapper :deep(.header-contact > svg), .header-wrapper :deep(.bookmark-site-button > svg), .header-wrapper :deep(.header-music-button > svg), .header-wrapper :deep(.radio-trigger > svg) { width: 18px; height: 18px; }
 }
 </style>
 
@@ -466,7 +467,7 @@ export default {
 
 <style scoped>
 .header-tools{flex-shrink:0;margin:0 6px}
-.header-tools-trigger{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 9px;border:1px solid var(--ui-border,#d8e4dc);border-radius:6px;background:transparent;color:var(--toolbar-icon-color,#386a50);font:inherit;font-size:12px;white-space:nowrap;cursor:pointer}
+.header-tools-trigger{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 9px;border:0;border-radius:6px;background:transparent;color:var(--toolbar-icon-color,#386a50);font:inherit;font-size:12px;white-space:nowrap;cursor:pointer}
 .header-tools-trigger:hover{background:var(--toolbar-icon-hover,#edf4ef)}
 .header-tools-trigger:focus-visible{outline:2px solid var(--toolbar-icon-color,#386a50);outline-offset:2px}
 .header-tools-trigger svg{width:17px;height:17px}
@@ -514,5 +515,30 @@ body.dark .site-tools-win95 .el-dropdown-menu__item:not(.is-disabled):is(:focus-
 </style>
 
 <style>
+/* ===== 站内搜索：由 NavigationLinks 通过 Teleport 传送到顶部导航条 ===== */
+.header-wrapper .header-site-search { display: flex; align-items: center; flex: 0 1 260px; min-width: 150px; margin: 0 10px; }
+.header-wrapper .header-site-search:empty { display: none; }
+.header-wrapper .header-site-search .unified-search-control { flex: 1 1 auto; min-width: 0; height: 34px; padding: 0 2px 0 0; border-radius: 9px; }
+.header-wrapper .header-site-search .search-input { flex: 1 1 0; width: 0; min-width: 0; }
+.header-wrapper .header-site-search .search-input .el-input__wrapper { height: 32px; padding: 0 6px; border-radius: 9px 0 0 9px; background: transparent !important; box-shadow: none !important; }
+#app .navigation-container .header-wrapper .header-site-search .search-input .el-input__wrapper { padding: 0 6px !important; border-radius: 9px 0 0 9px !important; box-shadow: none !important; background: transparent !important; }
+.header-wrapper .header-site-search .search-input .el-input__inner { font-size: 12px; }
+.header-wrapper .header-site-search .site-search-icon { font-size: 14px; color: #8a94a6; }
+.header-wrapper .header-site-search .search-planet-motion { display: none; }
+.header-wrapper .header-site-search .paste-btn { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 26px; width: 26px; min-width: 26px; height: 28px; margin: 0; padding: 0; border: 0; border-left: 1px solid #e5e9f0; border-radius: 0 7px 7px 0; background: transparent; color: #65718a; }
+#app .navigation-container .header-wrapper .header-site-search .paste-btn { border-radius: 0 7px 7px 0 !important; background: transparent !important; border-left: 1px solid #e5e9f0 !important; }
+#app .navigation-container .header-wrapper .header-site-search .paste-btn:hover { background: #edf2ff !important; color: #4979d3; }
+.header-wrapper.dark-theme .header-site-search .unified-search-control { background: #0b140e; border-color: #344b3d; }
+.header-wrapper.dark-theme .header-site-search .search-input .el-input__inner { color: var(--dark-text-primary, #d7e6dc); }
+.header-wrapper.dark-theme .header-site-search .site-search-icon { color: #8aa895; }
+.header-wrapper.dark-theme .header-site-search .paste-btn { color: var(--dark-text-secondary, #9db8a7); border-left-color: #354451; }
+#app .navigation-container .header-wrapper.dark-theme .header-site-search .paste-btn { background: transparent !important; border-left: 1px solid #354451 !important; border-radius: 0 7px 7px 0 !important; }
+#app .navigation-container .header-wrapper.dark-theme .header-site-search .paste-btn:hover { background: #14251b !important; color: #d7e6dc; }
+@media (max-width: 1299px) { .header-wrapper .header-site-search { display: none; } }
+/* 导航条横向紧张时先收起日期文字（时间仍由翻页时钟给出），给站内搜索让出空间 */
+@media (min-width: 1300px) and (max-width: 1499px) { .header-wrapper .header-status .clock-date { display: none; } }</style>
+
+<style>
 .site-tool-item-icon{display:block;flex:0 0 18px;width:18px;height:18px;margin-right:9px;color:inherit;opacity:.85}
 </style>
+

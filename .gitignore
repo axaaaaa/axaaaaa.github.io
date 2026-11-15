@@ -32,3 +32,11 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+/deploy-pages-temp/
+
+# 部署脚本运行时产物（build.bat 每次都会重写）
+/deploy.log
+/deploy-commit.txt
+
+# 本地工作记忆（不属于源码，不进公开仓库）
+/.workbuddy/

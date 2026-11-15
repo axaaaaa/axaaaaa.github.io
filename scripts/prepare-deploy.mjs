@@ -1,10 +1,9 @@
 /**
- * 把巡检相关的文件合进 dist/。
+ * 把采集相关的脚本合进 dist/。
  *
  * 为什么要这一步：`vue-cli-service build` 会清空 dist 目录，
- * 而 scripts/（巡检脚本）、sites-to-check.json（待检清单）、
- * .github/（Actions 定时任务）并不由 webpack 产出。
- * 直接 build 完就上传，这三个会一起消失，线上巡检就断了。
+ * 而 scripts/（采集脚本）并不由 webpack 产出。
+ * 直接 build 完就上传，这些脚本会一起消失，线上定时采集就断了。
  *
  * 用法：npm run build:deploy
  */
@@ -14,11 +13,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const src = path.join(root, 'github-status-package');
 const dist = path.join(root, 'dist');
 
 const items = [
-  { from: path.join(src, 'scripts'), to: path.join(dist, 'scripts'), label: '巡检脚本' },
   ...['hot','global','words','articles'].map(name => ({ from: path.join(root, 'scripts', `fetch_x_${name}.py`), to: path.join(dist, `fetch_x_${name}.py`), label: `X ${name} 采集脚本` })),
   { from: path.join(root, 'scripts', 'refresh_sources.py'), to: path.join(dist, 'scripts', 'refresh_sources.py'), label: '采集执行与健康状态' },
   ...(await readdir(path.join(root, 'scripts'))).filter(name => /^test_.*\.py$/.test(name)).map(name => ({ from: path.join(root, 'scripts', name), to: path.join(dist, 'scripts', name), label: `采集测试 ${name}` })),
@@ -33,10 +30,8 @@ const items = [
   { from: path.join(root, 'scripts', 'fetch_v2ex.py'), to: path.join(dist, 'fetch_v2ex.py'), label: 'V2EX 热门脚本' },
   { from: path.join(root, 'scripts', 'fetch_github_trending.py'), to: path.join(dist, 'fetch_github_trending.py'), label: 'GitHub 热点脚本' },
   { from: path.join(root, 'scripts', 'fetch_hacker_news.py'), to: path.join(dist, 'fetch_hacker_news.py'), label: 'Hacker News 采集脚本' },
+  { from: path.join(root, 'scripts', 'fetch_xueqiu.py'), to: path.join(dist, 'fetch_xueqiu.py'), label: '雪球热帖脚本' },
   { from: path.join(root, 'scripts', 'fetch_news.py'), to: path.join(dist, 'fetch_news.py'), label: '热点采集脚本' },
-
-  { from: path.join(src, 'sites-to-check.json'), to: path.join(dist, 'sites-to-check.json'), label: '待检清单' },
-  { from: path.join(src, '.github'), to: path.join(dist, '.github'), label: 'Actions 工作流' },
 ];
 
 if (!existsSync(dist)) {

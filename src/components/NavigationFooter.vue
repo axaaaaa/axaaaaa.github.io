@@ -205,7 +205,7 @@ export default {
 
 /* 暗黑模式 - 黑客帝国绿 */
 .footer.dark-theme {
-  background: #0a0a0a;
+  background: #06120b;
   border-top-color: rgba(0, 255, 65, 0.2);
 }
 

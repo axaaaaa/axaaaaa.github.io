@@ -9,7 +9,6 @@
     "prepare:deploy": "node scripts/prepare-deploy.mjs",
     "gen:sites": "python scripts/generate-sites-list.py",
     "check:sites": "python scripts/generate-sites-list.py --check",
-    "status:local": "cd dist && python ../scripts/check_sites.py",
     "lint": "vue-cli-service lint",
     "server": "node server.js"
   },

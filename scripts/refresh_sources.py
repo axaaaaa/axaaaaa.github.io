@@ -9,6 +9,7 @@ COLLECTORS=[
  ('github','GitHub Trending','fetch_github_trending.py','github-trending.json'),
  ('v2ex','V2EX','fetch_v2ex.py','v2ex-hot.json'),
  ('weibo','微博','fetch_weibo.py','weibo-hot.json'),
+ ('xueqiu','雪球','fetch_xueqiu.py','xueqiu-hot.json'),
  ('exchange-rates','汇率','fetch_exchange_rates.py','exchange-rates.json'),
  ('markets','市场行情与市值','fetch_markets.py','markets.json'),
  ('extra','扩展资讯','fetch_extra_hotspots.py','extra-hotspots.json'),

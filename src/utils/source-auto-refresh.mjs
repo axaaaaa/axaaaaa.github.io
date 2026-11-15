@@ -1,5 +1,5 @@
 // One timer per mounted feed, with teardown and visibility-aware refresh.
-export const sourceNames = new Set(['SourceSyncStatus', 'SourceNewsCard', 'GithubTrending', 'V2exHot', 'IthomeNews', 'WeiboHot', 'XHotTweets', 'XGlobalTweets', 'XGlobalEvents', 'XWordsTopics', 'XArticles', 'MarketOverview', 'CurrencyConverter', 'HistoryToday']);
+export const sourceNames = new Set(['SourceSyncStatus', 'SourceNewsCard', 'GithubTrending', 'V2exHot', 'IthomeNews', 'NewsHotspotHub', 'XHotTweets', 'XGlobalTweets', 'XGlobalEvents', 'XWordsTopics', 'XArticles', 'MarketOverview', 'CurrencyConverter', 'HistoryToday']);
 export function sourceAutoRefreshMixin() {
  const active = new WeakMap();
  return {

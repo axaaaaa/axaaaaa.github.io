@@ -1,9 +1,10 @@
 """Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
-import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
+import argparse,json,os,re,time,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
 from email.utils import parsedate_to_datetime
 from threading import Lock
+from http.client import IncompleteRead
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin,urlparse,quote
 from datetime import datetime,timezone,timedelta
@@ -56,6 +57,9 @@ SOURCES={
  'maoyan':{'name':'猫眼','kind':'国内票房榜','url':'https://www.maoyan.com/board/1','endpoint':'https://www.maoyan.com/board/1','icon':'https://www.maoyan.com/favicon.ico'},
  'douban_book':{'name':'豆瓣读书','kind':'新书速递','url':'https://book.douban.com/latest','endpoint':'https://book.douban.com/','icon':'https://img3.doubanio.com/favicon.ico'},
  'douban':{'name': '豆瓣电影', 'kind': '热门电影 · 豆瓣评分', 'url': 'https://movie.douban.com/explore', 'endpoint': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=24&page_start=0', 'icon': 'https://movie.douban.com/favicon.ico'},
+ 'imdb':{'name':'IMDb','kind':'最受欢迎电影榜 · 用户热度','url':'https://www.imdb.com/chart/moviemeter/','endpoint':'https://www.imdb.com/chart/moviemeter/','icon':'https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png'},
+ 'youtube_trending':{'name':'YouTube 热门','kind':'全球趋势榜 · 多国在榜','url':'https://www.youtube.com/','endpoint':'https://kworb.net/youtube/trending.html','icon':'https://www.youtube.com/favicon.ico'},
+ 'netflix':{'name':'Netflix Top 10','kind':'官方周榜 · 全球电影','url':'https://www.netflix.com/tudum/top10','endpoint':'https://www.netflix.com/tudum/top10','icon':'https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico'},
  'microsoft':{'name': '微软安全博客', 'kind': '安全研究与资讯 · 中文机译', 'url': 'https://www.microsoft.com/en-us/security/blog/', 'endpoint': 'https://www.microsoft.com/en-us/security/blog/feed/', 'icon': 'https://www.microsoft.com/favicon.ico'},
  'seebug':{'name': 'Seebug 漏洞库', 'kind': '最新漏洞情报', 'url': 'https://www.seebug.org/', 'endpoint': 'https://www.seebug.org/', 'icon': 'https://www.seebug.org/favicon.ico'},
 
@@ -74,6 +78,9 @@ SOURCES={
  'ijingyi_new':{'name':'精易论坛 · 最新帖','kind':'最新帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/forum.php','icon':'https://bbs.ijingyi.com/favicon.ico'},
  'ijingyi_hot':{'name':'精易论坛 · 本周热帖','kind':'本周热帖','url':'https://bbs.ijingyi.com/','endpoint':'https://bbs.ijingyi.com/forum.php','icon':'https://bbs.ijingyi.com/favicon.ico'},
  'bilibili':{'name':'哔哩哔哩（B站）','kind':'热门视频 · 非播放量排行','url':'https://www.bilibili.com/v/popular/all','endpoint':'https://api.bilibili.com/x/web-interface/popular?pn=1&ps=24','icon':'https://www.bilibili.com/favicon.ico'},
+ 'ithome_rank':{'name':'IT之家 · 日榜','kind':'24 小时阅读热度日榜','url':'https://www.ithome.com/','endpoint':'https://www.ithome.com/','icon':'https://www.ithome.com/favicon.ico'},
+ 'douyin':{'name':'抖音热榜','kind':'实时热点 · 热度值','url':'https://www.douyin.com/hot','endpoint':'https://aweme.snssdk.com/aweme/v1/hot/search/list/','icon':'https://www.douyin.com/favicon.ico'},
+ 'kuaishou':{'name':'快手热榜','kind':'光辉榜 · 热度值','url':'https://www.kuaishou.com/brilliant','endpoint':'https://www.kuaishou.com/brilliant','icon':'https://www.kuaishou.com/favicon.ico'},
  'tieba':{'name':'百度贴吧','kind':'热议话题榜','url':'https://tieba.baidu.com/','endpoint':'https://tieba.baidu.com/hottopic/browse/topicList','icon':'https://tieba.baidu.com/favicon.ico'},
  'woshipm':{'name':'人人都是产品经理','kind':'产品与运营文章','url':'https://www.woshipm.com/','endpoint':'https://www.woshipm.com/feed','icon':'https://www.woshipm.com/favicon.ico'},
  'csdn':{'name':'CSDN 博客','kind':'最新技术文章','url':'https://blog.csdn.net/','endpoint':'https://blog.csdn.net/nav/newarticles','icon':'https://blog.csdn.net/favicon.ico'},
@@ -97,13 +104,30 @@ SOURCES={
  'toutiao':{'name':'今日头条热榜','kind':'热榜','url':'https://www.toutiao.com/','endpoint':'https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc','icon':'https://www.toutiao.com/favicon.ico'},
  'qq':{'name':'腾讯新闻','kind':'热点榜','url':'https://news.qq.com/','endpoint':'https://r.inews.qq.com/gw/event/hot_ranking_list?page_size=20','icon':'https://news.qq.com/favicon.ico'},
  'netease':{'name':'网易新闻','kind':'最新资讯','url':'https://news.163.com/','endpoint':'https://news.163.com/special/0001220O/news_json.js','icon':'https://www.163.com/favicon.ico'},
+ 'thepaper':{'name':'澎湃新闻','kind':'澎湃热榜','url':'https://www.thepaper.cn/','endpoint':'https://cache.thepaper.cn/contentapi/wwwIndex/rightSidebar','icon':'https://www.thepaper.cn/favicon.ico'},
  'hellogithub':{'name':'HelloGitHub','kind':'开源月刊','url':'https://hellogithub.com/','endpoint':'https://hellogithub.com/rss','icon':'https://hellogithub.com/favicon.ico'},
- 'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'}
+ 'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'},
+ 'nvd':{'name':'NVD 最新漏洞','kind':'美国国家漏洞库 · 最新披露','url':'https://nvd.nist.gov/vuln/search','endpoint':'https://services.nvd.nist.gov/rest/json/cves/2.0','icon':'https://nvd.nist.gov/favicon.ico'},
+ 'exploitdb':{'name':'Exploit-DB','kind':'公开漏洞利用库 · 最新条目','url':'https://www.exploit-db.com/','endpoint':'https://www.exploit-db.com/rss.xml','icon':'https://www.exploit-db.com/favicon.ico'},
+ '36kr':{'name':'36氪','kind':'科技创投 · 24 小时热榜','url':'https://36kr.com/','endpoint':'https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot','icon':'https://36kr.com/favicon.ico'},
+ 'huxiu':{'name':'虎嗅','kind':'科技与商业资讯','url':'https://www.huxiu.com/','endpoint':'https://www.huxiu.com/','icon':'https://www.huxiu.com/favicon.ico'},
+ 'so_hot':{'name':'Stack Overflow 热问','kind':'开发者热门问题','url':'https://stackoverflow.com/questions','endpoint':'https://api.stackexchange.com/2.3/questions?order=desc&sort=hot&site=stackoverflow&pagesize=24','icon':'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico'},
+ 'wallstreetcn':{'name':'华尔街见闻','kind':'全球财经快讯','url':'https://wallstreetcn.com/live/global','endpoint':'https://api-one.wallstcn.com/apiv1/content/lives?channel=global-channel&limit=24','icon':'https://wallstreetcn.com/favicon.ico'},
+ 'steam_top':{'name':'Steam 热销榜','kind':'全球热销 · 实时价格','url':'https://store.steampowered.com/search/?filter=topsellers','endpoint':'https://store.steampowered.com/api/featuredcategories?cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
+ 'steam_free':{'name':'Steam 免费榜','kind':'免费开玩 · 热销排序','url':'https://store.steampowered.com/search/?maxprice=free','endpoint':'https://store.steampowered.com/search/results/?query&start=0&count=24&maxprice=free&filter=topsellers&infinite=1&json=1&cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
+ 'steam_online':{'name':'Steam 在线人数','kind':'同时在线与峰值人数','url':'https://steamcharts.com/top','endpoint':'https://steamcharts.com/top','icon':'https://steamcharts.com/favicon.ico'},
+ 'wegame':{'name':'WeGame 网吧热度榜','kind':'网吧热度 · 新游榜','url':'https://www.wegame.com.cn/rail/rank_detail.html?ranktype=most_newbie&netbar=true','endpoint':'https://www.wegame.com.cn/api/rail/web/data_filter/game_info/filter','icon':'https://www.wegame.com.cn/favicon.ico'},
+ 'tx_video':{'name':'腾讯视频','kind':'电视剧热搜榜 · 热度值','url':'https://v.qq.com/channel/tv','endpoint':'https://pbaccess.video.qq.com/trpc.tencentvideohotlistdata.hotlistdata.DoSearchHotListHttp/getSearchHotListHttp','icon':'https://v.qq.com/favicon.ico'},
+ 'iqiyi':{'name':'爱奇艺','kind':'电视剧推荐榜 · 爱奇艺评分','url':'https://www.iqiyi.com/dianshiju/','endpoint':'https://pcw-api.iqiyi.com/search/recommend/list?channel_id=2&data_type=1&mode=11&page_id=1&ret_num=30','icon':'https://www.iqiyi.com/favicon.ico'},
+ 'youku':{'name':'优酷','kind':'电视剧热度榜 · TOP 排名','url':'https://www.youku.com/ku/webtv','endpoint':'https://www.youku.com/ku/webtv','icon':'https://www.youku.com/favicon.ico'}
 }
 CN_AI_SOURCES={'deepseek_news','bytedance_news','kimi_news','tencent_ai_news','qwen_news'}
 AI_OFFICIAL_SOURCES={'openai_news','anthropic_news','deepmind_news'}
 VENDOR_SECURITY_SOURCES={'msrc','chrome_security','ubuntu_security'}
 SECURITY_RESEARCH_SOURCES={'unknowncheats','projectzero','unit42','crowdstrike','microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
+# 长期不可达的来源（Cloudflare 对数据中心 IP 一律 403）：仍然每轮尝试，但失败不再把整组采集判成"更新异常"，
+# 其状态依然如实写进 extra-hotspots.json 的 collection 字段里。
+OPTIONAL_SOURCES={'unknowncheats'}
 SECURITY_FEED_HOSTS={
  'unknowncheats':{'www.unknowncheats.me'},
  'projectzero':{'projectzero.google'},
@@ -654,15 +678,139 @@ def parse_extra_model_source(key,body):
   for block in re.findall(r'<tr\b[^>]*>(.*?)</tr>',html,re.S):
    cells=[text(cell) for cell in re.findall(r'<td\b[^>]*>(.*?)</td>',block,re.S)]
    link=re.search(r'href="(/models/[a-z0-9-]+)"',block)
-   if len(cells)!=8 or not link or not re.fullmatch(r'\d+(?:\.\d+)?',cells[3]):continue
-   meta='智能指数 '+cells[3]
-   if re.fullmatch(r'\$[\d.]+',cells[4]):meta+=' · 每任务 '+cells[4]
-   if re.fullmatch(r'[\d.]+',cells[5]):meta+=' · '+cells[5]+' 分钟/任务'
+   # 2026-11 页面改版：列变成 7 列（模型/智能指数/每任务成本/每任务耗时/首字延迟/上下文/更多）。
+   # 老版是 8 列且数值整体右移两位，这里两种都兼容。
+   if len(cells)==7:index_col,cost_col,time_col=1,2,3
+   elif len(cells)==8:index_col,cost_col,time_col=3,4,5
+   else:continue
+   if not link or not re.fullmatch(r'\d+(?:\.\d+)?',cells[index_col]):continue
+   meta='智能指数 '+cells[index_col]
+   if re.fullmatch(r'\$[\d.]+',cells[cost_col]):meta+=' · 每任务 '+cells[cost_col]
+   if re.fullmatch(r'[\d.]+',cells[time_col]):meta+=' · '+cells[time_col]+' 分钟/任务'
    add(cells[0],urljoin(base,link[1]),meta)
  if not rows:raise ValueError('No valid entries for '+key)
  entries=list(rows.values())
  if key=='aa_models':entries.sort(key=lambda row:float(row['meta'].split()[1]),reverse=True)
  return entries[:12]
+
+def format_hot_value(value):
+ raw=str(value).replace(',','').strip()
+ if re.fullmatch(r'[\d.]+[万亿]',raw):return raw
+ try:number=float(raw)
+ except (TypeError,ValueError):return ''
+ if number>=100_000_000:return '%.1f亿'%(number/100_000_000)
+ if number>=10_000:return '%.1f万'%(number/10_000)
+ return str(int(number))
+
+def parse_ithome_rank(body):
+ """IT之家首页右下角「日榜」：id=d-1 的列表（服务端直出，不需要浏览器）。"""
+ html=body.decode('utf-8','replace') if isinstance(body,(bytes,bytearray)) else body
+ start=html.find('id="rank"')
+ if start<0:raise ValueError('Missing IT之家 rank section')
+ # 页面里有两处 id="d-1"（软媒产品 / 排行榜），必须先从 #rank 区块里找
+ block=re.search(r'id="d-1"[^>]*>(.*?)</ul>',html[start:],re.S)
+ if not block:raise ValueError('Missing IT之家 daily ranking list')
+ items=[];seen=set()
+ for tag in re.findall(r'<a\b[^>]*>',block.group(1)):
+  href=re.search(r'href="([^"]+)"',tag);label=re.search(r'title="([^"]+)"',tag)
+  if not href or not label:continue
+  url=urljoin('https://www.ithome.com/',href.group(1))
+  if not re.fullmatch(r'https://www\.ithome\.com/\d+/\d+/\d+\.html?',url):continue
+  name=clean(unescape(label.group(1)))
+  if len(name)<4 or url in seen:continue
+  seen.add(url);items.append({'title':name,'url':url,'meta':'日榜 %d'%(len(items)+1)})
+ if not items:raise ValueError('No valid IT之家 daily ranking entries')
+ return items[:20]
+
+def parse_douyin_hot(body):
+ data=json.loads(body)
+ words=data.get('word_list') if isinstance(data,dict) else None
+ if not words and isinstance(data,dict):words=(data.get('data') or {}).get('word_list')
+ if not isinstance(words,list) or not words:raise ValueError('Invalid 抖音热榜 response')
+ items=[]
+ for row in words:
+  if not isinstance(row,dict):continue
+  name=clean(row.get('word'))
+  if len(name)<2:continue
+  meta='热度 '+format_hot_value(row.get('hot_value')) if format_hot_value(row.get('hot_value')) else '抖音热点'
+  videos=row.get('video_count')
+  if isinstance(videos,int) and videos>0:meta+=' · %d 个视频'%videos
+  sid=str(row.get('sentence_id') or '').strip()
+  url='https://www.douyin.com/hot/'+sid if sid.isdigit() else 'https://www.douyin.com/search/'+quote(name)
+  items.append({'title':name,'url':url,'meta':meta})
+ if not items:raise ValueError('No valid 抖音热榜 entries')
+ return items[:24]
+
+def parse_kuaishou_hot(body):
+ """快手「光辉榜」页把热榜数据内嵌在 window.__APOLLO_STATE__ 里，直接读这段 JSON。"""
+ html=body.decode('utf-8','replace') if isinstance(body,(bytes,bytearray)) else body
+ marker='window.__APOLLO_STATE__='
+ index=html.find(marker)
+ if index<0:raise ValueError('Missing 快手 hot rank state')
+ try:state,_=json.JSONDecoder().raw_decode(html,index+len(marker))
+ except ValueError:raise ValueError('Unreadable 快手 hot rank state')
+ client=(state or {}).get('defaultClient') or {}
+ rank=next((v for k,v in client.items() if k.startswith('$ROOT_QUERY.visionHotRank')),None)
+ refs=(rank or {}).get('items') if isinstance(rank,dict) else None
+ if not isinstance(refs,list) or not refs:raise ValueError('No 快手 hot rank items')
+ items=[];seen=set()
+ for ref in refs:
+  entry=client.get(ref.get('id')) if isinstance(ref,dict) else None
+  if not isinstance(entry,dict):continue
+  name=clean(entry.get('name'))
+  if len(name)<2 or name in seen:continue
+  photos=(entry.get('photoIds') or {}).get('json') if isinstance(entry.get('photoIds'),dict) else None
+  photo=photos[0] if isinstance(photos,list) and photos else ''
+  url='https://www.kuaishou.com/short-video/'+quote(str(photo)) if photo else 'https://www.kuaishou.com/search/video?searchKey='+quote(name)
+  hot=format_hot_value(entry.get('hotValue'))
+  seen.add(name);items.append({'title':name,'url':url,'meta':'热度 '+hot if hot else '快手热榜'})
+  if len(items)>=24:break
+ if not items:raise ValueError('No valid 快手 hot rank entries')
+ return items
+
+def parse_youku_rank(body):
+ text=body.decode('utf-8','replace');marker='window.__INITIAL_DATA__'
+ start=text.find(marker)
+ if start<0:raise ValueError('Youku page missing initial data')
+ start=text.find('{',start)
+ depth=0;end=start;instr=False;esc=False
+ for pos in range(start,len(text)):
+  char=text[pos]
+  if instr:
+   if esc:esc=False
+   elif char=='\\':esc=True
+   elif char=='"':instr=False
+   continue
+  if char=='"':instr=True
+  elif char=='{':depth+=1
+  elif char=='}':
+   depth-=1
+   if depth==0:end=pos;break
+ if depth!=0 or end<=start:raise ValueError('Youku initial data truncated')
+ raw=text[start:end+1].replace(':undefined',':null').replace(',undefined',',null')
+ data=json.loads(raw)
+ ranked={};others=[];seen=set()
+ for module in data.get('moduleList') or []:
+  for component in module.get('components') or []:
+   for row in component.get('itemList') or []:
+    if not isinstance(row,dict):continue
+    title=clean(str(row.get('title') or ''));token=str(row.get('action_value') or '')
+    if len(title)<2 or not re.fullmatch(r'[0-9a-f]{20,24}',token) or token in seen:continue
+    seen.add(token)
+    url='https://www.youku.com/show_page/id_'+token+'.html'
+    cover=row.get('img') if isinstance(row.get('img'),str) else ''
+    reason=row.get('reason') if isinstance(row.get('reason'),dict) else {}
+    text_node=reason.get('text') if isinstance(reason.get('text'),dict) else {}
+    badge=clean(str(text_node.get('title') or ''))
+    if '热度榜' in badge:
+     match=re.search(r'TOP\s*(\d+)',badge)
+     ranked[token]=(int(match.group(1)) if match else 999,badge,title,url,cover)
+     continue
+    others.append((title,url,clean(str(row.get('subtitle') or '')) or '优酷电视剧',cover))
+ items=[(title,url,meta,cover) for _,meta,title,url,cover in sorted(ranked.values(),key=lambda row:(0 if '电视剧热度榜' in row[1] else 1,row[0],row[2]))]
+ items+=[(title,url,meta,cover) for title,url,meta,cover in others]
+ if not items:raise ValueError('No valid Youku entries')
+ return items[:24]
 
 def parse_source(key,body):
  if key in EXTRA_MODEL_SOURCES:return parse_extra_model_source(key,body)
@@ -677,6 +825,10 @@ def parse_source(key,body):
  if key in AUTO_NEWS:return parse_auto_news(key,body)
  if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
  if key=='maoyan':return parse_maoyan_board(body)
+ if key=='netflix':return parse_netflix_top10(body)
+ if key=='ithome_rank':return parse_ithome_rank(body)
+ if key=='douyin':return parse_douyin_hot(body)
+ if key=='kuaishou':return parse_kuaishou_hot(body)
  if key=='douban_book':return parse_douban_books(body)
  if key=='douban':
   data=json.loads(body)
@@ -838,7 +990,7 @@ def parse_source(key,body):
    url=clean(item.findtext('link'))
    if not re.fullmatch(r'https://thehackernews\.com/\d{4}/\d{2}/[a-zA-Z0-9_%-]+\.html',url):continue
    add(item.findtext('title'),url,item.findtext('pubDate') or '')
- elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf']:
+ elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf','exploitdb']:
   root=ET.fromstring(body)
   for item in root.findall('.//item'):add(item.findtext('title'),item.findtext('link') or '',item.findtext('pubDate') or '')
  elif key=='juejin':
@@ -859,6 +1011,10 @@ def parse_source(key,body):
     for item in value:walk(item)
    elif isinstance(value,dict):add(value.get('t'),value.get('l') or '',value.get('p') or '')
   walk(data.get('news',[]))
+ elif key=='thepaper':
+  for row in (json.loads(body).get('data') or {}).get('hotNews') or []:
+   cont=str(row.get('contId',''))
+   if cont.isdigit():add(row.get('name'),'https://www.thepaper.cn/newsDetail_forward_'+cont,row.get('pubTime') or '',row.get('pic') or '')
  elif key=='anquanke':
   for row in json.loads(body).get('data',[]):
    id=str(row.get('id',''))
@@ -915,6 +1071,156 @@ def parse_source(key,body):
   for url,title in parser.links:
    url=urljoin(SOURCES[key]['url'],url)
    if re.fullmatch(r'https?://(?:www\.)?gamersky\.com/news/\d{6}/\d+\.shtml',url):add(title,url)
+ elif key=='nvd':
+  data=json.loads(body)
+  vulns=data.get('vulnerabilities') if isinstance(data,dict) else None
+  if not isinstance(vulns,list):raise ValueError('Invalid NVD response')
+  labels={'CRITICAL':'严重','HIGH':'高危','MEDIUM':'中危','LOW':'低危'}
+  for row in reversed(vulns):
+   cve=(row or {}).get('cve') if isinstance(row,dict) else None
+   if not isinstance(cve,dict):continue
+   cve_id=str(cve.get('id') or '')
+   if not re.fullmatch(r'CVE-\d{4}-\d{4,}',cve_id):continue
+   desc=next((d.get('value') for d in cve.get('descriptions') or [] if isinstance(d,dict) and d.get('lang')=='en'),'')
+   desc=clean(desc or '')
+   title=cve_id+(f' · {desc[:80]}' if desc else '')
+   score=None;severity=''
+   for group in ('cvssMetricV40','cvssMetricV31','cvssMetricV30','cvssMetricV2'):
+    entries=(cve.get('metrics') or {}).get(group) or []
+    if entries and isinstance(entries[0],dict):
+     data_item=entries[0].get('cvssData') or {}
+     score=data_item.get('baseScore');severity=labels.get(str(data_item.get('baseSeverity') or entries[0].get('baseSeverity') or '').upper(),'')
+     break
+   meta=[p for p in [severity,(f'CVSS {score}' if isinstance(score,(int,float)) else ''),str(cve.get('published') or '')[:10]] if p]
+   add(title,'https://nvd.nist.gov/vuln/detail/'+cve_id,' · '.join(meta))
+ elif key=='36kr':
+  data=json.loads(body)
+  if not isinstance(data,dict) or data.get('code')!=0:raise ValueError('Invalid 36Kr response')
+  for row in (data.get('data') or {}).get('hotRankList') or []:
+   material=(row or {}).get('templateMaterial') if isinstance(row,dict) else None
+   if not isinstance(material,dict):continue
+   item_id=str(material.get('itemId') or row.get('itemId') or '')
+   title=clean(material.get('widgetTitle') or material.get('title') or '')
+   if not item_id.isdigit() or not title:continue
+   read=material.get('statRead');author=clean(material.get('authorName') or '')
+   meta=[p for p in [author,(f'{read:,} 阅读' if isinstance(read,int) and not isinstance(read,bool) and read>=0 else '')] if p]
+   add(title,'https://36kr.com/p/'+item_id,' · '.join(meta) or '36氪热榜')
+ elif key=='huxiu':
+  try:text=body.decode('utf-8')
+  except UnicodeDecodeError:text=body.decode('gb18030')
+  parser=Links();parser.feed(text)
+  for href,title in parser.links:
+   url=urljoin(SOURCES[key]['url'],href)
+   if re.fullmatch(r'https://www\.huxiu\.com/article/\d+\.html',url) and len(title)>6:add(title,url)
+ elif key=='so_hot':
+  data=json.loads(body)
+  items=data.get('items') if isinstance(data,dict) else None
+  if not isinstance(items,list):raise ValueError('Invalid Stack Overflow response')
+  for row in items:
+   if not isinstance(row,dict):continue
+   title=clean(unescape(str(row.get('title') or '')))
+   url=str(row.get('link') or '')
+   if not title or not re.fullmatch(r'https://stackoverflow\.com/questions/\d+/[^?#]+',url):continue
+   tags=[str(t) for t in row.get('tags') or [] if isinstance(t,str)]
+   meta=[f"{row.get('score',0)} 分",f"{row.get('answer_count',0)} 回答"]+([' '.join('#'+t for t in tags[:3])] if tags else [])
+   add(title,url,' · '.join(meta))
+ elif key=='wallstreetcn':
+  data=json.loads(body)
+  items=(data.get('data') or {}).get('items') if isinstance(data,dict) else None
+  if not isinstance(items,list):raise ValueError('Invalid Wallstreetcn response')
+  for row in items:
+   if not isinstance(row,dict):continue
+   title=clean(str(row.get('title') or row.get('content_text') or ''))
+   url=str(row.get('uri') or ('https://wallstreetcn.com/livenews/'+str(row.get('id') or '')))
+   if not title or not re.fullmatch(r'https://wallstreetcn\.com/(?:livenews|articles)/\d+',url):continue
+   stamp=row.get('display_time');meta=''
+   if isinstance(stamp,int) and not isinstance(stamp,bool):meta=datetime.fromtimestamp(stamp).strftime('%m-%d %H:%M')
+   add(title[:120],url,meta)
+ elif key=='steam_top':
+  data=json.loads(body)
+  if not isinstance(data,dict):raise ValueError('Invalid Steam response')
+  entries=data.get('top_sellers',{}).get('items') or data.get('specials',{}).get('items') or []
+  for row in entries:
+   if not isinstance(row,dict):continue
+   appid=row.get('id');name=clean(str(row.get('name') or ''))
+   if isinstance(appid,bool) or not isinstance(appid,int) or appid<=0 or not name:continue
+   parts=[];price=row.get('final_price',row.get('original_price'))
+   if isinstance(price,int) and not isinstance(price,bool) and price>=0:parts.append('免费' if price==0 else f'¥{price/100:.2f}')
+   discount=row.get('discount_percent')
+   if isinstance(discount,int) and not isinstance(discount,bool) and discount>0:parts.append(f'-{discount}%')
+   cover=row.get('large_capsule_image') if isinstance(row.get('large_capsule_image'),str) else ''
+   add(name,f'https://store.steampowered.com/app/{appid}',' · '.join(parts) or 'Steam 热销',cover or f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
+ elif key=='steam_free':
+  data=json.loads(body)
+  if not isinstance(data,dict):raise ValueError('Invalid Steam response')
+  html=str(data.get('results_html') or '')
+  for block in re.split(r'<a href="https://store\.steampowered\.com/app/',html)[1:]:
+   appid=block.split('/')[0]
+   if not appid.isdigit():continue
+   match=re.search(r'<span class="title">(.*?)</span>',block,flags=re.S)
+   if not match:continue
+   title=clean(unescape(match.group(1)))
+   if not title:continue
+   pct=re.search(r'data-tooltip-html="[^"]*?(\d+)%',block)
+   meta='免费开玩'+(f' · 好评率 {pct.group(1)}%' if pct else '')
+   add(title[:120],f'https://store.steampowered.com/app/{appid}',meta,f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
+ elif key=='steam_online':
+  text=body.decode('utf-8')
+  for appid,name,current,peak in re.findall(r'<tr[^>]*>\s*<td>\d+\.</td>\s*<td class="game-name left">\s*<a href="/app/(\d+)">\s*(.*?)\s*</a>.*?<td class="num">([\d,]+)</td>.*?<td class="num period-col peak-concurrent">([\d,]+)</td>',text,flags=re.S):
+   title=clean(re.sub(r'<[^>]+>','',unescape(name)));current=int(current.replace(',',''));peak=int(peak.replace(',',''))
+   add(title,f'https://store.steampowered.com/app/{appid}',f'在线 {current:,} · 峰值 {peak:,}',f'https://cdn.cloudflare.steamstatic.com/steam/apps/{appid}/capsule_616x353.jpg')
+ elif key=='wegame':
+  data=json.loads(body)
+  entries=data.get('items') if isinstance(data,dict) else None
+  if not isinstance(entries,list):raise ValueError('Invalid WeGame response')
+  for row in entries:
+   if not isinstance(row,dict):continue
+   game_id=str(row.get('game_id') or '');title=clean(str(row.get('game_name') or ''))
+   if not game_id.isdigit() or game_id=='0' or not title:continue
+   parts=[]
+   try:
+    score=int(row.get('netbar_popularity'))
+    if score>0:parts.append(f'网吧热度 {score}')
+   except (TypeError,ValueError):pass
+   developer=clean(str(row.get('developer_name') or ''))
+   if developer:parts.append(developer)
+   cover=row.get('img_cover') if isinstance(row.get('img_cover'),str) else ''
+   add(title[:120],f'https://www.wegame.com.cn/store/{game_id}/',' · '.join(parts) or 'WeGame 网吧榜',cover)
+ elif key=='tx_video':
+  data=json.loads(body)
+  blocks=(data.get('data') or {}).get('Results') if isinstance(data,dict) else None
+  if not isinstance(blocks,list) or not blocks:raise ValueError('Invalid Tencent Video hot list response')
+  for row in (blocks[0].get('Result') or {}).get('ListInfo') or []:
+   if not isinstance(row,dict):continue
+   title=clean(str(row.get('Query') or ''));ident=str(row.get('ID') or '')
+   if len(title)<2 or not re.fullmatch(r'[A-Za-z0-9]{6,24}',ident):continue
+   parts=[]
+   hot=format_hot_value(row.get('HotLevel'))
+   if hot:parts.append('热度 '+hot)
+   detail=clean(str(row.get('SecondTitle') or ''))
+   if detail:parts.append(detail)
+   cover=row.get('HzImgURL') if isinstance(row.get('HzImgURL'),str) else ''
+   add(title[:80],f'https://v.qq.com/x/cover/{ident}.html',' · '.join(parts) or '腾讯视频热搜',cover)
+ elif key=='iqiyi':
+  data=json.loads(body)
+  entries=(data.get('data') or {}).get('list') if isinstance(data,dict) else None
+  if not isinstance(entries,list):raise ValueError('Invalid iQiyi list response')
+  for row in entries:
+   if not isinstance(row,dict):continue
+   title=clean(str(row.get('name') or ''));url=str(row.get('playUrl') or '')
+   if url.startswith('http://'):url='https://'+url[len('http://'):]
+   if len(title)<2 or not re.fullmatch(r'https://www\.iqiyi\.com/v_[A-Za-z0-9]+\.html',url):continue
+   parts=[]
+   try:
+    score=float(row.get('score') or 0)
+    if 0<score<=10:parts.append('爱奇艺 %.1f 分'%score)
+   except (TypeError,ValueError):pass
+   episode=row.get('latestOrder')
+   if isinstance(episode,int) and not isinstance(episode,bool) and episode>0:parts.append(f'更新至 {episode} 集')
+   cover=row.get('imageUrl') if isinstance(row.get('imageUrl'),str) else ''
+   add(title[:80],url,' · '.join(parts) or '爱奇艺电视剧推荐',cover)
+ elif key=='youku':
+  for title,url,meta,cover in parse_youku_rank(body):add(title,url,meta,cover)
  seen=set();unique=[]
  for row in rows:
   if row['url'] not in seen:seen.add(row['url']);unique.append(row)
@@ -925,9 +1231,21 @@ FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href
 FREEBUF_FEEDS = ('https://www.freebuf.com/feed','https://www.freebuf.com/rss')
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
+def nvd_endpoint():
+ end=datetime.now(timezone.utc);start=end-timedelta(days=2)
+ return f"https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate={start:%Y-%m-%dT%H:%M:%S.000}&pubEndDate={end:%Y-%m-%dT%H:%M:%S.000}&resultsPerPage=2000"
+
 def request_body(url,timeout=25):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
- with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co'] else 4_000_000)
+ limit=512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co','services.nvd.nist.gov'] else 4_000_000
+ # 对端提前断开连接时 read() 会抛 IncompleteRead（Netflix 的 tudum 页偶发），重试即可拿到完整正文
+ for attempt in range(3):
+  try:
+   with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(limit)
+   break
+  except IncompleteRead:
+   if attempt==2:raise
+   time.sleep(1+attempt)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -969,16 +1287,164 @@ def fetch_freebuf_items():
   try:
    page=browser.new_page(locale='zh-CN',viewport={'width':1440,'height':1000})
    page.goto(SOURCES['freebuf']['endpoint'],wait_until='domcontentloaded',timeout=60000)
+   try:page.wait_for_load_state('networkidle',timeout=20000)
+   except Exception:pass
    if '验证' in page.title():raise RuntimeError('FreeBuf returned a verification page')
-   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=15000)
-   rows=page.locator(FREEBUF_SELECTOR).evaluate_all("""links => links.map(a => ({
-    title: a.textContent,
-    url: a.href,
-    cover: a.closest('.article-item')?.querySelector('.img-view img')?.getAttribute('data-src') || a.closest('.article-item')?.querySelector('.img-view img')?.src || '',
-    meta: a.closest('.article-item')?.querySelector('.bottom-right')?.innerText || ''
-   }))""")
+   # 首页改版后 .article-item 那层结构没了，等待固定选择器会一直超时；
+   # 改成直接按"链接 + 标题"抽取，结构再变也不会卡在 wait_for 上。
+   rows=page.evaluate("""() => Array.from(document.querySelectorAll('a[href*="/articles/"], a[href*="/news/"]')).map(a => {
+     const img = a.querySelector('img') || a.closest('li, article, div')?.querySelector('img');
+     return {title: (a.textContent || '').trim(), url: a.href,
+             cover: (img?.getAttribute('data-src') || img?.src || ''), meta: ''};
+   })""")
    return normalize_freebuf_rows(rows)
   finally:browser.close()
+
+YOUTUBE_TRENDING_ENDPOINTS=(
+ ('https://kworb.net/youtube/trending.html','kworb'),
+ ('https://api.piped.private.coffee/trending?region=US','piped'),
+ ('https://pipedapi.ducks.party/trending?region=US','piped'),
+ ('https://invidious.materialio.us/api/v1/trending?region=US','invidious'),
+)
+IMDB_CHART='https://www.imdb.com/chart/moviemeter/'
+IMDB_ROWS_JS="""() => [...document.querySelectorAll('li.ipc-metadata-list-summary-item')].map(li => {
+ const link = li.querySelector('a[href*="/title/tt"]');
+ return {url: link ? link.getAttribute('href') : '', text: li.innerText};
+})"""
+
+def compact_count(value):
+ """把 8,600,000 / 34K / 1.2M 统一成中文万、亿写法。"""
+ if isinstance(value,str):
+  text=value.replace(',','').strip('() ')
+  match=re.fullmatch(r'(\d+(?:\.\d+)?)([KM]?)',text)
+  if not match:return text
+  number=float(match.group(1))*{'':1,'K':1_000,'M':1_000_000}[match.group(2)]
+ elif isinstance(value,bool) or not isinstance(value,(int,float)):return ''
+ else:number=float(value)
+ if number>=100_000_000:return f'{number/100_000_000:.1f}'.rstrip('0').rstrip('.')+' 亿'
+ if number>=10_000:return f'{number/10_000:.1f}'.rstrip('0').rstrip('.')+' 万'
+ return f'{int(number):,}'
+
+def duration_text(seconds):
+ if isinstance(seconds,bool) or not isinstance(seconds,(int,float)) or seconds<=0:return ''
+ seconds=int(seconds);hours,remainder=divmod(seconds,3600);minutes,second=divmod(remainder,60)
+ return f'{hours}:{minutes:02d}:{second:02d}' if hours else f'{minutes}:{second:02d}'
+
+def parse_netflix_top10(body):
+ text=body.decode('utf-8')
+ table=re.search(r'<table\b[^>]*>(.*?)</table>',text,re.S)
+ if not table:raise ValueError('Missing Netflix Top 10 table')
+ def cell(row,marker):
+  match=re.search(r'<td\b[^>]*'+marker+r'[^>]*>(.*?)</td>',row,re.S)
+  return clean(unescape(re.sub(r'<[^>]+>','',match.group(1)))) if match else ''
+ rows=[]
+ for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',table.group(1),re.S):
+  title_cell=re.search(r'<td\b[^>]*class="title"[^>]*>(.*?)</td>',row,re.S)
+  if not title_cell:continue
+  block=title_cell.group(1)
+  name=re.search(r'<button\b[^>]*>(.*?)</button>',block,re.S)
+  title=clean(unescape(re.sub(r'<[^>]+>','',name.group(1)))) if name else ''
+  rank=re.search(r'<span\b[^>]*class="rank"[^>]*>\s*(\d+)\s*</span>',block)
+  if not title or not rank:continue
+  meta=[]
+  views=cell(row,'data-uia="top10-table-row-views"')
+  weeks=cell(row,'data-uia="top10-table-row-weeks"')
+  if views:meta.append('观看 '+compact_count(views)+'次')
+  if weeks.isdigit():meta.append('在榜 '+weeks+' 周')
+  item={'title':title,'url':'https://www.netflix.com/search?q='+quote(title),'meta':' · '.join(meta)}
+  rows.append((int(rank.group(1)),item))
+ if not rows:raise ValueError('No valid Netflix Top 10 rows')
+ rows.sort(key=lambda pair:pair[0])
+ return [item for _,item in rows]
+
+def parse_kworb_trending(body):
+ text=body.decode('utf-8')
+ table=re.search(r'<table\b[^>]*>(.*?)</table>',text,re.S)
+ if not table:raise ValueError('Missing kworb trending table')
+ items=[]
+ for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',table.group(1),re.S):
+  link=re.search(r'<a\b[^>]*href="/youtube/trending/video/([A-Za-z0-9_-]{11})\.html"[^>]*>(.*?)</a>',row,re.S)
+  if not link:continue
+  title=clean(unescape(re.sub(r'<[^>]+>','',link.group(2))))
+  if len(title)<2:continue
+  cells=[clean(unescape(re.sub(r'<[^>]+>','',cell))) for cell in re.findall(r'<td\b[^>]*>(.*?)</td>',row,re.S)]
+  countries=cells[3] if len(cells)>3 and cells[3].isdigit() else ''
+  meta=countries+' 个国家/地区在榜' if countries else 'YouTube 全球趋势'
+  items.append({'title':title,'url':'https://www.youtube.com/watch?v='+link.group(1),'meta':meta})
+  if len(items)==24:break
+ if not items:raise ValueError('No valid kworb trending rows')
+ return items
+
+def parse_youtube_trending(body,flavor='piped'):
+ if flavor=='kworb':return parse_kworb_trending(body)
+ data=json.loads(body)
+ if not isinstance(data,list):raise ValueError('Invalid YouTube trending response')
+ items=[]
+ for row in data:
+  if not isinstance(row,dict):continue
+  if flavor=='piped':
+   url=row.get('url') or '';title=clean(row.get('title'));author=clean(row.get('uploaderName'))
+   views=row.get('views');duration=row.get('duration')
+  else:
+   video_id=clean(row.get('videoId')) if row.get('type','video')=='video' else ''
+   url='/watch?v='+video_id if video_id else ''
+   title=clean(row.get('title'));author=clean(row.get('author'))
+   views=row.get('viewCount');duration=row.get('lengthSeconds')
+  match=re.fullmatch(r'(?:https://www\.youtube\.com)?/watch\?v=([A-Za-z0-9_-]{11})',url)
+  if not match or not title:continue
+  meta=[part for part in (author,'观看 '+compact_count(views)+'次' if compact_count(views) else '','时长 '+duration_text(duration) if duration_text(duration) else '直播') if part]
+  items.append({'title':title,'url':'https://www.youtube.com/watch?v='+match.group(1),'meta':' · '.join(meta)})
+ if not items:raise ValueError('No valid YouTube trending videos')
+ return items[:24]
+
+def fetch_youtube_trending():
+ errors=[]
+ for endpoint,flavor in YOUTUBE_TRENDING_ENDPOINTS:
+  try:return parse_youtube_trending(request_body(endpoint),flavor),endpoint
+  except Exception as error:errors.append(f'{urlparse(endpoint).hostname or endpoint} {type(error).__name__}')
+ raise ValueError('YouTube trending unavailable: '+'; '.join(errors))
+
+def parse_imdb_rows(rows):
+ items=[]
+ for row in rows:
+  match=re.match(r'(?:https://www\.imdb\.com)?/title/(tt\d+)/',clean(row.get('url')))
+  if not match:continue
+  lines=[clean(part) for part in str(row.get('text') or '').split('\n') if clean(part)]
+  if len(lines)<2 or not re.fullmatch(r'#\d+',lines[0]):continue
+  title=lines[1]
+  if len(title)<2:continue
+  rating=votes=''
+  if len(lines)>3 and re.fullmatch(r'\d{1,2}\.\d',lines[3]):rating=lines[3]
+  if len(lines)>4 and re.fullmatch(r'\([\d.,]+[KM]?\)',lines[4]):votes=lines[4]
+  meta=[]
+  if rating:meta.append('IMDb '+rating)
+  if votes:meta.append(compact_count(votes)+'人评分')
+  item={'title':title,'url':'https://www.imdb.com/title/'+match.group(1)+'/','meta':' · '.join(meta)}
+  items.append(item)
+  if len(items)==24:break
+ if not items:raise ValueError('No valid IMDb chart rows')
+ return items
+
+def fetch_imdb_items():
+ import tempfile
+ from playwright.sync_api import sync_playwright
+ profile=os.environ.get('IMDB_BROWSER_PROFILE') or str(Path(tempfile.gettempdir())/'ainavigation-imdb-profile')
+ with sync_playwright() as playwright:
+  context=playwright.chromium.launch_persistent_context(profile,headless=os.environ.get('IMDB_HEADLESS')=='1',channel=os.environ.get('IMDB_BROWSER_CHANNEL') or None,locale='en-US',viewport={'width':1440,'height':900},args=['--disable-blink-features=AutomationControlled'])
+  try:
+   page=context.pages[0] if context.pages else context.new_page()
+   page.goto('https://www.imdb.com/',wait_until='domcontentloaded',timeout=60000)
+   page.wait_for_timeout(2000)
+   rows=[]
+   for _ in range(3):
+    page.goto(IMDB_CHART,wait_until='domcontentloaded',timeout=60000)
+    for _ in range(4):
+     page.wait_for_timeout(3000)
+     rows=page.evaluate(IMDB_ROWS_JS) or []
+     if len(rows)>=10:break
+    if len(rows)>=10:break
+   return parse_imdb_rows(rows)
+  finally:context.close()
 
 _translation_lock=Lock()
 _offline_translator=None
@@ -1061,17 +1527,41 @@ def fetch(key):
   items=[row if re.search(r'[㐀-鿿]',row['title']) else translate_security_titles([row])[0] for row in items]
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  if key=='freebuf':
+  items=None;used=source['endpoint']
   for feed in FREEBUF_FEEDS:
-   try:items=parse_freebuf_feed(request_body(feed));used=feed;break
-   except Exception as error:print(f'FREEBUF_FEED_FALLBACK {feed}: {type(error).__name__}: {error}')
-  else:items=fetch_freebuf_items();used=source['endpoint']
+   for attempt in range(2):
+    try:items=parse_freebuf_feed(request_body(feed,timeout=40));used=feed;break
+    except Exception as error:
+     print(f'FREEBUF_FEED_FALLBACK {feed} attempt={attempt+1}: {type(error).__name__}: {error}')
+     # 只对"网络抖动"重试同一个源；403/结构变化这类确定性失败直接换下一个入口
+     if attempt or isinstance(error,HTTPError) or not isinstance(error,(URLError,TimeoutError,IncompleteRead)):break
+     time.sleep(1)
+   if items:break
+  if not items:items=fetch_freebuf_items()
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
+ if key=='imdb':
+  items=cache_source_covers(key,fetch_imdb_items())
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key=='youtube_trending':
+  items,used=fetch_youtube_trending()
+  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  try:
-  used=source['endpoint']
+  used=nvd_endpoint() if key=='nvd' else source['endpoint']
   try:
    if key=='meta_ai_news':
     req=urllib.request.Request(used,headers={'User-Agent':'Mozilla/5.0'})
     with urllib.request.urlopen(req,timeout=15) as response:body=response.read(2_000_000)
+   elif key=='36kr':
+    req=urllib.request.Request(used,data=json.dumps({'partner_id':'wap','param':{'siteId':1,'platformId':2},'timestamp':int(datetime.now().timestamp()*1000)}).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
+    with urllib.request.urlopen(req,timeout=25) as response:body=response.read(4_000_000)
+   elif key=='wegame':
+    payload={'property':[],'rank_name':'most_newbie','filters':[],'stamp':{'agent_client_language':'zh_CN'},'response_format':0,'start_page':0,'items_per_pager':24,'netbar':True}
+    req=urllib.request.Request(used,data=json.dumps(payload).encode(),method='POST',headers={'Content-Type':'application/json','Origin':'https://www.wegame.com.cn','Referer':SOURCES['wegame']['url'],'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'})
+    with urllib.request.urlopen(req,timeout=30) as response:body=response.read(4_000_000)
+   elif key=='tx_video':
+    payload={'ChannelID':'2','PageSize':30,'SceneID':29}
+    req=urllib.request.Request(used,data=json.dumps(payload).encode(),method='POST',headers={'Content-Type':'application/json','Origin':'https://v.qq.com','Referer':'https://v.qq.com/channel/tv','User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'})
+    with urllib.request.urlopen(req,timeout=25) as response:body=response.read(4_000_000)
    else:body=request_body(used)
   except (URLError,TimeoutError) as error:
    if key!='douban' or isinstance(error,HTTPError):raise
@@ -1088,10 +1578,10 @@ def fetch(key):
   if key in {'mistral_news','meta_ai_news','mistral_api','minimax_api'}:items=translate_security_titles(items)
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  if key=='hf_trending':items=enrich_hf_trending(items)
- if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
+ if key in ('thehackernews','arxiv','cisa_kev','github_advisory','cve_program','nvd','exploitdb') or key in SECURITY_RESEARCH_SOURCES or key in VENDOR_SECURITY_SOURCES or key in AI_OFFICIAL_SOURCES or key in INTERNATIONAL_NEWS:
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':translate_security_titles(items)}
  if key in ('douban','douban_book'):return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_douban_posters(items,key)}
- if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
+ if key in NEW_SOURCE_PARSERS or key in AUTO_NEWS or key in ['hf_trending','seebug','baidu','fng','eastmoney','bilibili','ithome_rank','douyin','kuaishou','ijingyi_new','ijingyi_hot','pojie52','pojie52_new','pojie52_tech','pojie52_digest']:return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  items=cache_source_covers(key,attach_covers(key,items,body,source['url']))
  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
 def main():
@@ -1105,7 +1595,7 @@ def main():
    data=fetch(key);data['collection']={'status':'ok','lastAttemptAt':attempted,'lastSuccessAt':data['updatedAt'],'error':''}
    print(f'SOURCE_OK {key} items={len(data["items"])}');return key,data
   except Exception as error:
-   print(f'SOURCE_PRESERVED {key}: {error}')
+   print(f'SOURCE_{"OPTIONAL" if key in OPTIONAL_SOURCES else "PRESERVED"} {key}: {error}')
    old=previous.get(key)
    health={'status':'stale' if old and old.get('items') else 'unavailable','lastAttemptAt':attempted,'lastSuccessAt':old.get('updatedAt') if old else None,'error':str(error)[:500]}
    if old and old.get('items'):

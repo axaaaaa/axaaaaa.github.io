@@ -12,6 +12,14 @@ module.exports = defineConfig({
   
   // 链式配置
   chainWebpack: (config) => {
+    // 关闭 ESLint 持久缓存，避免某些磁盘上缓存未失效导致开发时显示过期的 lint 报错
+    const eslintPlugin = config.plugin('eslint')
+    if (eslintPlugin) {
+      eslintPlugin.tap((args) => {
+        if (args[0]) args[0].cache = false
+        return args
+      })
+    }
     config.plugin('define').tap((definitions) => {
       Object.assign(definitions[0], {
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'

@@ -2,7 +2,6 @@
   <section id="system-installation" class="installation" aria-labelledby="installation-title">
     <header class="installation-heading"><h2 id="installation-title"><button type="button" :aria-expanded="opened" aria-controls="installation-content" @click="opened = !opened"><span aria-hidden="true">[{{ opened ? '−' : '+' }}]</span> 系统安装</button></h2><span class="installation-screen-id">SETUP · WINDOWS / LINUX</span></header>
     <div v-if="opened" id="installation-content">
-      <div class="installation-intro"><span class="eyebrow">SYSTEM INSTALLATION</span><h3>从准备镜像，到第一次成功启动。</h3><p>先在虚拟机走一遍，再理解实体机的启动、分区与安装。教程中的勾选只记录本次页面学习进度。</p></div>
       <nav class="installation-tabs" aria-label="安装系统"><button v-for="item in tracks" :key="item.id" type="button" :aria-pressed="trackId === item.id" @click="chooseTrack(item.id)">{{ item.name }}</button></nav>
       <nav class="installation-tabs modes" aria-label="安装场景"><button v-for="item in modes" :key="item.id" type="button" :aria-pressed="mode === item.id" @click="chooseMode(item.id)">{{ item.name }}</button></nav>
       <div class="installation-notice"><strong>{{ mode === 'vm' ? '练习路线：独立虚拟磁盘' : '实体机路线：先备份，再确认磁盘' }}</strong><p>{{ mode === 'vm' ? '使用新建的虚拟磁盘，不映射宿主机物理磁盘。以下教程不会操作你的磁盘。' : '制作启动盘会清空目标 U 盘；删除、格式化或擦除分区会移除数据。先验证备份，再核对磁盘型号与容量。' }}</p></div>

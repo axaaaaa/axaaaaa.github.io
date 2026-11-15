@@ -1,22 +1,27 @@
 <template>
-  <InteractiveStarfield v-if="!wave" :dark="dark" />
-  <canvas v-else ref="canvas" class="search-wave" aria-hidden="true"></canvas>
-  <button type="button" class="effect-toggle" aria-label="蓝色粒子波" :aria-pressed="wave"
-    :title="wave ? '切换到浮动 01' : '切换到蓝色粒子波'" @click="toggle">
-    背景：{{ wave ? '蓝色粒子波' : '浮动 01' }}
+  <InteractiveStarfield v-if="mode === 'binary'" :dark="dark" />
+  <canvas v-else ref="canvas" class="search-wave" :class="{ 'search-wave-green': mode === 'green' }" aria-hidden="true"></canvas>
+  <button type="button" class="effect-toggle" :aria-label="label" :aria-pressed="mode !== 'binary'"
+    :title="'切换到' + nextLabel" @click="toggle">
+    背景：{{ label }}
   </button>
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import InteractiveStarfield from './InteractiveStarfield.vue';
 
 /* global defineProps */
 defineProps({ dark: Boolean });
 const key = 'nav-search-background';
 const canvas = ref(null);
-const wave = ref(false);
-try { wave.value = localStorage.getItem(key) === 'wave'; } catch { /* Storage is optional. */ }
+const modes = ['binary', 'wave', 'green'];
+const labels = { binary: '浮动 01', wave: '蓝色粒子波', green: '墨绿粒子波' };
+const mode = ref('binary');
+try { const saved = localStorage.getItem(key); if (modes.includes(saved)) mode.value = saved; } catch { /* Storage is optional. */ }
+
+const label = computed(() => labels[mode.value]);
+const nextLabel = computed(() => labels[modes[(modes.indexOf(mode.value) + 1) % modes.length]]);
 
 const cycleDelay = 12000;
 let cycleTimer;
@@ -26,7 +31,7 @@ function scheduleCycle() {
   clearTimeout(cycleTimer);
   if (document.hidden || reduceMotion?.matches) return;
   cycleTimer = setTimeout(() => {
-    wave.value = !wave.value;
+    mode.value = modes[(modes.indexOf(mode.value) + 1) % modes.length];
     scheduleCycle();
   }, cycleDelay);
 }
@@ -46,8 +51,8 @@ onBeforeUnmount(() => {
 
 function toggle() {
   scheduleCycle();
-  wave.value = !wave.value;
-  try { localStorage.setItem(key, wave.value ? 'wave' : 'binary'); } catch { /* Keep the in-memory selection. */ }
+  mode.value = modes[(modes.indexOf(mode.value) + 1) % modes.length];
+  try { localStorage.setItem(key, mode.value); } catch { /* Keep the in-memory selection. */ }
 }
 
 watch(canvas, (el, previous, cleanup) => {
@@ -55,7 +60,11 @@ watch(canvas, (el, previous, cleanup) => {
   const ctx = el.getContext('2d');
   if (!ctx) return;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  const colors = ['#102c9e', '#1745dc', '#205cff', '#3478ff', '#548fff'];
+  // 两套粒子配色：蓝色波与墨绿色波共用同一套运动逻辑。
+  const palettes = {
+    wave: ['#102c9e', '#1745dc', '#205cff', '#3478ff', '#548fff'],
+    green: ['#0c3f2a', '#12603c', '#1a8452', '#25a869', '#53c98c']
+  };
   let width = 0, height = 0, frame = 0, last = null, time = 0, visible = false, points = [];
   const ripples = [];
   const rippleDuration = 1.1;
@@ -70,6 +79,7 @@ watch(canvas, (el, previous, cleanup) => {
   function draw() {
     while (ripples.length && time - ripples[0].time >= rippleDuration) ripples.shift();
     ctx.clearRect(0, 0, width, height);
+    const colors = palettes[mode.value] || palettes.wave;
     const paths = colors.map(() => new Path2D());
     const amplitude = Math.min(28, height * .22);
     const wavelength = Math.max(135, Math.min(245, width * .28));
@@ -171,6 +181,9 @@ watch(canvas, (el, previous, cleanup) => {
   pointer-events: none;
   z-index: -1;
   background: radial-gradient(ellipse at center, #122b67 0%, #08142e 58%, #040812 100%);
+}
+.search-wave-green {
+  background: radial-gradient(ellipse at center, #123a2c 0%, #08170f 58%, #040b07 100%);
 }
 .effect-toggle {
   position: absolute;

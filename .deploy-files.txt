@@ -1,6 +1,4 @@
 .github/workflows/news-pages.yml
-github-status-package/.github/workflows/site-status.yml
-github-status-package/sites-to-check.json
 public/extra-hotspots.json
 public/favicon.ico
 public/hacker-news.json

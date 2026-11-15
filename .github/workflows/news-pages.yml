@@ -43,7 +43,7 @@ jobs:
         run: |
           git clone --depth 1 --branch main https://github.com/axaaaaa/axaaaaa.github.io.git published-snapshots
           mkdir -p public
-          for f in news.json github-trending.json v2ex-hot.json weibo-hot.json hacker-news.json x-hot.json x-global.json x-words.json x-articles.json markets.json exchange-rates.json extra-hotspots.json history-today.json nasa-apod.json collection-health.json; do
+          for f in news.json github-trending.json v2ex-hot.json weibo-hot.json xueqiu-hot.json hacker-news.json x-hot.json x-global.json x-words.json x-articles.json markets.json exchange-rates.json extra-hotspots.json history-today.json nasa-apod.json collection-health.json; do
             if [ -f "published-snapshots/$f" ]; then cp "published-snapshots/$f" "public/$f"; fi
           done
           if [ -d published-snapshots/source-covers ]; then cp -R published-snapshots/source-covers public/; fi
@@ -55,6 +55,7 @@ jobs:
             public/github-trending.json
             public/v2ex-hot.json
             public/weibo-hot.json
+            public/xueqiu-hot.json
             public/hacker-news.json
             public/x-hot.json
             public/x-global.json
@@ -71,6 +72,7 @@ jobs:
       - run: python -m unittest discover -s scripts -p test_github_trending.py
       - run: python -m unittest discover -s scripts -p test_v2ex.py
       - run: python -m unittest discover -s scripts -p test_weibo.py
+      - run: python -m unittest discover -s scripts -p test_xueqiu.py
       - run: python -m unittest discover -s scripts -p test_x_hot.py
       - run: python -m unittest discover -s scripts -p test_x_global.py
       - run: python -m unittest discover -s scripts -p test_x_words.py
@@ -107,6 +109,7 @@ jobs:
             public/github-trending.json
             public/v2ex-hot.json
             public/weibo-hot.json
+            public/xueqiu-hot.json
             public/hacker-news.json
             public/x-hot.json
             public/x-global.json

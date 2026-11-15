@@ -1,22 +1,39 @@
 <template>
-  <aside class="local-music" aria-label="本机音乐播放器">
-    <button ref="musicTrigger" type="button" class="header-music-button" :class="{ 'is-playing': playing }"
-      :aria-expanded="expanded" aria-controls="local-music-panel" :aria-label="expanded ? '收起本机音乐播放器' : '打开本机音乐播放器'"
-      :title="currentTrack ? (playing ? '正在播放：' : '本机音乐：') + currentTrack.name : '本机音乐'"
-      @click="expanded = !expanded"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13M9 9l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/></svg><span v-if="playing" class="playing-indicator" aria-hidden="true"></span></button>
+  <aside class="local-music" aria-label="音乐播放器">
+    <button ref="musicTrigger" type="button" class="header-music-button" :class="{ 'is-playing': playing || onlinePlaying }"
+      :aria-expanded="expanded" aria-controls="local-music-panel" :aria-label="expanded ? '收起音乐播放器' : '打开音乐播放器'"
+      :title="currentTrack ? (playing ? '正在播放：' : '本机音乐：') + currentTrack.name : onlineCurrent && onlinePlaying ? '在线音乐：' + onlineCurrent.title : '音乐'"
+      @click="expanded = !expanded"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13M9 9l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/></svg><span v-if="playing || onlinePlaying" class="playing-indicator" aria-hidden="true"></span></button>
     <section v-show="expanded" id="local-music-panel" class="music-panel" aria-label="音乐列表">
-      <header class="music-heading"><div><img class="pixel-web-badge" src="../assets/pixel-badges/music.png" width="88" height="31" alt=""> <strong>本机音乐</strong><p>只在本机播放，不上传文件</p></div><button type="button" aria-label="关闭音乐面板" @click="closePanel">关闭</button></header>
-      <div class="music-import"><button type="button" :disabled="restoring || saving" @click="$refs.files.click()">＋ 选择音乐</button><button type="button" :disabled="restoring || saving || !tracks.length" @click="clearTracks">清空</button></div>
-      <input ref="files" class="music-file-input" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.opus" multiple aria-label="选择本机音乐文件" @change="addFiles" />
-      <p class="music-current" :title="currentTrack?.name">{{ currentTrack?.name || '选择你喜欢的音乐' }}</p>
-      <audio ref="audio" controls preload="metadata" :loop="mode === 'single'" @ended="onEnded" @play="onLocalPlay" @pause="playing = false; saveProgress(true)" @error="onError" @volumechange="saveVolume" @loadedmetadata="restorePosition" @timeupdate="saveProgress()" @seeked="saveProgress(true)"></audio>
-      <div class="music-transport"><button type="button" :disabled="!tracks.length" aria-label="上一首" @click="step(-1)">上一首</button><button type="button" :disabled="!tracks.length" @click="togglePlay">{{ playing ? '暂停' : '播放' }}</button><button type="button" :disabled="!tracks.length" aria-label="下一首" @click="step(1)">下一首</button><label>模式<select v-model="mode" aria-label="播放模式" @change="saveMode"><option value="list">列表循环</option><option value="single">单曲循环</option><option value="random">随机播放</option></select></label></div>
-      <p v-if="message" class="music-message" role="status">{{ message }}</p>
-      <ol v-if="tracks.length" class="music-list" aria-label="本机歌单">
-        <li v-for="(track, index) in tracks" :key="track.id" :class="{ active: index === currentIndex }"><button type="button" class="track-name" :aria-current="index === currentIndex ? 'true' : undefined" :title="track.name" @click="selectTrack(index, true)">{{ index === currentIndex && playing ? '♫ ' : '' }}{{ track.name }}</button><button type="button" :disabled="saving || restoring" :aria-label="'移除 ' + track.name" @click="removeTrack(index)">×</button></li>
-      </ol>
-      <p v-else class="music-empty">支持多选音频文件<br />具体格式以浏览器解码能力为准</p>
-      <footer>{{ restoring ? '正在恢复本地歌单…' : saving ? '正在保存到浏览器…' : storageNotice }}<br />清空会删除本地音乐 · 音乐与交互音效独立控制</footer>
+      <header class="music-heading"><div><img class="pixel-web-badge" src="../assets/pixel-badges/music.png" width="88" height="31" alt=""> <strong>音乐</strong><p>本机文件，或免费试听 Audius 在线音乐</p></div><button type="button" aria-label="关闭音乐面板" @click="closePanel">关闭</button></header>
+      <nav class="music-tabs" aria-label="音乐来源"><button type="button" :aria-pressed="tab === 'local'" @click="switchTab('local')">本机音乐</button><button type="button" :aria-pressed="tab === 'online'" @click="switchTab('online')">在线音乐</button></nav>
+      <div v-show="tab === 'local'" class="music-local">
+        <div class="music-import"><button type="button" :disabled="restoring || saving" @click="$refs.files.click()">＋ 选择音乐</button><button type="button" :disabled="restoring || saving || !tracks.length" @click="clearTracks">清空</button></div>
+        <input ref="files" class="music-file-input" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.opus" multiple aria-label="选择本机音乐文件" @change="addFiles" />
+        <p class="music-current" :title="currentTrack?.name">{{ currentTrack?.name || '选择你喜欢的音乐' }}</p>
+        <audio ref="audio" controls preload="metadata" :loop="mode === 'single'" @ended="onEnded" @play="onLocalPlay" @pause="playing = false; saveProgress(true)" @error="onError" @volumechange="saveVolume" @loadedmetadata="restorePosition" @timeupdate="saveProgress()" @seeked="saveProgress(true)"></audio>
+        <div class="music-transport"><button type="button" :disabled="!tracks.length" aria-label="上一首" @click="step(-1)">上一首</button><button type="button" :disabled="!tracks.length" @click="togglePlay">{{ playing ? '暂停' : '播放' }}</button><button type="button" :disabled="!tracks.length" aria-label="下一首" @click="step(1)">下一首</button><label>模式<select v-model="mode" aria-label="播放模式" @change="saveMode"><option value="list">列表循环</option><option value="single">单曲循环</option><option value="random">随机播放</option></select></label></div>
+        <p v-if="message" class="music-message" role="status">{{ message }}</p>
+        <ol v-if="tracks.length" class="music-list" aria-label="本机歌单">
+          <li v-for="(track, index) in tracks" :key="track.id" :class="{ active: index === currentIndex }"><button type="button" class="track-name" :aria-current="index === currentIndex ? 'true' : undefined" :title="track.name" @click="selectTrack(index, true)">{{ index === currentIndex && playing ? '♫ ' : '' }}{{ track.name }}</button><button type="button" :disabled="saving || restoring" :aria-label="'移除 ' + track.name" @click="removeTrack(index)">×</button></li>
+        </ol>
+        <p v-else class="music-empty">支持多选音频文件<br />具体格式以浏览器解码能力为准</p>
+        <footer>{{ restoring ? '正在恢复本地歌单…' : saving ? '正在保存到浏览器…' : storageNotice }}<br />清空会删除本地音乐 · 音乐与交互音效独立控制</footer>
+      </div>
+      <div v-show="tab === 'online'" class="music-online">
+        <form class="music-online-search" @submit.prevent="searchOnline">
+          <input v-model.trim="onlineQuery" type="search" placeholder="搜索曲名 / 歌手 / 风格" aria-label="搜索在线音乐" />
+          <button type="submit" :disabled="onlineLoading">{{ onlineLoading ? '加载中…' : '搜索' }}</button>
+        </form>
+        <p class="music-message" role="status">{{ onlineMessage }}</p>
+        <p class="music-current" :title="onlineCurrent?.title">{{ onlineCurrent ? onlineCurrent.title + ' · ' + onlineCurrent.artist : '选择一首在线音乐' }}</p>
+        <audio ref="onlineAudio" controls preload="none" @play="onOnlinePlay" @pause="onlinePlaying = false" @ended="onlinePlaying = false" @error="onOnlineError"></audio>
+        <ol v-if="onlineTracks.length" class="music-list music-online-list" aria-label="在线音乐列表">
+          <li v-for="track in onlineTracks" :key="track.id" :class="{ active: onlineCurrent?.id === track.id }"><button type="button" class="track-name" :title="track.title" @click="playOnline(track)">{{ onlineCurrent?.id === track.id && onlinePlaying ? '♫ ' : '' }}{{ track.title }} · {{ track.artist }}</button></li>
+        </ol>
+        <p v-else-if="!onlineLoading" class="music-empty">在线曲库来自 Audius，可免费试听独立音乐人作品</p>
+        <footer>在线音乐由 Audius 提供 · 需要联网 · 本机与在线播放会互相暂停<br />曲目版权与授权以 Audius 平台说明为准</footer>
+      </div>
     </section>
   </aside>
 </template>
@@ -25,7 +42,7 @@ import { loadMusicFiles, saveMusicFiles, deleteMusicFile, clearMusicFiles } from
 export default {
   name: 'LocalMusicPlayer',
   emits: ['request-play'],
-  data: () => ({ expanded: false, tracks: [], currentIndex: -1, playing: false, mode: 'list', message: '', selectionRequest: 0, nextId: 0, restoring: true, saving: false, disposed: false, pendingPosition: null, lastProgressSave: 0, storageNotice: '音乐保存在当前浏览器，清除网站数据后会删除' }),
+  data: () => ({ expanded: false, tab: 'local', tracks: [], currentIndex: -1, playing: false, mode: 'list', message: '', selectionRequest: 0, nextId: 0, restoring: true, saving: false, disposed: false, pendingPosition: null, lastProgressSave: 0, storageNotice: '音乐保存在当前浏览器，清除网站数据后会删除', onlineTracks: [], onlineCurrent: null, onlinePlaying: false, onlineLoading: false, onlineMessage: '', onlineQuery: '', audiusHost: '' }),
   computed: { currentTrack() { return this.tracks[this.currentIndex] || null; } },
   async mounted() {
     try {
@@ -62,11 +79,76 @@ export default {
     this.releaseTracks();
   },
   methods: {
-    pauseLocal() { this.saveProgress(true); this.$refs.audio.pause(); this.playing = false; },
-    onLocalPlay() { this.$emit('request-play'); this.playing = true; },
+    pauseLocal() { this.saveProgress(true); this.$refs.audio.pause(); this.playing = false; this.$refs.onlineAudio?.pause(); this.onlinePlaying = false; },
+    onLocalPlay() { this.$emit('request-play'); this.playing = true; this.$refs.onlineAudio?.pause(); this.onlinePlaying = false; },
     closePanel() { this.expanded = false; this.$refs.musicTrigger?.focus(); },
     onOutsidePointer(event) { if (this.expanded && !this.$el.contains(event.target)) this.expanded = false; },
     onPanelKey(event) { if (this.expanded && event.key === 'Escape') { event.preventDefault(); this.closePanel(); } },
+    switchTab(name) {
+      this.tab = name;
+      if (name === 'online' && !this.onlineTracks.length && !this.onlineLoading) this.loadTrending();
+    },
+    async getAudiusHost() {
+      if (this.audiusHost) return this.audiusHost;
+      try {
+        const response = await fetch('https://api.audius.co', { headers: { Accept: 'application/json' } });
+        if (!response.ok) throw Error(`HTTP ${response.status}`);
+        const hosts = (await response.json())?.data;
+        const host = Array.isArray(hosts) ? hosts.find(item => typeof item === 'string' && item.startsWith('https://')) : '';
+        if (!host) throw Error('没有可用节点');
+        this.audiusHost = host.replace(/\/+$/, '');
+      } catch {
+        this.audiusHost = 'https://discoveryprovider.audius.co';
+      }
+      return this.audiusHost;
+    },
+    async fetchAudius(path, params = {}) {
+      const host = await this.getAudiusHost();
+      const url = new URL(host + path);
+      url.searchParams.set('app_name', 'ainavigation-site');
+      for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
+      const response = await fetch(url);
+      if (!response.ok) throw Error(`HTTP ${response.status}`);
+      return (await response.json())?.data || [];
+    },
+    mapAudiusTracks(list) {
+      return list.filter(track => track?.id).map(track => ({ id: track.id, title: track.title || '未命名曲目', artist: track.user?.name || track.user?.handle || '未知作者' }));
+    },
+    async loadTrending() {
+      this.onlineLoading = true;
+      this.onlineMessage = '正在获取热门曲目…';
+      try {
+        const list = await this.fetchAudius('/v1/tracks/trending', { limit: 25 });
+        this.onlineTracks = this.mapAudiusTracks(list);
+        this.onlineMessage = this.onlineTracks.length ? '' : '暂时没有找到热门曲目，试试搜索';
+      } catch {
+        this.onlineMessage = '在线曲库加载失败，请检查网络后重试';
+      } finally { this.onlineLoading = false; }
+    },
+    async searchOnline() {
+      const query = this.onlineQuery.trim();
+      if (!query) { this.onlineMessage = '请输入曲名、歌手或风格'; return; }
+      this.onlineLoading = true;
+      this.onlineMessage = `正在搜索“${query}”…`;
+      try {
+        const list = await this.fetchAudius('/v1/tracks/search', { query, limit: 25 });
+        this.onlineTracks = this.mapAudiusTracks(list);
+        this.onlineMessage = this.onlineTracks.length ? '' : '没有找到相关曲目，换个关键词试试';
+      } catch {
+        this.onlineMessage = '搜索失败，请检查网络后重试';
+      } finally { this.onlineLoading = false; }
+    },
+    async playOnline(track) {
+      const audio = this.$refs.onlineAudio;
+      if (!audio) return;
+      this.$refs.audio?.pause(); this.playing = false;
+      this.onlineCurrent = track;
+      this.onlineMessage = '';
+      audio.src = `${await this.getAudiusHost()}/v1/tracks/${track.id}/stream?app_name=ainavigation-site`;
+      try { await audio.play(); } catch { this.onlineMessage = '该曲目暂时无法播放，请换一首试试'; }
+    },
+    onOnlinePlay() { this.onlinePlaying = true; this.onlineMessage = ''; this.$emit('request-play'); },
+    onOnlineError() { if (this.onlineCurrent) { this.onlinePlaying = false; this.onlineMessage = '音频加载失败，请换一首或检查网络'; } },
     async addFiles(event) {
       if (this.restoring || this.saving) return;
       this.saving = true;
@@ -212,6 +294,11 @@ export default {
 .music-list .track-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; border-color: transparent; background: transparent; }
 .music-list li.active { background: var(--ui-accent-soft, #edf4ef); color: var(--ui-accent, #386a50); }
 .music-message { line-height: 1.6; color: var(--ui-accent); }
+.music-tabs { display: flex; gap: 7px; margin: 0 0 12px; }
+.music-tabs button[aria-pressed="true"] { border-color: var(--ui-accent, #386a50); background: var(--ui-accent-soft, #edf4ef); color: var(--ui-accent, #386a50); }
+.music-online-search { display: flex; gap: 7px; }
+.music-online-search input { flex: 1; min-width: 0; padding: 7px 9px; border: 1px solid var(--el-border-color, #d7e4dc); border-radius: 8px; font: inherit; color: inherit; background: var(--el-bg-color, #fff); }
+.music-online-list { max-height: 240px; }
 footer { border-top: 1px solid var(--el-border-color, #d7e4dc); padding-top: 10px; }
 @media (max-width: 600px) { .music-panel { position: fixed; top: 72px; left: 12px; right: 12px; width: auto; max-width: none; max-height: calc(100dvh - 90px); } }
 </style>

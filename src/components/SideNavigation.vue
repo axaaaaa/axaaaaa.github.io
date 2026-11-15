@@ -424,7 +424,7 @@ export default {
 }
 
 .collapse-toggle-dark {
-  background: #0a0a0a;
+  background: #06120b;
   border-color: rgba(0, 255, 65, 0.2);
 }
 
@@ -684,7 +684,7 @@ export default {
 
 /* 暗黑模式 - 黑客帝国绿 */
 .side-navigation-dark {
-  background: #0a0a0a;
+  background: #06120b;
   border-right-color: rgba(0, 255, 65, 0.2);
 }
 
@@ -744,7 +744,7 @@ export default {
 
 /* Unified sidebar hierarchy and quiet green interaction states. */
 .side-navigation { --nav-accent: #386a50; --nav-hover: rgba(56,106,80,.055); --nav-selected: rgba(56,106,80,.10); }
-.side-navigation-dark { --nav-accent: var(--dark-text-primary, #b0d4ba); --nav-hover: rgba(176,212,186,.055); --nav-selected: rgba(176,212,186,.10); }
+.side-navigation-dark { --nav-accent: var(--dark-text-primary, #a9e0bd); --nav-hover: rgba(169,224,189,.055); --nav-selected: rgba(169,224,189,.10); }
 .groups-container { gap: 12px; }
 .group-title { padding: 12px 10px 5px; font-size: 11px; font-weight: 400; letter-spacing: .04em; }
 .group-title:hover { color: var(--nav-accent); }
@@ -780,5 +780,5 @@ export default {
   .nav-collapsed .emoji-icon { width: 24px; font-size: 18px; }
 }
 .command-library-entry { border: 0; background: transparent; color: inherit; width: 100%; text-align: left; font: inherit; }
-.collapse-all-button {display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:10px;padding:7px 10px;border:1px solid #d7e4dc;border-radius:5px;background:transparent;color:inherit;font:inherit;font-size:12px;cursor:pointer;}.collapse-all-button:hover {background:rgba(90,140,110,.1);}.collapse-all-button:focus-visible{outline:2px solid var(--ui-accent,#386a50);outline-offset:2px;}.side-navigation-dark .collapse-all-button {border-color:#344b3d;color:#b0d4ba;}.collapse-all-feedback{font-size:11px;line-height:1.5;margin:5px 0;color:var(--ui-accent,#386a50);}
+.collapse-all-button {display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:10px;padding:7px 10px;border:1px solid #d7e4dc;border-radius:5px;background:transparent;color:inherit;font:inherit;font-size:12px;cursor:pointer;}.collapse-all-button:hover {background:rgba(90,140,110,.1);}.collapse-all-button:focus-visible{outline:2px solid var(--ui-accent,#386a50);outline-offset:2px;}.side-navigation-dark .collapse-all-button {border-color:#344b3d;color:#a9e0bd;}.collapse-all-feedback{font-size:11px;line-height:1.5;margin:5px 0;color:var(--ui-accent,#386a50);}
 </style>

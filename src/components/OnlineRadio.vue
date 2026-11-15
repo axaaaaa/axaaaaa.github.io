@@ -1,6 +1,5 @@
 <template>
   <div class="online-radio" aria-label="在线电台">
-    <p class="radio-caption">公开网络电台 · 点击频道开始收听</p>
     <div class="radio-current"><strong>{{ current.name }}</strong><span class="radio-state" role="status">{{ statusText }}</span></div>
     <p>{{ current.description }}</p>
     <audio ref="radioAudio" preload="none" @playing="onPlaying" @waiting="onWaiting" @pause="onPause" @error="fail" @ended="fail"></audio>
@@ -21,7 +20,6 @@
       <select v-model="availability" aria-label="电台源状态"><option value="">全部状态</option><option value="reachable">源可访问</option><option value="unavailable">暂不可用</option><option value="unverified">未检测</option></select></div>
       <p class="radio-caption">目录 {{ stations.length }} 个频道 · 匹配 {{ visibleStations.length }} 个<br />更新 {{ catalogDate }} · 源可访问不代表每个浏览器均可播放</p>
     </div>
-    <button type="button" class="radio-filter" :aria-pressed="favoritesOnly" @click="favoritesOnly = !favoritesOnly">{{ favoritesOnly ? '显示全部频道' : '只看收藏' }}</button>
     <ul class="radio-list"><li v-for="station in pagedStations" :key="station.id"><button type="button" class="radio-station" :aria-current="current.id === station.id ? 'true' : undefined" @click="play(station)"><strong>{{ station.name }}</strong><small>{{ station.region }} {{ station.city }} · {{ (station.categories || []).join(' / ') }}</small><small>{{ station.availability === 'reachable' ? '音频源可访问' : station.availability === 'unavailable' ? '本次检测暂不可用' : '未检测' }}</small></button><button type="button" :aria-label="(favorites.includes(station.id) ? '取消收藏 ' : '收藏 ') + station.name" :aria-pressed="favorites.includes(station.id)" @click="toggleFavorite(station.id)">{{ favorites.includes(station.id) ? '★' : '☆' }}</button></li></ul>
     <p v-if="!visibleStations.length">没有匹配的电台，请调整搜索或筛选条件。</p>
     <nav v-if="visibleStations.length > pageSize" class="radio-pagination" aria-label="电台分页"><button type="button" :disabled="page <= 1" @click="page--">上一页</button><span>{{ page }} / {{ pageCount }}</span><button type="button" :disabled="page >= pageCount" @click="page++">下一页</button></nav>
@@ -46,7 +44,8 @@ const STATIONS = mergeRadioDirectory(PRESET_STATIONS, directory.stations);
 export default {
   name: 'OnlineRadio',
   emits: ['request-play', 'playing-change'],
-  data: () => ({ stations: STATIONS, current: STATIONS[0], status: 'idle', playing: false, error: '', favorites: [], favoritesOnly: false, query: '', region: '', category: '', availability: '', page: 1, pageSize: 20, volume: 0.5, timeout: null, request: 0, sleepMinutes: 0, sleepDeadline: 0, sleepRemaining: 0, sleepInterval: null, sleepMessage: '' }),
+  props: { favoritesOnly: { type: Boolean, default: false } },
+  data: () => ({ stations: STATIONS, current: STATIONS[0], status: 'idle', playing: false, error: '', favorites: [], query: '', region: '', category: '', availability: '', page: 1, pageSize: 20, volume: 0.5, timeout: null, request: 0, sleepMinutes: 0, sleepDeadline: 0, sleepRemaining: 0, sleepInterval: null, sleepMessage: '' }),
   computed: {
     sleepRemainingText() { const seconds = this.sleepRemaining; return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`; },
     visibleStations() { return filterRadioDirectory(this.stations, this); },
@@ -115,10 +114,10 @@ export default {
 .radio-sleep-timer select { padding: 6px; max-width: 100%; font: inherit; color: inherit; background: var(--el-bg-color, #fff); border: 1px solid var(--el-border-color, #d7e4dc); border-radius: 6px; }
 .radio-directory-filters { margin: 12px 0; }.radio-directory-filters label { display: flex; align-items: center; gap: 8px; }.radio-directory-filters input { flex: 1; min-width: 0; width: auto; padding: 7px; border: 1px solid var(--el-border-color); border-radius: 6px; background: var(--el-bg-color); color: inherit; }.radio-selects { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }.radio-selects select { min-width: 0; flex: 1 1 85px; max-width: 100%; padding: 6px 3px; background: var(--el-bg-color); color: inherit; border: 1px solid var(--el-border-color); border-radius: 6px; font: inherit; }.radio-pagination { display: flex; align-items: center; justify-content: space-between; gap: 8px; }.radio-pagination button:disabled { opacity: .4; cursor: default; }.radio-list { max-height: 280px; overflow-y: auto; }.radio-station strong { display: block; overflow-wrap: anywhere; }
 
-.online-radio { font-size: 12px; line-height: 1.6; }
+.online-radio { font-size: 12px; line-height: 1.5; }
 .radio-caption { color: var(--el-text-color-secondary, #748579); font-size: 11px; }
-.radio-current, .radio-controls, .radio-controls label { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.radio-current { justify-content: space-between; }.radio-state { color: var(--ui-accent); }.radio-current strong { font-size: 16px; }
+.radio-current, .radio-controls, .radio-controls label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.radio-current { justify-content: space-between; }.radio-state { color: var(--ui-accent); }.radio-current strong { font-size: 14px; }
 button { font: inherit; color: inherit; border: 1px solid var(--el-border-color, #d7e4dc); background: var(--el-bg-color, #fff); border-radius: 8px; padding: 7px 10px; cursor: pointer; }button:hover { background: var(--ui-accent-soft); }
 .radio-list { list-style: none; padding: 0; margin: 12px 0; }.radio-list li { display: flex; align-items: center; gap: 6px; margin: 6px 0; }.radio-station { flex: 1; text-align: left; min-width: 0; }.radio-station small { display: block; color: var(--el-text-color-secondary); }.radio-station[aria-current="true"] { background: var(--ui-accent-soft); border-color: var(--ui-accent); }.radio-filter { margin-top: 12px; }.radio-error { color: var(--el-color-danger, #bd4343); }input { width: 110px; }a { color: var(--ui-accent); }
 </style>

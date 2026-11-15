@@ -72,11 +72,6 @@
   --theme-paper: #f5fbfb; --theme-heading: #cce9e9; --theme-line: #8babab; --theme-accent: #235c63;
   --theme-rule: 2px solid #59918f; --theme-title-font: Consolas, "Microsoft YaHei", monospace;
 }
-[data-source-theme="swiss"] {
-  --theme-paper: #fff; --theme-heading: #f5f5f5; --theme-line: #b7b7b7; --theme-accent: #a11c29;
-  --theme-rule: 3px solid #202020; --theme-radius: 0;
-  --theme-title-font: Arial, "Microsoft YaHei", sans-serif;
-}
 [data-source-theme="archive"] {
   --theme-paper: #f8f1e5; --theme-heading: #ece0c9; --theme-line: #b6a083; --theme-accent: #79482b;
   --theme-rule: 1px dashed #997e58; --theme-title-font: Georgia, SimSun, serif;
@@ -129,12 +124,6 @@
   --theme-paper: #fbfcff; --theme-heading: linear-gradient(#fff 0%, #e2f3ff 48%, #b0d9ff 49%, #e0f6ff 100%);
   --theme-line: #9cbbdc; --theme-accent: #205e9f; --theme-radius: 12px;
 }
-[data-source-theme="winamp"] {
-  --theme-paper: #f2f2f5; --theme-heading: linear-gradient(#414856, #222830);
-  --theme-heading-ink: #d2fba6; --theme-line: #8b929e; --theme-accent: #415921;
-  --theme-rule: 3px double #818895; --theme-radius: 0;
-  --theme-title-font: Consolas, "Microsoft YaHei", monospace;
-}
 [data-source-theme="palm"] {
   --theme-paper: #edf0e6; --theme-heading: #dce3d3; --theme-ink: #25362b; --theme-muted: #455648;
   --theme-line: #899788; --theme-accent: #344e3b; --theme-radius: 3px;
@@ -164,13 +153,72 @@
 }
 .navigation [data-source-theme="aero"] > header { box-shadow: inset 0 1px 0 #fff; }
 .navigation [data-source-theme="aqua"] > header { border-radius: 14px; box-shadow: inset 0 1px #fff; }
-.navigation [data-source-theme="winamp"] .x-tabs button[aria-pressed="true"] { background: #303741; color: #d2fba6; border-radius: 2px; }
 .navigation [data-source-theme="palm"] .source-rank { border: 1px solid var(--theme-line); padding-inline: 3px; }
 .navigation [data-source-theme="gameboy"] .source-rank { background: #dce5ab; box-shadow: 2px 2px #697943; padding-inline: 3px; }
 .navigation [data-source-theme="lcd"] .source-rank { font: 700 15px/1.4 Consolas, monospace; letter-spacing: .12em; background: #dce5db; padding-inline: 3px; }
 .navigation [data-source-theme="library"] .source-list > li { border-bottom: 1px dashed var(--theme-line); }
 .navigation [data-source-theme="library"] .source-cover { border-radius: 0; }
 .navigation [data-source-theme="brutalist"] > header h2 { font-weight: 800; }
+
+[data-source-theme="modern"] {
+  --theme-paper: #fff;
+  --theme-heading: #fff;
+  --theme-ink: #0f172a;
+  --theme-muted: #64748b;
+  --theme-line: #e6eaf2;
+  --theme-accent: #2563eb;
+  --theme-hover: #f1f5f9;
+  --theme-radius: 16px;
+  --theme-shadow: 0 12px 32px -18px rgba(15, 23, 42, .28);
+  --theme-rule: 1px solid #edf1f7;
+  --theme-title-font: Inter, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif;
+}
+.navigation [data-source-theme="modern"] > header {
+  padding: 0 0 14px;
+  margin-bottom: 14px;
+}
+.navigation section.source-news-card[data-source-theme="modern"] .source-tabs button {
+  border-radius: 999px;
+  background: #f6f8fb;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+.navigation section.source-news-card[data-source-theme="modern"] .source-tabs button[aria-pressed="true"] {
+  background: #e8f0ff;
+  border-color: #bfd4ff;
+  color: #1d4ed8;
+}
+.navigation section.source-news-card[data-source-theme="modern"] .source-list > li > a {
+  border-bottom-color: #eef2f8;
+}
+.navigation .x-global-events[data-source-theme="modern"] .events-viewport {
+  border-radius: 14px;
+  background: #f8fafc;
+  scrollbar-color: #c3cedd transparent;
+}
+.navigation .x-global-events[data-source-theme="modern"] .event-tile {
+  border-radius: 12px;
+  box-shadow: 0 6px 18px -12px rgba(15, 23, 42, .45);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.navigation .x-global-events[data-source-theme="modern"] .event-tile:hover {
+  box-shadow: 0 16px 30px -16px rgba(15, 23, 42, .55);
+  transform: translateY(-1px);
+}
+.navigation .x-global-events[data-source-theme="modern"] button {
+  background: #f6f8fb;
+  border-color: #e2e8f0;
+  border-radius: 999px;
+  color: #334155;
+}
+.navigation .x-global-events[data-source-theme="modern"] button:hover {
+  background: #eef2f8;
+}
+.navigation .x-global-events[data-source-theme="modern"] button[aria-pressed="true"] {
+  background: #e8f0ff;
+  border-color: #bfd4ff;
+  color: #1d4ed8;
+}
 
 [data-source-theme="win95"] {
   --theme-paper: #c0c0c0;

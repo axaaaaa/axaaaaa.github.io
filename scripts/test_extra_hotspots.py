@@ -171,4 +171,65 @@ class AdditionalSecuritySourcesTests(unittest.TestCase):
   row,=x.parse_source('crowdstrike',feed)
   self.assertEqual(row['meta'],'发布 2026-11-05')
 
+class MediaSourcesTests(unittest.TestCase):
+ def test_netflix_top10_table(self):
+  body=("<table><thead><tr><th>Ranking</th><th></th><th>Views</th></tr></thead><tbody>"
+        "<tr><td class=\"title\"><span class=\"rank\">01</span><button>A Dog&#x27;s <b>Perfect</b> Christmas</button>"
+        "<img src=\"https://dnm.nflximg.net/poster.jpg\"></td>"
+        "<td data-uia=\"top10-table-row-weeks\">1</td><td data-uia=\"top10-table-row-views\">8,600,000</td>"
+        "<td data-uia=\"top10-table-row-runtime\">1:41</td></tr></tbody></table>")
+  row,=x.parse_netflix_top10(body.encode())
+  self.assertEqual(row['title'],"A Dog's Perfect Christmas")
+  self.assertEqual(row['meta'],'观看 860 万次 · 在榜 1 周')
+  self.assertIn('q=A%20Dog',row['url'])
+  with self.assertRaises(ValueError):x.parse_netflix_top10(b'<html></html>')
+
+ def test_youtube_trending_piped(self):
+  data=[{'url':'/watch?v=DxgDeW-gIcU','title':'Live show','uploaderName':'Channel','views':970594,'duration':-1},
+        {'url':'/watch?v=abcdefghijk','title':'Music video','uploaderName':'Band','views':12300,'duration':215},
+        {'url':'/watch?v=short','title':'Invalid','uploaderName':'Nobody','views':1,'duration':10}]
+  rows=x.parse_youtube_trending(json.dumps(data).encode())
+  self.assertEqual(len(rows),2)
+  self.assertEqual(rows[0]['url'],'https://www.youtube.com/watch?v=DxgDeW-gIcU')
+  self.assertEqual(rows[0]['meta'],'Channel · 观看 97.1 万次 · 直播')
+  self.assertEqual(rows[1]['meta'],'Band · 观看 1.2 万次 · 时长 3:35')
+
+ def test_youtube_trending_kworb(self):
+  body=("<table><tr><th></th><th></th><th>Video</th><th>#</th><th>Highlights</th></tr>"
+        "<tr><td>1</td><td>=</td><td class=\"text\"><div><a href=\"/youtube/trending/video/dE_Ro8Sac2M.html\">"
+        "ENHYPEN &#39;I Want You&#39; Official MV</a></div></td><td>35</td>"
+        "<td class=\"mp text\"><div>#4 Indonesia, #5 Japan</div></td></tr>"
+        "<tr><td>2</td><td>NEW</td><td class=\"text\"><div><a href=\"/youtube/trending/video/short.html\">Bad</a></div></td></tr></table>")
+  row,=x.parse_youtube_trending(body.encode(),'kworb')
+  self.assertEqual(row['title'],"ENHYPEN 'I Want You' Official MV")
+  self.assertEqual(row['url'],'https://www.youtube.com/watch?v=dE_Ro8Sac2M')
+  self.assertEqual(row['meta'],'35 个国家/地区在榜')
+  with self.assertRaises(ValueError):x.parse_youtube_trending(b'<html></html>','kworb')
+
+ def test_youtube_trending_invidious(self):
+  data=[{'type':'video','videoId':'abcdefghijk','title':'Clip','author':'Author','viewCount':2500000,'lengthSeconds':3725}]
+  row,=x.parse_youtube_trending(json.dumps(data).encode(),'invidious')
+  self.assertEqual(row['meta'],'Author · 观看 250 万次 · 时长 1:02:05')
+
+ def test_imdb_chart_rows(self):
+  rows=[{'url':'/title/tt45368240/','cover':'https://m.media-amazon.com/images/poster.jpg',
+         'text':'#1\nYou Can See Everything\n20262h 54mR\n9.0\n (34K)\nRate\nMark as watched'},
+        {'url':'/title/tt0000000/','cover':'','text':'not a chart row'}]
+  row,=x.parse_imdb_rows(rows)
+  self.assertEqual(row['title'],'You Can See Everything')
+  self.assertEqual(row['meta'],'IMDb 9.0 · 3.4 万人评分')
+  self.assertEqual(row['url'],'https://www.imdb.com/title/tt45368240/')
+  with self.assertRaises(ValueError):x.parse_imdb_rows([{'url':'','text':''}])
+
+ def test_media_fetch_routes(self):
+  rows=[{'title':'Movie','url':'https://www.imdb.com/title/tt1/','meta':''}]
+  with patch.object(x,'fetch_imdb_items',return_value=rows),patch.object(x,'cache_source_covers',side_effect=lambda _,items:items):
+   data=x.fetch('imdb')
+  self.assertEqual(data['items'],rows)
+  self.assertEqual(data['name'],'IMDb')
+  with patch.object(x,'fetch_youtube_trending',return_value=(rows,'https://api.piped.private.coffee/trending?region=US')):
+   data=x.fetch('youtube_trending')
+  self.assertEqual(data['sourceUrlUsed'],'https://api.piped.private.coffee/trending?region=US')
+  self.assertEqual(data['items'],rows)
+
 if __name__=='__main__':unittest.main()

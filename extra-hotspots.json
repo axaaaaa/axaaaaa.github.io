@@ -9061,6 +9061,122 @@
         "lastSuccessAt": "2026-11-14T06:31:37.531989+00:00",
         "error": ""
       }
+    },
+    "thepaper": {
+      "name": "澎湃新闻",
+      "kind": "澎湃热榜",
+      "url": "https://www.thepaper.cn/",
+      "icon": "https://www.thepaper.cn/favicon.ico",
+      "sourceUrlUsed": "https://cache.thepaper.cn/contentapi/wwwIndex/rightSidebar",
+      "updatedAt": "2026-11-15T02:58:33.779686+00:00",
+      "items": [
+        {
+          "title": "连休五天！多地公布雪假时间",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34479010",
+          "meta": "18小时前"
+        },
+        {
+          "title": "住院病人去哪儿了？唐山一医院被举报涉嫌“虚假住院骗保”，当地已成立联合调查组",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34346324",
+          "meta": "15小时前"
+        },
+        {
+          "title": "三问兴平牵手希望小学“卖惨骗捐”案：监管多次预警，为何骗局仍能持续",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34480667",
+          "meta": "12小时前"
+        },
+        {
+          "title": "甘肃平凉发起“见面即问您好”活动：不限于熟人之间",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34477293",
+          "meta": "20小时前"
+        },
+        {
+          "title": "马上评｜别让体育饭圈把专业问题变成情绪口水战",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34476794",
+          "meta": "20小时前"
+        },
+        {
+          "title": "“司美格鲁肽副作用”登上热搜，如何看待GLP-1减重药物风险？",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34475342",
+          "meta": "23小时前"
+        },
+        {
+          "title": "男子高速开“智驾”直接躺倒睡觉、还载着一家人，交警：批评教育+处罚",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34479556",
+          "meta": "16小时前"
+        },
+        {
+          "title": "时隔五年再捧杯，中国战队夺得英雄联盟全球总决赛冠军",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34483414",
+          "meta": "2小时前"
+        },
+        {
+          "title": "网友反映日军侵华慰安所原址成网红拍照打卡点，杭州市园林文物局：若影响历史建筑安全会采取措施",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34470625",
+          "meta": "23小时前"
+        },
+        {
+          "title": "“零元面馆”内外众生相：一碗免费素面，真难住了一条街？",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34478046",
+          "meta": "18小时前"
+        },
+        {
+          "title": "观察｜特朗普又对伊朗打出经济封锁牌，但美国能说了算吗？",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34479929",
+          "meta": "3小时前"
+        },
+        {
+          "title": "马上评丨聚合模式低价内卷，卷不出健康安全的网约车",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34477698",
+          "meta": "20小时前"
+        },
+        {
+          "title": "历史上的今天｜1952年11月15日，开展全国大扫盲",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34479715",
+          "meta": "3小时前"
+        },
+        {
+          "title": "“给留守男孩一百元”的残疾博主喊冤，男孩家人为她发声澄清：不是剧本，另外九百给了给姐姐",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34478684",
+          "meta": "17小时前"
+        },
+        {
+          "title": "世界糖尿病日：早发现，早行动，健康未来，即刻开始",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34468239",
+          "meta": "22小时前"
+        },
+        {
+          "title": "首位外国领导人赴延安参谒黄帝陵",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34480111",
+          "meta": "14小时前"
+        },
+        {
+          "title": "新版医保目录新增51个一类新药，CAR-T首进，还有哪些亮点？",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34478661",
+          "meta": "15小时前"
+        },
+        {
+          "title": "美新型轰炸机B-21研制迎来重要里程碑，完成首次武器投放试验",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34475968",
+          "meta": "15小时前"
+        },
+        {
+          "title": "战胜马来西亚止连败，国足主帅邵佳一：我们没有乐观的资本",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34480839",
+          "meta": "12小时前"
+        },
+        {
+          "title": "又一城市公布“实时人口”：这项“人气指标”是如何测算的？",
+          "url": "https://www.thepaper.cn/newsDetail_forward_34469932",
+          "meta": "18小时前"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T02:58:33.612540+00:00",
+        "lastSuccessAt": "2026-11-15T02:58:33.779686+00:00",
+        "error": ""
+      }
     }
   }
 }

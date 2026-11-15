@@ -97,6 +97,7 @@ SOURCES={
  'toutiao':{'name':'今日头条热榜','kind':'热榜','url':'https://www.toutiao.com/','endpoint':'https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc','icon':'https://www.toutiao.com/favicon.ico'},
  'qq':{'name':'腾讯新闻','kind':'热点榜','url':'https://news.qq.com/','endpoint':'https://r.inews.qq.com/gw/event/hot_ranking_list?page_size=20','icon':'https://news.qq.com/favicon.ico'},
  'netease':{'name':'网易新闻','kind':'最新资讯','url':'https://news.163.com/','endpoint':'https://news.163.com/special/0001220O/news_json.js','icon':'https://www.163.com/favicon.ico'},
+ 'thepaper':{'name':'澎湃新闻','kind':'澎湃热榜','url':'https://www.thepaper.cn/','endpoint':'https://cache.thepaper.cn/contentapi/wwwIndex/rightSidebar','icon':'https://www.thepaper.cn/favicon.ico'},
  'hellogithub':{'name':'HelloGitHub','kind':'开源月刊','url':'https://hellogithub.com/','endpoint':'https://hellogithub.com/rss','icon':'https://hellogithub.com/favicon.ico'},
  'gamersky':{'name':'游民星空','kind':'游戏资讯','url':'https://www.gamersky.com/news/','endpoint':'https://www.gamersky.com/news/','icon':'https://www.gamersky.com/favicon.ico'},
  'nvd':{'name':'NVD 最新漏洞','kind':'美国国家漏洞库 · 最新披露','url':'https://nvd.nist.gov/vuln/search','endpoint':'https://services.nvd.nist.gov/rest/json/cves/2.0','icon':'https://nvd.nist.gov/favicon.ico'},
@@ -868,6 +869,10 @@ def parse_source(key,body):
     for item in value:walk(item)
    elif isinstance(value,dict):add(value.get('t'),value.get('l') or '',value.get('p') or '')
   walk(data.get('news',[]))
+ elif key=='thepaper':
+  for row in (json.loads(body).get('data') or {}).get('hotNews') or []:
+   cont=str(row.get('contId',''))
+   if cont.isdigit():add(row.get('name'),'https://www.thepaper.cn/newsDetail_forward_'+cont,row.get('pubTime') or '',row.get('pic') or '')
  elif key=='anquanke':
   for row in json.loads(body).get('data',[]):
    id=str(row.get('id',''))

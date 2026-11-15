@@ -1106,14 +1106,16 @@ def fetch_freebuf_items():
   try:
    page=browser.new_page(locale='zh-CN',viewport={'width':1440,'height':1000})
    page.goto(SOURCES['freebuf']['endpoint'],wait_until='domcontentloaded',timeout=60000)
+   try:page.wait_for_load_state('networkidle',timeout=20000)
+   except Exception:pass
    if '验证' in page.title():raise RuntimeError('FreeBuf returned a verification page')
-   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=30000)
-   rows=page.locator(FREEBUF_SELECTOR).evaluate_all("""links => links.map(a => ({
-    title: a.textContent,
-    url: a.href,
-    cover: a.closest('.article-item')?.querySelector('.img-view img')?.getAttribute('data-src') || a.closest('.article-item')?.querySelector('.img-view img')?.src || '',
-    meta: a.closest('.article-item')?.querySelector('.bottom-right')?.innerText || ''
-   }))""")
+   # 首页改版后 .article-item 那层结构没了，等待固定选择器会一直超时；
+   # 改成直接按"链接 + 标题"抽取，结构再变也不会卡在 wait_for 上。
+   rows=page.evaluate("""() => Array.from(document.querySelectorAll('a[href*="/articles/"], a[href*="/news/"]')).map(a => {
+     const img = a.querySelector('img') || a.closest('li, article, div')?.querySelector('img');
+     return {title: (a.textContent || '').trim(), url: a.href,
+             cover: (img?.getAttribute('data-src') || img?.src || ''), meta: ''};
+   })""")
    return normalize_freebuf_rows(rows)
   finally:browser.close()
 

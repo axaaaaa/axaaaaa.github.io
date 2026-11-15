@@ -9177,6 +9177,213 @@
         "lastSuccessAt": "2026-11-15T02:58:33.779686+00:00",
         "error": ""
       }
+    },
+    "projectzero": {
+      "name": "Google Project Zero",
+      "kind": "漏洞研究 · 中文机译",
+      "url": "https://projectzero.google/",
+      "icon": "https://projectzero.google/images/project-zero.svg",
+      "sourceUrlUsed": "https://projectzero.google/feed.xml",
+      "updatedAt": "2026-11-15T03:37:10.717933+00:00",
+      "items": [
+        {
+          "title": "Policy and Disclosure: 2026 Edition",
+          "url": "https://projectzero.google/2026/11/disclosure-policy.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-11-13T00:00:00-08:00",
+          "originalTitle": "Policy and Disclosure: 2026 Edition",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Fuzzers vs. AI: Comparing Fuzzilli and BigSleep on JavaScript Engines",
+          "url": "https://projectzero.google/2026/10/fuzzing-v-AI.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-10-27T00:00:00-07:00",
+          "originalTitle": "Fuzzers vs. AI: Comparing Fuzzilli and BigSleep on JavaScript Engines",
+          "translationStatus": "original"
+        },
+        {
+          "title": "How to fix a bug in a fix",
+          "url": "https://projectzero.google/2026/10/emergency-patching.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-10-06T00:00:00-07:00",
+          "originalTitle": "How to fix a bug in a fix",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Windows Exploitation Techniques: Dangling COM Object Registrations",
+          "url": "https://projectzero.google/2026/09/windows-dangling-com.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-09-21T00:00:00-07:00",
+          "originalTitle": "Windows Exploitation Techniques: Dangling COM Object Registrations",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Testing race conditions with memory access tracing and stack-based delay injection",
+          "url": "https://projectzero.google/2026/09/maccconc-race-condition.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-09-08T00:00:00-07:00",
+          "originalTitle": "Testing race conditions with memory access tracing and stack-based delay injection",
+          "translationStatus": "original"
+        },
+        {
+          "title": "A 0-click exploit chain for the Pixel 10: When a Door Closes, a Window Opens",
+          "url": "https://projectzero.google/2026/05/pixel-10-exploit.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-05-13T00:00:00-07:00",
+          "originalTitle": "A 0-click exploit chain for the Pixel 10: When a Door Closes, a Window Opens",
+          "translationStatus": "original"
+        },
+        {
+          "title": "On the Effectiveness of Mutational Grammar Fuzzing",
+          "url": "https://projectzero.google/2026/03/mutational-grammar-fuzzing.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-03-05T00:00:00-08:00",
+          "originalTitle": "On the Effectiveness of Mutational Grammar Fuzzing",
+          "translationStatus": "original"
+        },
+        {
+          "title": "A Deep Dive into the GetProcessHandleFromHwnd API",
+          "url": "https://projectzero.google/2026/02/gphfh-deep-dive.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-02-26T00:00:00-08:00",
+          "originalTitle": "A Deep Dive into the GetProcessHandleFromHwnd API",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Bypassing Administrator Protection by Abusing UI Access",
+          "url": "https://projectzero.google/2026/02/windows-administrator-protection.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-02-12T00:00:00-08:00",
+          "originalTitle": "Bypassing Administrator Protection by Abusing UI Access",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Breaking the Sound Barrier, Part II: Exploiting CVE-2024-54529",
+          "url": "https://projectzero.google/2026/01/sound-barrier-2.html",
+          "meta": "英文原题 · 翻译待更新 · 2026-01-30T00:00:00-08:00",
+          "originalTitle": "Breaking the Sound Barrier, Part II: Exploiting CVE-2024-54529",
+          "translationStatus": "original"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T03:37:09.985855+00:00",
+        "lastSuccessAt": "2026-11-15T03:37:10.717933+00:00",
+        "error": ""
+      }
+    },
+    "unit42": {
+      "name": "Palo Alto Unit 42",
+      "kind": "威胁研究与事件响应 · 中文机译",
+      "url": "https://unit42.paloaltonetworks.com/",
+      "icon": "https://unit42.paloaltonetworks.com/wp-content/uploads/2024/06/icon-Unit42-180x180-1.png",
+      "sourceUrlUsed": "https://unit42.paloaltonetworks.com/feed/",
+      "updatedAt": "2026-11-15T03:42:21.649517+00:00",
+      "items": [
+        {
+          "title": "Attackers Use Autonomous AI to Target Semiconductor, Defense and Civil Society Sectors",
+          "url": "https://unit42.paloaltonetworks.com/cairn-framework-ai-autonomous-attacks/",
+          "meta": "英文原题 · 翻译待更新 · Thu, 12 Nov 2026 15:00:31 +0000",
+          "originalTitle": "Attackers Use Autonomous AI to Target Semiconductor, Defense and Civil Society Sectors",
+          "translationStatus": "original"
+        },
+        {
+          "title": "ARTEX and AI-Powered Red Teaming Tools: What Defenders Need to Know",
+          "url": "https://unit42.paloaltonetworks.com/artex-and-ai-powered-red-teaming-tools/",
+          "meta": "英文原题 · 翻译待更新 · Wed, 11 Nov 2026 23:00:53 +0000",
+          "originalTitle": "ARTEX and AI-Powered Red Teaming Tools: What Defenders Need to Know",
+          "translationStatus": "original"
+        },
+        {
+          "title": "The XG Files: Falcon C2 Flying Under The (Browser) Radar",
+          "url": "https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise/",
+          "meta": "英文原题 · 翻译待更新 · Wed, 11 Nov 2026 15:00:23 +0000",
+          "originalTitle": "The XG Files: Falcon C2 Flying Under The (Browser) Radar",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Turning Up the Heat: Inside the Attacks on Europe’s Refrigeration Systems",
+          "url": "https://unit42.paloaltonetworks.com/europes-refrigeration-systems-attacks/",
+          "meta": "英文原题 · 翻译待更新 · Fri, 06 Nov 2026 21:15:09 +0000",
+          "originalTitle": "Turning Up the Heat: Inside the Attacks on Europe’s Refrigeration Systems",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Unit 42 Threat Intelligence Highlights - Nov. 2, 2026",
+          "url": "https://unit42.paloaltonetworks.com/u42-threat-intelligence-highlights-oct-2026/",
+          "meta": "英文原题 · 翻译待更新 · Mon, 02 Nov 2026 23:00:45 +0000",
+          "originalTitle": "Unit 42 Threat Intelligence Highlights - Nov. 2, 2026",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Threat Brief: Critical Vulnerabilities in PHP: CVE-2026-109618, CVE-2026-109619 (Updated October 29)",
+          "url": "https://unit42.paloaltonetworks.com/cve-2026-109618-cve-2026-109619/",
+          "meta": "英文原题 · 翻译待更新 · Thu, 29 Oct 2026 18:00:34 +0000",
+          "originalTitle": "Threat Brief: Critical Vulnerabilities in PHP: CVE-2026-109618, CVE-2026-109619 (Updated October 29)",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Unwrapping Retail Peak Season Cyber Threats",
+          "url": "https://unit42.paloaltonetworks.com/unwrapping-retail-cyber-threats/",
+          "meta": "英文原题 · 翻译待更新 · Wed, 28 Oct 2026 18:00:10 +0000",
+          "originalTitle": "Unwrapping Retail Peak Season Cyber Threats",
+          "translationStatus": "original"
+        },
+        {
+          "title": "EMudhra Intermediate CA Certificates Compromised",
+          "url": "https://unit42.paloaltonetworks.com/emudhra-certificate-compromise/",
+          "meta": "英文原题 · 翻译待更新 · Thu, 22 Oct 2026 17:15:32 +0000",
+          "originalTitle": "EMudhra Intermediate CA Certificates Compromised",
+          "translationStatus": "original"
+        },
+        {
+          "title": "The Current Landscape of OAuth Attacks",
+          "url": "https://unit42.paloaltonetworks.com/current-landscape-oauth-attacks/",
+          "meta": "英文原题 · 翻译待更新 · Thu, 22 Oct 2026 17:00:25 +0000",
+          "originalTitle": "The Current Landscape of OAuth Attacks",
+          "translationStatus": "original"
+        },
+        {
+          "title": "“Next Exploit Opportunities”: How a Threat Actor Used AI to Help Plan and Execute Multiple Types of Cybercrime Activities",
+          "url": "https://unit42.paloaltonetworks.com/ai-assisted-cybercrime-analysis/",
+          "meta": "英文原题 · 翻译待更新 · Wed, 21 Oct 2026 14:00:24 +0000",
+          "originalTitle": "“Next Exploit Opportunities”: How a Threat Actor Used AI to Help Plan and Execute Multiple Types of Cybercrime Activities",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Active Exploitation of May 2026 PAN-OS CVE-2026-0257 (Updated October 20)",
+          "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+          "meta": "英文原题 · 翻译待更新 · Tue, 20 Oct 2026 20:30:42 +0000",
+          "originalTitle": "Active Exploitation of May 2026 PAN-OS CVE-2026-0257 (Updated October 20)",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Top 5 Initial Access Threat Vectors Observed by Unit 42 in September 2026",
+          "url": "https://unit42.paloaltonetworks.com/top-5-initial-access-vectors-september-2026/",
+          "meta": "英文原题 · 翻译待更新 · Fri, 16 Oct 2026 17:47:54 +0000",
+          "originalTitle": "Top 5 Initial Access Threat Vectors Observed by Unit 42 in September 2026",
+          "translationStatus": "original"
+        },
+        {
+          "title": "AI-Powered Espionage Campaign Targets Government Linux Infrastructure",
+          "url": "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure/",
+          "meta": "英文原题 · 翻译待更新 · Thu, 15 Oct 2026 22:00:09 +0000",
+          "originalTitle": "AI-Powered Espionage Campaign Targets Government Linux Infrastructure",
+          "translationStatus": "original"
+        },
+        {
+          "title": "Unit 42 Uncovers PEERSTITCH, a Stealthy FortiGate Implant",
+          "url": "https://unit42.paloaltonetworks.com/fortimanager-cve-2024-47575-peerstitch-malware/",
+          "meta": "英文原题 · 翻译待更新 · Wed, 14 Oct 2026 22:00:44 +0000",
+          "originalTitle": "Unit 42 Uncovers PEERSTITCH, a Stealthy FortiGate Implant",
+          "translationStatus": "original"
+        },
+        {
+          "title": "The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk",
+          "url": "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk/",
+          "meta": "英文原题 · 翻译待更新 · Tue, 13 Oct 2026 22:00:04 +0000",
+          "originalTitle": "The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk",
+          "translationStatus": "original"
+        }
+      ],
+      "collection": {
+        "status": "ok",
+        "lastAttemptAt": "2026-11-15T03:42:20.839256+00:00",
+        "lastSuccessAt": "2026-11-15T03:42:21.649517+00:00",
+        "error": ""
+      }
     }
   }
 }

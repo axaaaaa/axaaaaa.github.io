@@ -1,9 +1,10 @@
 """Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
-import argparse,json,os,re,urllib.request,xml.etree.ElementTree as ET
+import argparse,json,os,re,time,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
 from email.utils import parsedate_to_datetime
 from threading import Lock
+from http.client import IncompleteRead
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin,urlparse,quote
 from datetime import datetime,timezone,timedelta
@@ -117,6 +118,9 @@ CN_AI_SOURCES={'deepseek_news','bytedance_news','kimi_news','tencent_ai_news','q
 AI_OFFICIAL_SOURCES={'openai_news','anthropic_news','deepmind_news'}
 VENDOR_SECURITY_SOURCES={'msrc','chrome_security','ubuntu_security'}
 SECURITY_RESEARCH_SOURCES={'unknowncheats','projectzero','unit42','crowdstrike','microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
+# 长期不可达的来源（Cloudflare 对数据中心 IP 一律 403）：仍然每轮尝试，但失败不再把整组采集判成"更新异常"，
+# 其状态依然如实写进 extra-hotspots.json 的 collection 字段里。
+OPTIONAL_SOURCES={'unknowncheats'}
 SECURITY_FEED_HOSTS={
  'unknowncheats':{'www.unknowncheats.me'},
  'projectzero':{'projectzero.google'},
@@ -667,10 +671,15 @@ def parse_extra_model_source(key,body):
   for block in re.findall(r'<tr\b[^>]*>(.*?)</tr>',html,re.S):
    cells=[text(cell) for cell in re.findall(r'<td\b[^>]*>(.*?)</td>',block,re.S)]
    link=re.search(r'href="(/models/[a-z0-9-]+)"',block)
-   if len(cells)!=8 or not link or not re.fullmatch(r'\d+(?:\.\d+)?',cells[3]):continue
-   meta='智能指数 '+cells[3]
-   if re.fullmatch(r'\$[\d.]+',cells[4]):meta+=' · 每任务 '+cells[4]
-   if re.fullmatch(r'[\d.]+',cells[5]):meta+=' · '+cells[5]+' 分钟/任务'
+   # 2026-11 页面改版：列变成 7 列（模型/智能指数/每任务成本/每任务耗时/首字延迟/上下文/更多）。
+   # 老版是 8 列且数值整体右移两位，这里两种都兼容。
+   if len(cells)==7:index_col,cost_col,time_col=1,2,3
+   elif len(cells)==8:index_col,cost_col,time_col=3,4,5
+   else:continue
+   if not link or not re.fullmatch(r'\d+(?:\.\d+)?',cells[index_col]):continue
+   meta='智能指数 '+cells[index_col]
+   if re.fullmatch(r'\$[\d.]+',cells[cost_col]):meta+=' · 每任务 '+cells[cost_col]
+   if re.fullmatch(r'[\d.]+',cells[time_col]):meta+=' · '+cells[time_col]+' 分钟/任务'
    add(cells[0],urljoin(base,link[1]),meta)
  if not rows:raise ValueError('No valid entries for '+key)
  entries=list(rows.values())
@@ -1047,7 +1056,15 @@ def nvd_endpoint():
 
 def request_body(url,timeout=25):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
- with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co','services.nvd.nist.gov'] else 4_000_000)
+ limit=512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co','services.nvd.nist.gov'] else 4_000_000
+ # 对端提前断开连接时 read() 会抛 IncompleteRead（Netflix 的 tudum 页偶发），重试即可拿到完整正文
+ for attempt in range(3):
+  try:
+   with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(limit)
+   break
+  except IncompleteRead:
+   if attempt==2:raise
+   time.sleep(1+attempt)
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
@@ -1090,7 +1107,7 @@ def fetch_freebuf_items():
    page=browser.new_page(locale='zh-CN',viewport={'width':1440,'height':1000})
    page.goto(SOURCES['freebuf']['endpoint'],wait_until='domcontentloaded',timeout=60000)
    if '验证' in page.title():raise RuntimeError('FreeBuf returned a verification page')
-   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=15000)
+   page.locator(FREEBUF_SELECTOR).first.wait_for(state='visible',timeout=30000)
    rows=page.locator(FREEBUF_SELECTOR).evaluate_all("""links => links.map(a => ({
     title: a.textContent,
     url: a.href,
@@ -1327,10 +1344,17 @@ def fetch(key):
   items=[row if re.search(r'[㐀-鿿]',row['title']) else translate_security_titles([row])[0] for row in items]
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
  if key=='freebuf':
+  items=None;used=source['endpoint']
   for feed in FREEBUF_FEEDS:
-   try:items=parse_freebuf_feed(request_body(feed));used=feed;break
-   except Exception as error:print(f'FREEBUF_FEED_FALLBACK {feed}: {type(error).__name__}: {error}')
-  else:items=fetch_freebuf_items();used=source['endpoint']
+   for attempt in range(2):
+    try:items=parse_freebuf_feed(request_body(feed,timeout=40));used=feed;break
+    except Exception as error:
+     print(f'FREEBUF_FEED_FALLBACK {feed} attempt={attempt+1}: {type(error).__name__}: {error}')
+     # 只对"网络抖动"重试同一个源；403/结构变化这类确定性失败直接换下一个入口
+     if attempt or isinstance(error,HTTPError) or not isinstance(error,(URLError,TimeoutError,IncompleteRead)):break
+     time.sleep(1)
+   if items:break
+  if not items:items=fetch_freebuf_items()
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
  if key=='imdb':
   items=cache_source_covers(key,fetch_imdb_items())
@@ -1380,7 +1404,7 @@ def main():
    data=fetch(key);data['collection']={'status':'ok','lastAttemptAt':attempted,'lastSuccessAt':data['updatedAt'],'error':''}
    print(f'SOURCE_OK {key} items={len(data["items"])}');return key,data
   except Exception as error:
-   print(f'SOURCE_PRESERVED {key}: {error}')
+   print(f'SOURCE_{"OPTIONAL" if key in OPTIONAL_SOURCES else "PRESERVED"} {key}: {error}')
    old=previous.get(key)
    health={'status':'stale' if old and old.get('items') else 'unavailable','lastAttemptAt':attempted,'lastSuccessAt':old.get('updatedAt') if old else None,'error':str(error)[:500]}
    if old and old.get('items'):

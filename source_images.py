@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 DOMAINS={
 'maoyan':('pipi.cn','meituan.net'),
 'douban':('doubanio.com',),'douban_book':('doubanio.com',),
-'sspai':('sspai.com',),'uisdc':('uisdc.com',),'zcool':('zcool.cn','zcool.com.cn'),'gamersky':('gamersky.com',),'freebuf':('3001.net','freebuf.com'),
+'sspai':('sspai.com',),'uisdc':('uisdc.com',),'zcool':('zcool.cn','zcool.com.cn'),'gamersky':('gamersky.com',),
 'woshipm':('woshipm.com','aixq.cc'),'csdn':('csdnimg.cn','csdn.net'),'oschina':('oschina.net','oscimg.net'),'xz':('aliyun.com','aliyuncs.com'),'anquanke':('qhimg.com','anquanke.com'),
 'yicai':('yicai.com','yicai.net'),'sinafinance':('sinaimg.cn','sina.com.cn'),'pojie52':('52pojie.cn',),'kanxue':('kanxue.com','kanxue.cn'),'ruanyifeng':('beekka.com','ruanyifeng.com'),
 'geekpark':('geekpark.net','geekpark.com'),'qbitai':('qbitai.com',),'juejin':('byteimg.com','juejin.cn','juejin.im'),'toutiao':('toutiaoimg.com','toutiao.com','byteimg.com'),

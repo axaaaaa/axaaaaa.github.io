@@ -1,4 +1,4 @@
-"""Independent public source snapshots; FreeBuf uses a rendered Chromium page."""
+"""Independent public source snapshots."""
 import argparse,json,os,re,time,urllib.request,xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
@@ -28,7 +28,6 @@ SOURCES={
  'openai_news':{'name': 'OpenAI News', 'kind': 'AI 官方发布 · 中文机译', 'url': 'https://openai.com/news/', 'endpoint': 'https://openai.com/news/rss.xml'},
  'anthropic_news':{'name': 'Anthropic News', 'kind': 'AI 官方发布 · 中文机译', 'url': 'https://www.anthropic.com/news', 'endpoint': 'https://www.anthropic.com/news'},
  'deepmind_news':{'name': 'Google DeepMind Blog', 'kind': 'AI 官方发布 · 中文机译', 'url': 'https://deepmind.google/blog/', 'endpoint': 'https://deepmind.google/blog/rss.xml'},
- 'unknowncheats':{'name': 'UC 论坛 · UnknownCheats', 'kind': '论坛最新帖 · 中文机译', 'url': 'https://www.unknowncheats.me/forum/index.php', 'endpoint': 'https://www.unknowncheats.me/forum/external.php?type=RSS2'},
  'msrc':{'name': '微软 MSRC', 'kind': '微软官方安全更新 · 中文机译', 'url': 'https://msrc.microsoft.com/update-guide/', 'endpoint': 'https://api.msrc.microsoft.com/cvrf/v3.0/updates'},
  'chrome_security':{'name': 'Chrome Releases', 'kind': '桌面 Chrome 安全更新 · 中文机译', 'url': 'https://chromereleases.googleblog.com/', 'endpoint': 'https://chromereleases.googleblog.com/feeds/posts/default/-/Desktop%20Update?max-results=20'},
  'ubuntu_security':{'name': 'Ubuntu Security Notices', 'kind': 'Ubuntu 官方安全公告 · 中文机译', 'url': 'https://ubuntu.com/security/notices', 'endpoint': 'https://ubuntu.com/security/notices/rss.xml'},
@@ -59,7 +58,6 @@ SOURCES={
  'douban':{'name': '豆瓣电影', 'kind': '热门电影 · 豆瓣评分', 'url': 'https://movie.douban.com/explore', 'endpoint': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=24&page_start=0', 'icon': 'https://movie.douban.com/favicon.ico'},
  'imdb':{'name':'IMDb','kind':'最受欢迎电影榜 · 用户热度','url':'https://www.imdb.com/chart/moviemeter/','endpoint':'https://www.imdb.com/chart/moviemeter/','icon':'https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png'},
  'youtube_trending':{'name':'YouTube 热门','kind':'全球趋势榜 · 多国在榜','url':'https://www.youtube.com/','endpoint':'https://kworb.net/youtube/trending.html','icon':'https://www.youtube.com/favicon.ico'},
- 'netflix':{'name':'Netflix Top 10','kind':'官方周榜 · 全球电影','url':'https://www.netflix.com/tudum/top10','endpoint':'https://www.netflix.com/tudum/top10','icon':'https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico'},
  'microsoft':{'name': '微软安全博客', 'kind': '安全研究与资讯 · 中文机译', 'url': 'https://www.microsoft.com/en-us/security/blog/', 'endpoint': 'https://www.microsoft.com/en-us/security/blog/feed/', 'icon': 'https://www.microsoft.com/favicon.ico'},
  'seebug':{'name': 'Seebug 漏洞库', 'kind': '最新漏洞情报', 'url': 'https://www.seebug.org/', 'endpoint': 'https://www.seebug.org/', 'icon': 'https://www.seebug.org/favicon.ico'},
 
@@ -88,7 +86,6 @@ SOURCES={
  'zcool':{'name':'站酷','kind':'设计作品发现','url':'https://www.zcool.com.cn/discover','endpoint':'https://www.zcool.com.cn/discover','icon':'https://www.zcool.com.cn/favicon.ico'},
  'xz':{'name':'先知社区','kind':'安全技术文章','url':'https://xz.aliyun.com/','endpoint':'https://xz.aliyun.com/','icon':'https://xz.aliyun.com/favicon.ico'},
  'anquanke':{'name':'安全客','kind':'安全资讯与研究','url':'https://www.anquanke.com/','endpoint':'https://api.anquanke.com/data/v1/posts?size=24&page=1','icon':'https://www.anquanke.com/favicon.ico'},
- 'freebuf':{'name':'FreeBuf','kind':'安全资讯','url':'https://www.freebuf.com/','endpoint':'https://www.freebuf.com/','icon':'https://www.freebuf.com/favicon.ico'},
  'fng':{'name':'恐惧贪婪指数','kind':'加密市场情绪 · Alternative.me','url':'https://alternative.me/crypto/fear-and-greed-index/','endpoint':'https://api.alternative.me/fng/?limit=8&format=json','icon':'https://alternative.me/favicon.ico'},
  'eastmoney':{'name':'东方财富 · A股涨幅榜','kind':'A 股涨幅榜 · 实时快照','url':'https://quote.eastmoney.com/center/gridlist.html','endpoint':'https://push2.eastmoney.com/api/qt/clist/get?pn=1&pz=20&po=1&np=1&fltt=2&invt=2&fid=f3&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23&fields=f2,f3,f4,f6,f12,f13,f14','icon':'https://www.eastmoney.com/favicon.ico'},
  'yicai':{'name':'第一财经','kind':'财经资讯','url':'https://www.yicai.com/','endpoint':'https://www.yicai.com/','icon':'https://www.yicai.com/favicon.ico'},
@@ -110,7 +107,6 @@ SOURCES={
  'nvd':{'name':'NVD 最新漏洞','kind':'美国国家漏洞库 · 最新披露','url':'https://nvd.nist.gov/vuln/search','endpoint':'https://services.nvd.nist.gov/rest/json/cves/2.0','icon':'https://nvd.nist.gov/favicon.ico'},
  'exploitdb':{'name':'Exploit-DB','kind':'公开漏洞利用库 · 最新条目','url':'https://www.exploit-db.com/','endpoint':'https://www.exploit-db.com/rss.xml','icon':'https://www.exploit-db.com/favicon.ico'},
  '36kr':{'name':'36氪','kind':'科技创投 · 24 小时热榜','url':'https://36kr.com/','endpoint':'https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot','icon':'https://36kr.com/favicon.ico'},
- 'huxiu':{'name':'虎嗅','kind':'科技与商业资讯','url':'https://www.huxiu.com/','endpoint':'https://www.huxiu.com/','icon':'https://www.huxiu.com/favicon.ico'},
  'so_hot':{'name':'Stack Overflow 热问','kind':'开发者热门问题','url':'https://stackoverflow.com/questions','endpoint':'https://api.stackexchange.com/2.3/questions?order=desc&sort=hot&site=stackoverflow&pagesize=24','icon':'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico'},
  'wallstreetcn':{'name':'华尔街见闻','kind':'全球财经快讯','url':'https://wallstreetcn.com/live/global','endpoint':'https://api-one.wallstcn.com/apiv1/content/lives?channel=global-channel&limit=24','icon':'https://wallstreetcn.com/favicon.ico'},
  'steam_top':{'name':'Steam 热销榜','kind':'全球热销 · 实时价格','url':'https://store.steampowered.com/search/?filter=topsellers','endpoint':'https://store.steampowered.com/api/featuredcategories?cc=cn&l=zh','icon':'https://store.steampowered.com/favicon.ico'},
@@ -124,12 +120,11 @@ SOURCES={
 CN_AI_SOURCES={'deepseek_news','bytedance_news','kimi_news','tencent_ai_news','qwen_news'}
 AI_OFFICIAL_SOURCES={'openai_news','anthropic_news','deepmind_news'}
 VENDOR_SECURITY_SOURCES={'msrc','chrome_security','ubuntu_security'}
-SECURITY_RESEARCH_SOURCES={'unknowncheats','projectzero','unit42','crowdstrike','microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
-# 长期不可达的来源（Cloudflare 对数据中心 IP 一律 403）：仍然每轮尝试，但失败不再把整组采集判成"更新异常"，
+SECURITY_RESEARCH_SOURCES={'projectzero','unit42','crowdstrike','microsoft','securelist','checkpoint','sentinellabs','elastic','eset'}
+# 长期不可达的来源：仍然每轮尝试，但失败不再把整组采集判成"更新异常"，
 # 其状态依然如实写进 extra-hotspots.json 的 collection 字段里。
-OPTIONAL_SOURCES={'unknowncheats'}
+OPTIONAL_SOURCES=set()
 SECURITY_FEED_HOSTS={
- 'unknowncheats':{'www.unknowncheats.me'},
  'projectzero':{'projectzero.google'},
  'unit42':{'unit42.paloaltonetworks.com'},
  'crowdstrike':{'www.crowdstrike.com','crowdstrike.com'},
@@ -148,7 +143,6 @@ def parse_security_feed(key,body):
    u=urlparse(url)
    if u.scheme!='https' or u.hostname not in SECURITY_FEED_HOSTS[key] or u.username or u.password or u.port not in [None,443]:continue
   except ValueError:continue
-  if key=='unknowncheats' and (u.query or u.fragment or not re.fullmatch(r'/forum/[a-z0-9_-]+/\d+-[^/]+\.html',u.path,re.I)):continue
   if key=='projectzero' and not re.fullmatch(r'/\d{4}/\d{2}/[^/]+\.html',u.path):continue
   if key=='unit42' and not re.fullmatch(r'/[a-z0-9][a-z0-9-]*/?',u.path):continue
   if key=='microsoft' and not re.fullmatch(r'/[a-z]{2}-[a-z]{2}/security/blog/\d{4}/\d{2}/\d{2}/[^/]+/',u.path):continue
@@ -162,8 +156,6 @@ def parse_security_feed(key,body):
   if key=='crowdstrike':
    try:date='发布 '+datetime.strptime(date,'%b %d, %Y %H:%M:%S%z').date().isoformat()
    except ValueError:pass
-  if key=='unknowncheats':
-   date=' · '.join(filter(None,(clean(entry.findtext('category')),_vendor_date(date))))
   rows.append({'title':title,'url':url,'meta':date})
   if len(rows)==24:break
  if not rows:raise ValueError('No valid security research entries')
@@ -825,7 +817,6 @@ def parse_source(key,body):
  if key in AUTO_NEWS:return parse_auto_news(key,body)
  if key in INTERNATIONAL_NEWS:return parse_international_news(key,body)
  if key=='maoyan':return parse_maoyan_board(body)
- if key=='netflix':return parse_netflix_top10(body)
  if key=='ithome_rank':return parse_ithome_rank(body)
  if key=='douyin':return parse_douyin_hot(body)
  if key=='kuaishou':return parse_kuaishou_hot(body)
@@ -990,7 +981,7 @@ def parse_source(key,body):
    url=clean(item.findtext('link'))
    if not re.fullmatch(r'https://thehackernews\.com/\d{4}/\d{2}/[a-zA-Z0-9_%-]+\.html',url):continue
    add(item.findtext('title'),url,item.findtext('pubDate') or '')
- elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','freebuf','exploitdb']:
+ elif key in ['sspai' ,'hellogithub','geekpark','qbitai','woshipm','oschina','exploitdb']:
   root=ET.fromstring(body)
   for item in root.findall('.//item'):add(item.findtext('title'),item.findtext('link') or '',item.findtext('pubDate') or '')
  elif key=='juejin':
@@ -1105,13 +1096,6 @@ def parse_source(key,body):
    read=material.get('statRead');author=clean(material.get('authorName') or '')
    meta=[p for p in [author,(f'{read:,} 阅读' if isinstance(read,int) and not isinstance(read,bool) and read>=0 else '')] if p]
    add(title,'https://36kr.com/p/'+item_id,' · '.join(meta) or '36氪热榜')
- elif key=='huxiu':
-  try:text=body.decode('utf-8')
-  except UnicodeDecodeError:text=body.decode('gb18030')
-  parser=Links();parser.feed(text)
-  for href,title in parser.links:
-   url=urljoin(SOURCES[key]['url'],href)
-   if re.fullmatch(r'https://www\.huxiu\.com/article/\d+\.html',url) and len(title)>6:add(title,url)
  elif key=='so_hot':
   data=json.loads(body)
   items=data.get('items') if isinstance(data,dict) else None
@@ -1227,8 +1211,6 @@ def parse_source(key,body):
  if not unique:raise ValueError('No valid source entries')
  return unique[:24]
 
-FREEBUF_SELECTOR = 'a[href*="/articles/"][href*=".html"], a[href*="/news/"][href*=".html"]'
-FREEBUF_FEEDS = ('https://www.freebuf.com/feed','https://www.freebuf.com/rss')
 WEEKLY_BACKUP = 'https://raw.githubusercontent.com/ruanyf/weekly/master/README.md'
 
 def nvd_endpoint():
@@ -1238,7 +1220,7 @@ def nvd_endpoint():
 def request_body(url,timeout=25):
  req=urllib.request.Request(url,headers={**({'Referer':'https://www.bilibili.com/'} if urlparse(url).hostname=='api.bilibili.com' else {'Referer':'https://movie.douban.com/'} if urlparse(url).hostname=='movie.douban.com' else {}),'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36','Accept':'application/atom+xml,application/rss+xml,application/json,text/html;q=0.9,*/*;q=0.8','Accept-Language':'zh-CN,zh;q=0.9,en;q=0.8'})
  limit=512_000 if url==CVE_RECORD_BASE+'deltaLog.json' else 12_000_000 if urlparse(url).hostname in ['www.elastic.co','elastic.co','services.nvd.nist.gov'] else 4_000_000
- # 对端提前断开连接时 read() 会抛 IncompleteRead（Netflix 的 tudum 页偶发），重试即可拿到完整正文
+ # 对端提前断开连接时 read() 会抛 IncompleteRead，重试即可拿到完整正文
  for attempt in range(3):
   try:
    with urllib.request.urlopen(req,timeout=timeout) as r:body=r.read(limit)
@@ -1249,16 +1231,6 @@ def request_body(url,timeout=25):
  if b'aliyun_waf_aa' in body[:2000]:raise ValueError('Source returned an access verification page')
  return body
 
-def parse_freebuf_feed(body):
- root=ET.fromstring(body);rows=[]
- atom={'a':'http://www.w3.org/2005/Atom'}
- for item in root.findall('.//item'):
-  rows.append({'title':item.findtext('title'),'url':item.findtext('link'),'meta':item.findtext('pubDate')})
- for item in root.findall('a:entry',atom):
-  link=next((a.get('href') for a in item.findall('a:link',atom) if a.get('rel','alternate')=='alternate'),'')
-  rows.append({'title':item.findtext('a:title',namespaces=atom),'url':link,'meta':item.findtext('a:updated',namespaces=atom)})
- return normalize_freebuf_rows(rows)
-
 def parse_weekly_backup(body):
  text=body.decode('utf-8');rows=[]
  for issue,title,path in re.findall(r'-\s*第\s*(\d+)\s*期[：:]\s*\[([^\n]+?)\]\((docs/issue-\d+\.md)\)',text):
@@ -1267,38 +1239,6 @@ def parse_weekly_backup(body):
  if not rows:raise ValueError('No weekly issues in official repository')
  return [row for _,row in sorted(rows,key=lambda pair:pair[0],reverse=True)[:24]]
 
-
-def normalize_freebuf_rows(rows):
- items=[];seen=set()
- for row in rows:
-  title=clean(row.get('title'));url=urljoin(SOURCES['freebuf']['url'],row.get('url') or '')
-  if not re.fullmatch(r'https://www\.freebuf\.com/(?:news|articles)(?:/[A-Za-z0-9_-]+)*/\d+\.html',url):continue
-  if len(title)<3 or url in seen:continue
-  seen.add(url);item={'title':title,'url':url,'meta':clean(row.get('meta'))};cover=clean_cover('freebuf',row.get('cover'),SOURCES['freebuf']['url'])
-  if cover:item['cover']=cover
-  items.append(item)
- if not items:raise ValueError('No valid FreeBuf article entries')
- return items[:24]
-
-def fetch_freebuf_items():
- from playwright.sync_api import sync_playwright
- with sync_playwright() as playwright:
-  browser=playwright.chromium.launch(headless=os.environ.get('FREEBUF_HEADLESS') == '1',channel=os.environ.get('FREEBUF_BROWSER_CHANNEL') or None)
-  try:
-   page=browser.new_page(locale='zh-CN',viewport={'width':1440,'height':1000})
-   page.goto(SOURCES['freebuf']['endpoint'],wait_until='domcontentloaded',timeout=60000)
-   try:page.wait_for_load_state('networkidle',timeout=20000)
-   except Exception:pass
-   if '验证' in page.title():raise RuntimeError('FreeBuf returned a verification page')
-   # 首页改版后 .article-item 那层结构没了，等待固定选择器会一直超时；
-   # 改成直接按"链接 + 标题"抽取，结构再变也不会卡在 wait_for 上。
-   rows=page.evaluate("""() => Array.from(document.querySelectorAll('a[href*="/articles/"], a[href*="/news/"]')).map(a => {
-     const img = a.querySelector('img') || a.closest('li, article, div')?.querySelector('img');
-     return {title: (a.textContent || '').trim(), url: a.href,
-             cover: (img?.getAttribute('data-src') || img?.src || ''), meta: ''};
-   })""")
-   return normalize_freebuf_rows(rows)
-  finally:browser.close()
 
 YOUTUBE_TRENDING_ENDPOINTS=(
  ('https://kworb.net/youtube/trending.html','kworb'),
@@ -1329,33 +1269,6 @@ def duration_text(seconds):
  if isinstance(seconds,bool) or not isinstance(seconds,(int,float)) or seconds<=0:return ''
  seconds=int(seconds);hours,remainder=divmod(seconds,3600);minutes,second=divmod(remainder,60)
  return f'{hours}:{minutes:02d}:{second:02d}' if hours else f'{minutes}:{second:02d}'
-
-def parse_netflix_top10(body):
- text=body.decode('utf-8')
- table=re.search(r'<table\b[^>]*>(.*?)</table>',text,re.S)
- if not table:raise ValueError('Missing Netflix Top 10 table')
- def cell(row,marker):
-  match=re.search(r'<td\b[^>]*'+marker+r'[^>]*>(.*?)</td>',row,re.S)
-  return clean(unescape(re.sub(r'<[^>]+>','',match.group(1)))) if match else ''
- rows=[]
- for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',table.group(1),re.S):
-  title_cell=re.search(r'<td\b[^>]*class="title"[^>]*>(.*?)</td>',row,re.S)
-  if not title_cell:continue
-  block=title_cell.group(1)
-  name=re.search(r'<button\b[^>]*>(.*?)</button>',block,re.S)
-  title=clean(unescape(re.sub(r'<[^>]+>','',name.group(1)))) if name else ''
-  rank=re.search(r'<span\b[^>]*class="rank"[^>]*>\s*(\d+)\s*</span>',block)
-  if not title or not rank:continue
-  meta=[]
-  views=cell(row,'data-uia="top10-table-row-views"')
-  weeks=cell(row,'data-uia="top10-table-row-weeks"')
-  if views:meta.append('观看 '+compact_count(views)+'次')
-  if weeks.isdigit():meta.append('在榜 '+weeks+' 周')
-  item={'title':title,'url':'https://www.netflix.com/search?q='+quote(title),'meta':' · '.join(meta)}
-  rows.append((int(rank.group(1)),item))
- if not rows:raise ValueError('No valid Netflix Top 10 rows')
- rows.sort(key=lambda pair:pair[0])
- return [item for _,item in rows]
 
 def parse_kworb_trending(body):
  text=body.decode('utf-8')
@@ -1526,19 +1439,6 @@ def fetch(key):
   items=parse_source(key,request_cn_ai(key))
   items=[row if re.search(r'[㐀-鿿]',row['title']) else translate_security_titles([row])[0] for row in items]
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}
- if key=='freebuf':
-  items=None;used=source['endpoint']
-  for feed in FREEBUF_FEEDS:
-   for attempt in range(2):
-    try:items=parse_freebuf_feed(request_body(feed,timeout=40));used=feed;break
-    except Exception as error:
-     print(f'FREEBUF_FEED_FALLBACK {feed} attempt={attempt+1}: {type(error).__name__}: {error}')
-     # 只对"网络抖动"重试同一个源；403/结构变化这类确定性失败直接换下一个入口
-     if attempt or isinstance(error,HTTPError) or not isinstance(error,(URLError,TimeoutError,IncompleteRead)):break
-     time.sleep(1)
-   if items:break
-  if not items:items=fetch_freebuf_items()
-  return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':used,'updatedAt':datetime.now(timezone.utc).isoformat(),'items':cache_source_covers(key,items)}
  if key=='imdb':
   items=cache_source_covers(key,fetch_imdb_items())
   return {**{k:v for k,v in source.items() if k!='endpoint'},'sourceUrlUsed':source['endpoint'],'updatedAt':datetime.now(timezone.utc).isoformat(),'items':items}

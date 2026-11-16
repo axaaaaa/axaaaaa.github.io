@@ -46,26 +46,7 @@ class Tests(unittest.TestCase):
   self.assertEqual(rows[0]['url'],'https://www.anquanke.com/post/id/123')
  def test_new_rss_sources(self):
   body=b'<rss><channel><item><title>Public article</title><link>https://example.com/post/1</link></item></channel></rss>'
-  for key in ['woshipm','oschina','freebuf']:self.assertEqual(len(x.parse_source(key,body)),1)
- def test_freebuf_rendered_rows(self):
-  rows=[{'title':' Test article ', 'url':'/news/123.html'},
-        {'title':'Duplicate article','url':'https://www.freebuf.com/news/123.html'},
-        {'title':'Technical article','url':'/articles/web/456.html'},
-        {'title':'Author profile','url':'/author/test'},
-        {'title':'Wrong domain','url':'https://example.com/news/999.html'}]
-  result=x.normalize_freebuf_rows(rows)
-  self.assertEqual(len(result),2)
-  self.assertEqual(result[0]['title'],'Test article')
-  self.assertEqual(result[1]['url'],'https://www.freebuf.com/articles/web/456.html')
- def test_freebuf_empty(self):
-  with self.assertRaises(ValueError):x.normalize_freebuf_rows([])
- def test_freebuf_browser_route(self):
-  rows=[{'title':'Test article','url':'https://www.freebuf.com/news/123.html','meta':''}]
-  with patch.object(x,'fetch_freebuf_items',return_value=rows),patch.object(x.urllib.request,'urlopen',side_effect=AssertionError('RSS should not be used')):
-   result=x.fetch('freebuf')
-  self.assertEqual(result['items'],rows)
-  self.assertTrue(result['updatedAt'])
-  self.assertNotIn('unavailable',result)
+  for key in ['woshipm','oschina']:self.assertEqual(len(x.parse_source(key,body)),1)
  def test_empty(self):
   with self.assertRaises(ValueError):x.parse_source('toutiao',b'{"data":[]}')
  def test_partial_outage(self):
@@ -76,9 +57,6 @@ class Tests(unittest.TestCase):
     return {'items':[{'title':'new'}],'updatedAt':'2026-10-31T00:00:00Z'}
    with patch('sys.argv',['fetch','--output',str(p)]),patch.object(x,'fetch',side_effect=fetch):x.main()
    result=json.loads(p.read_text())['sources']['sspai'];self.assertEqual(result['items'],old['items']);self.assertEqual(result['updatedAt'],old['updatedAt']);self.assertEqual(result['collection']['status'],'stale');self.assertIn('offline',result['collection']['error'])
- def test_freebuf_atom(self):
-  body=b'<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>Test article</title><link href="https://www.freebuf.com/news/123.html"/><updated>2026-11-01</updated></entry></feed>'
-  self.assertEqual(x.parse_freebuf_feed(body)[0]['url'],'https://www.freebuf.com/news/123.html')
  def test_weekly_official_backup(self):
   body='- 第 417 期：[New issue](docs/issue-417.md)\n- 第 416 期：[Old issue](docs/issue-416.md)'.encode()
   self.assertTrue(x.parse_weekly_backup(body)[0]['url'].endswith('issue-417.md'))
@@ -105,10 +83,6 @@ class AddedSourcesTests(unittest.TestCase):
    with patch.object(x,'request_body',side_effect=[OSError('redirect loop'),b'backup']) as req,patch.object(x,'parse_source',return_value=rows):
     self.assertEqual(x.fetch(key)['sourceUrlUsed'],'https://att.ijingyi.com/')
    self.assertEqual(req.call_args_list[0].args[0],'https://bbs.ijingyi.com/forum.php')
- def test_freebuf_second_feed(self):
-  body=b'<rss><channel><item><title>Report</title><link>https://www.freebuf.com/news/123.html</link></item></channel></rss>'
-  with patch.object(x,'request_body',side_effect=[OSError('offline'),body]),patch.object(x,'cache_source_covers',side_effect=lambda _,rows:rows):
-   self.assertEqual(x.fetch('freebuf')['sourceUrlUsed'],'https://www.freebuf.com/rss')
  def test_douban_transient_network_retry(self):
   from urllib.error import URLError
   rows=[{'title':'Movie','url':'https://movie.douban.com/subject/123/'}]
@@ -172,18 +146,6 @@ class AdditionalSecuritySourcesTests(unittest.TestCase):
   self.assertEqual(row['meta'],'发布 2026-11-05')
 
 class MediaSourcesTests(unittest.TestCase):
- def test_netflix_top10_table(self):
-  body=("<table><thead><tr><th>Ranking</th><th></th><th>Views</th></tr></thead><tbody>"
-        "<tr><td class=\"title\"><span class=\"rank\">01</span><button>A Dog&#x27;s <b>Perfect</b> Christmas</button>"
-        "<img src=\"https://dnm.nflximg.net/poster.jpg\"></td>"
-        "<td data-uia=\"top10-table-row-weeks\">1</td><td data-uia=\"top10-table-row-views\">8,600,000</td>"
-        "<td data-uia=\"top10-table-row-runtime\">1:41</td></tr></tbody></table>")
-  row,=x.parse_netflix_top10(body.encode())
-  self.assertEqual(row['title'],"A Dog's Perfect Christmas")
-  self.assertEqual(row['meta'],'观看 860 万次 · 在榜 1 周')
-  self.assertIn('q=A%20Dog',row['url'])
-  with self.assertRaises(ValueError):x.parse_netflix_top10(b'<html></html>')
-
  def test_youtube_trending_piped(self):
   data=[{'url':'/watch?v=DxgDeW-gIcU','title':'Live show','uploaderName':'Channel','views':970594,'duration':-1},
         {'url':'/watch?v=abcdefghijk','title':'Music video','uploaderName':'Band','views':12300,'duration':215},

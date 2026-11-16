@@ -50,15 +50,6 @@ class SecurityResearchTests(unittest.TestCase):
    row,=f.fetch('ubuntu_security')['items']
   self.assertEqual((row['url'],row['title'],row['originalTitle']),(url,'Linux 内核漏洞','USN-9022-1: Linux kernel vulnerabilities'))
   self.assertIn('USN-9022-1',row['meta'])
- def test_unknowncheats_public_threads_only(self):
-  url='https://www.unknowncheats.me/forum/counter-strike-2-a/780609-example-new-post.html'
-  good=f'<item><title>Forum question</title><link>{url}</link><category>Counter-Strike 2</category><pubDate>Tue, 10 Nov 2026 11:24:59 GMT</pubDate></item>'
-  bad='<item><title>Offsite</title><link>https://example.com/forum/category/780609-test.html</link></item><item><title>Downloads</title><link>https://www.unknowncheats.me/forum/downloads.php</link></item>'
-  body=('<rss><channel>'+good+bad+'</channel></rss>').encode()
-  with patch.object(f,'request_body',return_value=body),patch.object(f,'translate_title',return_value='论坛问题'):
-   row,=f.fetch('unknowncheats')['items']
-  self.assertEqual((row['url'],row['title'],row['originalTitle']),(url,'论坛问题','Forum question'))
-  self.assertIn('Counter-Strike 2 · 2026-11-10',row['meta'])
  def test_ai_official_rss_domains_and_translation(self):
   for key,url in [('openai_news','https://openai.com/index/model-news/'),('deepmind_news','https://deepmind.google/blog/model-news/')]:
    with self.subTest(key=key),patch.object(f,'request_body',return_value=self.feed(url)),patch.object(f,'translate_title',return_value='模型更新'):

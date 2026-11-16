@@ -6,11 +6,11 @@
 
 
 
-  <header class="events-header"><div class="events-title-line"><h2 id="global-events-heading">{{selectedDay==='previous'?'前一天海外在聊什么':'昨天海外在聊什么'}}</h2></div><div class="events-actions"><div class="events-day-tabs" role="group" aria-label="海外热点日期"><button type="button" :aria-pressed="selectedDay==='latest'" @click="changeDay('latest')">最新一天</button><button type="button" :aria-pressed="selectedDay==='previous'" @click="changeDay('previous')">前一天</button></div><span>数据 {{dataDate.slice(5)}}（UTC）{{error?' · 缓存':''}}</span><button type="button" :aria-pressed="paused" @click="paused=!paused">{{paused?'继续轮播':'暂停轮播'}}</button><a href="https://xbangdan.com/global/" target="_blank" rel="noopener noreferrer">来源：X榜单海外 ↗</a></div></header>
+  <header class="events-header"><div class="events-title-line"><h2 id="global-events-heading">{{selectedDay==='previous'?'前一天海外在聊什么':'昨天海外在聊什么'}}</h2></div><div class="events-actions"><div class="events-day-tabs" role="group" aria-label="海外热点日期"><button type="button" :aria-pressed="selectedDay==='latest'" @click="changeDay('latest')">最新一天</button><button type="button" :aria-pressed="selectedDay==='previous'" @click="changeDay('previous')">前一天</button></div><span>数据 {{dataDate.slice(5)}}（UTC）{{error?' · 缓存':''}}</span><button type="button" :aria-pressed="paused" @click="paused=!paused">{{paused?'继续轮播':'暂停轮播'}}</button><a href="https://xbangdan.com/global/" target="_blank" rel="noopener noreferrer">来源：X榜单海外 ↗</a></div></header>
 
 
 
-  <p v-if="dayUnavailable" class="events-day-empty" role="status">前一天暂无归档数据，请切换到最新一天。</p>
+  <p v-if="dayUnavailable" class="events-day-empty" role="status">前一天暂无归档数据，请切换到最新一天。</p>
   <div v-if="events.length" class="events-layout">
 
 
@@ -31,7 +31,7 @@
 
 
 
-   <div ref="viewport" class="events-viewport" tabindex="0" aria-label="海外热点轮播，悬停或聚焦暂停，可左右滚动" @mouseenter="hovered=true" @mouseleave="hovered=false" @focusin="focused=true" @focusout="focused=false" @keydown.left.prevent="move(-1)" @keydown.right.prevent="move(1)">
+   <div ref="viewport" class="events-viewport" tabindex="0" aria-label="海外热点轮播，可左右滑动或滚动" @mouseenter="canHover&&(hovered=true)" @mouseleave="hovered=false" @focusin="focused=true" @focusout="focused=false" @keydown.left.prevent="move(-1)" @keydown.right.prevent="move(1)" @pointerdown="hold" @pointerup="release" @pointercancel="release" @pointerleave="release" @touchstart.passive="hold" @touchmove.passive="hold" @touchend="release" @touchcancel="release" @wheel.passive="onWheel">
 
 
 
@@ -99,7 +99,7 @@ export default {
 
 
 
- data:()=>({events:[],dataDate:'',error:false,paused:false,hovered:false,focused:false,selectedId:'',failedImages:{},controller:null,frame:0,lastFrame:0,scrollPosition:0,reduced:false,mediaQuery:null}),
+ data:()=>({events:[],dataDate:'',error:false,paused:false,hovered:false,focused:false,selectedId:'',failedImages:{},controller:null,frame:0,lastFrame:0,scrollPosition:0,reduced:false,mediaQuery:null,canHover:true,holding:false,idleTimer:0}),
 
 
 
@@ -107,11 +107,11 @@ export default {
 
 
 
- async mounted(){this.mediaQuery=window.matchMedia('(prefers-reduced-motion: reduce)');this.reduced=this.mediaQuery.matches;this.mediaQuery.addEventListener?.('change',this.motionChanged);await this.load();this.$nextTick(()=>this.start());},
+ async mounted(){this.mediaQuery=window.matchMedia('(prefers-reduced-motion: reduce)');this.reduced=this.mediaQuery.matches;this.mediaQuery.addEventListener?.('change',this.motionChanged);this.canHover=window.matchMedia('(hover:hover) and (pointer:fine)').matches;await this.load();this.$nextTick(()=>this.start());},
 
 
 
- beforeUnmount(){this.controller?.abort();cancelAnimationFrame(this.frame);this.mediaQuery?.removeEventListener?.('change',this.motionChanged);},
+ beforeUnmount(){this.controller?.abort();cancelAnimationFrame(this.frame);clearTimeout(this.idleTimer);this.mediaQuery?.removeEventListener?.('change',this.motionChanged);},
 
 
 
@@ -139,6 +139,22 @@ export default {
 
 
 
+ hold(){clearTimeout(this.idleTimer);this.holding=true;},
+
+
+
+ onWheel(){this.hold();this.release();},
+
+
+
+ release(){clearTimeout(this.idleTimer);this.idleTimer=setTimeout(()=>{this.settle();this.holding=false;},1800);},
+
+
+
+ settle(){const viewport=this.$refs.viewport;const track=this.$refs.track;if(!viewport||!track)return;const loop=track.scrollWidth/2;if(loop>0&&viewport.scrollLeft>=loop)viewport.scrollLeft-=loop;this.scrollPosition=viewport.scrollLeft;},
+
+
+
   start(){
 
 
@@ -147,7 +163,7 @@ export default {
 
 
 
-    if(viewport&&track&&this.secondary.length>1&&!this.paused&&!this.hovered&&!this.focused&&!this.reduced&&!document.hidden&&this.$el.getBoundingClientRect().height>0){
+    if(viewport&&track&&this.secondary.length>1&&!this.paused&&!this.hovered&&!this.focused&&!this.reduced&&!this.holding&&!document.hidden&&this.$el.getBoundingClientRect().height>0){
 
 
 
@@ -243,7 +259,7 @@ export default {
 
 
 
-.events-header{position:relative;inset-block-start:-9px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.events-header h2{margin:0;font-size:17px;font-weight:700}.events-header p{margin:5px 0 0;font-size:12px;color:var(--ev-muted)}.events-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--ev-muted);font-size:11px}.events-actions a{color:inherit;text-decoration:none}
+.events-header{position:relative;inset-block-start:-9px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.events-header h2{margin:0;font-size:17px;font-weight:700}.events-header p{margin:5px 0 0;font-size:12px;color:var(--ev-muted)}.events-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--ev-muted);font-size:11px}.events-actions a{color:inherit;text-decoration:none}
 
 
 
@@ -255,7 +271,7 @@ export default {
 
 
 
-.events-viewport{overflow-x:auto;overflow-y:hidden;min-width:0;border-radius:13px;scrollbar-width:thin;scrollbar-color:#a0b2c5 transparent;overscroll-behavior-x:contain}.events-track{display:flex;width:max-content;min-height:280px}.events-group{display:grid;grid-template-rows:repeat(2,133px);grid-auto-flow:column;grid-auto-columns:230px;gap:14px;padding-right:14px}.event-small{width:230px;height:133px}.event-small:nth-child(3n){background:linear-gradient(135deg,#412b72,#794673)}.event-small:nth-child(3n+1){background:linear-gradient(135deg,#124552,#246e76)}.event-small .event-top{top:10px;font-size:10px}.event-small .event-top b{font-size:11px}.event-small .event-copy{bottom:12px;gap:5px}.event-small .event-copy strong{font-size:14px;line-height:1.5}.event-small .event-stats{font-size:10px}.event-small .event-top>span{padding:2px 6px}footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;color:var(--ev-muted);font-size:11px}.x-global-events button:focus-visible,.event-tile:focus-visible,.events-viewport:focus-visible,.events-actions a:focus-visible{outline:2px solid #e99c46;outline-offset:3px}
+.events-viewport{overflow-x:auto;overflow-y:hidden;min-width:0;border-radius:13px;scrollbar-width:thin;scrollbar-color:#a0b2c5 transparent;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}.events-track{display:flex;width:max-content;min-height:280px}.events-group{display:grid;grid-template-rows:repeat(2,133px);grid-auto-flow:column;grid-auto-columns:230px;gap:14px;padding-right:14px}.event-small{width:230px;height:133px}.event-small:nth-child(3n){background:linear-gradient(135deg,#412b72,#794673)}.event-small:nth-child(3n+1){background:linear-gradient(135deg,#124552,#246e76)}.event-small .event-top{top:10px;font-size:10px}.event-small .event-top b{font-size:11px}.event-small .event-copy{bottom:12px;gap:5px}.event-small .event-copy strong{font-size:14px;line-height:1.5}.event-small .event-stats{font-size:10px}.event-small .event-top>span{padding:2px 6px}footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;color:var(--ev-muted);font-size:11px}.x-global-events button:focus-visible,.event-tile:focus-visible,.events-viewport:focus-visible,.events-actions a:focus-visible{outline:2px solid #e99c46;outline-offset:3px}
 
 
 
@@ -353,7 +369,7 @@ export default {
 
 
 
-
-<style scoped>
-.events-day-tabs{display:flex;gap:4px}.events-day-tabs button[aria-pressed="true"]{color:#b7682d;background:rgba(233,156,70,.14);border-color:rgba(233,156,70,.4);font-weight:600}.events-day-empty{padding:24px 0;margin:0;color:var(--ev-muted);font-size:13px}
-</style>
+
+<style scoped>
+.events-day-tabs{display:flex;gap:4px}.events-day-tabs button[aria-pressed="true"]{color:#b7682d;background:rgba(233,156,70,.14);border-color:rgba(233,156,70,.4);font-weight:600}.events-day-empty{padding:24px 0;margin:0;color:var(--ev-muted);font-size:13px}
+</style>

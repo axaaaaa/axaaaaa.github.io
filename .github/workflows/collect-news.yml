@@ -8,7 +8,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '7,22,37,52 * * * *' # 每小时 4 个采集窗口（GitHub 定时任务是尽力而为，实际会被延迟/合并）
+    - cron: '17 * * * *' # 每小时整点后第 17 分钟采集一次（GitHub 定时任务是尽力而为，实际可能被延迟/合并）
 
 permissions:
   contents: read

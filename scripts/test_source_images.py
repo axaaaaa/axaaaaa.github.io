@@ -25,8 +25,6 @@ class Tests(unittest.TestCase):
  def test_partial_failure(self):
   with patch.object(x,'detail_cover',side_effect=OSError('offline')):r=x.attach_covers('sspai',[{'title':'One','url':'https://sspai.com/post/1'}],b'<rss/>','https://sspai.com/')
   self.assertEqual(r[0]['title'],'One');self.assertNotIn('cover',r[0])
- def test_freebuf(self):
-  r=sources.normalize_freebuf_rows([{'title':'Article','url':'/news/123.html','cover':'https://image.3001.net/a.jpg'}]);self.assertEqual(r[0]['cover'],'https://image.3001.net/a.jpg')
  def test_uisdc_excludes_navigation(self):
   html='<a href="https://www.uisdc.com/guide-test">这是导航入口不是新闻文章</a><div id="home_list_normal"><a href="https://www.uisdc.com/article-test">这是真正的设计新闻文章标题</a></div>'
   rows=sources.parse_source('uisdc',html.encode());self.assertEqual(len(rows),1);self.assertTrue(rows[0]['url'].endswith('article-test'))

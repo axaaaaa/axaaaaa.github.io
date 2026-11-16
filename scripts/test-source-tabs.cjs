@@ -16,7 +16,6 @@ state.selectSourceCategory('security');
 assert.equal(state.sourceCategory,'security');
 assert.equal(state.sourceVisible('thehackernews'),false);
 for (const id of ['vendor_security','threat_research']) assert.equal(state.sourceVisible(id),true);
-assert.equal(state.sourceVisible('unknowncheats'),false);
 assert.equal(state.sourceVisible('unit42'),false);
 assert.equal(state.sourceVisible('checkpoint'),false);
 assert.equal(state.sourceVisible('dongchedi'),false);

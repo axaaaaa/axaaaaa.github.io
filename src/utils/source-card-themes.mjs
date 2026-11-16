@@ -9,7 +9,7 @@ const groups = {
   wire: ['x-global'],
   archive: ['x-articles'],
   ledger: ['sinafinance', 'fng', 'eastmoney', 'xueqiu', 'wallstreetcn', 'qq'],
-  notes: ['sspai', 'juejin', 'qbitai', '36kr', 'huxiu'],
+  notes: ['sspai', 'juejin', 'qbitai', '36kr'],
   tickets: ['ijingyi_new'],
   industrial: ['autohome', 'pcauto'],
   aero: ['geekpark'],

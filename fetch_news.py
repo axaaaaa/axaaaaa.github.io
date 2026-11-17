@@ -2,6 +2,7 @@
 import argparse
 import concurrent.futures
 import email.utils
+import html
 import json
 import re
 import urllib.request
@@ -14,6 +15,11 @@ SOURCES = [
     ('IT之家', 'https://www.ithome.com/rss/', '科技动态'),
     ('Hugging Face', 'https://huggingface.co/blog/feed.xml', 'AI 前沿'),
 ]
+
+def _plain(markup, limit=200):
+    """把 RSS 里的 HTML 描述压成纯文本，供列表展示与 AI 速览使用。"""
+    text = html.unescape(re.sub(r'<[^>]+>', ' ', markup or ''))
+    return re.sub(r'\s+', ' ', text).strip()[:limit]
 
 def parse_feed(xml, source, category):
     root = ET.fromstring(xml)
@@ -38,7 +44,13 @@ def parse_feed(xml, source, category):
             continue
         if not re.match(r'^https?://', url or '') or not title.strip():
             continue
-        result.append({'title': re.sub(r'\s+', ' ', title).strip(), 'url': url, 'source': source, 'category': category, 'publishedAt': date.astimezone(timezone.utc).isoformat()})
+        summary = _plain(
+            entry.findtext('description')
+            or entry.findtext('a:summary', namespaces=atom)
+            or entry.findtext('a:content', namespaces=atom)
+            or ''
+        )
+        result.append({'title': re.sub(r'\s+', ' ', title).strip(), 'url': url, 'source': source, 'category': category, 'summary': summary, 'publishedAt': date.astimezone(timezone.utc).isoformat()})
     return result[:16]
 
 def fetch(source):

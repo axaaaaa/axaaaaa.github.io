@@ -91,6 +91,14 @@ jobs:
       - name: Refresh NASA Astronomy Picture of the Day
         continue-on-error: true
         run: python fetch_nasa_apod.py --output nasa-apod.json
+      # AI 速览：调用 Cloudflare Workers AI 把头条压成三句话写回 news.json。
+      # 失败只跳过，不影响采集与部署；未配置 secrets 时会打印 DIGEST_SKIP。
+      - name: Generate AI digest
+        continue-on-error: true
+        run: python generate_digest.py --input news.json
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
       - name: Save headlines
         uses: actions/cache/save@v4
         with:

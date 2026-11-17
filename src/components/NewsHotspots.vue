@@ -5,7 +5,11 @@
       <div class="news-actions"><span class="news-updated" role="status">{{ status }}</span><button type="button" @click="expanded = !expanded" :aria-expanded="expanded">{{ expanded ? '收起' : '展开' }}</button></div>
     </header>
     <template v-if="expanded">
-      <div class="news-toolbar"><div class="news-filters" aria-label="资讯分类"><button v-for="filter in filters" :key="filter" type="button" :class="{ active: selected === filter }" :aria-pressed="selected === filter" @click="selected = filter; showAll = false">{{ filter }}</button></div><span>每3小时更新 · 点击阅读原文</span></div>
+      <div v-if="digest" class="news-digest">
+        <div class="news-digest-top"><span class="news-digest-badge">AI 速览</span><span v-if="digest.basedOn" class="news-digest-meta">基于 {{ digest.basedOn }} 条资讯</span></div>
+        <p class="news-digest-text">{{ digest.text }}</p>
+      </div>
+      <div class="news-toolbar"><div class="news-filters" aria-label="资讯分类"><button v-for="filter in filters" :key="filter" type="button" :class="{ active: selected === filter }" :aria-pressed="selected === filter" @click="selected = filter; showAll = false">{{ filter }}</button></div><span>每小时更新 · 点击阅读原文</span></div>
       <div v-if="loading && !items.length" class="news-empty" role="status">正在加载科技资讯…</div>
       <ol v-else-if="visible.length" class="news-grid">
         <li v-for="(item, index) in visible" :key="item.url"><a :href="item.url" target="_blank" rel="noopener noreferrer" :class="{'has-content-cover':Boolean(item.cover)}"><ContentCover :cover="item.cover" :source-key="item.source==='IT之家'?'ithome':'huggingface'" /><span class="news-rank" :class="{ top: index < 3 }">{{ index + 1 }}</span><div class="news-copy"><h3>{{ item.title }}</h3><div class="news-meta"><span>{{ item.source }}</span><span>{{ formatDate(item.publishedAt) }}</span></div></div><span class="news-arrow" aria-hidden="true">↗</span></a></li>
@@ -21,7 +25,7 @@ export default {
  components:{ContentCover},
   name: 'NewsHotspots',
   props: { dark: Boolean },
-  data: () => ({ items: [], updatedAt: '', loading: false, error: false, expanded: true, selected: '全部', filters: ['全部', 'AI 前沿', '科技动态'], showAll: false, controller: null }),
+  data: () => ({ items: [], digest: null, updatedAt: '', loading: false, error: false, expanded: true, selected: '全部', filters: ['全部', 'AI 前沿', '科技动态'], showAll: false, controller: null }),
   computed: {
     filtered() { return this.items.filter(item => this.selected === '全部' || item.category === this.selected); },
     visible() { return this.filtered.slice(0, this.showAll ? 24 : 6); },
@@ -53,6 +57,13 @@ export default {
       if (!Array.isArray(data.items) || !Number.isFinite(Date.parse(data.updatedAt))) throw new Error('invalid news');
       this.items = data.items.filter(item => typeof item.title === 'string' && typeof item.source === 'string' && /^https?:\/\//i.test(item.url)).slice(0, 24);
       this.updatedAt = data.updatedAt;
+      this.digest = this.normalizeDigest(data.digest);
+    },
+    normalizeDigest(value) {
+      if (!value || typeof value.text !== 'string') return null;
+      const text = value.text.trim();
+      if (text.length < 12) return null;
+      return { text, basedOn: Number(value.basedOn) || 0, model: typeof value.model === 'string' ? value.model : '' };
     }
   }
 };
@@ -64,4 +75,11 @@ export default {
 @media(max-width:700px){.news-heading{padding:16px;align-items:flex-start}.news-brand h2 span{display:none}.news-actions{flex-direction:column;align-items:flex-end;gap:2px}.news-updated{font-size:10px}.news-toolbar{margin:0 16px}.news-toolbar>span{display:none}.news-grid{grid-template-columns:1fr;padding:0 10px;gap:0}.news-grid a{min-height:72px}.news-bottom{padding:12px 16px}.news-bottom>span{max-width:70%;line-height:1.6}}
 
 .news-grid a.has-content-cover{flex-wrap:wrap}
+
+.news-digest{margin:0 24px 14px;padding:14px 16px 15px;border:1px solid rgba(241,118,77,.2);border-radius:13px;background:rgba(241,118,77,.055)}
+.news-digest-top{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.news-digest-badge{font-size:10px;font-weight:700;letter-spacing:1.4px;color:#e0703f;background:rgba(241,118,77,.15);padding:2px 7px;border-radius:6px}
+.news-digest-meta{font-size:11px;color:var(--news-muted)}
+.news-digest-text{margin:0;font-size:13px;line-height:1.78;color:var(--news-text)}
+@media(max-width:700px){.news-digest{margin:0 16px 12px;padding:12px 13px}.news-digest-text{font-size:12.5px;line-height:1.75}.news-digest-meta{font-size:10px}}
 </style>

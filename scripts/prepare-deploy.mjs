@@ -32,6 +32,7 @@ const items = [
   { from: path.join(root, 'scripts', 'fetch_hacker_news.py'), to: path.join(dist, 'fetch_hacker_news.py'), label: 'Hacker News 采集脚本' },
   { from: path.join(root, 'scripts', 'fetch_xueqiu.py'), to: path.join(dist, 'fetch_xueqiu.py'), label: '雪球热帖脚本' },
   { from: path.join(root, 'scripts', 'fetch_news.py'), to: path.join(dist, 'fetch_news.py'), label: '热点采集脚本' },
+  { from: path.join(root, 'scripts', 'generate_digest.py'), to: path.join(dist, 'generate_digest.py'), label: 'AI 速览脚本' },
 ];
 
 if (!existsSync(dist)) {

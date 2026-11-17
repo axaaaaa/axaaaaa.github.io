@@ -38,6 +38,8 @@ MAX_TOKENS = 3600
 MAX_CHARS = 2400
 # 素材指纹相同且上次生成不足这么多小时，就直接沿用，省 Workers AI 额度
 REUSE_WINDOW_HOURS = 3
+# 两次生成之间的最小间隔：无论定时器怎么配，都按这个节奏走
+MIN_INTERVAL_HOURS = 2.5
 MAX_SECTIONS = 16
 MAX_SECURITY = 18
 MAX_HOT = 18
@@ -824,16 +826,20 @@ def main():
     fingerprint = source_fingerprint(items)
     previous_digest = load_previous_digest(args.previous)
     if previous_digest:
-        # 素材和上一轮完全一样就别再烧一次额度：免费层 neurons 每小时都在被消耗，
-        # 内容没变还重新生成，只会把 429 提前撞上来。
-        same_source = previous_digest.get('sourceHash') == fingerprint
         generated = previous_digest.get('generatedAt') or ''
         try:
             age = (datetime.now(timezone.utc)
                    - datetime.fromisoformat(generated.replace('Z', '+00:00'))).total_seconds()
         except ValueError:
             age = 0
-        if same_source and age < REUSE_WINDOW_HOURS * 3600:
+        # 时间闸门：触发频率（GitHub cron / Cloudflare Worker）随时可能被改错或失效，
+        # 真正决定「多久生成一次」的应该是这里，这样即使每小时都触发也不会把额度烧光。
+        if age < MIN_INTERVAL_HOURS * 3600:
+            if keep_previous_digest(path, data, args.previous):
+                print(f'DIGEST_REUSE 距上次生成只有 {age / 3600:.1f}h，未到 {MIN_INTERVAL_HOURS}h 间隔')
+                return 0
+        # 素材和上一轮完全一样也别重复生成
+        elif previous_digest.get('sourceHash') == fingerprint and age < REUSE_WINDOW_HOURS * 3600:
             if keep_previous_digest(path, data, args.previous):
                 print(f'DIGEST_REUSE 素材与上一轮一致（{age / 3600:.1f}h 前），沿用上次速览省额度')
                 return 0

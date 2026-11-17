@@ -44,6 +44,10 @@ MAX_REVERSE = 14
 MAX_FINANCE = 16
 MAX_TECH_MEDIA = 16
 MAX_X = 12
+MAX_OPEN_SOURCE = 12
+MAX_MARKET = 10
+MAX_ACADEMIC = 8
+MAX_AI_VENDOR = 14
 
 # 安全类来源（取自 extra-hotspots.json），用于生成固定的「网络安全」板块
 SECURITY_KEYS = [
@@ -64,6 +68,13 @@ FINANCE_KEYS = ['eastmoney', 'sinafinance', 'yicai', 'wallstreetcn', '36kr']
 # 科技资讯（国内科技媒体与开发者社区）
 TECH_MEDIA_KEYS = ['ithome_rank', 'geekpark', 'qbitai', 'sspai', 'ruanyifeng',
                    'hellogithub', 'juejin', 'oschina']
+# 学术前沿
+ACADEMIC_KEYS = ['arxiv']
+# AI 厂商官方发布（每家取一条，保证不被某一家刷屏）
+AI_VENDOR_KEYS = ['openai_news', 'anthropic_news', 'deepmind_news', 'mistral_news',
+                  'meta_ai_news', 'qwen_news', 'kimi_news', 'glm_news', 'deepseek_news',
+                  'bytedance_news', 'tencent_ai_news', 'minimax_news', 'minimax_api',
+                  'mistral_api', 'aa_models']
 
 # 这三个板块是固定版面，模型漏掉就当本次失败、换下一个模型重试
 REQUIRED_SECTIONS = ['网络安全', '新闻热搜', '短视频热榜']
@@ -97,7 +108,7 @@ TECH_TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式�
 请按主题把它们归成 5～7 个板块，每个板块写一段概述，要求：
 1. 只依据材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
 2. 板块名用 2～6 个字的名词短语，例如「AI 与大模型」「手机与硬件」「行业与资本」「游戏与娱乐」；不要用「科技动态」「其他」「综合」这类笼统名字；材料撑不起一个板块的主题就不要硬凑；
-2b. **每个板块的 title 开头必须带一个与主题贴合的 emoji**（如「🤖 AI 与大模型」「📱 手机与硬件」「🎮 游戏与娱乐」），一个板块只用一个，且各板块之间不重复；**不要用 🛡️ 🔥 🎬 🌍 🔧 💰 💻 🐦 这八个**（固定版面已占用）；
+2b. **每个板块的 title 开头必须带一个与主题贴合的 emoji**（如「🤖 AI 与大模型」「📱 手机与硬件」「🎮 游戏与娱乐」），一个板块只用一个，且各板块之间不重复；**不要用 🛡️ 🔥 🎬 🌍 🔧 💰 💻 🐦 🚀 📈 🔬 🏢 这几个**（固定版面已占用）；
 3. **正文写 3～5 行**，行与行之间用换行符分隔；**每一行都必须以 emoji 开头**，同一板块内各行用不同的 emoji，行内其余文字不要再加 emoji；**不要用「-」「*」「•」「1.」这类列表符号**；
 3b. **每行覆盖一个话题方向**：同一家公司、同一类产品、同一个话题的多条材料要合并进同一行（例如手机新品与耳机预售合成「消费电子」一行），**不要一条材料写一行，也不要只写一条就收尾**；每行 1～2 句、整个板块合计 80～160 字，说清发生了什么，不要罗列型号与价格清单；
 4. 篇幅不限，但每句都要带新信息，同一件事只说一次，不要跨板块重复；
@@ -148,6 +159,36 @@ FIXED_TEMPLATE = """下面是今天采集到的各类榜单与专项材料（分
 
 {x_block}"""
 
+NEW_TEMPLATE = """下面是今天采集到的开源项目、市场行情、学术论文与 AI 厂商官方动态（分块给出，每块注明对应板块）。
+
+请严格按「GitHub 与开源」「市场行情」「学术前沿」「AI 厂商官方」这四个板块各写一段概述。四个板块一个都不能少，不能改名、不能合并，也不要新增其他板块。
+
+通用要求：
+1. **每个板块的 title 开头必须带一个与板块主题贴合的 emoji**（建议「🚀 GitHub 与开源」「📈 市场行情」「🔬 学术前沿」「🏢 AI 厂商官方」），四个 emoji 互不重复；**正文里每行开头也要带一个与该条内容贴合的 emoji**；
+2. 只依据对应材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
+3. **每个板块只能用它自己那块材料**，不要把一类材料写进另一类板块；
+4. **全部用中文写**：项目名、论文标题、模型名可以保留英文原名，其余一律译成中文；
+5. 不要提到材料里没有的公司、产品、地区或数字；
+6. **正文写 3～5 行**，行与行之间用换行符分隔；**每一行都必须以 emoji 开头**，同一板块内各行用不同的 emoji，行内其余文字不要再加 emoji；**不要用「-」「*」「•」「1.」这类列表符号**；
+7. **每行覆盖一个话题方向**，同类信息合并进一行，不要一条材料写一行，也不要只写一条就收尾；每行 1～2 句、整个板块合计 80～180 字；
+
+各板块的具体要求：
+8. 「GitHub 与开源」：概括今天 trending 的项目在做什么（说清它解决什么问题、什么语言），可以点名项目；
+9. 「市场行情」：用「涨/跌 + 百分比」陈述指数与主要加密资产的表现，**只陈述事实，不给投资建议、不预测涨跌、不推荐标的**；如果材料里有恐惧贪婪指数也一并说明当前市场情绪；
+10. 「学术前沿」：概括这些论文在研究什么问题、提出了什么方法，用通俗说法，不要罗列公式与作者；
+11. 「AI 厂商官方」：概括各家厂商今天发布了什么（新模型、新功能、API 变更、价格调整），按厂商归类，不要逐条罗列；
+
+12. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
+[{{"title":"🚀 板块名","text":"🚀 第一行要点\n📦 第二行要点\n🔋 第三行要点"}}]
+
+{open_source_block}
+
+{market_block}
+
+{academic_block}
+
+{vendor_block}"""
+
 
 def _render_block(title, rows):
     if not rows:
@@ -191,6 +232,21 @@ def build_tech_block(rows):
 def build_x_block(rows):
     return _render_block('X（推特）趋势与高互动推文（供「X 新闻」板块使用）', rows)
 
+def build_open_source_block(rows):
+    return _render_block('GitHub Trending 与开源社区（供「GitHub 与开源」板块使用）', rows)
+
+
+def build_market_block(rows):
+    return _render_block('指数与加密资产行情（供「市场行情」板块使用，只陈述涨跌）', rows)
+
+
+def build_academic_block(rows):
+    return _render_block('arXiv 最新论文（供「学术前沿」板块使用）', rows)
+
+
+def build_vendor_block(rows):
+    return _render_block('AI 厂商官方发布动态（供「AI 厂商官方」板块使用）', rows)
+
 
 def build_tech_prompt(items):
     lines = []
@@ -203,6 +259,15 @@ def build_tech_prompt(items):
             line += f' —— {summary}'
         lines.append(line)
     return TECH_TEMPLATE.format(n=len(items), material='\n'.join(lines))
+
+
+def build_new_prompt(open_source=None, market=None, academic=None, vendor=None):
+    return NEW_TEMPLATE.format(
+        open_source_block=build_open_source_block(open_source),
+        market_block=build_market_block(market),
+        academic_block=build_academic_block(academic),
+        vendor_block=build_vendor_block(vendor),
+    )
 
 
 def build_fixed_prompt(security=None, hot=None, short=None,
@@ -367,6 +432,65 @@ def load_x_news(words_path='x-words.json', global_path='x-global.json'):
     except (OSError, ValueError):
         pass
     return drop_unfit(drop_politics(rows))[:MAX_X]
+
+
+def load_open_source(trending_path='github-trending.json', hotspot_path='extra-hotspots.json'):
+    """GitHub Trending（日榜/周榜各取几条）+ Hugging Face 趋势 + HelloGitHub 周刊。"""
+    rows = []
+    try:
+        data = json.loads(Path(trending_path).read_text(encoding='utf-8-sig'))
+        periods = data.get('periods') or {}
+        for key, label in (('daily', '日榜'), ('weekly', '周榜')):
+            for item in ((periods.get(key) or {}).get('items') or [])[:5]:
+                name = str(item.get('name') or '').strip()
+                if not name:
+                    continue
+                desc = re.sub(r'\s+', ' ', str(item.get('description') or ''))[:90]
+                language = str(item.get('language') or '')
+                title = f'{name}（{label}' + (f' · {language}' if language else '') + '）'
+                rows.append({'source': 'github', 'title': title, 'meta': desc})
+    except (OSError, ValueError):
+        pass
+    rows += load_group(hotspot_path, ['hf_trending', 'hellogithub'], 6)
+    return drop_unfit(drop_politics(rows))[:MAX_OPEN_SOURCE]
+
+
+MARKET_FALLBACK = ['比特币', '以太坊', 'Bitcoin', 'Ethereum', 'BTC', 'ETH']
+
+
+def load_market(markets_path='markets.json', hotspot_path='extra-hotspots.json'):
+    """大盘指数 + 主流加密资产；顺手带上恐惧贪婪指数。"""
+    rows = []
+    try:
+        data = json.loads(Path(markets_path).read_text(encoding='utf-8-sig'))
+        for item in data.get('items') or []:
+            name = str(item.get('name') or '').strip()
+            percent = item.get('changePercent')
+            if not name or not isinstance(percent, (int, float)):
+                continue
+            is_index = item.get('kind') == 'index'
+            is_coin = any(key in name for key in MARKET_FALLBACK)
+            if not (is_index or is_coin):
+                continue
+            rows.append({
+                'source': 'market',
+                'title': f'{name} {percent:+.2f}%',
+                'meta': str(item.get('category') or ''),
+            })
+    except (OSError, ValueError):
+        pass
+    rows += load_group(hotspot_path, ['fng'], 2)
+    return rows[:MAX_MARKET]
+
+
+def load_academic(path):
+    # 只有一个来源，per_source 必须给足，否则 load_group 只走两轮
+    return drop_politics(load_group(path, ACADEMIC_KEYS, MAX_ACADEMIC, per_source=MAX_ACADEMIC))
+
+
+def load_ai_vendor(path):
+    """每家厂商只取一条，避免某一家刷屏。"""
+    return drop_politics(load_group(path, AI_VENDOR_KEYS, MAX_AI_VENDOR, per_source=1))
 
 
 def tidy(text):
@@ -567,6 +691,8 @@ def main():
     parser.add_argument('--xueqiu', default='xueqiu-hot.json')
     parser.add_argument('--x-words', dest='x_words', default='x-words.json')
     parser.add_argument('--x-global', dest='x_global', default='x-global.json')
+    parser.add_argument('--github', default='github-trending.json')
+    parser.add_argument('--markets', default='markets.json')
     parser.add_argument('--account', default=os.environ.get('CF_ACCOUNT_ID', ''))
     parser.add_argument('--token', default=os.environ.get('CF_API_TOKEN', ''))
     parser.add_argument('--model', default=os.environ.get('CF_AI_MODEL', ''))
@@ -596,9 +722,14 @@ def main():
     finance = load_finance(args.security, args.xueqiu)
     tech = load_tech_media(args.security)
     x_news = load_x_news(args.x_words, args.x_global)
+    open_source = load_open_source(args.github, args.security)
+    market = load_market(args.markets, args.security)
+    academic = load_academic(args.security)
+    vendor = load_ai_vendor(args.security)
     print(f'DIGEST_MATERIAL security={len(security)} hot={len(hot)} video={len(short)} '
           f'intl={len(intl)} reverse={len(reverse)} finance={len(finance)} '
-          f'tech={len(tech)} x={len(x_news)}')
+          f'tech={len(tech)} x={len(x_news)} oss={len(open_source)} '
+          f'market={len(market)} paper={len(academic)} vendor={len(vendor)}')
 
     # 固定板块 + 材料非空的新板块都要校验，材料为空的就放过（当天没数据不怪模型）
     required = list(REQUIRED_SECTIONS)
@@ -609,6 +740,7 @@ def main():
 
     tech_prompt = build_tech_prompt(items)
     fixed_prompt = build_fixed_prompt(security, hot, short, intl, reverse, finance, tech, x_news)
+    new_prompt = build_new_prompt(open_source, market, academic, vendor)
     models = [args.model] if args.model else MODELS
 
     def run(prompt, required_names, tag):
@@ -646,17 +778,23 @@ def main():
 
     # 第一段：24 条科技资讯按主题归类；第二段：八个固定版面。
     # 分两次调用是因为一次让模型写 13～15 个板块时，它会把科技板块整个丢掉。
+    new_required = [name for name, rows in (
+        ('GitHub 与开源', open_source), ('市场行情', market),
+        ('学术前沿', academic), ('AI 厂商官方', vendor)) if rows]
+
     tech_model, tech_sections = run(tech_prompt, [], '科技板块')
     tech_sections = [section for section in tech_sections
                      if not any(norm_title(name) in norm_title(section['title']) for name in required)]
     fixed_model, fixed_sections = run(fixed_prompt, required, '固定板块')
+    new_model, new_sections = run(new_prompt, new_required, '开源市场前沿')
 
-    if not tech_sections and not fixed_sections:
-        print('DIGEST_SKIP 两段生成均失败，保留原有数据')
+    if not tech_sections and not fixed_sections and not new_sections:
+        print('DIGEST_SKIP 三段生成均失败，保留原有数据')
         return 0
 
-    sections = clamp_lines(ensure_line_emoji(dedupe_emojis(tech_sections + fixed_sections)))
-    model = fixed_model or tech_model
+    combined = tech_sections + fixed_sections + new_sections
+    sections = clamp_lines(ensure_line_emoji(dedupe_emojis(combined)))
+    model = fixed_model or tech_model or new_model
     write_digest(path, data, sections, model, len(items))
     total = sum(len(section['text']) for section in sections)
     print(f'DIGEST_OK sections={len(sections)} tech={len(tech_sections)} '

@@ -16,13 +16,26 @@ from pathlib import Path
 
 API = 'https://api.cloudflare.com/client/v4/accounts/{account}/ai/run/{model}'
 
-# 结构化输出对指令遵循要求高，70b 优先，8b 兜底；可用 CF_AI_MODEL 覆盖
-MODELS = ['@cf/meta/llama-3.3-70b-instruct-fp8-fast', '@cf/meta/llama-3.1-8b-instruct-fp8-fast']
+# 按优先级排列：GLM-4.7-Flash 中文表达与板块分派最稳，Llama-3.3-70B 作次选，8B 最后兜底。
+# 用 CF_AI_MODEL 环境变量可整体覆盖（指定后只跑这一个）。
+MODELS = [
+    '@cf/zai-org/glm-4.7-flash',
+    '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
+    '@cf/meta/llama-3.1-8b-instruct-fp8-fast',
+]
+
+# 部分模型默认开「思考模式」，会把 max_tokens 全烧在思维链上、正文返回空字符串，
+# 必须显式关闭，否则表现为「调用成功但内容为空」。
+MODEL_PARAMS = {
+    '@cf/zai-org/glm-4.7-flash': {'chat_template_kwargs': {'enable_thinking': False}},
+    '@cf/openai/gpt-oss-120b': {'reasoning_effort': 'low'},
+    '@cf/qwen/qwen3-30b-a3b-fp8': {'chat_template_kwargs': {'enable_thinking': False}},
+}
 
 MAX_ITEMS = 24
 MAX_TOKENS = 2200
 MAX_CHARS = 2400
-MAX_SECTIONS = 9
+MAX_SECTIONS = 11
 MAX_SECURITY = 18
 MAX_HOT = 18
 MAX_SHORT_VIDEO = 8
@@ -37,6 +50,18 @@ SECURITY_KEYS = [
 HOT_KEYS = ['baidu', 'toutiao', 'qq', 'netease', 'thepaper', 'tieba']
 SHORT_VIDEO_KEYS = ['bilibili']
 
+# 这三个板块是固定版面，模型漏掉就当本次失败、换下一个模型重试
+REQUIRED_SECTIONS = ['网络安全', '新闻热搜', '短视频热榜']
+
+# 热搜材料里剔除时政类条目：靠提示词约束不够稳（换模型就失效），在取样阶段直接掐掉
+SENSITIVE_HOT = [
+    '习近平', '总书记', '中共中央', '政治局', '人大常委会', '全国政协', '中央军委',
+    '解放军', '军演', '国防部', '外交部', '总理', '李强', '王沪宁', '赵乐际',
+    '蔡奇', '丁薛祥', '李希', '台独', '中美', '中日', '中印', '领事', '大使',
+    '会见', '考察', '公诉', '落马', '被查', '双开', '受贿', '贪腐', '违纪',
+    '主席', '复兴', '中山之行', '元首', '会晤', '中俄',
+]
+
 SYSTEM = (
     '你是一名中文科技媒体的值班编辑，擅长把一堆资讯按主题归类并写成版面。'
     '你只依据给定材料写作，不编造、不评论、不署名。'
@@ -46,7 +71,7 @@ TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式为「�
 
 {material}
 
-请按主题把它们归成 5～8 个板块，每个板块写一段概述，要求：
+请按主题把它们归成 5～7 个板块，每个板块写一段概述；此外必须固定输出「网络安全」「新闻热搜」「短视频热榜」三个板块（材料见下文），这三个板块必须出现，不可省略、不可改名、不可合并进其他板块。要求：
 1. 只依据材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
 2. 板块名用 2～6 个字的名词短语，例如「AI 与大模型」「手机与硬件」「行业与资本」「游戏与娱乐」；不要用「科技动态」「其他」「综合」这类笼统名字；材料撑不起一个板块的主题就不要硬凑；
 3. 每个板块 2～5 句，说清发生了什么；不要罗列型号与价格清单，挑有信息量的细节写；
@@ -54,7 +79,7 @@ TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式为「�
 5. **全部用中文写**：材料里的英文标题和摘要必须译成中文再概括，不要直接抄英文原文；
 6. 不要提到材料里没有的公司、产品、地区或数字；
 7. 「网络安全」板块只能使用下文的安全情报材料，不要把上面的科技资讯塞进这个板块；3～4 句，先说最值得注意的漏洞或攻击活动（说清影响什么产品、严重到什么程度），**正文里不要出现任何 CVE 编号**；
-8. 「新闻热搜」板块只能使用下文的热搜榜材料：3～4 句，概括今天大众在关注什么，按话题方向归类（社会民生、娱乐、体育、科技等），不要逐条罗列各平台标题；
+8. 「新闻热搜」板块只能使用下文的热搜榜材料：3～4 句，概括今天大众在关注什么，按话题方向归类（社会民生、娱乐、体育、科技等），不要逐条罗列各平台标题；**涉及时政、领导人活动、官员被查或贪腐案件、外交军事的条目一律不写**；
 9. 「短视频热榜」板块只能使用下文的短视频热榜材料：2～3 句，概括热门内容的类型和几个有代表性的内容；
 10. 每个板块的内容必须来自对应材料，不要把一类材料写进另一类板块；
 11. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
@@ -139,12 +164,13 @@ def load_security(path):
 
 
 def load_hot(path, weibo_path='weibo-hot.json'):
-    rows = load_group(path, HOT_KEYS, MAX_HOT)
+    # 多取一些，过滤掉时政条目后还能凑够数量
+    rows = load_group(path, HOT_KEYS, MAX_HOT + 10)
     # 微博热搜不在 extra-hotspots 里，单独从 weibo-hot.json 取前几条
     try:
         weibo = json.loads(Path(weibo_path).read_text(encoding='utf-8-sig'))
         head = []
-        for item in (weibo.get('items') or [])[:3]:
+        for item in (weibo.get('items') or [])[:8]:
             title = str(item.get('title') or '').strip()
             if len(title) >= 4:
                 heat = item.get('heat')
@@ -152,7 +178,17 @@ def load_hot(path, weibo_path='weibo-hot.json'):
         rows = head + rows
     except (OSError, ValueError):
         pass
-    return rows[:MAX_HOT]
+    rows = [row for row in rows
+            if not any(word in row['title'] for word in SENSITIVE_HOT)]
+    # 同一条热搜常被多家平台同时收录，按标题去重
+    seen, unique = set(), []
+    for row in rows:
+        key = re.sub(r'[\s\W]+', '', row['title'])[:24]
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(row)
+    return unique[:MAX_HOT]
 
 
 def load_short_video(path):
@@ -218,7 +254,7 @@ def flatten(sections):
     return '\n\n'.join(f'{section["title"]}：{section["text"]}' for section in sections)
 
 
-def call_model(model, account, token, prompt, timeout=45):
+def call_model(model, account, token, prompt, timeout=90):
     payload = {
         'messages': [
             {'role': 'system', 'content': SYSTEM},
@@ -227,6 +263,7 @@ def call_model(model, account, token, prompt, timeout=45):
         'max_tokens': MAX_TOKENS,
         'temperature': 0.3,
     }
+    payload.update(MODEL_PARAMS.get(model) or {})
     request = urllib.request.Request(
         API.format(account=account, model=model),
         data=json.dumps(payload, ensure_ascii=False).encode('utf-8'),
@@ -294,6 +331,7 @@ def main():
         load_short_video(args.security),
     )
     plain_fallback = ''
+    keeper = None  # 结构不全但可用的结果，所有模型都漏板块时兜底用
     for model in ([args.model] if args.model else MODELS):
         try:
             raw = call_model(model, args.account, args.token, prompt)
@@ -315,8 +353,21 @@ def main():
                 if len(plain) >= 40:
                     plain_fallback = plain
             continue
+        missing = [name for name in REQUIRED_SECTIONS
+                   if not any(name in section['title'] for section in sections)]
+        if missing:
+            print(f'DIGEST_MODEL_FAIL {model} 缺少固定板块 {"/".join(missing)}')
+            if keeper is None:
+                keeper = (model, sections)
+            continue
         write_digest(path, data, sections, model, len(items))
         print(f'DIGEST_OK sections={len(sections)} chars={sum(len(s["text"]) for s in sections)} model={model} items={len(items)}')
+        return 0
+
+    if keeper:
+        model, sections = keeper
+        write_digest(path, data, sections, model, len(items))
+        print(f'DIGEST_OK(固定板块不全) sections={len(sections)} model={model}')
         return 0
 
     if plain_fallback:

@@ -223,6 +223,62 @@ class CrossSectionDedupeTests(unittest.TestCase):
         self.assertEqual(left, right)
 
 
+class DigestFallbackTests(unittest.TestCase):
+    def _news(self, tmp, items):
+        path = Path(tmp) / 'news.json'
+        path.write_text(json.dumps({'updatedAt': 'x', 'items': items}, ensure_ascii=False), encoding='utf-8')
+        return path
+
+    def _previous(self, tmp, digest):
+        path = Path(tmp) / 'news.previous.json'
+        path.write_text(json.dumps({'digest': digest}, ensure_ascii=False), encoding='utf-8')
+        return path
+
+    def test_fingerprint_ignores_order(self):
+        rows = [{'title': 'A', 'url': 'u1'}, {'title': 'B', 'url': 'u2'}]
+        self.assertEqual(g.source_fingerprint(rows), g.source_fingerprint(list(reversed(rows))))
+
+    def test_fingerprint_changes_with_content(self):
+        self.assertNotEqual(g.source_fingerprint([{'title': 'A', 'url': 'u1'}]),
+                            g.source_fingerprint([{'title': 'A2', 'url': 'u1'}]))
+
+    def test_keep_previous_digest_restores_into_bare_news(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            prev = self._previous(tmp, {'sections': [{'title': '🛡️ 安全', 'text': 'x'}],
+                                        'generatedAt': '2026-11-17T10:00:00+00:00',
+                                        'sourceHash': 'abc'})
+            path = self._news(tmp, [{'title': '新采到的条目'}])
+            data = json.loads(path.read_text(encoding='utf-8'))
+            self.assertTrue(g.keep_previous_digest(path, data, prev))
+            after = json.loads(path.read_text(encoding='utf-8'))
+            self.assertEqual(after['digest']['sourceHash'], 'abc')
+            self.assertEqual(after['items'][0]['title'], '新采到的条目')
+
+    def test_keep_previous_digest_noop_without_previous(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._news(tmp, [{'title': 'x'}])
+            data = json.loads(path.read_text(encoding='utf-8'))
+            self.assertFalse(g.keep_previous_digest(path, data, Path(tmp) / 'missing.json'))
+            self.assertNotIn('digest', json.loads(path.read_text(encoding='utf-8')))
+
+    def test_keep_previous_digest_rejects_empty_sections(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            prev = self._previous(tmp, {'sections': []})
+            path = self._news(tmp, [{'title': 'x'}])
+            data = json.loads(path.read_text(encoding='utf-8'))
+            self.assertFalse(g.keep_previous_digest(path, data, prev))
+
+    def test_write_digest_records_source_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._news(tmp, [{'title': 'x'}])
+            data = json.loads(path.read_text(encoding='utf-8'))
+            g.write_digest(path, data, [{'title': '🛡️ 安全', 'text': 'abc'}], 'model-x', 1, 'fp123')
+            digest = json.loads(path.read_text(encoding='utf-8'))['digest']
+            self.assertEqual(digest['sourceHash'], 'fp123')
+            self.assertIn('generatedAt', digest)
+
+
+
 class NewPromptTests(unittest.TestCase):
     def test_new_prompt_lists_four_blocks(self):
         prompt = g.build_new_prompt(

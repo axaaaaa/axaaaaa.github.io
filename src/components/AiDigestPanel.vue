@@ -27,6 +27,9 @@
       <span v-if="modelLabel">{{ modelLabel }}</span>
     </footer>
   </section>
+  <section v-else-if="error" class="ai-digest-panel ai-digest-empty" :class="{ 'ai-digest-dark': dark }" aria-live="polite">
+    <p class="ai-digest-text">今日速览这会儿没拉到，稍后会自动重试。下面的新闻与工具不受影响。</p>
+  </section>
 </template>
 <script>
 const CACHE_KEY = 'navigation-digest-v2';
@@ -34,15 +37,17 @@ const CACHE_KEY = 'navigation-digest-v2';
 export default {
   name: 'AiDigestPanel',
   props: { dark: Boolean },
-  data: () => ({ digest: null, loading: false, error: false, controller: null }),
+  data: () => ({ digest: null, loading: false, error: false, controller: null, now: Date.now(), ticker: null }),
   computed: {
     status() {
       if (!this.digest?.generatedAt) return '';
       const date = new Date(this.digest.generatedAt);
       if (!Number.isFinite(date.getTime())) return '';
-      const stale = Date.now() - date.getTime() > 6 * 3600000;
-      const stamp = date.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
-      return `${stale ? '上次生成' : '生成于'} ${stamp}`;
+      const minutes = Math.max(0, Math.round((this.now - date.getTime()) / 60000));
+      const relative = minutes < 1 ? '刚刚更新'
+        : minutes < 60 ? `${minutes} 分钟前更新`
+        : `${Math.floor(minutes / 60)} 小时前更新`;
+      return minutes > 180 ? `${relative} · 数据可能未刷新` : relative;
     },
     subtitle() {
       const basedOn = this.digest?.basedOn;
@@ -58,8 +63,14 @@ export default {
       return short.replace(/-instruct.*$/, '').replace(/^@?cf-/, '');
     }
   },
-  mounted() { this.load(); },
-  beforeUnmount() { this.controller?.abort(); },
+  mounted() {
+    this.load();
+    this.ticker = setInterval(() => { this.now = Date.now(); }, 60000);
+  },
+  beforeUnmount() {
+    this.controller?.abort();
+    clearInterval(this.ticker);
+  },
   methods: {
     normalize(value) {
       if (!value) return null;
@@ -129,6 +140,7 @@ export default {
 .ai-digest-meta button:disabled{cursor:default;opacity:.6}
 .ai-digest-panel button:focus-visible{outline:2px solid var(--ai-accent);outline-offset:1px}
 .ai-digest-text{margin:0;font-size:14px;line-height:1.95;color:var(--ai-text);white-space:pre-line;text-align:justify}
+.ai-digest-empty .ai-digest-text{color:var(--ai-muted);font-size:13px;text-align:left}
 .ai-digest-body{min-width:0}
 .ai-digest-sec{min-width:0}
 .ai-digest-sec+.ai-digest-sec{margin-top:14px}

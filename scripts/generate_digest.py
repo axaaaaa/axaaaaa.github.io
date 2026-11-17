@@ -5,6 +5,7 @@
 """
 import argparse
 import ast
+import hashlib
 import json
 import os
 import re
@@ -35,6 +36,8 @@ MODEL_PARAMS = {
 MAX_ITEMS = 24
 MAX_TOKENS = 3600
 MAX_CHARS = 2400
+# 素材指纹相同且上次生成不足这么多小时，就直接沿用，省 Workers AI 额度
+REUSE_WINDOW_HOURS = 3
 MAX_SECTIONS = 16
 MAX_SECURITY = 18
 MAX_HOT = 18
@@ -728,13 +731,51 @@ def call_model(model, account, token, prompt, timeout=90):
     return str(text or '')
 
 
-def write_digest(path, data, sections, model, based_on):
+def source_fingerprint(items):
+    """材料指纹：标题 + 链接排序后取哈希，用来判断这一轮素材和上一轮是否同一批。"""
+    blob = '\n'.join(sorted(f'{item.get("title") or ""}|{item.get("url") or ""}' for item in items))
+    return hashlib.sha1(blob.encode('utf-8')).hexdigest()[:16]
+
+
+def load_previous_digest(previous):
+    """读上一轮已经生成好的速览，用于生成失败时兜底。"""
+    try:
+        raw = json.loads(Path(previous).read_text(encoding='utf-8-sig'))
+    except (OSError, ValueError):
+        return None
+    digest = raw.get('digest') if isinstance(raw, dict) else None
+    if not isinstance(digest, dict):
+        return None
+    sections = digest.get('sections')
+    if not isinstance(sections, list) or not sections:
+        return None
+    return digest
+
+
+def keep_previous_digest(path, data, previous):
+    """采集已经把 news.json 覆写成裸数据了，这里把上一轮的 digest 搬回来。
+
+    不搬的话线上速览会直接消失：前端读不到 digest 就退回本地缓存，
+    表现成「时间永远停在几小时前、刷新也不动」。
+    """
+    digest = load_previous_digest(previous)
+    if not digest:
+        return False
+    data['digest'] = digest
+    temp = path.with_suffix('.tmp')
+    temp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    temp.replace(path)
+    return True
+
+
+def write_digest(path, data, sections, model, based_on, fingerprint=''):
     data['digest'] = {
         'sections': sections,
         'text': flatten(sections),
         'model': model,
         'generatedAt': datetime.now(timezone.utc).isoformat(),
         'basedOn': based_on,
+        'sourceHash': fingerprint,
     }
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -744,6 +785,8 @@ def write_digest(path, data, sections, model, based_on):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', default='news.json')
+    parser.add_argument('--previous', default='news.previous.json',
+                        help='采集前备份的上一版 news.json，用于生成失败时兜底')
     parser.add_argument('--security', default='extra-hotspots.json')
     parser.add_argument('--weibo', default='weibo-hot.json')
     parser.add_argument('--xueqiu', default='xueqiu-hot.json')
@@ -756,10 +799,6 @@ def main():
     parser.add_argument('--model', default=os.environ.get('CF_AI_MODEL', ''))
     args = parser.parse_args()
 
-    if not args.account or not args.token:
-        print('DIGEST_SKIP 未配置 CF_ACCOUNT_ID / CF_API_TOKEN')
-        return 0
-
     path = Path(args.input)
     try:
         data = json.loads(path.read_text(encoding='utf-8-sig'))
@@ -767,10 +806,37 @@ def main():
         print(f'DIGEST_SKIP 读取 {path} 失败: {error}')
         return 0
 
+    if not args.account or not args.token:
+        if keep_previous_digest(path, data, args.previous):
+            print('DIGEST_STALE 未配置 CF_ACCOUNT_ID / CF_API_TOKEN，沿用上一次速览')
+        else:
+            print('DIGEST_SKIP 未配置 CF_ACCOUNT_ID / CF_API_TOKEN')
+        return 0
+
     items = [item for item in data.get('items') or [] if isinstance(item, dict) and item.get('title')][:MAX_ITEMS]
     if len(items) < 5:
-        print(f'DIGEST_SKIP 有效资讯仅 {len(items)} 条，样本太少')
+        if keep_previous_digest(path, data, args.previous):
+            print(f'DIGEST_STALE 有效资讯仅 {len(items)} 条，沿用上一次速览')
+        else:
+            print(f'DIGEST_SKIP 有效资讯仅 {len(items)} 条，样本太少')
         return 0
+
+    fingerprint = source_fingerprint(items)
+    previous_digest = load_previous_digest(args.previous)
+    if previous_digest:
+        # 素材和上一轮完全一样就别再烧一次额度：免费层 neurons 每小时都在被消耗，
+        # 内容没变还重新生成，只会把 429 提前撞上来。
+        same_source = previous_digest.get('sourceHash') == fingerprint
+        generated = previous_digest.get('generatedAt') or ''
+        try:
+            age = (datetime.now(timezone.utc)
+                   - datetime.fromisoformat(generated.replace('Z', '+00:00'))).total_seconds()
+        except ValueError:
+            age = 0
+        if same_source and age < REUSE_WINDOW_HOURS * 3600:
+            if keep_previous_digest(path, data, args.previous):
+                print(f'DIGEST_REUSE 素材与上一轮一致（{age / 3600:.1f}h 前），沿用上次速览省额度')
+                return 0
 
     security = load_security(args.security)
     hot = load_hot(args.security, args.weibo)
@@ -847,7 +913,10 @@ def main():
     new_model, new_sections = run(new_prompt, new_required, '开源市场前沿')
 
     if not tech_sections and not fixed_sections and not new_sections:
-        print('DIGEST_SKIP 三段生成均失败，保留原有数据')
+        if keep_previous_digest(path, data, args.previous):
+            print('DIGEST_STALE 三段生成均失败，沿用上一次速览')
+        else:
+            print('DIGEST_SKIP 三段生成均失败，且没有上一次速览可沿用')
         return 0
 
     combined = dedupe_cross_section(
@@ -856,7 +925,7 @@ def main():
     sections = clamp_lines(ensure_line_emoji(
         dedupe_emojis(combined, priority=fixed_sections + new_sections)))
     model = fixed_model or tech_model or new_model
-    write_digest(path, data, sections, model, len(items))
+    write_digest(path, data, sections, model, len(items), fingerprint)
     total = sum(len(section['text']) for section in sections)
     print(f'DIGEST_OK sections={len(sections)} tech={len(tech_sections)} '
           f'fixed={len(fixed_sections)} chars={total} model={model} items={len(items)}')
@@ -869,4 +938,10 @@ if __name__ == '__main__':
         sys.exit(main())
     except Exception as error:
         print(f'DIGEST_SKIP 未预期的错误 {type(error).__name__}: {error}')
+        try:
+            news = Path('news.json')
+            keep_previous_digest(news, json.loads(news.read_text(encoding='utf-8-sig')), 'news.previous.json')
+            print('DIGEST_STALE 异常兜底：沿用上一次速览')
+        except Exception:
+            pass
         sys.exit(0)

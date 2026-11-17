@@ -54,7 +54,9 @@ echo [3/5] Syncing dist to Pages root...
 rem Keep .git out of the mirror operation and preserve CNAME if one exists.
 rem .github 必须排除：dist 里没有工作流文件，/MIR 会把 main 上的 .github/workflows 整目录删掉，
 rem 定时采集任务会因此彻底停摆（2026-11-15 就是这么停的）。
-robocopy "%ROOT%dist" "%PUBLISH_DIR%" /MIR /XD "%PUBLISH_DIR%\.git" "%PUBLISH_DIR%\.github" /XF CNAME /R:2 /W:1 /NFL /NDL /NJH /NJS /NP >> "%LOG_FILE%" 2>&1
+rem news.json 必须排除：它由定时采集任务每小时重写（含 AI 速览 digest），dist 里那份是本地旧快照，
+rem /MIR 会用旧速览盖掉线上最新的那份，且 AI 额度耗尽时无法立刻重新生成。
+robocopy "%ROOT%dist" "%PUBLISH_DIR%" /MIR /XD "%PUBLISH_DIR%\.git" "%PUBLISH_DIR%\.github" /XF CNAME news.json /R:2 /W:1 /NFL /NDL /NJH /NJS /NP >> "%LOG_FILE%" 2>&1
 if errorlevel 8 goto :fail
 if not exist "%PUBLISH_DIR%\.nojekyll" type nul > "%PUBLISH_DIR%\.nojekyll"
 

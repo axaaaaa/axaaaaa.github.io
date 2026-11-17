@@ -625,17 +625,24 @@ MAX_LINES = 5
 
 
 def clamp_lines(sections, limit=MAX_LINES):
-    """行数超限时把多出来的行并进最后一行，保住内容又不破坏版面节奏。"""
+    """行数超限时把条目重新均分到 limit 行，而不是全部堆到末尾一行。
+
+    模型经常「一条材料写一行」，直接截断会丢内容、堆到末行又会出一行超长文本，
+    这里按原顺序分桶后合并，既保住全部信息，每行长度也大致相当。
+    """
     for section in sections:
         lines = [line for line in section['text'].split('\n') if line.strip()]
         if len(lines) <= limit:
             continue
-        head, tail = lines[:limit - 1], lines[limit - 1:]
-        first = EMOJI_RE.match(tail[0])
-        prefix = f'{first.group(1)} ' if first else ''
-        bodies = [EMOJI_RE.sub('', line).strip() for line in tail]
-        head.append(prefix + '；'.join(bodies))
-        section['text'] = '\n'.join(head)
+        size = -(-len(lines) // limit)  # 向上取整
+        buckets = [lines[index:index + size] for index in range(0, len(lines), size)]
+        merged = []
+        for bucket in buckets:
+            first = EMOJI_RE.match(bucket[0])
+            prefix = f'{first.group(1)} ' if first else ''
+            bodies = [EMOJI_RE.sub('', line).strip() for line in bucket]
+            merged.append(prefix + '；'.join(body for body in bodies if body))
+        section['text'] = '\n'.join(merged)
     return sections
 
 

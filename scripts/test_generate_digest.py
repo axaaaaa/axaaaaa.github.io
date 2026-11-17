@@ -170,6 +170,58 @@ class LineStyleTests(unittest.TestCase):
         g.clamp_lines(sections)
         self.assertEqual(len(sections[0]['text'].split('\n')), 2)
 
+    def test_clamp_lines_does_not_glue_punctuation(self):
+        text = '\n'.join(f'📌 第{i}条内容。' for i in range(8))
+        sections = [{'title': '🔬 学术前沿', 'text': text}]
+        g.clamp_lines(sections)
+        body = sections[0]['text']
+        self.assertNotIn('。；', body)
+        self.assertNotIn('；。', body)
+        self.assertTrue(body.rstrip().endswith('。'))
+
+
+class CrossSectionDedupeTests(unittest.TestCase):
+    def test_same_event_kept_once(self):
+        sections = [
+            {'title': '🧠 AI 与前沿', 'text': '🤖 谷歌 DeepMind 首席战略官跳槽 Anthropic。'},
+            {'title': '🛠️ 硬件与开发', 'text': '🤖 谷歌DeepMind首席战略官跳槽Anthropic\n💾 三星确认 HBM5 用 D0a Die。'},
+        ]
+        result = g.dedupe_cross_section(sections)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[1]['text'], '💾 三星确认 HBM5 用 D0a Die。')
+
+    def test_empty_section_removed(self):
+        sections = [
+            {'title': '🧠 AI 与前沿', 'text': '🧩 Hugging Face 与 OpenRouter 合作。'},
+            {'title': '🧩 开发者生态', 'text': '🧩 Hugging Face 与 OpenRouter 合作。'},
+            {'title': '🛡️ 网络安全', 'text': '🎣 钓鱼活动针对多个行业。'},
+        ]
+        result = g.dedupe_cross_section(sections)
+        self.assertEqual([s['title'] for s in result], ['🧠 AI 与前沿', '🛡️ 网络安全'])
+
+    def test_required_section_keeps_first_line(self):
+        sections = [
+            {'title': '🌍 国际新闻', 'text': '🚁 乌克兰无人机袭击克里米亚桥梁。'},
+            {'title': '🔥 新闻热搜', 'text': '🚁 乌克兰无人机袭击克里米亚桥梁。'},
+        ]
+        result = g.dedupe_cross_section(sections, keep_sections=['新闻热搜'])
+        self.assertEqual(len(result), 2)
+        self.assertTrue(result[1]['text'].strip())
+
+    def test_order_and_distinct_lines_preserved(self):
+        sections = [
+            {'title': '🌍 国际新闻', 'text': '📌 甲事件发生。\n📌 乙事件发生。'},
+            {'title': '🛡️ 网络安全', 'text': '🛡️ 丙漏洞被利用。'},
+        ]
+        result = g.dedupe_cross_section(sections)
+        self.assertEqual([s['title'] for s in result], ['🌍 国际新闻', '🛡️ 网络安全'])
+        self.assertEqual(len(result[0]['text'].split('\n')), 2)
+
+    def test_norm_line_ignores_punctuation_and_emoji(self):
+        left = g.norm_line('🤖 千问 4 Max 正式发布，2.4 万亿参数。')
+        right = g.norm_line('千问4Max正式发布2.4万亿参数')
+        self.assertEqual(left, right)
+
 
 class NewPromptTests(unittest.TestCase):
     def test_new_prompt_lists_four_blocks(self):

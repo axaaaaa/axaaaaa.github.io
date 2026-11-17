@@ -146,6 +146,8 @@
 
     <XGlobalEvents :data-source-theme="sourceCardTheme('x-events', currentTheme === 'dark')" ref="xGlobalEvents" v-show="!localSearchQuery.trim() && hotspotsExpanded" :dark="currentTheme === 'dark'" @select-event="$refs.xNewsHub.selectEvent($event)" />
 
+    <AiDigestPanel v-show="!localSearchQuery.trim() && hotspotsExpanded" :dark="currentTheme === 'dark'" />
+
     <nav v-show="!localSearchQuery.trim()" class="source-category-tabs" role="tablist" aria-label="信息来源分类">
       <button v-for="tab in sourceCategoryTabs" :key="tab.id" :id="`source-tab-${tab.id}`" type="button" role="tab" :aria-selected="sourceCategory===tab.id" :tabindex="sourceCategory===tab.id?0:-1" aria-controls="information-source-cards" @click="selectSourceCategory(tab.id)" @keydown="onSourceTabKey($event,tab.id)"><span class="source-tab-icon" aria-hidden="true" :style="{ '--source-tab-glyph': 'url(' + tab.icon + ')' }"></span>{{tab.label}}</button>
     </nav>
@@ -864,6 +866,7 @@ import NewsHotspotHub from "./NewsHotspotHub.vue";
 import XNewsHub from "./XNewsHub.vue";
 
 import XGlobalEvents from "./XGlobalEvents.vue";
+import AiDigestPanel from "./AiDigestPanel.vue";
 
 
 
@@ -972,7 +975,7 @@ export default {
 
 
 
-  components: { CategoryPixelBadge, NasaApod, SourceSyncStatus, XNewsHub, XGlobalEvents, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, MarketOverview, NewsHotspotHub, GithubTrending, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check }, // 注册组件
+  components: { AiDigestPanel, CategoryPixelBadge, NasaApod, SourceSyncStatus, XNewsHub, XGlobalEvents, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, MarketOverview, NewsHotspotHub, GithubTrending, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check }, // 注册组件
 
 
 

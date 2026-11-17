@@ -111,7 +111,7 @@ TECH_TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式�
 2b. **每个板块的 title 开头必须带一个与主题贴合的 emoji**（如「🤖 AI 与大模型」「📱 手机与硬件」「🎮 游戏与娱乐」），一个板块只用一个，且各板块之间不重复；**不要用 🛡️ 🔥 🎬 🌍 🔧 💰 💻 🐦 🚀 📈 🔬 🏢 这几个**（固定版面已占用）；
 3. **正文写 3～5 行**，行与行之间用换行符分隔；**每一行都必须以 emoji 开头**，同一板块内各行用不同的 emoji，行内其余文字不要再加 emoji；**不要用「-」「*」「•」「1.」这类列表符号**；
 3b. **每行覆盖一个话题方向**：同一家公司、同一类产品、同一个话题的多条材料要合并进同一行（例如手机新品与耳机预售合成「消费电子」一行），**不要一条材料写一行，也不要只写一条就收尾**；每行 1～2 句、整个板块合计 80～160 字，说清发生了什么，不要罗列型号与价格清单；
-4. 篇幅不限，但每句都要带新信息，同一件事只说一次，不要跨板块重复；
+4. 篇幅不限，但每句都要带新信息；**同一件事全局只能出现一次，只放在最贴切的那个板块里，换成另一种说法复述也算重复**（例如「某高管跳槽」不要既写进 AI 板块又写进硬件板块）；**如果一个板块去掉重复内容后剩下的材料不足一行，就不要写这个板块**；
 5. **全部用中文写**：材料里的英文标题和摘要必须译成中文再概括，不要直接抄英文原文；
 6. 不要提到材料里没有的公司、产品、地区或数字；
 7. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
@@ -603,6 +603,44 @@ def dedupe_emojis(sections, priority=None):
     return sections
 
 
+# 比较正文是否同一件事时忽略的字符：空白、标点、引号、破折号
+PUNCT_RE = re.compile(r'[\s，,。．.；;：:、！!？?“”"\'’‘（）()【】\[\]—–\-…·~～/]+')
+
+
+def norm_line(text):
+    """正文归一化：去掉行首 emoji 与全部标点空白，只留下用于比较的实词。"""
+    return PUNCT_RE.sub('', EMOJI_RE.sub('', str(text or '')))
+
+
+def dedupe_cross_section(sections, keep_sections=()):
+    """同一事件被模型写进多个板块时，只在最先出现的板块里保留一次。
+
+    材料分组本身有重叠（AI 与前沿 / 硬件与开发 / 开发者生态吃的是同一批科技源），
+    模型会把同一条消息分别改写进三个板块，读起来像重复灌水。这里做确定性去重：
+    去重后整块为空的板块直接丢弃，keep_sections 里的固定版面至少保留首行。
+    """
+    keep = {norm_title(item) for item in keep_sections}
+    seen = set()
+    result = []
+    for section in sections:
+        lines = [line.strip() for line in section['text'].split('\n') if line.strip()]
+        kept = []
+        for line in lines:
+            key = norm_line(line)
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            kept.append(line)
+        if not kept:
+            title = norm_title(EMOJI_RE.sub('', str(section['title'])))
+            if not lines or title not in keep:
+                continue  # 内容与前面板块完全重合，整块不再输出
+            kept = lines[:1]
+        section['text'] = '\n'.join(kept)
+        result.append(section)
+    return result
+
+
 # 正文行首补 emoji 用的候选池
 LINE_EMOJI = ['📌', '🔹', '💡', '⚙️', '📊', '🧩', '🚀', '📎', '🔖', '🗂️']
 
@@ -629,6 +667,8 @@ def ensure_line_emoji(sections):
 
 
 MAX_LINES = 5
+# 合并同桶条目时要去掉的句末标点，避免拼出「。；」
+TRAILING_PUNCT_RE = re.compile(r'[。．.；;，,、\s]+$')
 
 
 def clamp_lines(sections, limit=MAX_LINES):
@@ -647,8 +687,12 @@ def clamp_lines(sections, limit=MAX_LINES):
         for bucket in buckets:
             first = EMOJI_RE.match(bucket[0])
             prefix = f'{first.group(1)} ' if first else ''
-            bodies = [EMOJI_RE.sub('', line).strip() for line in bucket]
-            merged.append(prefix + '；'.join(body for body in bodies if body))
+            # 各条目先去句末标点再拼接，否则会出现「研究机器翻译。；如何成为…」这种「。；」
+            bodies = [TRAILING_PUNCT_RE.sub('', EMOJI_RE.sub('', line).strip()) for line in bucket]
+            body = '；'.join(item for item in bodies if item)
+            if body and not body.endswith('。'):
+                body += '。'
+            merged.append(prefix + body)
         section['text'] = '\n'.join(merged)
     return sections
 
@@ -806,7 +850,9 @@ def main():
         print('DIGEST_SKIP 三段生成均失败，保留原有数据')
         return 0
 
-    combined = tech_sections + fixed_sections + new_sections
+    combined = dedupe_cross_section(
+        tech_sections + fixed_sections + new_sections,
+        keep_sections=REQUIRED_SECTIONS + list(new_required))
     sections = clamp_lines(ensure_line_emoji(
         dedupe_emojis(combined, priority=fixed_sections + new_sections)))
     model = fixed_model or tech_model or new_model

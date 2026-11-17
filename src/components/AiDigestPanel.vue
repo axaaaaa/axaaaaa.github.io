@@ -5,7 +5,7 @@
         <span class="ai-digest-mark" aria-hidden="true">AI</span>
         <div class="ai-digest-copy">
           <h2 id="ai-digest-heading">今日速览 <span>DAILY DIGEST</span></h2>
-          <p>{{ digest.basedOn ? `基于 ${digest.basedOn} 条头条自动汇总` : '自动汇总今日头条' }}</p>
+          <p>{{ subtitle }}</p>
         </div>
       </div>
       <div class="ai-digest-meta">
@@ -13,7 +13,15 @@
         <button type="button" :disabled="loading" @click="load(true)">{{ loading ? '更新中…' : '刷新' }}</button>
       </div>
     </header>
-    <p class="ai-digest-text">{{ digest.text }}</p>
+    <div class="ai-digest-body">
+      <template v-if="digest.sections.length">
+        <section v-for="(sec, index) in digest.sections" :key="index" class="ai-digest-sec">
+          <h3>{{ sec.title }}</h3>
+          <p>{{ sec.text }}</p>
+        </section>
+      </template>
+      <p v-else class="ai-digest-text">{{ digest.text }}</p>
+    </div>
     <footer class="ai-digest-foot">
       <span>由 AI 汇总当日头条，仅作导航参考</span>
       <span v-if="modelLabel">{{ modelLabel }}</span>
@@ -36,6 +44,13 @@ export default {
       const stamp = date.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
       return `${stale ? '上次生成' : '生成于'} ${stamp}`;
     },
+    subtitle() {
+      const basedOn = this.digest?.basedOn;
+      const count = this.digest?.sections?.length || 0;
+      if (basedOn && count > 1) return `基于 ${basedOn} 条头条，按 ${count} 个板块汇总`;
+      if (basedOn) return `基于 ${basedOn} 条头条自动汇总`;
+      return '自动汇总今日头条';
+    },
     modelLabel() {
       const model = this.digest?.model || '';
       if (!model) return '';
@@ -47,10 +62,18 @@ export default {
   beforeUnmount() { this.controller?.abort(); },
   methods: {
     normalize(value) {
-      if (!value || typeof value.text !== 'string') return null;
-      const text = value.text.trim();
-      if (text.length < 12) return null;
+      if (!value) return null;
+      const sections = Array.isArray(value.sections)
+        ? value.sections
+            .filter(item => item && typeof item.title === 'string' && typeof item.text === 'string')
+            .map(item => ({ title: item.title.trim(), text: item.text.trim() }))
+            .filter(item => item.title && item.text.length >= 10)
+            .slice(0, 8)
+        : [];
+      const text = typeof value.text === 'string' ? value.text.trim() : '';
+      if (!sections.length && text.length < 12) return null;
       return {
+        sections,
         text,
         basedOn: Number(value.basedOn) || 0,
         model: typeof value.model === 'string' ? value.model : '',
@@ -106,7 +129,14 @@ export default {
 .ai-digest-meta button:disabled{cursor:default;opacity:.6}
 .ai-digest-panel button:focus-visible{outline:2px solid var(--ai-accent);outline-offset:1px}
 .ai-digest-text{margin:0;font-size:14px;line-height:1.95;color:var(--ai-text);white-space:pre-line;text-align:justify}
+.ai-digest-body{min-width:0}
+.ai-digest-sec{min-width:0}
+.ai-digest-sec+.ai-digest-sec{margin-top:14px}
+.ai-digest-sec h3{margin:0 0 5px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:.2px;color:var(--ai-accent)}
+.ai-digest-sec h3::before{content:'';flex:none;width:3px;height:12px;border-radius:2px;background:var(--ai-accent)}
+.ai-digest-sec p{margin:0;font-size:13.5px;line-height:1.85;color:var(--ai-text);white-space:pre-line}
+@media(min-width:900px){.ai-digest-body{display:grid;grid-template-columns:1fr 1fr;gap:16px 30px;align-items:start}.ai-digest-sec+.ai-digest-sec{margin-top:0}}
 .ai-digest-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--ai-line);font-size:10px;color:var(--ai-muted)}
 .ai-digest-foot span{min-width:0}
-@media(max-width:700px){.ai-digest-panel{padding:14px;border-radius:14px}.ai-digest-text{font-size:13px;line-height:1.85;text-align:left}.ai-digest-head{margin-bottom:10px}.ai-digest-mark{width:34px;height:34px;border-radius:10px}.ai-digest-copy h2{font-size:15px}}
+@media(max-width:700px){.ai-digest-panel{padding:14px;border-radius:14px}.ai-digest-text{font-size:13px;line-height:1.85;text-align:left}.ai-digest-sec p{font-size:13px;line-height:1.8}.ai-digest-head{margin-bottom:10px}.ai-digest-mark{width:34px;height:34px;border-radius:10px}.ai-digest-copy h2{font-size:15px}}
 </style>

@@ -401,10 +401,16 @@ def parse_sections(raw):
         except (ValueError, SyntaxError):
             data = None
     if not isinstance(data, list):
-        # 最后一道兜底：直接按字段正则抠，能救回坏转义和被截断的数组
+        # 最后一道兜底：直接按字段正则抠，能救回坏转义和被截断的数组。
+        # 先用「锚定对象结尾」的宽松写法（正文里混进未转义引号时也不会被截断），
+        # 再退回到严格转义写法。
         pairs = re.findall(
-            r'"title"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,\s*"text"\s*:\s*"((?:[^"\\]|\\.)*)"',
+            r'"title"\s*:\s*"([^"]*)"\s*,\s*"text"\s*:\s*"(.*?)"\s*\}\s*(?=,|\]|$)',
             chunk, re.S)
+        if not pairs:
+            pairs = re.findall(
+                r'"title"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,\s*"text"\s*:\s*"((?:[^"\\]|\\.)*)"',
+                chunk, re.S)
         if not pairs:
             return []
         data = [{'title': title, 'text': body} for title, body in pairs]

@@ -1,25 +1,34 @@
-name: Build and Deploy to axaaaaa.github.io
+name: Collector tests
+
+# 只跑采集脚本的单测，不做构建与发布——线上发布统一由 collect-news.yml 负责
+# （collect-news.yml 跑在 main 上，负责采集 + 生成 AI 速览 + 发布静态站）。
+#
+# 历史：这个工作流原本叫 "Build and Deploy to axaaaaa.github.io"，每 3 小时构建部署一次。
+# 因为 test_microsoft_seebug.py 一直失败，它从来没走到部署步骤，所以和 collect-news 的
+# 双发布路径一直没暴露出来。2026-11-17 修好单测后它会真的部署，而且用的是 master 仓库里
+# 的 public/news.json 快照（不含每小时生成 AI 速览那一步），会每 3 小时把线上 digest 打回旧版本。
+# 因此把构建/部署部分整体移除，只保留测试价值。
+
 on:
   push:
-    branches: [master, main]
+    branches: [master]
   workflow_dispatch:
-  schedule:
-    - cron: '23 */3 * * *'
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
 concurrency:
-  group: pages-news
-  cancel-in-progress: false
+  group: collector-tests
+  cancel-in-progress: true
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     env:
       ARGOS_PACKAGES_DIR: ${{ github.workspace }}/.argos-models
       ARGOS_DEVICE_TYPE: cpu
       ARGOS_INTRA_THREADS: "2"
-    timeout-minutes: 50
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -48,26 +57,6 @@ jobs:
           done
           if [ -d published-snapshots/source-covers ]; then cp -R published-snapshots/source-covers public/; fi
           rm -rf published-snapshots
-      - uses: actions/cache/restore@v4
-        with:
-          path: |
-            public/news.json
-            public/github-trending.json
-            public/v2ex-hot.json
-            public/weibo-hot.json
-            public/xueqiu-hot.json
-            public/hacker-news.json
-            public/x-hot.json
-            public/x-global.json
-            public/x-words.json
-            public/x-articles.json
-            public/markets.json
-            public/exchange-rates.json
-            public/extra-hotspots.json
-            public/source-covers/
-            public/history-today.json
-          key: news-source-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: news-source-
       - run: python -m unittest discover -s scripts -p test_news.py
       - run: python -m unittest discover -s scripts -p test_github_trending.py
       - run: python -m unittest discover -s scripts -p test_v2ex.py
@@ -97,38 +86,5 @@ jobs:
       - run: python -m unittest discover -s scripts -p test_history_today.py
       - run: python -m unittest discover -s scripts -p test_hacker_news.py
       - run: python -m unittest discover -s scripts -p test_refresh_sources.py
-      - run: python -m pip install playwright==1.64.1
-      - run: python -m playwright install --with-deps chromium
-      - name: Collect sources with bounded retries and snapshot fallback
-        run: xvfb-run -a python scripts/refresh_sources.py
-      - run: python -c "from scripts.source_images import prune_all_covers; prune_all_covers()"
-      - uses: actions/cache/save@v4
-        with:
-          path: |
-            public/news.json
-            public/github-trending.json
-            public/v2ex-hot.json
-            public/weibo-hot.json
-            public/xueqiu-hot.json
-            public/hacker-news.json
-            public/x-hot.json
-            public/x-global.json
-            public/x-words.json
-            public/x-articles.json
-            public/markets.json
-            public/exchange-rates.json
-            public/extra-hotspots.json
-            public/source-covers/
-            public/history-today.json
-          key: news-source-${{ github.run_id }}-${{ github.run_attempt }}
-      - run: npm ci
-      - run: npm run build:deploy
-      - name: Deploy static site with GitHub Pages
-        run: |
-          touch dist/.nojekyll
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
-      - id: deployment
-        uses: actions/deploy-pages@v4
-
+      - name: Unit tests for generate_digest
+        run: python -m unittest discover -s scripts -p test_generate_digest.py

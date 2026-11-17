@@ -163,6 +163,48 @@ class LineStyleTests(unittest.TestCase):
         self.assertEqual(len(sections[0]['text'].split('\n')), 2)
 
 
+class NewPromptTests(unittest.TestCase):
+    def test_new_prompt_lists_four_blocks(self):
+        prompt = g.build_new_prompt(
+            open_source=[{'source': 'github', 'title': 'x/y（日榜 · Go）', 'meta': '一个项目'}],
+            market=[{'source': 'market', 'title': '上证指数 -1.44%', 'meta': 'A 股'}],
+            academic=[{'source': 'arxiv', 'title': '某论文研究模型遗忘问题'}],
+            vendor=[{'source': 'openai_news', 'title': '发布新模型'}],
+        )
+        for name in ['GitHub 与开源', '市场行情', '学术前沿', 'AI 厂商官方']:
+            self.assertIn(name, prompt)
+        self.assertIn('不给投资建议', prompt)
+
+    def test_new_prompt_empty_sections_omitted(self):
+        prompt = g.build_new_prompt(open_source=[{'source': 'github', 'title': 'x/y'}])
+        self.assertNotIn('arXiv 最新论文', prompt)
+
+    def test_market_loader_marks_sign(self):
+        import json as _json
+        temp = tempfile.NamedTemporaryFile('w', suffix='.json', delete=False, encoding='utf-8')
+        _json.dump({'items': [
+            {'name': '上证指数', 'kind': 'index', 'changePercent': -1.44, 'category': 'A 股'},
+            {'name': '某只股票', 'kind': 'stock', 'changePercent': 3.2, 'category': 'A 股'},
+            {'name': '比特币', 'kind': 'crypto', 'changePercent': 2.5, 'category': '加密货币'},
+        ]}, temp, ensure_ascii=False)
+        temp.close()
+        self.addCleanup(lambda: Path(temp.name).unlink(missing_ok=True))
+        rows = g.load_market(temp.name, 'not-exists.json')
+        titles = [row['title'] for row in rows]
+        self.assertIn('上证指数 -1.44%', titles)
+        self.assertIn('比特币 +2.50%', titles)
+        self.assertTrue(all('某只股票' not in title for title in titles))
+
+    def test_academic_takes_more_than_two(self):
+        import json as _json
+        temp = tempfile.NamedTemporaryFile('w', suffix='.json', delete=False, encoding='utf-8')
+        _json.dump({'sources': {'arxiv': {'items': [
+            {'title': f'第 {i} 篇关于模型压缩的论文研究'} for i in range(8)]}}}, temp, ensure_ascii=False)
+        temp.close()
+        self.addCleanup(lambda: Path(temp.name).unlink(missing_ok=True))
+        self.assertGreater(len(g.load_academic(temp.name)), 2)
+
+
 class ModelParamsTests(unittest.TestCase):
     def test_thinking_disabled_for_glm(self):
         self.assertEqual(

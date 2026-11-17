@@ -88,7 +88,30 @@ jobs:
       # 采集会把 news.json 覆写成裸数据（只剩 updatedAt + items），digest 字段一起没了。
       # 这里在采集前留一份带 digest 的副本，AI 生成失败时用它兜底，速览才不会凭空消失。
       - name: Backup previous digest
-        run: cp news.json news.previous.json || true
+        run: |
+          cp news.json news.previous.json || true
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          def digest_of(raw):
+              try:
+                  return json.loads(raw.decode('utf-8-sig') if isinstance(raw, bytes) else raw).get('digest')
+              except Exception:
+                  return None
+          prev = Path('news.previous.json')
+          if prev.exists() and digest_of(prev.read_bytes()):
+              print('DIGEST_BACKUP 使用工作区副本')
+          else:
+              try:
+                  raw = subprocess.run(['git', 'show', 'HEAD:news.json'], capture_output=True, check=True).stdout
+              except Exception:
+                  raw = b''
+              if digest_of(raw):
+                  prev.write_bytes(raw)
+                  print('DIGEST_BACKUP 工作区没有速览，回退到仓库里提交过的上一版')
+              else:
+                  print('DIGEST_BACKUP 没有可用的速览副本')
+          PY
       - name: Refresh independent sources and record health
         timeout-minutes: 30
         run: xvfb-run -a python scripts/refresh_sources.py

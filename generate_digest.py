@@ -19,8 +19,8 @@ API = 'https://api.cloudflare.com/client/v4/accounts/{account}/ai/run/{model}'
 MODELS = ['@cf/meta/llama-3.1-8b-instruct-fp8-fast', '@cf/meta/llama-3.3-70b-instruct-fp8-fast']
 
 MAX_ITEMS = 24
-MAX_TOKENS = 320
-MAX_CHARS = 400
+MAX_TOKENS = 900
+MAX_CHARS = 700
 
 SYSTEM = (
     '你是一名中文科技媒体的值班编辑，擅长把一堆资讯压成一段让人想读下去的导读。'
@@ -33,11 +33,12 @@ TEMPLATE = """以下是今天采集到的 {n} 条科技资讯，格式为「序�
 
 请写一段导读，要求：
 1. 只依据上面的材料，不要补充任何材料之外的信息，不要猜测原因或影响；
-2. 按重要性从高到低，第一句先说今天最值得关注的一件事；
-3. 连成一段话，不要分点、不要编号、不要小标题，全文不超过 100 字；
+2. 按重要性从高到低，开头先说今天最值得关注的一件事，再依次带出其余值得一看的内容；
+3. 篇幅 300～400 字，写成 3 段：第一段说今天最值得关注的一件事（2～3 句），第二段说其他重要动态（3～4 句），第三段说新品、产品与价格类信息（3～4 句）；不要分点、不要编号、不要小标题、不要加粗；
 4. 不要使用「据悉」「值得注意的是」「总的来说」这类套话，也不要提到「以上」「下面」「这份材料」；
 5. 不要做推断或评价：不写「这说明」「意味着」「反映出」后面那类内容，只陈述材料里直接出现的事实；
-6. 不要提到材料里没有的公司、产品、地区或数字；材料以商品与降价信息为主时，就老实概括有哪些值得关注的新品，不要硬凑趋势。"""
+6. 不要提到材料里没有的公司、产品、地区或数字；材料以商品与降价信息为主时，就老实概括有哪些值得关注的新品，不要硬凑趋势；
+7. 每句都要带新信息，不要先把标题念一遍再补细节，同一件事只说一次。"""
 
 
 def build_prompt(items):
@@ -54,11 +55,20 @@ def build_prompt(items):
 
 
 def tidy(text):
-    """清掉模型爱加的前后缀与多余空白，避免渲染出奇怪的东西。"""
-    value = re.sub(r'\s+', ' ', str(text or '')).strip()
-    value = re.sub(r'^(导读|速览|今日速览)\s*[:：]\s*', '', value)
-    value = value.strip('“”"\'「」 ')
-    return value[:MAX_CHARS]
+    """清掉模型爱加的前后缀、项目符号与多余空白，保留段落换行供前端换行显示。"""
+    value = str(text or '').replace('\r\n', '\n').replace('\r', '\n')
+    value = re.sub(r'[ \t\u3000]+', ' ', value)
+    lines = []
+    for line in value.split('\n'):
+        line = line.strip()
+        line = re.sub(r'^(导读|速览|今日速览)\s*[:：]\s*', '', line)
+        # 模型偶尔还是会分点，这里把符号去掉降级成普通段落
+        line = re.sub(r'^(?:[-*•·]|\d+[.、)])\s*', '', line)
+        if line:
+            lines.append(line)
+    value = '\n'.join(lines)
+    value = re.sub(r'\n{3,}', '\n\n', value)
+    return value.strip('“”"\'「」 \n')[:MAX_CHARS]
 
 
 def call_model(model, account, token, prompt, timeout=45):

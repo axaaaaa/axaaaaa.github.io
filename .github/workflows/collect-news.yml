@@ -8,7 +8,11 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '17 * * * *' # 每小时整点后第 17 分钟采集一次（GitHub 定时任务是尽力而为，实际可能被延迟/合并）
+    # 每 3 小时一次（UTC 0/3/6/9/12/15/18/21 点的第 17 分钟）。
+    # 改频的直接原因是 Workers AI 免费额度：每小时 3 次大模型调用会把每天 10000 neurons 打满，
+    # 一打满就是整点 429，速览全挂。降频后留出余量应付手动触发。
+    # GitHub 定时任务是尽力而为（实测 4~16 小时一次），真正维持节奏的是 Cloudflare Worker。
+    - cron: '17 */3 * * *'
 
 permissions:
   contents: read

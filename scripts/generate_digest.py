@@ -33,22 +33,37 @@ MODEL_PARAMS = {
 }
 
 MAX_ITEMS = 24
-MAX_TOKENS = 2200
+MAX_TOKENS = 3600
 MAX_CHARS = 2400
-MAX_SECTIONS = 11
+MAX_SECTIONS = 16
 MAX_SECURITY = 18
 MAX_HOT = 18
 MAX_SHORT_VIDEO = 8
+MAX_INTL = 20
+MAX_REVERSE = 14
+MAX_FINANCE = 16
+MAX_TECH_MEDIA = 16
+MAX_X = 12
 
 # 安全类来源（取自 extra-hotspots.json），用于生成固定的「网络安全」板块
 SECURITY_KEYS = [
     'nvd', 'cisa_kev', 'exploitdb', 'cncert', 'cve_program', 'github_advisory',
     'eset', 'checkpoint', 'crowdstrike', 'elastic', 'microsoft',
-    'thehackernews', 'securelist', 'unit42', 'sentinellabs', 'anquanke', 'kanxue', 'xz',
+    'thehackernews', 'securelist', 'unit42', 'sentinellabs', 'anquanke', 'seebug', 'xz',
 ]
 # 新闻热搜与短视频热榜来源
 HOT_KEYS = ['baidu', 'toutiao', 'qq', 'netease', 'thepaper', 'tieba']
 SHORT_VIDEO_KEYS = ['bilibili']
+# 国际新闻（路透/美联/ BBC/半岛/卫报/NHK/纽时/华日）
+INTL_KEYS = ['reuters', 'ap', 'bbc', 'aljazeera', 'guardian', 'nhk', 'nytimes', 'wsj']
+# 逆向与破解论坛（看雪、吾爱破解、精易）
+REVERSE_KEYS = ['kanxue', 'pojie52', 'pojie52_new', 'pojie52_tech', 'pojie52_digest',
+                'ijingyi_new', 'ijingyi_hot']
+# 财经热榜（雪球另在 xueqiu-hot.json）
+FINANCE_KEYS = ['eastmoney', 'sinafinance', 'yicai', 'wallstreetcn', '36kr']
+# 科技资讯（国内科技媒体与开发者社区）
+TECH_MEDIA_KEYS = ['ithome_rank', 'geekpark', 'qbitai', 'sspai', 'ruanyifeng',
+                   'hellogithub', 'juejin', 'oschina']
 
 # 这三个板块是固定版面，模型漏掉就当本次失败、换下一个模型重试
 REQUIRED_SECTIONS = ['网络安全', '新闻热搜', '短视频热榜']
@@ -62,34 +77,72 @@ SENSITIVE_HOT = [
     '主席', '复兴', '中山之行', '元首', '会晤', '中俄',
 ]
 
+# 国际/财经/逆向/X 这几个板块最容易带出涉政涉华内容，取样时也一并滤掉
+SENSITIVE_POLITICS = [
+    '习近平', '总书记', '中共中央', '政治局', '人大常委会', '全国政协', '中央军委',
+    '国防部', '外交部', '解放军', '军演', '台独', '台湾', '香港', '澳门', '新疆',
+    '西藏', '南海', '会见', '会晤', '元首', '考察', '落马', '被查', '双开', '受贿',
+    '贪腐', '违纪', '公诉', '李强', '王沪宁', '赵乐际', '蔡奇', '丁薛祥', '李希',
+]
+
 SYSTEM = (
     '你是一名中文科技媒体的值班编辑，擅长把一堆资讯按主题归类并写成版面。'
     '你只依据给定材料写作，不编造、不评论、不署名。'
 )
 
-TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式为「序号. [分类] 标题 —— 摘要」：
+TECH_TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式为「序号. [分类] 标题 —— 摘要」：
 
 {material}
 
-请按主题把它们归成 5～7 个板块，每个板块写一段概述；此外必须固定输出「网络安全」「新闻热搜」「短视频热榜」三个板块（材料见下文），这三个板块必须出现，不可省略、不可改名、不可合并进其他板块。要求：
+请按主题把它们归成 5～7 个板块，每个板块写一段概述，要求：
 1. 只依据材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
 2. 板块名用 2～6 个字的名词短语，例如「AI 与大模型」「手机与硬件」「行业与资本」「游戏与娱乐」；不要用「科技动态」「其他」「综合」这类笼统名字；材料撑不起一个板块的主题就不要硬凑；
 3. 每个板块 2～5 句，说清发生了什么；不要罗列型号与价格清单，挑有信息量的细节写；
 4. 篇幅不限，但每句都要带新信息，同一件事只说一次，不要跨板块重复；
 5. **全部用中文写**：材料里的英文标题和摘要必须译成中文再概括，不要直接抄英文原文；
 6. 不要提到材料里没有的公司、产品、地区或数字；
-7. 「网络安全」板块只能使用下文的安全情报材料，不要把上面的科技资讯塞进这个板块；3～4 句，先说最值得注意的漏洞或攻击活动（说清影响什么产品、严重到什么程度），**正文里不要出现任何 CVE 编号**；
-8. 「新闻热搜」板块只能使用下文的热搜榜材料：3～4 句，概括今天大众在关注什么，按话题方向归类（社会民生、娱乐、体育、科技等），不要逐条罗列各平台标题；**涉及时政、领导人活动、官员被查或贪腐案件、外交军事的条目一律不写**；
-9. 「短视频热榜」板块只能使用下文的短视频热榜材料：2～3 句，概括热门内容的类型和几个有代表性的内容；
-10. 每个板块的内容必须来自对应材料，不要把一类材料写进另一类板块；
-11. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
+7. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
+[{{"title":"板块名","text":"该板块概述"}}]"""
+
+FIXED_TEMPLATE = """下面是今天采集到的各类榜单与专项材料（分块给出，每块注明对应板块）。
+
+请严格按「网络安全」「新闻热搜」「短视频热榜」「国际新闻」「逆向论坛」「财经热榜」「科技资讯」「X 新闻」这八个板块各写一段概述。八个板块一个都不能少，不能改名、不能合并，也不要新增其他板块。
+
+通用要求：
+1. 只依据对应材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
+2. **每个板块只能用它自己那块材料**，不要把一类材料写进另一类板块；
+3. **全部用中文写**：材料里的英文标题与摘要必须先译成中文再概括；
+4. 不要提到材料里没有的公司、产品、地区或数字；
+5. 每个板块 2～4 句，说清发生了什么，挑有信息量的细节写，不要逐条罗列标题；
+
+各板块的具体要求：
+6. 「网络安全」：先说最值得注意的漏洞或攻击活动，说清影响什么产品、严重到什么程度，**正文里不要出现任何 CVE 编号**；
+7. 「新闻热搜」：概括今天大众在关注什么，按话题方向归类；**涉及时政、领导人活动、官员案件、外交军事的条目一律不写**；
+8. 「短视频热榜」：概括热门内容的类型和几个有代表性的内容；
+9. 「国际新闻」：概括今天国际上发生了什么（经济、科技、社会、灾害、冲突等），只陈述事实，不评价、不预测；
+10. 「逆向论坛」：概括技术爱好者在研究什么（逆向分析、脱壳、抓包、协议还原、安全工具等），可以点出项目或工具名，但**不要写具体破解步骤或绕过授权的方法**；
+11. 「财经热榜」：概括市场与投资者在关注什么（行情、公司业绩、行业政策、大宗商品等），**不要给投资建议、不预测涨跌**；
+12. 「科技资讯」：概括国内科技媒体与开发者在讨论什么，侧重新技术、新产品、开发者工具与开源项目；
+13. 「X 新闻」：概括 X 上今天的热门话题与高互动讨论，按方向归类（AI、科技、社会、娱乐等）；
+
+14. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
 [{{"title":"板块名","text":"该板块概述"}}]
 
 {security_block}
 
 {hot_block}
 
-{short_block}"""
+{short_block}
+
+{intl_block}
+
+{reverse_block}
+
+{finance_block}
+
+{tech_block}
+
+{x_block}"""
 
 
 def _render_block(title, rows):
@@ -115,7 +168,27 @@ def build_short_block(short):
     return _render_block('今日短视频热榜（供「短视频热榜」板块使用）', short)
 
 
-def build_prompt(items, security=None, hot=None, short=None):
+def build_intl_block(rows):
+    return _render_block('今日国际新闻（供「国际新闻」板块使用）', rows)
+
+
+def build_reverse_block(rows):
+    return _render_block('逆向与破解论坛新帖（供「逆向论坛」板块使用）', rows)
+
+
+def build_finance_block(rows):
+    return _render_block('财经热榜与市场资讯（供「财经热榜」板块使用）', rows)
+
+
+def build_tech_block(rows):
+    return _render_block('国内科技媒体与开发者社区（供「科技资讯」板块使用）', rows)
+
+
+def build_x_block(rows):
+    return _render_block('X（推特）趋势与高互动推文（供「X 新闻」板块使用）', rows)
+
+
+def build_tech_prompt(items):
     lines = []
     for index, item in enumerate(items, 1):
         title = re.sub(r'\s+', ' ', str(item.get('title') or ''))[:120]
@@ -125,12 +198,20 @@ def build_prompt(items, security=None, hot=None, short=None):
         if summary:
             line += f' —— {summary}'
         lines.append(line)
-    return TEMPLATE.format(
-        n=len(items),
-        material='\n'.join(lines),
+    return TECH_TEMPLATE.format(n=len(items), material='\n'.join(lines))
+
+
+def build_fixed_prompt(security=None, hot=None, short=None,
+                       intl=None, reverse=None, finance=None, tech=None, x_news=None):
+    return FIXED_TEMPLATE.format(
         security_block=build_security_block(security),
         hot_block=build_hot_block(hot),
         short_block=build_short_block(short),
+        intl_block=build_intl_block(intl),
+        reverse_block=build_reverse_block(reverse),
+        finance_block=build_finance_block(finance),
+        tech_block=build_tech_block(tech),
+        x_block=build_x_block(x_news),
     )
 
 
@@ -195,6 +276,95 @@ def load_short_video(path):
     return load_group(path, SHORT_VIDEO_KEYS, MAX_SHORT_VIDEO, per_source=MAX_SHORT_VIDEO)
 
 
+def drop_politics(rows):
+    """滤掉涉政涉华条目，并按标题去重。"""
+    seen, unique = set(), []
+    for row in rows:
+        title = str(row.get('title') or '')
+        if any(word in title for word in SENSITIVE_POLITICS):
+            continue
+        key = re.sub(r'[\s\W]+', '', title)[:24]
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(row)
+    return unique
+
+
+# 明显不适合放进速览的内容（刑事案件细节、擦边话题），X 板块尤其容易带出来
+CONTENT_BLOCK = ['侵犯', '性侵', '强奸', '猥亵', '裸照', '色情', '约炮', '卖淫']
+
+
+def drop_unfit(rows):
+    return [row for row in rows
+            if not any(word in str(row.get('title') or '') for word in CONTENT_BLOCK)]
+
+
+def load_intl(path):
+    return drop_politics(load_group(path, INTL_KEYS, MAX_INTL + 8))[:MAX_INTL]
+
+
+def load_reverse(path):
+    return drop_politics(load_group(path, REVERSE_KEYS, MAX_REVERSE + 6))[:MAX_REVERSE]
+
+
+def load_finance(path, xueqiu_path='xueqiu-hot.json'):
+    rows = list(load_group(path, FINANCE_KEYS, MAX_FINANCE + 6))
+    # 雪球热榜单独一个文件，补在前面
+    try:
+        data = json.loads(Path(xueqiu_path).read_text(encoding='utf-8-sig'))
+        head = []
+        for item in (data.get('items') or [])[:8]:
+            title = str(item.get('title') or '').strip()
+            if len(title) >= 5:
+                likes = item.get('likes')
+                head.append({
+                    'source': 'xueqiu',
+                    'title': title,
+                    'meta': f'{likes} 赞' if likes else '',
+                    'at': str(data.get('updatedAt') or ''),
+                })
+        rows = head + rows
+    except (OSError, ValueError):
+        pass
+    return drop_politics(rows)[:MAX_FINANCE]
+
+
+def load_tech_media(path):
+    return drop_politics(load_group(path, TECH_MEDIA_KEYS, MAX_TECH_MEDIA + 8))[:MAX_TECH_MEDIA]
+
+
+def load_x_news(words_path='x-words.json', global_path='x-global.json'):
+    """X（推特）板块：以趋势词条为主，再用高互动推文补足。"""
+    rows = []
+    try:
+        data = json.loads(Path(words_path).read_text(encoding='utf-8-sig'))
+        for item in (data.get('items') or [])[:10]:
+            title = str(item.get('title') or '').strip()
+            if len(title) < 5:
+                continue
+            meta = str(item.get('summary') or '')[:80]
+            rows.append({'source': 'x-words', 'title': title, 'meta': meta})
+    except (OSError, ValueError):
+        pass
+    try:
+        data = json.loads(Path(global_path).read_text(encoding='utf-8-sig'))
+        posts = [item for item in (data.get('items') or [])
+                 if isinstance(item, dict) and len(str(item.get('title') or '')) >= 12]
+        posts.sort(key=lambda item: int(re.sub(r'\D', '', str(item.get('likes') or '0')) or 0), reverse=True)
+        for item in posts[:10]:
+            title = re.sub(r'\s+', ' ', str(item.get('title') or ''))[:100]
+            likes = item.get('likes')
+            rows.append({
+                'source': 'x',
+                'title': title,
+                'meta': f'{likes} 赞' if likes else str(item.get('category') or ''),
+            })
+    except (OSError, ValueError):
+        pass
+    return drop_unfit(drop_politics(rows))[:MAX_X]
+
+
 def tidy(text):
     """清掉模型爱加的前后缀、项目符号与多余空白，保留段落换行供前端换行显示。"""
     value = str(text or '').replace('\r\n', '\n').replace('\r', '\n')
@@ -213,16 +383,14 @@ def tidy(text):
 
 
 def parse_sections(raw):
-    """从模型输出里抠出 [{title,text}]，容忍代码块包裹与前后废话。"""
+    """从模型输出里抠出 [{title,text}]，容忍代码块包裹、前后废话、坏转义与截断。"""
     value = str(raw or '').strip()
     if not value:
         return []
     value = re.sub(r'^```(?:json|JSON)?\s*', '', value)
     value = re.sub(r'\s*```$', '', value)
     start, end = value.find('['), value.rfind(']')
-    if start < 0 or end <= start:
-        return []
-    chunk = value[start:end + 1]
+    chunk = value[start:end + 1] if start >= 0 and end > start else value
     data = None
     try:
         data = json.loads(chunk)
@@ -231,15 +399,26 @@ def parse_sections(raw):
         try:
             data = ast.literal_eval(chunk)
         except (ValueError, SyntaxError):
-            return []
+            data = None
     if not isinstance(data, list):
-        return []
+        # 最后一道兜底：直接按字段正则抠，能救回坏转义和被截断的数组
+        pairs = re.findall(
+            r'"title"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,\s*"text"\s*:\s*"((?:[^"\\]|\\.)*)"',
+            chunk, re.S)
+        if not pairs:
+            return []
+        data = [{'title': title, 'text': body} for title, body in pairs]
+
+    def _unescape(text):
+        return (text.replace('\\n', '\n').replace('\\t', ' ')
+                .replace('\\"', '"').replace('\\\\', '\\'))
+
     sections = []
     for entry in data:
         if not isinstance(entry, dict):
             continue
-        title = re.sub(r'\s+', ' ', str(entry.get('title') or '')).strip(' 「」【】#：:·-')
-        body = str(entry.get('text') or '').replace('\r\n', '\n').replace('\r', '\n')
+        title = re.sub(r'\s+', ' ', _unescape(str(entry.get('title') or ''))).strip(' 「」【】#：:·-')
+        body = _unescape(str(entry.get('text') or '')).replace('\r\n', '\n').replace('\r', '\n')
         body = re.sub(r'[ \t\u3000]+', ' ', body).strip()
         body = re.sub(r'\n{2,}', '\n', body)
         if len(title) < 2 or len(body) < 10:
@@ -303,6 +482,9 @@ def main():
     parser.add_argument('--input', default='news.json')
     parser.add_argument('--security', default='extra-hotspots.json')
     parser.add_argument('--weibo', default='weibo-hot.json')
+    parser.add_argument('--xueqiu', default='xueqiu-hot.json')
+    parser.add_argument('--x-words', dest='x_words', default='x-words.json')
+    parser.add_argument('--x-global', dest='x_global', default='x-global.json')
     parser.add_argument('--account', default=os.environ.get('CF_ACCOUNT_ID', ''))
     parser.add_argument('--token', default=os.environ.get('CF_API_TOKEN', ''))
     parser.add_argument('--model', default=os.environ.get('CF_AI_MODEL', ''))
@@ -324,60 +506,81 @@ def main():
         print(f'DIGEST_SKIP 有效资讯仅 {len(items)} 条，样本太少')
         return 0
 
-    prompt = build_prompt(
-        items,
-        load_security(args.security),
-        load_hot(args.security, args.weibo),
-        load_short_video(args.security),
-    )
-    plain_fallback = ''
-    keeper = None  # 结构不全但可用的结果，所有模型都漏板块时兜底用
-    for model in ([args.model] if args.model else MODELS):
-        try:
-            raw = call_model(model, args.account, args.token, prompt)
-        except urllib.error.HTTPError as error:
-            print(f'DIGEST_MODEL_FAIL {model} http={error.code}')
-            continue
-        except Exception as error:  # 超时、网络、解析失败都只换下一个模型
-            print(f'DIGEST_MODEL_FAIL {model} {type(error).__name__}: {error}')
-            continue
-        if not raw:
-            print(f'DIGEST_MODEL_FAIL {model} 返回空文本')
-            continue
-        sections = parse_sections(raw)
-        if not sections:
-            # 模型没守 JSON 格式时先留一份纯文本兜底，换下一个模型再试
-            print(f'DIGEST_MODEL_FAIL {model} 未返回可解析的板块 JSON')
-            if not plain_fallback:
-                plain = tidy(raw)
-                if len(plain) >= 40:
-                    plain_fallback = plain
-            continue
-        missing = [name for name in REQUIRED_SECTIONS
-                   if not any(name in section['title'] for section in sections)]
-        if missing:
-            print(f'DIGEST_MODEL_FAIL {model} 缺少固定板块 {"/".join(missing)}')
-            if keeper is None:
-                keeper = (model, sections)
-            continue
-        write_digest(path, data, sections, model, len(items))
-        print(f'DIGEST_OK sections={len(sections)} chars={sum(len(s["text"]) for s in sections)} model={model} items={len(items)}')
+    security = load_security(args.security)
+    hot = load_hot(args.security, args.weibo)
+    short = load_short_video(args.security)
+    intl = load_intl(args.security)
+    reverse = load_reverse(args.security)
+    finance = load_finance(args.security, args.xueqiu)
+    tech = load_tech_media(args.security)
+    x_news = load_x_news(args.x_words, args.x_global)
+    print(f'DIGEST_MATERIAL security={len(security)} hot={len(hot)} video={len(short)} '
+          f'intl={len(intl)} reverse={len(reverse)} finance={len(finance)} '
+          f'tech={len(tech)} x={len(x_news)}')
+
+    # 固定板块 + 材料非空的新板块都要校验，材料为空的就放过（当天没数据不怪模型）
+    required = list(REQUIRED_SECTIONS)
+    for name, rows in (('国际新闻', intl), ('逆向论坛', reverse), ('财经热榜', finance),
+                       ('科技资讯', tech), ('X 新闻', x_news)):
+        if rows:
+            required.append(name)
+
+    tech_prompt = build_tech_prompt(items)
+    fixed_prompt = build_fixed_prompt(security, hot, short, intl, reverse, finance, tech, x_news)
+    models = [args.model] if args.model else MODELS
+
+    def run(prompt, required_names, tag):
+        """跑一遍模型链，返回 (model, sections)；全失败返回 (None, [])。"""
+        best = None
+        for name in models:
+            try:
+                raw = call_model(name, args.account, args.token, prompt)
+            except urllib.error.HTTPError as error:
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} http={error.code}')
+                continue
+            except Exception as error:  # 超时、网络、解析失败都只换下一个模型
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} {type(error).__name__}: {error}')
+                continue
+            if not raw:
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} 返回空文本')
+                continue
+            sections = parse_sections(raw)
+            if not sections:
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} 未返回可解析的板块 JSON')
+                continue
+            missing = [title for title in required_names
+                       if not any(title in section['title'] for section in sections)]
+            if missing:
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} 缺少板块 {"/".join(missing)}')
+                # 留覆盖最全的那一份兜底，不要拿到第一个半成品就用
+                score = (len(required_names) - len(missing), len(sections))
+                if best is None or score > best[0]:
+                    best = (score, name, sections)
+                continue
+            return name, sections
+        if best:
+            return best[1], best[2]
+        return None, []
+
+    # 第一段：24 条科技资讯按主题归类；第二段：八个固定版面。
+    # 分两次调用是因为一次让模型写 13～15 个板块时，它会把科技板块整个丢掉。
+    tech_model, tech_sections = run(tech_prompt, [], '科技板块')
+    tech_sections = [section for section in tech_sections
+                     if not any(name in section['title'] for name in required)]
+    fixed_model, fixed_sections = run(fixed_prompt, required, '固定板块')
+
+    if not tech_sections and not fixed_sections:
+        print('DIGEST_SKIP 两段生成均失败，保留原有数据')
         return 0
 
-    if keeper:
-        model, sections = keeper
-        write_digest(path, data, sections, model, len(items))
-        print(f'DIGEST_OK(固定板块不全) sections={len(sections)} model={model}')
-        return 0
-
-    if plain_fallback:
-        sections = [{'title': '今日概览', 'text': plain_fallback}]
-        write_digest(path, data, sections, MODELS[-1], len(items))
-        print(f'DIGEST_OK sections=1（纯文本兜底）chars={len(plain_fallback)}')
-        return 0
-
-    print('DIGEST_SKIP 所有模型均失败，保留原有数据')
+    sections = tech_sections + fixed_sections
+    model = fixed_model or tech_model
+    write_digest(path, data, sections, model, len(items))
+    total = sum(len(section['text']) for section in sections)
+    print(f'DIGEST_OK sections={len(sections)} tech={len(tech_sections)} '
+          f'fixed={len(fixed_sections)} chars={total} model={model} items={len(items)}')
     return 0
+
 
 
 if __name__ == '__main__':

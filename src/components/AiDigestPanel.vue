@@ -29,7 +29,7 @@
   </section>
 </template>
 <script>
-const CACHE_KEY = 'navigation-digest-v1';
+const CACHE_KEY = 'navigation-digest-v2';
 
 export default {
   name: 'AiDigestPanel',
@@ -68,7 +68,7 @@ export default {
             .filter(item => item && typeof item.title === 'string' && typeof item.text === 'string')
             .map(item => ({ title: item.title.trim(), text: item.text.trim() }))
             .filter(item => item.title && item.text.length >= 10)
-            .slice(0, 8)
+            .slice(0, 20)
         : [];
       const text = typeof value.text === 'string' ? value.text.trim() : '';
       if (!sections.length && text.length < 12) return null;

@@ -114,6 +114,26 @@ class PromptTests(unittest.TestCase):
         self.assertEqual(text, 'A：一\n\nB：二')
 
 
+class EmojiTests(unittest.TestCase):
+    def test_norm_title_ignores_spaces(self):
+        self.assertIn(g.norm_title('X 新闻'), g.norm_title('🐦 X新闻'))
+
+    def test_dedupe_replaces_repeated_emoji(self):
+        sections = [
+            {'title': '💻 操作系统与软件', 'text': 'x' * 20},
+            {'title': '💻 科技资讯', 'text': 'y' * 20},
+        ]
+        g.dedupe_emojis(sections)
+        emojis = [g.EMOJI_RE.match(s['title']).group(1) for s in sections]
+        self.assertEqual(len(set(emojis)), 2)
+        self.assertEqual(sections[0]['title'], '💻 操作系统与软件')
+        self.assertTrue(sections[1]['title'].endswith('科技资讯'))
+
+    def test_dedupe_keeps_titles_without_emoji(self):
+        sections = [{'title': '无表情板块', 'text': 'x' * 20}]
+        self.assertEqual(g.dedupe_emojis(sections)[0]['title'], '无表情板块')
+
+
 class ModelParamsTests(unittest.TestCase):
     def test_thinking_disabled_for_glm(self):
         self.assertEqual(

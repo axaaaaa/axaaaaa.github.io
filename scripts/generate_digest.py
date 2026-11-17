@@ -97,6 +97,7 @@ TECH_TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式�
 请按主题把它们归成 5～7 个板块，每个板块写一段概述，要求：
 1. 只依据材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
 2. 板块名用 2～6 个字的名词短语，例如「AI 与大模型」「手机与硬件」「行业与资本」「游戏与娱乐」；不要用「科技动态」「其他」「综合」这类笼统名字；材料撑不起一个板块的主题就不要硬凑；
+2b. **每个板块的 title 开头必须带一个与主题贴合的 emoji**（如「🤖 AI 与大模型」「📱 手机与硬件」「🎮 游戏与娱乐」），一个板块只用一个，且各板块之间不重复；**不要用 🛡️ 🔥 🎬 🌍 🔧 💰 💻 🐦 这八个**（固定版面已占用）；**正文里不要出现 emoji**；
 3. 每个板块 2～5 句，说清发生了什么；不要罗列型号与价格清单，挑有信息量的细节写；
 4. 篇幅不限，但每句都要带新信息，同一件事只说一次，不要跨板块重复；
 5. **全部用中文写**：材料里的英文标题和摘要必须译成中文再概括，不要直接抄英文原文；
@@ -109,23 +110,24 @@ FIXED_TEMPLATE = """下面是今天采集到的各类榜单与专项材料（分
 请严格按「网络安全」「新闻热搜」「短视频热榜」「国际新闻」「逆向论坛」「财经热榜」「科技资讯」「X 新闻」这八个板块各写一段概述。八个板块一个都不能少，不能改名、不能合并，也不要新增其他板块。
 
 通用要求：
-1. 只依据对应材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
-2. **每个板块只能用它自己那块材料**，不要把一类材料写进另一类板块；
-3. **全部用中文写**：材料里的英文标题与摘要必须先译成中文再概括；
-4. 不要提到材料里没有的公司、产品、地区或数字；
-5. 每个板块 2～4 句，说清发生了什么，挑有信息量的细节写，不要逐条罗列标题；
+1. **每个板块的 title 开头必须带一个与板块主题贴合的 emoji**（如「🛡️ 网络安全」「🔥 新闻热搜」「🎬 短视频热榜」「🌍 国际新闻」「🔧 逆向论坛」「💰 财经热榜」「💻 科技资讯」「🐦 X 新闻」），一个板块只用一个，八个板块的 emoji 互不重复；**正文里不要出现 emoji**；
+2. 只依据对应材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
+3. **每个板块只能用它自己那块材料**，不要把一类材料写进另一类板块；
+4. **全部用中文写**：材料里的英文标题与摘要必须先译成中文再概括；
+5. 不要提到材料里没有的公司、产品、地区或数字；
+6. 每个板块 2～4 句，说清发生了什么，挑有信息量的细节写，不要逐条罗列标题；
 
 各板块的具体要求：
-6. 「网络安全」：先说最值得注意的漏洞或攻击活动，说清影响什么产品、严重到什么程度，**正文里不要出现任何 CVE 编号**；
-7. 「新闻热搜」：概括今天大众在关注什么，按话题方向归类；**涉及时政、领导人活动、官员案件、外交军事的条目一律不写**；
-8. 「短视频热榜」：概括热门内容的类型和几个有代表性的内容；
-9. 「国际新闻」：概括今天国际上发生了什么（经济、科技、社会、灾害、冲突等），只陈述事实，不评价、不预测；
-10. 「逆向论坛」：概括技术爱好者在研究什么（逆向分析、脱壳、抓包、协议还原、安全工具等），可以点出项目或工具名，但**不要写具体破解步骤或绕过授权的方法**；
-11. 「财经热榜」：概括市场与投资者在关注什么（行情、公司业绩、行业政策、大宗商品等），**不要给投资建议、不预测涨跌**；
-12. 「科技资讯」：概括国内科技媒体与开发者在讨论什么，侧重新技术、新产品、开发者工具与开源项目；
-13. 「X 新闻」：概括 X 上今天的热门话题与高互动讨论，按方向归类（AI、科技、社会、娱乐等）；
+7. 「网络安全」：先说最值得注意的漏洞或攻击活动，说清影响什么产品、严重到什么程度，**正文里不要出现任何 CVE 编号**；
+8. 「新闻热搜」：概括今天大众在关注什么，按话题方向归类；**涉及时政、领导人活动、官员案件、外交军事的条目一律不写**；
+9. 「短视频热榜」：概括热门内容的类型和几个有代表性的内容；
+10. 「国际新闻」：概括今天国际上发生了什么（经济、科技、社会、灾害、冲突等），只陈述事实，不评价、不预测；
+11. 「逆向论坛」：概括技术爱好者在研究什么（逆向分析、脱壳、抓包、协议还原、安全工具等），可以点出项目或工具名，但**不要写具体破解步骤或绕过授权的方法**；
+12. 「财经热榜」：概括市场与投资者在关注什么（行情、公司业绩、行业政策、大宗商品等），**不要给投资建议、不预测涨跌**；
+13. 「科技资讯」：概括国内科技媒体与开发者在讨论什么，侧重新技术、新产品、开发者工具与开源项目；
+14. 「X 新闻」：概括 X 上今天的热门话题与高互动讨论，按方向归类（AI、科技、社会、娱乐等）；
 
-14. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
+15. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
 [{{"title":"板块名","text":"该板块概述"}}]
 
 {security_block}
@@ -439,6 +441,35 @@ def flatten(sections):
     return '\n\n'.join(f'{section["title"]}：{section["text"]}' for section in sections)
 
 
+EMOJI_RE = re.compile(r'^([\U0001F300-\U0001FAFF\u2600-\u27BF\u2B00-\u2BFF][\uFE0F]?)\s*')
+# 模型给的 emoji 撞车时的替补（固定版面那八个之外）
+FALLBACK_EMOJI = ['📌', '📎', '🗂️', '🔖', '📰', '📊', '🧩', '🛰️', '⚙️', '🔍']
+
+
+def norm_title(text):
+    """比较板块名时忽略空格差异，"X 新闻" 与 "X新闻" 视为同一个。"""
+    return re.sub(r'\s+', '', str(text or ''))
+
+
+def dedupe_emojis(sections):
+    """保证每个板块标题前的 emoji 不重复；重复的换一个替补。"""
+    seen = set()
+    for section in sections:
+        match = EMOJI_RE.match(section['title'])
+        if not match:
+            continue
+        emoji = match.group(1)
+        rest = section['title'][match.end():]
+        if emoji in seen:
+            for candidate in FALLBACK_EMOJI:
+                if candidate not in seen:
+                    emoji = candidate
+                    break
+        seen.add(emoji)
+        section['title'] = f'{emoji} {rest}'.strip()
+    return sections
+
+
 def call_model(model, account, token, prompt, timeout=90):
     payload = {
         'messages': [
@@ -555,7 +586,7 @@ def main():
                 print(f'DIGEST_MODEL_FAIL[{tag}] {name} 未返回可解析的板块 JSON')
                 continue
             missing = [title for title in required_names
-                       if not any(title in section['title'] for section in sections)]
+                       if not any(norm_title(title) in norm_title(section['title']) for section in sections)]
             if missing:
                 print(f'DIGEST_MODEL_FAIL[{tag}] {name} 缺少板块 {"/".join(missing)}')
                 # 留覆盖最全的那一份兜底，不要拿到第一个半成品就用
@@ -572,14 +603,14 @@ def main():
     # 分两次调用是因为一次让模型写 13～15 个板块时，它会把科技板块整个丢掉。
     tech_model, tech_sections = run(tech_prompt, [], '科技板块')
     tech_sections = [section for section in tech_sections
-                     if not any(name in section['title'] for name in required)]
+                     if not any(norm_title(name) in norm_title(section['title']) for name in required)]
     fixed_model, fixed_sections = run(fixed_prompt, required, '固定板块')
 
     if not tech_sections and not fixed_sections:
         print('DIGEST_SKIP 两段生成均失败，保留原有数据')
         return 0
 
-    sections = tech_sections + fixed_sections
+    sections = dedupe_emojis(tech_sections + fixed_sections)
     model = fixed_model or tech_model
     write_digest(path, data, sections, model, len(items))
     total = sum(len(section['text']) for section in sections)

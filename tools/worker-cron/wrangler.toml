@@ -1,0 +1,13 @@
+name = "pages-news-cron"
+main = "worker.js"
+compatibility_date = "2026-11-17"
+workers_dev = true
+preview_urls = false
+
+# 每小时第 17 分钟触发（UTC），与原来 GitHub 上的 cron 对齐
+[triggers]
+crons = ["17 * * * *"]
+
+# 想看每次触发的日志就打开；免费额度内可用
+[observability]
+enabled = true

@@ -40,3 +40,6 @@ pnpm-debug.log*
 
 # 本地工作记忆（不属于源码，不进公开仓库）
 /.workbuddy/
+
+# Cloudflare Worker 本地缓存与部署状态
+.wrangler/

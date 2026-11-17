@@ -15,8 +15,8 @@ from pathlib import Path
 
 API = 'https://api.cloudflare.com/client/v4/accounts/{account}/ai/run/{model}'
 
-# 优先中文友好的 Qwen，失败再退到 Llama；可用 CF_AI_MODEL 覆盖
-MODELS = ['@cf/qwen/qwen2.5-7b-instruct', '@cf/meta/llama-3.1-8b-instruct-fp8-fast']
+# 实测：8b 可读性最好，70b 更保守（不编造但偏平淡），按序兜底；可用 CF_AI_MODEL 覆盖
+MODELS = ['@cf/meta/llama-3.1-8b-instruct-fp8-fast', '@cf/meta/llama-3.3-70b-instruct-fp8-fast']
 
 MAX_ITEMS = 24
 MAX_TOKENS = 320
@@ -34,8 +34,10 @@ TEMPLATE = """以下是今天采集到的 {n} 条科技资讯，格式为「序�
 请写一段导读，要求：
 1. 只依据上面的材料，不要补充任何材料之外的信息，不要猜测原因或影响；
 2. 按重要性从高到低，第一句先说今天最值得关注的一件事；
-3. 连成一段话，不要分点、不要编号、不要小标题，总字数控制在 120 字以内；
-4. 不要使用「据悉」「值得注意的是」「总的来说」这类套话，也不要提到「以上」「下面」「这份材料」。"""
+3. 连成一段话，不要分点、不要编号、不要小标题，全文不超过 100 字；
+4. 不要使用「据悉」「值得注意的是」「总的来说」这类套话，也不要提到「以上」「下面」「这份材料」；
+5. 不要做推断或评价：不写「这说明」「意味着」「反映出」后面那类内容，只陈述材料里直接出现的事实；
+6. 不要提到材料里没有的公司、产品、地区或数字；材料以商品与降价信息为主时，就老实概括有哪些值得关注的新品，不要硬凑趋势。"""
 
 
 def build_prompt(items):
@@ -77,7 +79,14 @@ def call_model(model, account, token, prompt, timeout=45):
     with urllib.request.urlopen(request, timeout=timeout) as response:
         body = json.loads(response.read().decode('utf-8', 'replace'))
     result = body.get('result') or {}
+    # 兼容两种返回：Workers AI 原生 {response} 与 OpenAI 风格 {choices[].message.content}
     text = result.get('response') or result.get('text') or ''
+    if not text:
+        for choice in result.get('choices') or []:
+            content = ((choice or {}).get('message') or {}).get('content')
+            if content:
+                text = content
+                break
     return tidy(text)
 
 

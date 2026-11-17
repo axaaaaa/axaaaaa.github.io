@@ -80,6 +80,6 @@ export default {
 .news-digest-top{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .news-digest-badge{font-size:10px;font-weight:700;letter-spacing:1.4px;color:#e0703f;background:rgba(241,118,77,.15);padding:2px 7px;border-radius:6px}
 .news-digest-meta{font-size:11px;color:var(--news-muted)}
-.news-digest-text{margin:0;font-size:13px;line-height:1.78;color:var(--news-text)}
+.news-digest-text{margin:0;font-size:13px;line-height:1.78;color:var(--news-text);white-space:pre-line}
 @media(max-width:700px){.news-digest{margin:0 16px 12px;padding:12px 13px}.news-digest-text{font-size:12.5px;line-height:1.75}.news-digest-meta{font-size:10px}}
 </style>

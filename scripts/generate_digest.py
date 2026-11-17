@@ -97,25 +97,27 @@ TECH_TEMPLATE = """下面是从今天采集到的 {n} 条科技资讯，格式�
 请按主题把它们归成 5～7 个板块，每个板块写一段概述，要求：
 1. 只依据材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
 2. 板块名用 2～6 个字的名词短语，例如「AI 与大模型」「手机与硬件」「行业与资本」「游戏与娱乐」；不要用「科技动态」「其他」「综合」这类笼统名字；材料撑不起一个板块的主题就不要硬凑；
-2b. **每个板块的 title 开头必须带一个与主题贴合的 emoji**（如「🤖 AI 与大模型」「📱 手机与硬件」「🎮 游戏与娱乐」），一个板块只用一个，且各板块之间不重复；**不要用 🛡️ 🔥 🎬 🌍 🔧 💰 💻 🐦 这八个**（固定版面已占用）；**正文里不要出现 emoji**；
-3. 每个板块 2～5 句，说清发生了什么；不要罗列型号与价格清单，挑有信息量的细节写；
+2b. **每个板块的 title 开头必须带一个与主题贴合的 emoji**（如「🤖 AI 与大模型」「📱 手机与硬件」「🎮 游戏与娱乐」），一个板块只用一个，且各板块之间不重复；**不要用 🛡️ 🔥 🎬 🌍 🔧 💰 💻 🐦 这八个**（固定版面已占用）；
+3. **正文写 3～5 行**，行与行之间用换行符分隔；**每一行都必须以 emoji 开头**，同一板块内各行用不同的 emoji，行内其余文字不要再加 emoji；**不要用「-」「*」「•」「1.」这类列表符号**；
+3b. **每行覆盖一个话题方向**：同一家公司、同一类产品、同一个话题的多条材料要合并进同一行（例如手机新品与耳机预售合成「消费电子」一行），**不要一条材料写一行，也不要只写一条就收尾**；每行 1～2 句、整个板块合计 80～160 字，说清发生了什么，不要罗列型号与价格清单；
 4. 篇幅不限，但每句都要带新信息，同一件事只说一次，不要跨板块重复；
 5. **全部用中文写**：材料里的英文标题和摘要必须译成中文再概括，不要直接抄英文原文；
 6. 不要提到材料里没有的公司、产品、地区或数字；
 7. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
-[{{"title":"板块名","text":"该板块概述"}}]"""
+[{{"title":"🚗 板块名","text":"🚀 第一行要点\n📦 第二行要点\n🔋 第三行要点"}}]"""
 
 FIXED_TEMPLATE = """下面是今天采集到的各类榜单与专项材料（分块给出，每块注明对应板块）。
 
 请严格按「网络安全」「新闻热搜」「短视频热榜」「国际新闻」「逆向论坛」「财经热榜」「科技资讯」「X 新闻」这八个板块各写一段概述。八个板块一个都不能少，不能改名、不能合并，也不要新增其他板块。
 
 通用要求：
-1. **每个板块的 title 开头必须带一个与板块主题贴合的 emoji**（如「🛡️ 网络安全」「🔥 新闻热搜」「🎬 短视频热榜」「🌍 国际新闻」「🔧 逆向论坛」「💰 财经热榜」「💻 科技资讯」「🐦 X 新闻」），一个板块只用一个，八个板块的 emoji 互不重复；**正文里不要出现 emoji**；
+1. **每个板块的 title 开头必须带一个与板块主题贴合的 emoji**（如「🛡️ 网络安全」「🔥 新闻热搜」「🎬 短视频热榜」「🌍 国际新闻」「🔧 逆向论坛」「💰 财经热榜」「💻 科技资讯」「🐦 X 新闻」），一个板块只用一个，八个板块的 emoji 互不重复；**正文里每行开头也要带一个与该条内容贴合的 emoji**；
 2. 只依据对应材料，不补充材料之外的信息，不做推断或评价（不写「这说明」「意味着」「反映出」这类内容）；
 3. **每个板块只能用它自己那块材料**，不要把一类材料写进另一类板块；
 4. **全部用中文写**：材料里的英文标题与摘要必须先译成中文再概括；
 5. 不要提到材料里没有的公司、产品、地区或数字；
-6. 每个板块 2～4 句，说清发生了什么，挑有信息量的细节写，不要逐条罗列标题；
+6. **正文写 3～5 行**，行与行之间用换行符分隔；**每一行都必须以 emoji 开头**，同一板块内各行用不同的 emoji，行内其余文字不要再加 emoji；**不要用「-」「*」「•」「1.」这类列表符号**；
+6b. **每行覆盖一个话题方向**：同一件事、同一类话题的多条材料要合并进同一行，**不要一条材料写一行，也不要只写一条就收尾**；每行 1～2 句、整个板块合计 100～200 字，说清发生了什么，不要逐条罗列标题；
 
 各板块的具体要求：
 7. 「网络安全」：先说最值得注意的漏洞或攻击活动，说清影响什么产品、严重到什么程度，**正文里不要出现任何 CVE 编号**；
@@ -128,7 +130,7 @@ FIXED_TEMPLATE = """下面是今天采集到的各类榜单与专项材料（分
 14. 「X 新闻」：概括 X 上今天的热门话题与高互动讨论，按方向归类（AI、科技、社会、娱乐等）；
 
 15. 只输出 JSON 数组，不要写任何解释、不要加代码块标记，格式严格为：
-[{{"title":"板块名","text":"该板块概述"}}]
+[{{"title":"🚗 板块名","text":"🚀 第一行要点\n📦 第二行要点\n🔋 第三行要点"}}]
 
 {security_block}
 
@@ -470,6 +472,49 @@ def dedupe_emojis(sections):
     return sections
 
 
+# 正文行首补 emoji 用的候选池
+LINE_EMOJI = ['📌', '🔹', '💡', '⚙️', '📊', '🧩', '🚀', '📎', '🔖', '🗂️']
+
+
+def ensure_line_emoji(sections):
+    """正文每一行都以 emoji 开头；模型漏写的行在代码层补一个，保证版面统一。"""
+    for section in sections:
+        used = set()
+        lines = []
+        for line in section['text'].split('\n'):
+            text = line.strip()
+            if not text:
+                continue
+            match = EMOJI_RE.match(text)
+            if match:
+                used.add(match.group(1))
+                lines.append(text)
+                continue
+            pick = next((item for item in LINE_EMOJI if item not in used), LINE_EMOJI[0])
+            used.add(pick)
+            lines.append(f'{pick} {text}')
+        section['text'] = '\n'.join(lines)
+    return sections
+
+
+MAX_LINES = 5
+
+
+def clamp_lines(sections, limit=MAX_LINES):
+    """行数超限时把多出来的行并进最后一行，保住内容又不破坏版面节奏。"""
+    for section in sections:
+        lines = [line for line in section['text'].split('\n') if line.strip()]
+        if len(lines) <= limit:
+            continue
+        head, tail = lines[:limit - 1], lines[limit - 1:]
+        first = EMOJI_RE.match(tail[0])
+        prefix = f'{first.group(1)} ' if first else ''
+        bodies = [EMOJI_RE.sub('', line).strip() for line in tail]
+        head.append(prefix + '；'.join(bodies))
+        section['text'] = '\n'.join(head)
+    return sections
+
+
 def call_model(model, account, token, prompt, timeout=90):
     payload = {
         'messages': [
@@ -610,7 +655,7 @@ def main():
         print('DIGEST_SKIP 两段生成均失败，保留原有数据')
         return 0
 
-    sections = dedupe_emojis(tech_sections + fixed_sections)
+    sections = clamp_lines(ensure_line_emoji(dedupe_emojis(tech_sections + fixed_sections)))
     model = fixed_model or tech_model
     write_digest(path, data, sections, model, len(items))
     total = sum(len(section['text']) for section in sections)

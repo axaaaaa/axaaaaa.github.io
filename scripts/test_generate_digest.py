@@ -134,6 +134,35 @@ class EmojiTests(unittest.TestCase):
         self.assertEqual(g.dedupe_emojis(sections)[0]['title'], '无表情板块')
 
 
+class LineStyleTests(unittest.TestCase):
+    def test_ensure_line_emoji_fills_missing(self):
+        sections = [{'title': '🛡️ 安全', 'text': '某漏洞影响广泛\n🐛 已有 emoji 的行'}]
+        g.ensure_line_emoji(sections)
+        lines = sections[0]['text'].split('\n')
+        self.assertTrue(g.EMOJI_RE.match(lines[0]))
+        self.assertEqual(lines[1], '🐛 已有 emoji 的行')
+
+    def test_ensure_line_emoji_avoids_repeat_within_section(self):
+        sections = [{'title': '🛡️ 安全', 'text': '第一行\n第二行\n第三行'}]
+        g.ensure_line_emoji(sections)
+        emojis = [g.EMOJI_RE.match(line).group(1) for line in sections[0]['text'].split('\n')]
+        self.assertEqual(len(set(emojis)), len(emojis))
+
+    def test_clamp_lines_merges_overflow(self):
+        text = '\n'.join(f'📌 第{i}行内容' for i in range(9))
+        sections = [{'title': '🛡️ 安全', 'text': text}]
+        g.clamp_lines(sections)
+        lines = sections[0]['text'].split('\n')
+        self.assertEqual(len(lines), g.MAX_LINES)
+        self.assertTrue(g.EMOJI_RE.match(lines[-1]))
+        self.assertIn('第8行内容', lines[-1])
+
+    def test_clamp_lines_keeps_short(self):
+        sections = [{'title': '🛡️ 安全', 'text': '📌 一\n📦 二'}]
+        g.clamp_lines(sections)
+        self.assertEqual(len(sections[0]['text'].split('\n')), 2)
+
+
 class ModelParamsTests(unittest.TestCase):
     def test_thinking_disabled_for_glm(self):
         self.assertEqual(

@@ -97,24 +97,33 @@ jobs:
           python - <<'PY'
           import json, subprocess
           from pathlib import Path
+
           def digest_of(raw):
               try:
                   return json.loads(raw.decode('utf-8-sig') if isinstance(raw, bytes) else raw).get('digest')
               except Exception:
                   return None
+
+          def stamp(digest):
+              return (digest or {}).get('generatedAt') or ''
+
           prev = Path('news.previous.json')
-          if prev.exists() and digest_of(prev.read_bytes()):
-              print('DIGEST_BACKUP 使用工作区副本')
+          best = prev.read_bytes() if prev.exists() else b''
+          if not digest_of(best):
+              best = b''
+          try:
+              head = subprocess.run(['git', 'show', 'HEAD:news.json'], capture_output=True, check=True).stdout
+          except Exception:
+              head = b''
+          head_digest = digest_of(head)
+          if head_digest and stamp(head_digest) > stamp(digest_of(best)):
+              best = head
+          chosen = digest_of(best)
+          if chosen:
+              prev.write_bytes(best)
+              print(f"DIGEST_BACKUP 选用 {stamp(chosen)} 这一版（工作区与仓库里取较新的）")
           else:
-              try:
-                  raw = subprocess.run(['git', 'show', 'HEAD:news.json'], capture_output=True, check=True).stdout
-              except Exception:
-                  raw = b''
-              if digest_of(raw):
-                  prev.write_bytes(raw)
-                  print('DIGEST_BACKUP 工作区没有速览，回退到仓库里提交过的上一版')
-              else:
-                  print('DIGEST_BACKUP 没有可用的速览副本')
+              print('DIGEST_BACKUP 没有可用的速览副本')
           PY
       - name: Refresh independent sources and record health
         timeout-minutes: 30

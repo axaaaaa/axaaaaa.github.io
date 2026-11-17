@@ -133,6 +133,14 @@ class EmojiTests(unittest.TestCase):
         sections = [{'title': '无表情板块', 'text': 'x' * 20}]
         self.assertEqual(g.dedupe_emojis(sections)[0]['title'], '无表情板块')
 
+    def test_dedupe_priority_keeps_semantic_emoji(self):
+        tech = {'title': '🚀 科技与前沿', 'text': 'x' * 20}
+        new = {'title': '🚀 GitHub 与开源', 'text': 'y' * 20}
+        result = g.dedupe_emojis([tech, new], priority=[new])
+        self.assertEqual(result[1]['title'], '🚀 GitHub 与开源')
+        self.assertNotEqual(result[0]['title'], '🚀 科技与前沿')
+        self.assertEqual([item is tech for item in result][0], True)
+
 
 class LineStyleTests(unittest.TestCase):
     def test_ensure_line_emoji_fills_missing(self):

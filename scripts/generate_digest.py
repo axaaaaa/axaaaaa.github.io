@@ -577,10 +577,17 @@ def norm_title(text):
     return re.sub(r'\s+', '', str(text or ''))
 
 
-def dedupe_emojis(sections):
-    """保证每个板块标题前的 emoji 不重复；重复的换一个替补。"""
+def dedupe_emojis(sections, priority=None):
+    """保证每个板块标题前的 emoji 不重复；重复的换一个替补。
+
+    priority 里的板块优先占位（固定版面比科技板块更值得保留语义贴切的 emoji），
+    处理顺序优先、但返回顺序不变。
+    """
     seen = set()
-    for section in sections:
+    ranked = list(priority or [])
+    ordered = [section for section in sections if any(section is item for item in ranked)]
+    ordered += [section for section in sections if not any(section is item for item in ranked)]
+    for section in ordered:
         match = EMOJI_RE.match(section['title'])
         if not match:
             continue
@@ -800,7 +807,8 @@ def main():
         return 0
 
     combined = tech_sections + fixed_sections + new_sections
-    sections = clamp_lines(ensure_line_emoji(dedupe_emojis(combined)))
+    sections = clamp_lines(ensure_line_emoji(
+        dedupe_emojis(combined, priority=fixed_sections + new_sections)))
     model = fixed_model or tech_model or new_model
     write_digest(path, data, sections, model, len(items))
     total = sum(len(section['text']) for section in sections)

@@ -47,7 +47,8 @@ export default {
       const relative = minutes < 1 ? '刚刚更新'
         : minutes < 60 ? `${minutes} 分钟前更新`
         : `${Math.floor(minutes / 60)} 小时前更新`;
-      return minutes > 180 ? `${relative} · 数据可能未刷新` : relative;
+      // 采集每 6 小时一次，超过 7 小时才算异常（留出一次运行失败的余量）
+      return minutes > 420 ? `${relative} · 数据可能未刷新` : relative;
     },
     subtitle() {
       const basedOn = this.digest?.basedOn;

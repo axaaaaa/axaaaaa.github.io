@@ -4,9 +4,11 @@ compatibility_date = "2026-11-17"
 workers_dev = true
 preview_urls = false
 
-# 每小时第 17 分钟触发（UTC），与原来 GitHub 上的 cron 对齐
+# 每 6 小时触发一次（UTC 0/6/12/18 点的第 17 分钟），与 GitHub 上的 cron 对齐。
+# Workers AI 免费层每天只有 10,000 neurons，每小时三段生成必然打满；
+# 6 小时一次约消耗 1,300~1,800 neurons，留足余量。
 [triggers]
-crons = ["17 * * * *"]
+crons = ["17 */6 * * *"]
 
 # 想看每次触发的日志就打开；免费额度内可用
 [observability]

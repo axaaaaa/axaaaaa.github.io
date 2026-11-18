@@ -38,8 +38,12 @@ MAX_TOKENS = 3600
 MAX_CHARS = 2400
 # 素材指纹相同且上次生成不足这么多小时，就直接沿用，省 Workers AI 额度
 REUSE_WINDOW_HOURS = 3
-# 两次生成之间的最小间隔：无论定时器怎么配，都按这个节奏走
-MIN_INTERVAL_HOURS = 2.5
+# 两次生成之间的最小间隔：无论定时器怎么配，都按这个节奏走。
+# 采集定在每 6 小时一次（17 */6 * * *），这里留 0.5 小时缓冲，
+# 否则 cron 触发时年龄可能差几秒不到 6.0 小时，会被误判成「还没到间隔」。
+MIN_INTERVAL_HOURS = 5.5
+# 生成间隔小时数，只用于日志文案与前端提示阈值对齐
+INTERVAL_HOURS = 6
 MAX_SECTIONS = 16
 MAX_SECURITY = 18
 MAX_HOT = 18
@@ -880,7 +884,13 @@ def main():
             try:
                 raw = call_model(name, args.account, args.token, prompt)
             except urllib.error.HTTPError as error:
-                print(f'DIGEST_MODEL_FAIL[{tag}] {name} http={error.code}')
+                # 429 到底是用量打满、限速还是权限问题，只有响应体能说清，必须打出来
+                detail = ''
+                try:
+                    detail = error.read().decode('utf-8', 'replace')[:300]
+                except Exception:
+                    pass
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} http={error.code} {detail}')
                 continue
             except Exception as error:  # 超时、网络、解析失败都只换下一个模型
                 print(f'DIGEST_MODEL_FAIL[{tag}] {name} {type(error).__name__}: {error}')

@@ -255,7 +255,7 @@ export default {
 
 
 
-.events-dark{--ev-text:#e2e9f4;--ev-muted:#95a3b9;--ev-line:rgba(145,164,194,.2);background:rgba(24,31,45,.92)}
+.events-dark{--ev-text:#b0d4ba;--ev-muted:#8ca995;--ev-line:#263c2e;background:linear-gradient(rgba(176,212,186,.015) 1px,transparent 1px),#080f0b;background-size:100% 4px}
 
 
 

@@ -880,7 +880,13 @@ def main():
             try:
                 raw = call_model(name, args.account, args.token, prompt)
             except urllib.error.HTTPError as error:
-                print(f'DIGEST_MODEL_FAIL[{tag}] {name} http={error.code}')
+                # 429 到底是用量打满、限速还是权限问题，只有响应体能说清，必须打出来
+                detail = ''
+                try:
+                    detail = error.read().decode('utf-8', 'replace')[:300]
+                except Exception:
+                    pass
+                print(f'DIGEST_MODEL_FAIL[{tag}] {name} http={error.code} {detail}')
                 continue
             except Exception as error:  # 超时、网络、解析失败都只换下一个模型
                 print(f'DIGEST_MODEL_FAIL[{tag}] {name} {type(error).__name__}: {error}')

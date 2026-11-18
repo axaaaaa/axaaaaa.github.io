@@ -34,6 +34,10 @@ pnpm-debug.log*
 *.sw?
 /deploy-pages-temp/
 
+# 重建前用 mv 把旧 dist 挪开的临时目录（宿主安全删除会拦 rm -rf，所以先改名）
+/dist-old-*/
+/dist-broken-*/
+
 # 部署脚本运行时产物（build.bat 每次都会重写）
 /deploy.log
 /deploy-commit.txt

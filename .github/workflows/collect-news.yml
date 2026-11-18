@@ -8,11 +8,11 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # 每 3 小时一次（UTC 0/3/6/9/12/15/18/21 点的第 17 分钟）。
-    # 改频的直接原因是 Workers AI 免费额度：每小时 3 次大模型调用会把每天 10000 neurons 打满，
-    # 一打满就是整点 429，速览全挂。降频后留出余量应付手动触发。
+    # 每 6 小时一次（UTC 0/6/12/18 点的第 17 分钟）。
+    # 改频的直接原因是 Workers AI 免费额度：10,000 neurons/天，每小时三段生成会把额度打满，
+    # 一打满就是整点 429，速览全挂。6 小时一次约消耗 1,300~1,800 neurons，只占额度两成。
     # GitHub 定时任务是尽力而为（实测 4~16 小时一次），真正维持节奏的是 Cloudflare Worker。
-    - cron: '17 */3 * * *'
+    - cron: '17 */6 * * *'
 
 permissions:
   contents: read

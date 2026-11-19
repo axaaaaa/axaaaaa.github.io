@@ -1,17 +1,16 @@
 <template>
   <section id="ai-knowledge" class="ai-knowledge" aria-labelledby="ai-knowledge-title">
     <header class="heading">
-      <h2 id="ai-knowledge-title"><button type="button" :aria-expanded="opened" aria-controls="ai-knowledge-content" @click="opened = !opened"><svg class="ai-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M9 12v2M15 12v2M12 4v3M8 19v2M16 19v2M2 11v4M22 11v4"/></svg> 人工智能知识 <span aria-hidden="true">{{ opened ? '⌃' : '⌄' }}</span></button></h2>
+      <h2 id="ai-knowledge-title"><button type="button" :aria-expanded="opened" aria-controls="ai-knowledge-content" @click="opened = !opened"><span class="ai-emoji" aria-hidden="true">🤖</span> 人工智能知识 <span aria-hidden="true">{{ opened ? '⌃' : '⌄' }}</span></button></h2>
       <span class="muted">从概念到落地 · {{ entries.length }} 个知识点</span>
     </header>
     <div v-if="opened" id="ai-knowledge-content">
-      <div class="intro"><span class="eyebrow">AI FIELD NOTES</span><h3>看懂人工智能的底层逻辑</h3><p>建议按「基础概念 → 机器学习 → 深度学习 → 大模型 → 应用与安全」的顺序阅读。每条包含定义、例子和常见误区。</p></div>
-      <nav class="tabs" aria-label="人工智能知识分类"><button v-for="name in categories" :key="name" type="button" :aria-pressed="category === name" @click="category = name">{{ name || '全部知识' }}</button></nav>
+      <nav class="tabs" aria-label="人工智能知识分类"><button v-for="name in categories" :key="name" type="button" :aria-pressed="category === name" @click="category = name">{{ name ? catLabel(name) : '🗂️ 全部知识' }}</button></nav>
       <label class="search"><span>搜索知识</span><input v-model="query" type="search" placeholder="试试：过拟合、Transformer、RAG、提示注入…" /></label>
       <p class="muted" role="status">找到 {{ filtered.length }} 个知识点 · 点击卡片展开说明</p>
       <div class="cards">
         <details v-for="entry in filtered" :key="entry.id" class="card">
-          <summary><small>{{ entry.category }}</small><h3>{{ entry.title }}</h3><span class="term">{{ entry.term }}</span></summary>
+          <summary><small>{{ catLabel(entry.category) }}</small><h3>{{ entry.title }}</h3><span class="term">{{ entry.term }}</span></summary>
           <p>{{ entry.description }}</p>
           <div class="example"><strong>举个例子</strong><p>{{ entry.example }}</p></div>
           <p class="pitfall"><strong>常见误区：</strong>{{ entry.pitfall }}</p>
@@ -25,10 +24,19 @@
 import { aiKnowledgeEntries, filterAIKnowledge } from '../data/ai-knowledge.mjs';
 export default {
   name: 'AIKnowledge',
-  data: () => ({ opened: false, entries: aiKnowledgeEntries, category: '', query: '' }),
+  data: () => ({
+    opened: false,
+    entries: aiKnowledgeEntries,
+    category: '',
+    query: '',
+    categoryEmoji: { '基础概念': '📘', '机器学习': '📈', '深度学习': '🧠', '大模型': '💬', '应用与安全': '🛡️' },
+  }),
   computed: {
     categories() { return ['', ...new Set(this.entries.map(entry => entry.category))]; },
     filtered() { return filterAIKnowledge(this.entries, this.category, this.query); },
+  },
+  methods: {
+    catLabel(name) { const icon = this.categoryEmoji[name]; return icon ? `${icon} ${name}` : name; },
   },
 };
 </script>
@@ -37,16 +45,12 @@ export default {
 .heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 h2{margin:0;font-size:20px;font-weight:500}
 .heading button{display:inline-flex;align-items:center;gap:7px;border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left}
-.ai-icon{width:19px;height:19px;flex:none}
+.ai-emoji{font-size:18px;line-height:1;flex:none}
 button,input{font:inherit;color:inherit;border:1px solid var(--el-border-color,#d7e4dc);background:var(--el-fill-color-blank,#fff);border-radius:7px;padding:8px 11px;box-sizing:border-box}
 button{cursor:pointer}
 button:hover,button[aria-pressed="true"]{color:var(--ui-accent);background:var(--ui-accent-soft)}
 button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--ui-accent,#338866);outline-offset:3px}
 .muted,.term{color:var(--el-text-color-secondary,#65746c);line-height:1.8}
-.intro{padding:22px;margin:20px 0;background:var(--ui-accent-soft,#eff7f3);border-radius:12px}
-.eyebrow{font:11px/1.8 Consolas,monospace;letter-spacing:2px;color:var(--ui-accent,#338866)}
-.intro h3{font-size:24px;margin:8px 0}
-.intro p{margin:0;line-height:1.9}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
 .search{display:flex;align-items:center;gap:12px}
 .search input{flex:1;min-width:0}
@@ -61,7 +65,7 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid
 .example p{margin:5px 0}
 .pitfall{color:var(--el-text-color-secondary,#65746c)}
 .empty{padding:24px;text-align:center}
-@media(max-width:760px){.ai-knowledge{margin:16px 12px;padding:14px}.cards{grid-template-columns:minmax(0,1fr)}.intro{padding:16px}.intro h3{font-size:21px}.heading .muted{font-size:12px}}
+@media(max-width:760px){.ai-knowledge{margin:16px 12px;padding:14px}.cards{grid-template-columns:minmax(0,1fr)}.heading .muted{font-size:12px}}
 </style>
 <style scoped>
 .ai-knowledge{
@@ -85,11 +89,10 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid
 .heading .muted{color:#fff}
 .heading h2{font-size:17px;font-weight:700}
 #ai-knowledge-content{padding:0 10px 10px}
-.ai-knowledge :is(.intro,.card,.example,button,input){border-radius:0}
-.intro{background:#fff;box-shadow:var(--win-inset)}
+.ai-knowledge :is(.card,.example,button,input){border-radius:0}
 .card{background:#efefef;box-shadow:inset 1px 1px #fff,inset -1px -1px #c0c0c0}
-.card small,.eyebrow,.term{font-family:Consolas,"Microsoft YaHei",monospace}
-.card small,.eyebrow{display:inline-block;padding:1px 5px;color:#163673;background:#e7edf8;border:1px solid #9aabc4}
+.card small,.term{font-family:Consolas,"Microsoft YaHei",monospace}
+.card small{display:inline-block;padding:1px 5px;color:#163673;background:#e7edf8;border:1px solid #9aabc4}
 .ai-knowledge button:not(.heading button){border:0;background:#c0c0c0;box-shadow:var(--win-raised)}
 .ai-knowledge button:not(.heading button):hover{background:#d5d5d5}
 .ai-knowledge button[aria-pressed="true"]{color:#fff;background:#244983;box-shadow:var(--win-inset)}

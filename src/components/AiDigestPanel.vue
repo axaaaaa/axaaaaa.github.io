@@ -18,7 +18,19 @@
       <template v-if="digest.sections.length">
         <section v-for="(sec, index) in digest.sections" :key="index" class="ai-digest-sec" :class="{ 'is-speaking': speakingIndex === index }">
           <h3>{{ sec.title }}</h3>
-          <p>{{ sec.text }}</p>
+          <div v-if="sec.lines.length" class="ai-digest-lines">
+            <p v-for="(line, i) in sec.lines" :key="i">
+              {{ line.text }}<a
+                v-if="line.link"
+                class="ai-digest-ref"
+                :href="line.link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                :title="line.link.title"
+                :aria-label="`打开原文：${line.link.title}`"><span aria-hidden="true">↗</span> 原文</a>
+            </p>
+          </div>
+          <p v-else>{{ sec.text }}</p>
         </section>
       </template>
       <p v-else class="ai-digest-text">{{ digest.text }}</p>
@@ -110,7 +122,11 @@ export default {
       const sections = Array.isArray(value.sections)
         ? value.sections
             .filter(item => item && typeof item.title === 'string' && typeof item.text === 'string')
-            .map(item => ({ title: item.title.trim(), text: item.text.trim() }))
+            .map(item => ({
+              title: item.title.trim(),
+              text: item.text.trim(),
+              lines: this.buildLines(item.text, item.sources)
+            }))
             .filter(item => item.title && item.text.length >= 10)
             .slice(0, 20)
         : [];
@@ -123,6 +139,21 @@ export default {
         model: typeof value.model === 'string' ? value.model : '',
         generatedAt: typeof value.generatedAt === 'string' ? value.generatedAt : ''
       };
+    },
+    buildLines(text, sources) {
+      // 后端按行给来源（line 是文本里第几行），这里按行号对齐；
+      // 行号对不上就退化成纯文本，绝不把链接错挂到别的行上
+      const byLine = new Map();
+      for (const item of Array.isArray(sources) ? sources : []) {
+        const index = Number(item?.line);
+        const url = typeof item?.url === 'string' ? item.url : '';
+        if (!Number.isInteger(index) || byLine.has(index) || !/^https?:\/\//i.test(url)) continue;
+        byLine.set(index, { url, title: String(item.title || '').trim() });
+      }
+      return String(text || '')
+        .split('\n')
+        .map((line, index) => ({ text: line, link: byLine.get(index) || null }))
+        .filter(line => line.text.trim());
     },
     async load(force = false) {
       if (!force) {
@@ -244,6 +275,13 @@ export default {
 .ai-digest-sec h3{margin:0 0 5px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:.2px;color:var(--ai-accent)}
 .ai-digest-sec h3::before{content:'';flex:none;width:3px;height:12px;border-radius:2px;background:var(--ai-accent)}
 .ai-digest-sec p{margin:0;font-size:13.5px;line-height:1.85;color:var(--ai-text);white-space:pre-line}
+.ai-digest-lines p{margin:0;font-size:13.5px;line-height:1.85;color:var(--ai-text);white-space:normal}
+.ai-digest-lines p+p{margin-top:2px}
+.ai-digest-ref{display:inline-block;margin-left:6px;font-size:11px;line-height:1.5;vertical-align:1px;white-space:nowrap;color:var(--ai-muted);text-decoration:none;border-bottom:1px dashed currentColor;border-radius:3px 3px 0 0}
+.ai-digest-ref:hover{color:var(--ai-accent);border-bottom-style:solid}
+.ai-digest-ref:focus-visible{outline:2px solid var(--ai-accent);outline-offset:2px}
+.ai-digest-dark .ai-digest-ref{color:#8ca995}
+.ai-digest-dark .ai-digest-ref:hover{color:#d0e7d7;border-bottom-color:#d0e7d7}
 .ai-digest-sec.is-speaking{position:relative;border-radius:4px;box-shadow:0 0 0 6px rgba(241,118,77,.05)}
 .ai-digest-sec.is-speaking h3{color:var(--ai-accent)}
 .ai-digest-sec.is-speaking h3::before{width:4px}

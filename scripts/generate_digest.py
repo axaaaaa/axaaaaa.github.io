@@ -7,6 +7,7 @@ import argparse
 import ast
 import hashlib
 import json
+import math
 import os
 import re
 import sys
@@ -312,7 +313,14 @@ def load_group(path, keys, limit, per_source=2):
             if round_index >= len(items):
                 continue
             item = items[round_index]
-            picked.append({'source': key, 'title': str(item.get('title')).strip(), 'meta': str(item.get('meta') or ''), 'at': updated_at})
+            picked.append({
+                'source': key,
+                'title': str(item.get('title')).strip(),
+                'meta': str(item.get('meta') or ''),
+                # 带上链接：速览每一段要能跳回原文，没链接的行等于白写
+                'url': str(item.get('url') or '').strip(),
+                'at': updated_at,
+            })
             if len(picked) >= limit:
                 return picked
     return picked
@@ -333,7 +341,12 @@ def load_hot(path, weibo_path='weibo-hot.json'):
             title = str(item.get('title') or '').strip()
             if len(title) >= 4:
                 heat = item.get('heat')
-                head.append({'source': 'weibo', 'title': title, 'meta': f'热度 {heat}' if heat else '', 'at': str(weibo.get('updatedAt') or '')})
+                head.append({
+                    'source': 'weibo', 'title': title,
+                    'meta': f'热度 {heat}' if heat else '',
+                    'url': str(item.get('url') or '').strip(),
+                    'at': str(weibo.get('updatedAt') or ''),
+                })
         rows = head + rows
     except (OSError, ValueError):
         pass
@@ -400,6 +413,7 @@ def load_finance(path, xueqiu_path='xueqiu-hot.json'):
                     'source': 'xueqiu',
                     'title': title,
                     'meta': f'{likes} 赞' if likes else '',
+                    'url': str(item.get('url') or '').strip(),
                     'at': str(data.get('updatedAt') or ''),
                 })
         rows = head + rows
@@ -422,7 +436,8 @@ def load_x_news(words_path='x-words.json', global_path='x-global.json'):
             if len(title) < 5:
                 continue
             meta = str(item.get('summary') or '')[:80]
-            rows.append({'source': 'x-words', 'title': title, 'meta': meta})
+            rows.append({'source': 'x-words', 'title': title, 'meta': meta,
+                         'url': str(item.get('url') or '').strip()})
     except (OSError, ValueError):
         pass
     try:
@@ -437,6 +452,7 @@ def load_x_news(words_path='x-words.json', global_path='x-global.json'):
                 'source': 'x',
                 'title': title,
                 'meta': f'{likes} 赞' if likes else str(item.get('category') or ''),
+                'url': str(item.get('url') or '').strip(),
             })
     except (OSError, ValueError):
         pass
@@ -457,7 +473,8 @@ def load_open_source(trending_path='github-trending.json', hotspot_path='extra-h
                 desc = re.sub(r'\s+', ' ', str(item.get('description') or ''))[:90]
                 language = str(item.get('language') or '')
                 title = f'{name}（{label}' + (f' · {language}' if language else '') + '）'
-                rows.append({'source': 'github', 'title': title, 'meta': desc})
+                rows.append({'source': 'github', 'title': title, 'meta': desc,
+                             'url': str(item.get('url') or '').strip()})
     except (OSError, ValueError):
         pass
     rows += load_group(hotspot_path, ['hf_trending', 'hellogithub'], 6)
@@ -485,6 +502,7 @@ def load_market(markets_path='markets.json', hotspot_path='extra-hotspots.json')
                 'source': 'market',
                 'title': f'{name} {percent:+.2f}%',
                 'meta': str(item.get('category') or ''),
+                'url': str(item.get('url') or '').strip(),
             })
     except (OSError, ValueError):
         pass
@@ -704,6 +722,117 @@ def clamp_lines(sections, limit=MAX_LINES):
             merged.append(prefix + body)
         section['text'] = '\n'.join(merged)
     return sections
+
+
+MAX_SECTION_LINKS = 1
+# 一行只挂一条来源：模型把两三条材料压成一行时，行内两个「原文」链接分不清谁是谁，
+# 不如只给最匹配的那条
+LINK_PUNCT_RE = re.compile(r'[\s，,。．.；;：:、！!？?“”"\'’‘（）()【】\[\]—–\-…·~～/|]+')
+LINK_WORD_RE = re.compile(r'[a-z][a-z0-9.+#-]{1,}')
+LINK_CJK_RE = re.compile(r'[\u4e00-\u9fff0-9]')
+# 这些字组成的二元组几乎每条标题都有，参与匹配只会制造假阳性
+LINK_STOP_CHARS = set('的了是在和与及为中上下来去个这那个们你他她它不有也就都还要会对而把被从到说可以其此将等')
+SAFE_URL_RE = re.compile(r'^https?://[^\s<>"]+$', re.I)
+# 逐行挂链的准入线：实测命中正确来源的分数都在 2.8 以上、共享 token 都在 4 个以上，
+# 而错配的都在 2.4 以下——宁可这一行没有链接，也不要把不相干的条目当成来源。
+MIN_LINK_SCORE = 2.6
+MIN_LINK_SHARED = 3
+
+
+def is_safe_url(url):
+    return bool(SAFE_URL_RE.match(str(url or '').strip()))
+
+
+def link_tokens(text):
+    """把一句话拆成可比较的 token：中文按二元组，英文/型号按整词。
+
+    英文词从原文取（不去空格），否则「小米 M1 Pro」会被拼成「m1pro」，
+    产品型号、GTA6、DDR5 这类关键区分词就全对不上了。
+    """
+    raw = str(text or '').lower()
+    tokens = set(LINK_WORD_RE.findall(raw))
+    value = LINK_PUNCT_RE.sub('', raw)
+    cjk = ''.join(LINK_CJK_RE.findall(value))
+    for index in range(len(cjk) - 1):
+        gram = cjk[index:index + 2]
+        if gram[0] in LINK_STOP_CHARS or gram[1] in LINK_STOP_CHARS:
+            continue
+        tokens.add(gram)
+    return tokens
+
+
+def token_idf(corpus):
+    """稀有 token 权重高：「AI」「2026」这种满屏都是的词不该决定匹配结果。"""
+    total = max(len(corpus), 1)
+    frequency = {}
+    for tokens in corpus:
+        for token in tokens:
+            frequency[token] = frequency.get(token, 0) + 1
+    return {token: math.log(1 + total / count) for token, count in frequency.items()}
+
+
+def rank_sources(text, rows, idf, limit=MAX_SECTION_LINKS):
+    """按 token 权重重合度给材料排序，返回 [(score, shared, link)]。"""
+    wanted = link_tokens(text)
+    if not wanted:
+        return []
+    scored = []
+    seen = set()
+    for row in rows:
+        url = str(row.get('url') or '').strip()
+        if not is_safe_url(url) or url in seen:
+            continue
+        tokens = link_tokens(f'{row.get("title") or ""} {row.get("meta") or ""}')
+        shared = wanted & tokens
+        if not shared:
+            continue
+        score = sum(idf.get(token, 0) for token in shared) / math.sqrt(max(len(tokens), 1))
+        if score <= 0:
+            continue
+        seen.add(url)
+        scored.append((score, len(shared), {
+            'title': str(row.get('title') or '')[:40],
+            'url': url,
+            'source': str(row.get('source') or ''),
+        }))
+    scored.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    return scored[:limit]
+
+
+def attach_sources(sections, blocks, fallback_rows):
+    """给每一行挂最多两条「原文」链接，前端点开即到来源。
+
+    粒度为「行」而不是「段」：模型每行写一个话题方向，一行通常对应一到三条材料，
+    挂到段落层面用户分不清哪条链接对的是哪句话。行内材料由两处取得：
+    固定版面与开源/市场/论文/厂商板块是按板块切好材料的，直接用它自己那块；
+    科技板块那 5～7 段是模型自己对 24 条资讯分组，退回用完整条目池匹配。
+    """
+    corpus = [link_tokens(f'{row.get("title") or ""} {row.get("meta") or ""}')
+              for rows in list(blocks.values()) + [fallback_rows] for row in rows]
+    idf = token_idf(corpus)
+    normalized = [(norm_title(name), rows) for name, rows in blocks.items()]
+    attached = lines_linked = 0
+    for section in sections:
+        name = norm_title(EMOJI_RE.sub('', str(section['title'])))
+        rows = fallback_rows
+        for block_name, block_rows in normalized:
+            if block_name and block_name in name:
+                rows = block_rows
+                break
+        sources, used = [], set()
+        for index, line in enumerate(section['text'].split('\n')):
+            for score, shared, link in rank_sources(line, rows, idf):
+                if score < MIN_LINK_SCORE or shared < MIN_LINK_SHARED:
+                    continue
+                if link['url'] in used:
+                    continue
+                used.add(link['url'])
+                sources.append({'line': index, **link})
+        if sources:
+            section['sources'] = sources
+            attached += 1
+            lines_linked += len({item['line'] for item in sources})
+    return sections, attached, lines_linked
 
 
 def call_model(model, account, token, prompt, timeout=90):
@@ -940,11 +1069,26 @@ def main():
         keep_sections=REQUIRED_SECTIONS + list(new_required))
     sections = clamp_lines(ensure_line_emoji(
         dedupe_emojis(combined, priority=fixed_sections + new_sections)))
+
+    # 每段挂几条来源链接，前端点开直接到原文。放在所有文本加工之后做：
+    # 前面的去重/合并行会改正文，先在最终文本上算重合度才对得上。
+    blocks = {
+        '网络安全': security, '新闻热搜': hot, '短视频热榜': short,
+        '国际新闻': intl, '逆向论坛': reverse, '财经热榜': finance,
+        '科技资讯': tech, 'X 新闻': x_news, 'GitHub 与开源': open_source,
+        '市场行情': market, '学术前沿': academic, 'AI 厂商官方': vendor,
+    }
+    tech_rows = [{'title': item.get('title') or '', 'url': item.get('url') or '',
+                  'source': item.get('source') or '', 'meta': item.get('summary') or ''}
+                 for item in items]
+    sections, linked, linked_lines = attach_sources(sections, blocks, tech_rows)
+
     model = fixed_model or tech_model or new_model
     write_digest(path, data, sections, model, len(items), fingerprint)
     total = sum(len(section['text']) for section in sections)
     print(f'DIGEST_OK sections={len(sections)} tech={len(tech_sections)} '
-          f'fixed={len(fixed_sections)} chars={total} model={model} items={len(items)}')
+          f'fixed={len(fixed_sections)} chars={total} model={model} items={len(items)} '
+          f'links={linked}/{len(sections)}段 {linked_lines}行')
     return 0
 
 

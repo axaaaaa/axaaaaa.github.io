@@ -321,6 +321,102 @@ class NewPromptTests(unittest.TestCase):
         self.assertGreater(len(g.load_academic(temp.name)), 2)
 
 
+class SourceLinkTests(unittest.TestCase):
+    """速览每行都要能点回原文，所以匹配宁缺毋滥：错挂一条比不挂更糟。"""
+
+    def _rows(self):
+        return [
+            {'source': 'a', 'title': '同步磁盘结构管理器存在编码输出缺陷，已在野利用',
+             'meta': '漏洞', 'url': 'https://example.com/a'},
+            {'source': 'b', 'title': 'PGPainless 出现压缩包回取导致的拒绝服务风险',
+             'meta': '开源', 'url': 'https://example.com/b'},
+            {'source': 'c', 'title': '金价从峰值跌去三分之一',
+             'meta': '黄金', 'url': 'https://example.com/c'},
+        ]
+
+    @staticmethod
+    def _filler(count=12):
+        """垫一批无关条目：idf 要靠语料规模才有意义，只有一两条时分数没有参考价值。"""
+        return [{'source': f'f{i}', 'title': f'某地举办第 {i} 届农产品展销会，现场签约项目若干',
+                 'meta': '', 'url': f'https://example.com/f{i}'} for i in range(count)]
+
+    def test_load_group_keeps_url(self):
+        data = {'sources': {'ithome': {'updatedAt': 't', 'items': [
+            {'title': '某条科技资讯标题', 'url': 'https://example.com/x', 'meta': '摘要'}]}}}
+        temp = tempfile.NamedTemporaryFile('w', suffix='.json', delete=False, encoding='utf-8')
+        json.dump(data, temp, ensure_ascii=False)
+        temp.close()
+        self.addCleanup(lambda: Path(temp.name).unlink(missing_ok=True))
+        rows = g.load_group(temp.name, ['ithome'], 5)
+        self.assertEqual(rows[0]['url'], 'https://example.com/x')
+
+    def test_tokens_ignore_stop_char_bigrams(self):
+        tokens = g.link_tokens('这是的和与在')
+        self.assertEqual(tokens, set())
+        self.assertIn('金价', g.link_tokens('金价下跌'))
+
+    def test_rank_picks_right_row(self):
+        rows = self._rows()
+        idf = g.token_idf([g.link_tokens(f'{r["title"]} {r["meta"]}') for r in rows])
+        ranked = g.rank_sources('PGPainless 出现压缩包回取导致的拒绝服务', rows, idf)
+        self.assertTrue(ranked)
+        self.assertEqual(ranked[0][2]['url'], 'https://example.com/b')
+
+    def test_rank_skips_unsafe_url(self):
+        rows = [{'title': '比特币上涨 1.05%', 'meta': '', 'url': 'javascript:alert(1)'}]
+        idf = g.token_idf([g.link_tokens('比特币上涨')])
+        self.assertEqual(g.rank_sources('比特币上涨 1.05%', rows, idf), [])
+
+    def test_rank_skips_rows_without_url(self):
+        rows = [{'title': '比特币上涨 1.05%', 'meta': ''}]
+        idf = g.token_idf([g.link_tokens('比特币上涨')])
+        self.assertEqual(g.rank_sources('比特币上涨 1.05%', rows, idf), [])
+
+    def test_attach_links_line_index_to_source(self):
+        rows = self._rows()
+        section = {'title': '🛡️ 网络安全',
+                   'text': '同步磁盘结构管理器存在编码输出缺陷，已在野利用。\nPGPainless 出现压缩包回取导致的拒绝服务风险。'}
+        sections, attached, lines = g.attach_sources([dict(section)], {'网络安全': rows}, rows)
+        self.assertEqual(attached, 1)
+        self.assertEqual(lines, 2)
+        sources = sections[0]['sources']
+        self.assertEqual([item['line'] for item in sources], [0, 1])
+        self.assertEqual(sources[0]['url'], 'https://example.com/a')
+        self.assertEqual(sources[1]['url'], 'https://example.com/b')
+
+    def test_attach_requires_block_binding_for_fixed_section(self):
+        # 网络安全段落只应在网络安全那块材料里找来源，不能串到金价那条
+        rows = self._rows()
+        block = [rows[2]]
+        section = {'title': '🛡️ 网络安全', 'text': 'PGPainless 出现压缩包回取导致的拒绝服务风险。'}
+        sections, attached, _ = g.attach_sources([section], {'网络安全': block}, rows)
+        self.assertEqual(attached, 0)
+        self.assertNotIn('sources', sections[0])
+
+    def test_attach_skips_weak_match(self):
+        rows = self._rows()
+        section = {'title': '🤖 AI 与大模型', 'text': '某公司发布了一款新的推理芯片，性能提升明显。'}
+        sections, attached, lines = g.attach_sources([section], {}, rows)
+        self.assertEqual((attached, lines), (0, 0))
+
+    def test_attach_dedupes_same_url_in_section(self):
+        rows = [{'source': 'a', 'title': 'GTA6 地图被玩家手工复刻并附带秘籍', 'meta': '',
+                 'url': 'https://example.com/gta'}] + self._filler()
+        section = {'title': '🔥 新闻热搜',
+                   'text': '吧友手搓 GTA6 地图并加入秘籍。\nGTA6 地图复刻版本在外网流传。'}
+        sections, _, _ = g.attach_sources([section], {'新闻热搜': rows}, rows)
+        urls = [item['url'] for item in sections[0]['sources']]
+        self.assertEqual(urls, ['https://example.com/gta'])
+
+    def test_attach_caps_two_links_per_line(self):
+        rows = [{'source': f's{i}', 'title': f'小米发布新款手机 型号 M{i} Pro 售价 {3000 + i}',
+                 'meta': '', 'url': f'https://example.com/{i}'} for i in range(5)] + self._filler()
+        section = {'title': '📱 手机与系统', 'text': '小米发布新手机 M1 Pro、M2 Pro 与 M3 Pro。'}
+        sections, _, _ = g.attach_sources([section], {'手机与系统': rows}, rows)
+        self.assertLessEqual(len(sections[0]['sources']), g.MAX_SECTION_LINKS)
+        self.assertGreaterEqual(len(sections[0]['sources']), 1)
+
+
 class ModelParamsTests(unittest.TestCase):
     def test_thinking_disabled_for_glm(self):
         self.assertEqual(

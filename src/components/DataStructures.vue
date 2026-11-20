@@ -103,7 +103,7 @@
         </div>
 
         <div class="ds-stage">
-          <transition-group v-if="demo.items.length" name="ds-cell" tag="div" class="ds-cells">
+          <transition-group v-if="demo.items.length" name="ds-cell" tag="div" class="ds-cells" :class="demo.mode === 'stack' ? 'is-stack' : 'is-queue'">
             <span
               v-for="(cell, index) in demo.items"
               :key="cell.key"
@@ -114,6 +114,7 @@
               }"
             >{{ cell.value }}</span>
           </transition-group>
+          <p v-if="demo.items.length" class="ds-axis">{{ demo.mode === 'stack' ? '从上往下：栈顶 → 栈底' : '从上往下：队头 → 队尾' }}</p>
           <p v-else class="ds-stage-empty">还没有元素。随便输入一个值，点「{{ demo.mode === 'stack' ? '入栈' : '入队' }}」试试。</p>
           <p class="ds-stage-note">{{ demo.note }}</p>
         </div>
@@ -219,8 +220,8 @@ export default {
       this.demo.mode = mode;
       this.demo.items = [];
       this.demo.note = mode === 'stack'
-        ? '栈顶就是数组末尾：入栈在尾部追加，出栈也从尾部移除。'
-        : '队头在左、队尾在右：入队在右侧追加，出队在左侧移除。';
+        ? '栈顶就是数组末尾，显示在最上方：入栈往上叠，出栈也从上面拿走。'
+        : '队头在上、队尾在下：入队往下方追加，出队从上方移除。';
     },
     push() {
       const items = this.demo.items;
@@ -420,12 +421,15 @@ h3 span { margin-left: 8px; font: 12px/1 ui-monospace, Consolas, monospace; colo
 .ds-demo-controls .ds-primary { background: var(--ui-accent, #386a50); border-color: var(--ui-accent, #386a50); color: #fff; }
 .ds-demo-controls .ds-ghost { color: var(--el-text-color-secondary, #6b7280); }
 .ds-stage { display: flex; flex-direction: column; justify-content: center; gap: 10px; min-height: 104px; margin-top: 12px; padding: 14px; border: 1px dashed var(--el-border-color, #dbe2ea); border-radius: 12px; background: #fff; }
-.ds-cells { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.ds-cell { min-width: 46px; padding: 10px 12px; border: 1px solid transparent; border-radius: 10px; background: var(--ui-accent-soft, #eef4f0); color: var(--ui-accent, #386a50); font: 600 13px/1 ui-monospace, Consolas, monospace; text-align: center; }
+.ds-axis { margin: 0; font-size: 11px; color: var(--el-text-color-secondary, #94a3b8); }
+.ds-cells { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ds-cells.is-stack { flex-direction: column-reverse; }
+.ds-cell { min-width: 96px; padding: 7px 12px; border: 1px solid transparent; border-radius: 10px; background: var(--ui-accent-soft, #eef4f0); color: var(--ui-accent, #386a50); font: 600 13px/1.3 ui-monospace, Consolas, monospace; text-align: center; }
 .ds-cell.is-top, .ds-cell.is-front { border-color: var(--ui-accent, #386a50); box-shadow: 0 0 0 3px rgba(56, 106, 80, .12); }
 .ds-stage-empty { margin: 0; font-size: 12px; color: var(--el-text-color-secondary, #6b7280); }
 .ds-stage-note { margin: 0; font-size: 12px; color: var(--el-text-color-secondary, #6b7280); }
 .ds-cell-enter-from, .ds-cell-leave-to { opacity: 0; transform: translateY(8px) scale(.94); }
+.is-stack .ds-cell-enter-from, .is-stack .ds-cell-leave-to { transform: translateY(-8px) scale(.94); }
 .ds-cell-enter-active, .ds-cell-leave-active { transition: opacity .2s ease, transform .2s ease; }
 .ds-cell-move { transition: transform .2s ease; }
 .ds-table-wrap { margin-top: 22px; padding: 18px 20px 8px; border: 1px solid var(--el-border-color-light, #e8ecf1); border-radius: 16px; background: #fff; }

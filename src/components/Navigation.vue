@@ -70,7 +70,7 @@
       </nav>
 
       <section id="knowledge-zone" class="module-zone" aria-labelledby="knowledge-zone-title">
-        <header class="module-zone-heading"><h2 id="knowledge-zone-title" class="zone-title">知识区</h2><span>底层原理 · 数据结构 · 编程语言 · 人工智能 · 网络与安全</span></header>
+        <header class="module-zone-heading"><h2 id="knowledge-zone-title" class="zone-title">知识区</h2><span>底层原理 · 数据结构 · 编程语言 · 汇编 · 人工智能 · 网络与安全</span></header>
         <CommandLibrary ref="commandLibrary" />
         <ShortcutLibrary ref="shortcutLibrary" />
         <NetworkReference ref="networkReference" />
@@ -82,6 +82,7 @@
         <VulnerabilityHandbook ref="vulnerabilityHandbook" />
         <DataStructures ref="dataStructures" />
         <ProgrammingLanguages ref="programmingLanguages" />
+        <AssemblyGuide ref="assemblyGuide" />
       </section>
 
       <section id="tools-zone" class="module-zone" aria-labelledby="tools-zone-title">
@@ -210,6 +211,7 @@ export default {
     VulnerabilityHandbook: defineAsyncComponent(() => import('./VulnerabilityHandbook.vue')),
     DataStructures: defineAsyncComponent(() => import('./DataStructures.vue')),
     ProgrammingLanguages: defineAsyncComponent(() => import('./ProgrammingLanguages.vue')),
+    AssemblyGuide: defineAsyncComponent(() => import('./AssemblyGuide.vue')),
     ElectricityLibrary: defineAsyncComponent(() => import('./ElectricityLibrary.vue')),
     SystemTools: defineAsyncComponent(() => import('./SystemTools.vue')),
     UtilityToolbox: defineAsyncComponent(() => import('./UtilityToolbox.vue')),
@@ -260,6 +262,7 @@ export default {
       else if (action === 'fundamentals') this.scrollToComputerFundamentals();
       else if (action === 'ai') this.scrollToAIKnowledge();
       else if (action === 'hardware') this.scrollToHardwareTiers();
+      else if (action === 'assembly') this.scrollToAssemblyGuide();
       else if (action === 'terminal') this.scrollToLinuxTerminal();
       else if (action === 'radio') { const button = document.querySelector('.radio-trigger'); if (button?.getAttribute('aria-expanded') !== 'true') button?.click(); button?.focus(); }
       else if (action === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); this.$refs.scrollContainer?.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -281,7 +284,7 @@ export default {
       }
       const commands = this.$refs.commandLibrary;
       if (commands) { commands.libraryExpanded = false; commands.expanded = {}; }
-      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','aiKnowledge','hardwareTiers','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','reverseHandbook','vulnerabilityHandbook','dataStructures','programmingLanguages','linuxTerminal']) {
+      for (const refName of ['cryptoPlayground','shortcutLibrary','computerFundamentals','aiKnowledge','hardwareTiers','systemInstallation','networkReference','imageTools','textTools','utilityToolbox','systemTools','electricityLibrary','reverseHandbook','vulnerabilityHandbook','dataStructures','programmingLanguages','assemblyGuide','linuxTerminal']) {
         if (this.$refs[refName]) this.$refs[refName].opened = false;
       }
       // Native details can live under v-show panels; close without clearing inputs.
@@ -316,6 +319,7 @@ export default {
     async scrollToComputerFundamentals() { return this.scrollToModule('ComputerFundamentals','computerFundamentals','computer-fundamentals','opened'); },
     async scrollToAIKnowledge() { return this.scrollToModule('AIKnowledge','aiKnowledge','ai-knowledge','opened'); },
     async scrollToHardwareTiers() { return this.scrollToModule('HardwareTierList','hardwareTiers','hardware-tiers','opened'); },
+    async scrollToAssemblyGuide() { return this.scrollToModule('AssemblyGuide','assemblyGuide','assembly-guide','opened'); },
       async scrollToNetworkReference() { return this.scrollToModule('NetworkReference','networkReference','network-reference','opened');
     },
     async scrollToShortcuts() { return this.scrollToModule('ShortcutLibrary','shortcutLibrary','shortcut-library','opened');

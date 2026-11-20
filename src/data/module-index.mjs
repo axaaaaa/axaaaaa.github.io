@@ -1,7 +1,7 @@
 import { markRaw } from 'vue';
 import {
   Collection, Grid, Connection, Cpu, MagicStick, Setting, Refresh, Lock,
-  Key, Picture, EditPen, Tools, Monitor, Lightning, Operation, TrendCharts, Share, Notebook,
+  Key, Picture, EditPen, Tools, Monitor, Lightning, Operation, TrendCharts, Share, Notebook, Guide,
 } from '@element-plus/icons-vue';
 
 // 知识区 / 工具区模块索引：顶部 sticky 导航与首屏快捷入口共用。
@@ -21,6 +21,7 @@ export const moduleGroups = [
       { label: '漏洞手册', ref: 'vulnerabilityHandbook', id: 'vulnerability-handbook', component: 'VulnerabilityHandbook', openKey: 'opened', icon: markRaw(Lock) },
       { label: '数据结构', ref: 'dataStructures', id: 'data-structures', component: 'DataStructures', openKey: 'opened', icon: markRaw(Share) },
       { label: '编程语言', ref: 'programmingLanguages', id: 'programming-languages', component: 'ProgrammingLanguages', openKey: 'opened', icon: markRaw(Notebook) },
+      { label: '汇编语言', ref: 'assemblyGuide', id: 'assembly-guide', component: 'AssemblyGuide', openKey: 'opened', icon: markRaw(Guide) },
     ],
   },
   {

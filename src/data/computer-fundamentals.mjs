@@ -171,15 +171,6 @@ export const knowledgeEntries = [
     "pitfall": "进程也可通过共享内存通信；多线程不保证更快。"
   },
   {
-    "id": "syscall",
-    "category": "操作系统",
-    "title": "用户态与系统调用",
-    "term": "User / Kernel",
-    "description": "系统调用是程序请求内核服务的受控入口，例如文件访问和进程管理。",
-    "example": "库函数可能封装系统调用，也可能完全在用户态完成。",
-    "pitfall": "系统调用不等于必然发生进程上下文切换。"
-  },
-  {
     "id": "schedule",
     "category": "操作系统",
     "title": "调度与上下文切换",
@@ -196,6 +187,87 @@ export const knowledgeEntries = [
     "description": "原子操作保证特定操作的不可分割性；锁和内存顺序约束帮助协调共享状态。",
     "example": "计数器的读取、加一、写回若不是同步操作，可能丢失其他线程的更新。",
     "pitfall": "volatile 不是通用的线程同步方案，其语义取决于语言。"
+  },
+  {
+    "id": "os-bits",
+    "category": "操作系统",
+    "title": "32 位系统与 64 位系统",
+    "term": "x86 / x86-64 · 地址宽度",
+    "description": "「多少位」首先指 CPU 通用寄存器和地址的宽度。32 位系统的虚拟地址空间只有 4 GiB，其中一半通常留给内核，用户程序实际可用 2–3 GiB；64 位系统把地址宽度扩到 48 位（x86-64）或 39/48 位（ARM64），用户态可用空间一下就上到上百 TB。位宽同时决定指针大小、单次可处理的数据宽度和可用寄存器数量。",
+    "example": "同样装 16 GiB 内存：32 位 Windows 只能识别并使用约 3–3.5 GiB（超出部分被 PCIe 等 MMIO 预留挤掉），64 位系统可以全部用上；一个要一次映射 8 GiB 文件做分析的程序，在 32 位下必然失败。",
+    "pitfall": "「64 位系统更快」并不绝对——它主要赢在地址空间和寄存器数量。另外 64 位系统能跑 32 位程序（Windows 走 WOW64、Linux 装 32 位运行库），但 32 位系统跑不了 64 位程序；能用多少内存也受主板、系统和程序自身（是否大地址感知）三方限制。"
+  },
+  {
+    "id": "os-kernel-mode",
+    "category": "操作系统",
+    "title": "内核态、用户态与系统调用",
+    "term": "Ring 0 / Ring 3 · Kernel mode",
+    "description": "CPU 用特权级把代码分成两档：内核态可以执行特权指令（改页表、关中断、直接访问设备），用户态只能碰自己地址空间里的普通内存。应用程序想读文件、发网络包、创建进程，必须通过系统调用这个唯一受控入口切进内核，完成后返回用户态。这层隔离是「一个程序崩溃不会带走整个系统」的根本原因。",
+    "example": "printf 最终会落到 write 系统调用：用户态把参数放进约定的寄存器，执行 syscall / svc 指令陷入内核，内核校验指针与权限后再操作设备。",
+    "pitfall": "系统调用不等于进程切换，很多调用做完就原地返回；而「内核态」也不等于「更安全」——驱动运行在内核态，一行空指针就能让整机蓝屏。内核架构上 Linux 是宏内核、Windows 是混合内核、Fuchsia 是微内核，取舍在性能与故障隔离之间。"
+  },
+  {
+    "id": "os-address-space",
+    "category": "操作系统",
+    "title": "虚拟地址空间与页表",
+    "term": "Virtual memory / Page table / ASLR",
+    "description": "每个进程都以为自己独占整片地址空间，这层幻象由 MMU 查页表实现：虚拟地址被拆成多级索引（x86-64 四级页表，48 位有效地址），逐级查到物理页框，再拼上页内偏移。地址空间通常以固定分界划成用户态与内核态两半，进程切换时换掉页表基址（CR3），内核那一半通过共享映射保证陷入内核后仍能访问。",
+    "example": "两个进程都把同一个共享库映射到各自的 0x7f… 地址，物理内存里其实只有一份代码页；fork 之后父子进程共享只读页，谁写谁触发写时复制。",
+    "pitfall": "虚拟地址连续不代表物理内存连续；「进程占用 2 GB 内存」可能大部分是已映射但从未真正分配的空页。ASLR 每次启动随机化基址，所以同一程序的绝对地址每次都不一样。"
+  },
+  {
+    "id": "os-boot",
+    "category": "操作系统",
+    "title": "开机到桌面：启动链",
+    "term": "UEFI → Bootloader → Kernel → init",
+    "description": "上电后固件先做自检并初始化基本硬件，然后按启动项去 EFI 系统分区找引导程序（Windows Boot Manager、GRUB、systemd-boot）；引导程序把内核和初始内存盘载入内存并移交控制权；内核初始化调度、内存管理、驱动，再挂载根文件系统；最后拉起 1 号进程（systemd / launchd / init）启动各项服务与登录界面。",
+    "example": "双系统机器在 UEFI 启动菜单里选 Ubuntu，GRUB 读取 /boot/grub/grub.cfg 载入内核与 initrd，内核挂载 ext4 根分区后由 systemd 拉起 gdm3 图形登录。",
+    "pitfall": "「开机慢」可能卡在固件自检、引导等待超时、内核等设备或某个用户态服务，先看 systemd-analyze blame / 事件查看器再优化。Secure Boot 会校验引导链签名，自己编译的内核或第三方驱动因此加载失败很常见。"
+  },
+  {
+    "id": "os-preempt",
+    "category": "操作系统",
+    "title": "抢占、时间片与优先级",
+    "term": "Preemption / Timeslice / Priority",
+    "description": "分时系统靠定时器中断强行打断正在运行的任务，把 CPU 让给下一个——这叫抢占。调度器按优先级和运行时长分配时间片，交互型任务给短时间片换响应速度，计算型任务给长时间片换吞吐。优先级还分静态（nice 值）与动态（根据等待 I/O 行为调整），实时任务则用独立的调度类。",
+    "example": "一个死循环线程不会卡死系统，因为每个时间片结束都会被时钟中断抢占；但把线程提到实时优先级后，它可能饿死包括输入响应在内的所有普通任务。",
+    "pitfall": "「多核就不用调度」是误解，核数只决定并行度。优先级反转（低优先级持锁挡住高优先级）需要优先级继承来缓解；把服务调成实时优先级通常是故障而不是优化。"
+  },
+  {
+    "id": "os-ipc",
+    "category": "操作系统",
+    "title": "进程间通信的几种方式",
+    "term": "IPC · Pipe / Shared memory / Socket",
+    "description": "进程地址空间彼此隔离，交换数据必须走内核中转或共享映射。常见手段：管道与命名管道（单向字节流，简单但有缓冲上限）、共享内存（映射同一物理页，最快但需自己做同步）、本地套接字（双向、可传文件描述符）、信号（只能通知事件，不传数据）、消息队列。",
+    "example": "shell 里的 ls | grep 用的是匿名管道；数据库与本机客户端常用 Unix domain socket；高频行情分发用共享内存加信号量，省掉两次内核拷贝。",
+    "pitfall": "共享内存快是因为绕过了内核拷贝，但也意味着没有天然的边界检查与生命周期管理，读写越界会直接把对方进程搞崩。管道写满会阻塞，忘记读端关闭还会收到 SIGPIPE。"
+  },
+  {
+    "id": "os-permission",
+    "category": "操作系统",
+    "title": "权限模型：用户、ACL 与提权",
+    "term": "UID / GID · ACL · UAC / sudo",
+    "description": "类 Unix 用 UID/GID 加 rwx 位表达「谁能读、写、执行」，再辅以 ACL、setuid、capabilities 做细粒度授权；Windows 用访问控制列表（DACL）描述每个对象的许可，登录时生成令牌，管理员账户平时以普通权限运行，需要时经 UAC 二次确认提权。",
+    "example": "passwd 命令带 setuid 位，普通用户执行时短暂获得 root 权限去改 /etc/shadow；容器里用 --user 指定非 root UID，可以显著缩小被攻破后的影响面。",
+    "pitfall": "chmod 777 不是「解决权限问题」，而是把问题变成安全漏洞。root 能绕过几乎所有检查，所以「以 root 跑服务」风险极高；Windows 上「以管理员身份运行」会改环境变量与网络映射，行为与普通启动并不一致。"
+  },
+  {
+    "id": "os-vfs",
+    "category": "操作系统",
+    "title": "一切皆文件与虚拟文件系统",
+    "term": "VFS · /dev /proc /sys",
+    "description": "Unix 把设备、管道、套接字都抽象成可读写的文件描述符，普通文件、字符设备、块设备、网络流共用 open/read/write/close 这套接口。VFS 是内核里的统一中间层：上层系统调用不关心底层是 ext4、NTFS 还是网络文件系统，下层只要实现对应操作即可挂载进来。",
+    "example": "cat /proc/cpuinfo 读的不是磁盘文件，而是内核现场生成的信息；echo 1 > /proc/sys/net/ipv4/ip_forward 直接改内核参数；dd if=/dev/zero of=test.img 把设备当文件写。",
+    "pitfall": "「是文件」只说明接口统一，不代表语义相同——设备文件的 seek、非阻塞、错误码含义都各有差别。Windows 的 HANDLE 抽象类似但并不等同，跨平台代码不能假设两者行为一致。"
+  },
+  {
+    "id": "os-container-vm",
+    "category": "操作系统",
+    "title": "虚拟机与容器的区别",
+    "term": "Hypervisor vs Namespace / cgroup",
+    "description": "虚拟机由 Hypervisor 虚拟出一整套硬件，里面跑完整的内核与系统，隔离强、能跑异构系统，但启动要几十秒、内存开销大。容器共享宿主内核，靠 namespace 隔离进程/网络/挂载视图，靠 cgroup 限制 CPU 与内存，镜像分层复用，启动常在毫秒级。",
+    "example": "同一个 Docker 镜像在 Linux 上能跑，到 Windows 内核上必须走 WSL2 或 Hyper-V 提供的 Linux 内核，因为容器不能自带内核；而虚拟机里可以装任意版本的内核。",
+    "pitfall": "容器不是轻量虚拟机，内核共享意味着内核漏洞或错误配置可能穿透隔离；「容器更安全」不成立，需要配合非 root 运行、只读根文件系统、seccomp 等手段。"
   },
   {
     "id": "compile",

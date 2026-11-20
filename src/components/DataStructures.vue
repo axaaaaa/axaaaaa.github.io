@@ -112,9 +112,11 @@
                 'is-top': demo.mode === 'stack' && index === demo.items.length - 1,
                 'is-front': demo.mode === 'queue' && index === 0,
               }"
-            >{{ cell.value }}</span>
+            >
+              {{ cell.value }}
+              <em v-if="edgeTag(index)" class="ds-cell-tag" :class="{ 'is-edge-primary': isPrimaryEdge(index) }">{{ edgeTag(index) }}</em>
+            </span>
           </transition-group>
-          <p v-if="demo.items.length" class="ds-axis">{{ demo.mode === 'stack' ? '从上往下：栈顶 → 栈底' : '从上往下：队头 → 队尾' }}</p>
           <p v-else class="ds-stage-empty">还没有元素。随便输入一个值，点「{{ demo.mode === 'stack' ? '入栈' : '入队' }}」试试。</p>
           <p class="ds-stage-note">{{ demo.note }}</p>
         </div>
@@ -214,6 +216,24 @@ export default {
       if (value.includes('n log')) return 'mid';
       if (value.includes('n')) return 'warn';
       return 'none';
+    },
+    // 给首尾元素打标：栈 → 栈顶 / 栈底；队列 → 队头 / 队尾
+    edgeTag(index) {
+      const total = this.demo.items.length;
+      const stack = this.demo.mode === 'stack';
+      const head = stack ? '栈顶' : '队头';
+      const tail = stack ? '栈底' : '队尾';
+      const isHead = stack ? index === total - 1 : index === 0;
+      const isTail = stack ? index === 0 : index === total - 1;
+      if (total === 1) return `${head} · ${tail}`;
+      if (isHead) return head;
+      if (isTail) return tail;
+      return '';
+    },
+    // 栈顶 / 队头用主色强调，另一端用弱化色
+    isPrimaryEdge(index) {
+      const total = this.demo.items.length;
+      return this.demo.mode === 'stack' ? index === total - 1 : index === 0;
     },
     switchMode(mode) {
       if (this.demo.mode === mode) return;
@@ -421,10 +441,23 @@ h3 span { margin-left: 8px; font: 12px/1 ui-monospace, Consolas, monospace; colo
 .ds-demo-controls .ds-primary { background: var(--ui-accent, #386a50); border-color: var(--ui-accent, #386a50); color: #fff; }
 .ds-demo-controls .ds-ghost { color: var(--el-text-color-secondary, #6b7280); }
 .ds-stage { display: flex; flex-direction: column; justify-content: center; gap: 10px; min-height: 104px; margin-top: 12px; padding: 14px; border: 1px dashed var(--el-border-color, #dbe2ea); border-radius: 12px; background: #fff; }
-.ds-axis { margin: 0; font-size: 11px; color: var(--el-text-color-secondary, #94a3b8); }
 .ds-cells { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 .ds-cells.is-stack { flex-direction: column-reverse; }
-.ds-cell { min-width: 96px; padding: 7px 12px; border: 1px solid transparent; border-radius: 10px; background: var(--ui-accent-soft, #eef4f0); color: var(--ui-accent, #386a50); font: 600 13px/1.3 ui-monospace, Consolas, monospace; text-align: center; }
+.ds-cell { position: relative; min-width: 96px; padding: 7px 12px; border: 1px solid transparent; border-radius: 10px; background: var(--ui-accent-soft, #eef4f0); color: var(--ui-accent, #386a50); font: 600 13px/1.3 ui-monospace, Consolas, monospace; text-align: center; }
+.ds-cell-tag {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--el-fill-color-light, #f3f4f6);
+  color: var(--el-text-color-secondary, #6b7280);
+  font: 500 10.5px/1.6 ui-monospace, Consolas, monospace;
+  font-style: normal;
+  white-space: nowrap;
+}
+.ds-cell-tag.is-edge-primary { background: var(--ui-accent, #386a50); color: #fff; }
 .ds-cell.is-top, .ds-cell.is-front { border-color: var(--ui-accent, #386a50); box-shadow: 0 0 0 3px rgba(56, 106, 80, .12); }
 .ds-stage-empty { margin: 0; font-size: 12px; color: var(--el-text-color-secondary, #6b7280); }
 .ds-stage-note { margin: 0; font-size: 12px; color: var(--el-text-color-secondary, #6b7280); }
@@ -484,6 +517,8 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .dark-theme .ds-o[data-tone="mid"] { background: rgba(150, 120, 250, .16); color: #c6b0ff; }
 .dark-theme .ds-o[data-tone="warn"] { background: rgba(240, 170, 60, .15); color: #f3c27c; }
 .dark-theme .ds-code { border-color: rgba(120, 207, 155, .18); }
+.dark-theme .ds-cell-tag { background: rgba(255, 255, 255, .07); color: #9fb2a7; }
+.dark-theme .ds-cell-tag.is-edge-primary { background: var(--ui-accent, #386a50); color: #0b120d; }
 
 @media (max-width: 900px) {
   .ds-layout { grid-template-columns: minmax(0, 1fr); }

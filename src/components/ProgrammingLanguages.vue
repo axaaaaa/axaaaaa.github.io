@@ -14,7 +14,6 @@
             <svg class="pl-caret" :style="{ transform: opened ? 'rotate(180deg)' : 'none' }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
           </button>
         </h2>
-        <p class="pl-sub">C · C++ · Python · JavaScript —— 类型、内存、执行方式与适用边界</p>
       </div>
       <button type="button" class="pl-toggle" :aria-expanded="opened" aria-controls="pl-content" @click="opened = !opened">{{ opened ? '收起' : '展开' }}</button>
     </header>
@@ -246,7 +245,6 @@ export default {
 h2 { margin: 10px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -.01em; }
 .pl-title-btn { display: inline-flex; align-items: center; gap: 8px; border: 0; padding: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
 .pl-caret { width: 16px; height: 16px; opacity: .45; transition: transform .22s ease; }
-.pl-sub { margin: 6px 0 0; font-size: 12px; color: var(--el-text-color-secondary, #6b7280); }
 .pl-toggle {
   padding: 8px 15px;
   border: 1px solid var(--el-border-color, #e5e7eb);

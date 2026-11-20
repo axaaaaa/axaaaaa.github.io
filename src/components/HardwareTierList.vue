@@ -36,7 +36,7 @@
           <span class="rank"><span v-if="index < 3" class="trophy" :class="'trophy-' + (index + 1)">🏆</span><template v-else>{{ index + 1 }}</template></span>
           <span class="tier" :class="'tier-' + tierOf(item.score)">{{ tierOf(item.score) }}</span>
           <div class="body">
-            <div class="line"><span class="brand-logo" :title="item.brand"><img :src="logoOf(item.brand)" :alt="item.brand" loading="lazy" /></span><strong>{{ item.name }}</strong><span class="year">{{ item.year }}</span><span class="note" :title="item.note">{{ item.note }}</span><span v-if="item.price" class="price" title="参考价，按 1 美元 ≈ 7.15 元换算">{{ formatUsd(item.price) }} · {{ formatCny(item.price) }}</span></div>
+            <div class="line"><span class="brand-logo" :title="item.brand"><img :src="logoOf(item.brand)" :alt="item.brand" loading="lazy" /></span><strong>{{ item.name }}</strong><span v-if="item.zh" class="name-zh" :title="item.zh">{{ item.zh }}</span><span class="year">{{ item.year }}</span><span class="note" :title="item.note">{{ item.note }}</span><span v-if="item.price" class="price" title="参考价，按 1 美元 ≈ 7.15 元换算">{{ formatUsd(item.price) }} · {{ formatCny(item.price) }}</span></div>
             <div class="bar"><i :style="{ width: barWidth(item.score) }"></i></div>
           </div>
           <span class="score">{{ item.score }}</span>
@@ -157,6 +157,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--ui-accent, 
 .body { min-width: 0; }
 .line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .line strong { font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.name-zh { font-size: 12px; color: var(--el-text-color-secondary, #65746c); white-space: nowrap; }
 .year { font-size: 11px; color: var(--el-text-color-secondary, #7a8a80); }
 .brand-logo {
   display: inline-flex;

@@ -1,0 +1,36 @@
+{
+  "updatedAt": "2026-11-20",
+  "source": "各行官网 / 手机银行人民币存款挂牌利率（整存整取）",
+  "notice": "挂牌利率仅供参考，网点实际执行利率可能上浮；中小银行常有起存门槛与额度限制，请以银行最新公告与柜台报价为准。",
+  "tenors": [
+    { "key": "demand", "label": "活期", "years": 1, "hint": "按存满 1 年估算" },
+    { "key": "m3", "label": "3 个月", "years": 0.25 },
+    { "key": "m6", "label": "6 个月", "years": 0.5 },
+    { "key": "y1", "label": "1 年", "years": 1 },
+    { "key": "y2", "label": "2 年", "years": 2 },
+    { "key": "y3", "label": "3 年", "years": 3 },
+    { "key": "y5", "label": "5 年", "years": 5 }
+  ],
+  "banks": [
+    { "name": "工商银行", "group": "国有大行", "logo": "bank-logos/icbc.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.85, "y1": 0.95, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "建设银行", "group": "国有大行", "logo": "bank-logos/ccb.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.85, "y1": 0.95, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "农业银行", "group": "国有大行", "logo": "bank-logos/abc.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.85, "y1": 0.95, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "中国银行", "group": "国有大行", "logo": "bank-logos/boc.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.85, "y1": 0.95, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "交通银行", "group": "国有大行", "logo": "bank-logos/bocom.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.85, "y1": 0.95, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "邮储银行", "group": "国有大行", "logo": "bank-logos/psbc.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.86, "y1": 0.98, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "招商银行", "group": "股份制银行", "logo": "bank-logos/cmb.png", "rates": { "demand": 0.05, "m3": 0.65, "m6": 0.85, "y1": 0.95, "y2": 1.05, "y3": 1.25, "y5": 1.3 } },
+    { "name": "浦发银行", "group": "股份制银行", "logo": "bank-logos/spdb.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "中信银行", "group": "股份制银行", "logo": "bank-logos/citic.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "兴业银行", "group": "股份制银行", "logo": "bank-logos/cib.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "光大银行", "group": "股份制银行", "logo": "bank-logos/ceb.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "华夏银行", "group": "股份制银行", "logo": "bank-logos/hxb.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "民生银行", "group": "股份制银行", "logo": "bank-logos/cmbc.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.15, "y3": 1.3, "y5": 1.35 } },
+    { "name": "平安银行", "group": "股份制银行", "logo": "bank-logos/pab.png", "wide": true, "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "北京银行", "group": "城商行", "logo": "bank-logos/bob.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.3, "y5": 1.35 } },
+    { "name": "上海银行", "group": "城商行", "logo": "bank-logos/bos.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.2, "y3": 1.25, "y5": 1.3 } },
+    { "name": "南京银行", "group": "城商行", "logo": "bank-logos/njcb.png", "rates": { "demand": 0.05, "m3": 0.7, "m6": 0.95, "y1": 1.15, "y2": 1.25, "y3": 1.35, "y5": 1.35 } },
+    { "name": "宁波银行", "group": "城商行", "logo": "bank-logos/nbcb.png", "rates": { "demand": 0.05, "m3": 0.8, "m6": 1.05, "y1": 1.25, "y2": 1.3, "y3": 1.55, "y5": 1.6 } },
+    { "name": "微众银行", "group": "民营银行", "logo": "bank-logos/webank.png", "wide": true, "rates": { "demand": 0.25, "m3": 1.1, "m6": 1.3, "y1": 1.5, "y2": 1.6, "y3": 1.75, "y5": 1.6 } },
+    { "name": "网商银行", "group": "民营银行", "logo": "bank-logos/mybank.png", "rates": { "demand": 0.25, "m3": 1.1, "m6": 1.3, "y1": 1.4, "y2": 1.55, "y3": 1.6, "y5": 1.8 } }
+  ]
+}

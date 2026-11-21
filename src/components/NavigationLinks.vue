@@ -226,23 +226,6 @@
 
 
 
-    <section v-show="!localSearchQuery.trim()" class="module-quick-entry" aria-label="模块快捷入口">
-      <header class="module-quick-head">
-        <div><span class="module-quick-eyebrow">KNOWLEDGE &amp; TOOLS</span><h3>模块快捷入口</h3></div>
-        <small>点击直接展开并定位到模块</small>
-      </header>
-      <div class="module-quick-groups">
-        <div v-for="group in moduleGroups" :key="group.id" class="module-quick-group">
-          <span class="module-quick-label">{{ group.title }}</span>
-          <div class="module-quick-grid">
-            <button v-for="item in group.items" :key="item.id" type="button" class="module-quick-item" @click="$emit('module-jump', item)">
-              <component :is="item.icon" class="module-quick-icon" aria-hidden="true" /><span>{{ item.label }}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <BrowserFingerprint v-show="!localSearchQuery.trim()" class="homepage-fingerprint" :dark="currentTheme === 'dark'" @located="$emit('located', $event)" />
 
 
@@ -933,7 +916,6 @@ import { DocumentCopy, Search, Link, Check } from '@element-plus/icons-vue'; // 
 
 
 import { matchPinyin } from '../utils/pinyin.js'; 
-import { moduleGroups } from '../data/module-index.mjs';
 
 
 
@@ -1019,7 +1001,6 @@ export default {
 
 
       marketHubTab: 'market',
-      moduleGroups,
       timeHubTab: 'world',
       hotspotsExpanded: true,
       sourceCategory: 'all',
@@ -7199,75 +7180,4 @@ ul {
   .engine-search-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-</style>
-
-<style scoped>
-/* 首屏模块快捷入口 */
-.module-quick-entry {
-  margin: 18px 20px 0;
-  padding: 16px 18px;
-  border: 1px solid var(--el-border-color-light, #d7e4dc);
-  border-radius: 14px;
-  background: var(--el-bg-color, #fff);
-}
-.module-quick-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.module-quick-eyebrow {
-  font: 10px/1.6 Consolas, monospace;
-  letter-spacing: 2px;
-  color: var(--el-text-color-secondary, #7a8a80);
-}
-.module-quick-head h3 {
-  margin: 2px 0 0;
-  font-size: 18px;
-  color: var(--el-text-color-primary, #26382d);
-}
-.module-quick-head small { font-size: 11px; color: var(--el-text-color-secondary, #7a8a80); }
-.module-quick-groups { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-.module-quick-group { display: flex; align-items: flex-start; gap: 10px; }
-.module-quick-label {
-  flex: none;
-  width: 44px;
-  padding-top: 7px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--el-text-color-secondary, #7a8a80);
-}
-.module-quick-grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));
-  gap: 6px;
-  min-width: 0;
-}
-.module-quick-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 9px;
-  border: 1px solid var(--el-border-color-light, #dfe8e1);
-  border-radius: 8px;
-  background: transparent;
-  color: var(--el-text-color-regular, #3c4f44);
-  font-size: 12px;
-  text-align: left;
-  cursor: pointer;
-}
-.module-quick-item:hover {
-  color: var(--ui-accent, #2f6b4f);
-  background: var(--ui-accent-soft, #eef6f1);
-  border-color: transparent;
-}
-.module-quick-icon { width: 14px; height: 14px; flex: none; }
-.module-quick-item:focus-visible { outline: 2px solid var(--ui-accent, #2f6b4f); outline-offset: 2px; }
-@media (max-width: 700px) {
-  .module-quick-entry { margin: 14px 12px 0; padding: 14px; }
-  .module-quick-group { flex-direction: column; gap: 4px; }
-  .module-quick-label { padding-top: 0; }
-}
 </style>

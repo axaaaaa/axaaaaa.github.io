@@ -1,5 +1,5 @@
 <template>
-<section class="br-panel" aria-labelledby="bank-rate-title">
+<section class="br-panel" :class="{'br-dark':dark}" aria-labelledby="bank-rate-title">
   <header class="br-head">
     <div>
       <h3 id="bank-rate-title">🏦 银行存款利率计算器</h3>
@@ -16,19 +16,28 @@
       <label class="br-field">
         <span>存款本金（元）</span>
         <input type="number" min="0" step="1000" v-model.number="principal" inputmode="decimal" aria-label="存款本金">
-        <div class="br-chips">
-          <button v-for="p in presets" :key="p" type="button" :class="{active:principal===p}" @click="principal=p">{{money(p,0)}}</button>
-        </div>
       </label>
 
-      <label class="br-field">
-        <span>银行</span>
-        <select v-model="bankName" aria-label="选择银行">
-          <optgroup v-for="group in groups" :key="group" :label="group">
-            <option v-for="b in banks.filter(x=>x.group===group)" :key="b.name" :value="b.name">{{b.name}}</option>
-          </optgroup>
-        </select>
-      </label>
+      <div class="br-field">
+        <span id="br-bank-label">银行</span>
+        <div class="br-picker" :class="{open:bankOpen}">
+          <button type="button" class="br-picker-btn" aria-haspopup="listbox" :aria-expanded="bankOpen" aria-labelledby="br-bank-label" @click.stop="bankOpen=!bankOpen" @keydown.esc="bankOpen=false" @keydown.down.prevent="bankOpen=true">
+            <img v-if="bank?.logo" class="br-picker-logo" :class="{wide:bank.wide}" :src="logoSrc(bank)" :alt="bank.name">
+            <span class="br-picker-name" :title="bank?.name">{{bank?.name || '选择银行'}}</span>
+            <span class="br-picker-caret" aria-hidden="true">▾</span>
+          </button>
+          <div v-if="bankOpen" class="br-picker-panel" role="listbox" aria-labelledby="br-bank-label">
+            <div v-for="row in pickerRows" :key="row.key">
+              <div v-if="row.type==='group'" class="br-picker-group">{{row.label}}</div>
+              <button v-else type="button" role="option" :aria-selected="row.bank.name===bankName" class="br-picker-item" :class="{active:row.bank.name===bankName}" @click="pickBank(row.bank.name)">
+                <img v-if="row.bank.logo" class="br-picker-item-logo" :class="{wide:row.bank.wide}" :src="logoSrc(row.bank)" :alt="row.bank.name" loading="lazy">
+                <span class="br-picker-item-name">{{row.bank.name}}</span>
+                <span class="br-picker-item-rate">{{Number(row.bank.rates?.[tenorKey] || 0).toFixed(2)}}%</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <label class="br-field">
         <span>存期</span>
@@ -41,6 +50,10 @@
         <span>年利率（%）<button v-if="customRate!==null" type="button" class="br-reset" @click="customRate=null">用挂牌值</button></span>
         <input type="number" min="0" step="0.01" v-model.number="rateInput" aria-label="年利率百分比">
       </label>
+
+      <div class="br-chips" role="group" aria-label="快捷金额">
+        <button v-for="p in presets" :key="p" type="button" :class="{active:principal===p}" @click="principal=p">{{money(p,0)}}</button>
+      </div>
     </div>
 
     <div class="br-result" role="status" aria-live="polite">
@@ -117,7 +130,7 @@
 
     <div class="br-table-wrap">
       <table class="br-table">
-        <caption class="br-caption">{{tenorLabel}}期 · 按本金 {{money(principal,0)}} 计算，点行可切换银行</caption>
+        <caption class="br-caption">{{tenorLabel}}期 · 按本金 {{money(principal,0)}} 计算 · 共 {{ranking.length}} 家，表内滚动查看，点行切换银行</caption>
         <thead><tr><th>银行</th><th>类型</th><th class="num">{{tenorLabel}}利率</th><th class="num">到期利息</th></tr></thead>
         <tbody>
           <tr v-for="(row,index) in ranking" :key="row.name" :class="{active:row.name===bankName,best:index===0}" tabindex="0" @click="bankName=row.name" @keydown.enter.prevent="bankName=row.name" @keydown.space.prevent="bankName=row.name">
@@ -140,13 +153,22 @@
 <script>
 export default {
   name: 'BankRateCalculator',
-  data: () => ({ data: null, error: false, principal: 100000, bankName: '工商银行', tenorKey: 'y1', customRate: null, presets: [10000, 100000, 500000, 1000000] }),
+  props: { dark: Boolean },
+  data: () => ({ data: null, error: false, principal: 100000, bankName: '工商银行', tenorKey: 'y1', customRate: null, bankOpen: false, presets: [10000, 100000, 500000, 1000000] }),
   computed: {
     banks() { return this.data?.banks || []; },
     tenors() { return this.data?.tenors || []; },
     updatedAt() { return this.data?.updatedAt || ''; },
     notice() { return this.data?.notice || ''; },
     groups() { return [...new Set(this.banks.map(b => b.group))]; },
+    pickerRows() {
+      const rows = [];
+      this.groups.forEach(group => {
+        rows.push({ type: 'group', key: `g-${group}`, label: group });
+        this.banks.filter(b => b.group === group).forEach(b => rows.push({ type: 'bank', key: b.name, bank: b }));
+      });
+      return rows;
+    },
     tenor() { return this.tenors.find(t => t.key === this.tenorKey) || { key: 'y1', label: '1 年', years: 1 }; },
     tenorLabel() { return this.tenor.label; },
     years() { return this.tenor.years; },
@@ -175,8 +197,11 @@ export default {
     bankName() { this.customRate = null; },
     tenorKey() { this.customRate = null; }
   },
-  mounted() { this.load(); },
+  mounted() { this.load(); document.addEventListener('click', this.closePicker); },
+  beforeUnmount() { document.removeEventListener('click', this.closePicker); },
   methods: {
+    closePicker() { this.bankOpen = false; },
+    pickBank(name) { this.bankName = name; this.bankOpen = false; },
     logoSrc(bank) { return bank?.logo ? `${process.env.BASE_URL}${bank.logo}` : ''; },
     money(value, digits = 2) {
       const n = Number(value);
@@ -198,20 +223,40 @@ export default {
 };
 </script>
 <style scoped>
-.br-panel{color:var(--m-text,#26364c)}
+.br-panel{container-type:inline-size;--br-head-bg:#fafafb;--m-text:#26364c;--m-muted:#7b8799;--m-line:rgba(105,128,160,.15);margin:18px 0 24px;border:1px solid var(--m-line);border-radius:18px;background:rgba(255,255,255,.86);color:var(--m-text);padding:20px 22px 16px;box-sizing:border-box;min-width:0}
+.br-dark{--br-head-bg:#0c1310;--m-text:#e2e9f4;--m-muted:#95a3b9;--m-line:rgba(145,164,194,.17);background:linear-gradient(rgba(176,212,186,.015) 1px,transparent 1px),#080f0b;background-size:100% 4px}
 .br-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:0 0 14px}
 .br-head h3{margin:0;font-size:14px;line-height:1.7}
 .br-head p{margin:4px 0 0;font-size:11px;color:var(--m-muted,#7b8799);line-height:1.6}
 .br-count{font-size:10px;color:var(--m-muted,#7b8799);border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:999px;padding:4px 9px;white-space:nowrap}
-.br-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.br-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:start}
 .br-field{display:flex;flex-direction:column;gap:5px;min-width:0;font-size:11px;color:var(--m-muted,#7b8799)}
 .br-field>span{display:flex;justify-content:space-between;align-items:center;gap:6px}
 .br-field input,.br-field select{width:100%;box-sizing:border-box;border:1px solid var(--m-line,rgba(105,128,160,.15));background:rgba(127,145,171,.05);color:var(--m-text,#26364c);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;font-variant-numeric:tabular-nums}
 .br-field input:focus-visible,.br-field select:focus-visible{outline:2px solid #43898d;outline-offset:1px}
 .br-reset{border:0;background:transparent;color:#43898d;font:inherit;font-size:10px;cursor:pointer;padding:0}
-.br-chips{display:flex;gap:4px;flex-wrap:wrap}
-.br-chips button{border:1px solid var(--m-line,rgba(105,128,160,.15));background:transparent;color:var(--m-muted,#7b8799);border-radius:6px;padding:3px 7px;font:inherit;font-size:10px;cursor:pointer}
+.br-chips{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+.br-chips button{flex:1 1 0;min-width:72px;text-align:center;border:1px solid var(--m-line,rgba(105,128,160,.15));background:transparent;color:var(--m-muted,#7b8799);border-radius:6px;padding:5px 8px;font:inherit;font-size:10px;line-height:1.5;cursor:pointer;font-variant-numeric:tabular-nums;white-space:nowrap}
+.br-chips button:hover{border-color:rgba(66,143,143,.35);color:#43898d}
 .br-chips button.active{background:rgba(66,143,143,.12);color:#43898d;border-color:rgba(66,143,143,.35)}
+.br-picker{position:relative}
+.br-picker-btn{display:flex;align-items:center;gap:7px;width:100%;box-sizing:border-box;border:1px solid var(--m-line,rgba(105,128,160,.15));background:rgba(127,145,171,.05);color:var(--m-text,#26364c);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;cursor:pointer;text-align:left}
+.br-picker-btn:focus-visible{outline:2px solid #43898d;outline-offset:1px}
+.br-picker-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.br-picker-caret{flex:none;color:var(--m-muted,#7b8799);font-size:10px}
+.br-picker-logo{width:18px;height:18px;flex:none;object-fit:contain;background:#fff;border-radius:4px;padding:1px;box-sizing:border-box;box-shadow:0 0 0 1px var(--m-line,rgba(105,128,160,.15))}
+.br-picker-logo.wide{width:auto;max-width:46px;height:15px;padding:2px 3px}
+.br-picker-panel{position:absolute;left:0;top:calc(100% + 4px);min-width:180px;max-width:240px;z-index:40;max-height:250px;overflow-y:auto;border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:10px;background:#fff;box-shadow:0 10px 26px rgba(28,45,64,.14);padding:4px;box-sizing:border-box;scrollbar-width:thin}
+.br-dark .br-picker-panel{background:#121a15;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.br-picker-group{font-size:9px;color:var(--m-muted,#7b8799);padding:5px 8px 3px;letter-spacing:.04em}
+.br-picker-item{display:flex;align-items:center;gap:7px;width:100%;box-sizing:border-box;border:0;background:transparent;color:var(--m-text,#26364c);font:inherit;font-size:12px;padding:6px 8px;border-radius:6px;cursor:pointer;text-align:left}
+.br-picker-item:hover{background:rgba(127,145,171,.08)}
+.br-picker-item.active{background:rgba(66,143,143,.12);color:#43898d}
+.br-picker-item-logo{width:17px;height:17px;flex:none;object-fit:contain;background:#fff;border-radius:4px;padding:1px;box-sizing:border-box;box-shadow:0 0 0 1px var(--m-line,rgba(105,128,160,.12))}
+.br-picker-item-logo.wide{width:auto;max-width:44px;height:14px;padding:2px 3px}
+.br-picker-item-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.br-picker-item-rate{flex:none;font-size:11px;font-variant-numeric:tabular-nums;color:var(--m-muted,#7b8799)}
+.br-picker-item.active .br-picker-item-rate{color:#43898d}
 .br-result{margin:14px 0 16px;border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:12px;padding:14px 16px;background:rgba(66,143,143,.05)}
 .br-result-head{display:flex;align-items:center;gap:8px;margin:0 0 8px;flex-wrap:wrap}
 .br-logo{width:22px;height:22px;object-fit:contain;background:#fff;border-radius:5px;padding:1px;box-sizing:border-box;box-shadow:0 0 0 1px var(--m-line,rgba(105,128,160,.15))}
@@ -250,10 +295,10 @@ export default {
 .br-why-qa{display:grid;gap:8px;margin:0}
 .br-why-qa dt{margin:0;color:var(--m-text,#26364c);font-weight:600}
 .br-why-qa dd{margin:2px 0 0}
-.br-table-wrap{overflow-x:auto;border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:10px}
+.br-table-wrap{max-height:286px;overflow:auto;border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:10px;scrollbar-width:thin}
 .br-table{width:100%;border-collapse:collapse;font-size:12px;min-width:420px}
 .br-caption{caption-side:top;text-align:left;font-size:10px;color:var(--m-muted,#7b8799);padding:8px 12px;background:rgba(127,145,171,.06);border-bottom:1px solid var(--m-line,rgba(105,128,160,.15))}
-.br-table th{font-size:10px;font-weight:500;color:var(--m-muted,#7b8799);text-align:left;padding:8px 12px;background:rgba(127,145,171,.06)}
+.br-table th{position:sticky;top:0;z-index:1;font-size:10px;font-weight:500;color:var(--m-muted,#7b8799);text-align:left;padding:8px 12px;background:var(--br-head-bg,#fafafb)}
 .br-table td{padding:7px 12px;border-top:1px solid var(--m-line,rgba(105,128,160,.15))}
 .br-table .num{text-align:right;font-variant-numeric:tabular-nums}
 .br-table tbody tr{cursor:pointer}
@@ -265,6 +310,7 @@ export default {
 .br-note{display:flex;flex-direction:column;gap:3px;margin:10px 0 0;font-size:10px;color:var(--m-muted,#7b8799);line-height:1.6}
 .br-empty{padding:18px;text-align:center;font-size:12px;color:var(--m-muted,#7b8799)}
 .br-empty button{margin-left:6px;border:0;background:transparent;color:#43898d;font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
-@media(max-width:700px){.br-amount{font-size:22px}.br-form{grid-template-columns:repeat(2,minmax(0,1fr))}.br-table{min-width:360px}}
+@media(max-width:700px){.br-amount{font-size:22px}.br-table{min-width:360px}}
+@container (max-width:560px){.br-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.br-table{min-width:0}.br-table th:nth-child(2),.br-table td:nth-child(2){display:none}.br-table th,.br-table td{padding:7px 9px}.br-row-logo{width:16px;height:16px}.br-row-logo.wide{max-width:38px;height:13px}.br-why-body{padding:2px 10px 10px}}
 </style>

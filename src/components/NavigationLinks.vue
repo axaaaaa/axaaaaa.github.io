@@ -218,7 +218,10 @@
     </section>
     </div>
 
-    <InvestMasters v-show="!localSearchQuery.trim()" :dark="currentTheme === 'dark'" />
+    <div v-show="!localSearchQuery.trim()" class="insight-row">
+      <BankRateCalculator :dark="currentTheme === 'dark'" />
+      <InvestMasters :dark="currentTheme === 'dark'" />
+    </div>
 
 
 
@@ -833,6 +836,7 @@ import ChinaCalendar from "./ChinaCalendar.vue";
 
 
 import CurrencyConverter from "./CurrencyConverter.vue";
+import BankRateCalculator from "./BankRateCalculator.vue";
 import InvestMasters from "./InvestMasters.vue";
 
 
@@ -960,7 +964,7 @@ export default {
 
 
 
-  components: { AiDigestPanel, CategoryPixelBadge, NasaApod, SourceSyncStatus, XNewsHub, XGlobalEvents, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, InvestMasters, MarketOverview, NewsHotspotHub, GithubTrending, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check }, // 注册组件
+  components: { BankRateCalculator, AiDigestPanel, CategoryPixelBadge, NasaApod, SourceSyncStatus, XNewsHub, XGlobalEvents, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, InvestMasters, MarketOverview, NewsHotspotHub, GithubTrending, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check }, // 注册组件
 
 
 
@@ -7032,6 +7036,9 @@ ul {
  .dashboard-hubs-row :deep(.history-list){grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:1000px){.dashboard-hubs-row{grid-template-columns:minmax(0,1fr);gap:16px}}
+.insight-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start;margin:18px 0 24px}
+.insight-row :deep(.br-panel),.insight-row :deep(.im-panel){margin:0}
+@media(max-width:1180px){.insight-row{grid-template-columns:minmax(0,1fr);gap:16px}}
 </style>
 
 <style scoped>

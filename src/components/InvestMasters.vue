@@ -90,7 +90,7 @@ export default {
 };
 </script>
 <style scoped>
-.im-panel{--m-text:#26364c;--m-muted:#7b8799;--m-line:rgba(105,128,160,.15);margin:18px 0 24px;border:1px solid var(--m-line);border-radius:18px;background:rgba(255,255,255,.86);color:var(--m-text);padding:20px 22px 15px;box-sizing:border-box;min-width:0}
+.im-panel{container-type:inline-size;--m-text:#26364c;--m-muted:#7b8799;--m-line:rgba(105,128,160,.15);margin:18px 0 24px;border:1px solid var(--m-line);border-radius:18px;background:rgba(255,255,255,.86);color:var(--m-text);padding:20px 22px 15px;box-sizing:border-box;min-width:0}
 .im-dark{--m-text:#e2e9f4;--m-muted:#95a3b9;--m-line:rgba(145,164,194,.17);background:linear-gradient(rgba(176,212,186,.015) 1px,transparent 1px),#080f0b;background-size:100% 4px;color:var(--m-text)}
 .im-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:0 0 12px}
 .im-head h3{margin:0;font-size:14px;line-height:1.7}
@@ -128,7 +128,7 @@ export default {
 .im-empty{padding:18px;text-align:center;font-size:12px;color:var(--m-muted,#7b8799)}
 .im-empty button{margin-left:6px;border:0;background:transparent;color:#43898d;font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
 @media(max-width:700px){.im-chip{min-width:54px;padding:5px}.im-chip-avatar{width:24px;height:24px;font-size:12px}.im-card{padding:13px}.im-avatar{width:38px;height:38px;font-size:17px}.im-core{font-size:13px}.im-works{margin-left:0;flex-basis:100%}}
-@media(min-width:880px){
+@container (min-width:880px){
   .im-body{grid-template-columns:296px minmax(0,1fr);gap:20px;align-items:start}
   .im-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;overflow:visible;padding:0;margin:0}
   .im-chip{flex-direction:row;justify-content:flex-start;gap:7px;min-width:0;width:100%;padding:6px 7px;border-radius:9px}

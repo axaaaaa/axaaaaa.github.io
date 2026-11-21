@@ -1,0 +1,246 @@
+{
+  "updatedAt": "2026-11-21",
+  "notice": "内容为公开流传的投资思想整理，引文为常见版本，部分为意译；仅作学习参考，不构成任何投资建议。",
+  "masters": [
+    {
+      "id": "graham",
+      "name": "本杰明·格雷厄姆",
+      "en": "Benjamin Graham",
+      "life": "1894–1976",
+      "role": "价值投资之父",
+      "initial": "格",
+      "color": "#7b6cd9",
+      "tags": ["安全边际", "市场先生", "内在价值"],
+      "core": "用远低于内在价值的价格买入，安全边际是一切的前提。",
+      "points": [
+        "买股票就是买公司的一部分，价格终会回归价值",
+        "市场先生的报价是情绪，不是命令，你可以不理他",
+        "宁可分散持有一篮子低估资产，也不押注单一判断"
+      ],
+      "quote": "市场短期是投票机，长期是称重机。",
+      "quoteEn": "In the short run, the market is a voting machine but in the long run, it is a weighing machine.",
+      "source": "《证券分析》",
+      "works": ["《证券分析》", "《聪明的投资者》"]
+    },
+    {
+      "id": "buffett",
+      "name": "沃伦·巴菲特",
+      "en": "Warren Buffett",
+      "life": "1930–",
+      "role": "伯克希尔·哈撒韦",
+      "initial": "巴",
+      "color": "#2f7d5b",
+      "tags": ["能力圈", "护城河", "长期持有"],
+      "core": "在能力圈里找有护城河的好公司，用合理价格长期持有。",
+      "points": [
+        "别人贪婪时我恐惧，别人恐惧时我贪婪",
+        "用合理的价格买优秀的公司，胜过用便宜的价格买平庸的公司",
+        "如果你不打算持有十年，就不要持有十分钟"
+      ],
+      "quote": "在别人贪婪时恐惧，在别人恐惧时贪婪。",
+      "quoteEn": "Be fearful when others are greedy, and greedy when others are fearful.",
+      "source": "致股东的信",
+      "works": ["伯克希尔年报", "致股东的信"]
+    },
+    {
+      "id": "munger",
+      "name": "查理·芒格",
+      "en": "Charlie Munger",
+      "life": "1924–2023",
+      "role": "伯克希尔副董事长",
+      "initial": "芒",
+      "color": "#b8863b",
+      "tags": ["多元思维模型", "逆向思考", "避免愚蠢"],
+      "core": "用多学科模型交叉验证，先想清楚怎么会失败，再决定下注。",
+      "points": [
+        "反过来想，总是反过来想：先问什么会让这笔投资归零",
+        "避免愚蠢比追求聪明更容易积累优势",
+        "只在明显有优势时出手，其余时间耐心等待"
+      ],
+      "quote": "如果我知道自己会死在哪里，那我就永远不去那个地方。",
+      "quoteEn": "All I want to know is where I'm going to die so I'll never go there.",
+      "source": "《穷查理宝典》",
+      "works": ["《穷查理宝典》"]
+    },
+    {
+      "id": "lynch",
+      "name": "彼得·林奇",
+      "en": "Peter Lynch",
+      "life": "1944–",
+      "role": "富达麦哲伦基金",
+      "initial": "林",
+      "color": "#c1533f",
+      "tags": ["投资你了解的", "十倍股", "PEG"],
+      "core": "投资你真正了解的公司，好生意往往先在生活里被发现。",
+      "points": [
+        "在熟悉的行业里，普通投资者可能比华尔街更有信息优势",
+        "成长股要看 PEG：市盈率相对盈利增速是否合理",
+        "别拔掉鲜花去浇灌杂草——让赢家继续跑"
+      ],
+      "quote": "了解你持有的东西，并知道你为什么持有它。",
+      "quoteEn": "Know what you own, and know why you own it.",
+      "source": "《彼得·林奇的成功投资》",
+      "works": ["《彼得·林奇的成功投资》", "《战胜华尔街》"]
+    },
+    {
+      "id": "fisher",
+      "name": "菲利普·费雪",
+      "en": "Philip Fisher",
+      "life": "1907–2004",
+      "role": "成长股投资先驱",
+      "initial": "费",
+      "color": "#3f6fbf",
+      "tags": ["成长股", "闲聊法", "集中持有"],
+      "core": "用「闲聊法」调研，买入能持续成长几十年的公司并集中持有。",
+      "points": [
+        "从研发、销售、管理层到竞争对手，聊出来的信息比财报更早",
+        "真正优秀的成长公司极少，找到了就不要轻易卖出",
+        "用 15 个要点筛公司，而不是只看当期利润"
+      ],
+      "quote": "股市里挤满了对价格无所不知、对价值一无所知的人。",
+      "quoteEn": "The stock market is filled with individuals who know the price of everything, but the value of nothing.",
+      "source": "常引述于《怎样选择成长股》",
+      "works": ["《怎样选择成长股》"]
+    },
+    {
+      "id": "templeton",
+      "name": "约翰·邓普顿",
+      "en": "John Templeton",
+      "life": "1912–2008",
+      "role": "全球逆向投资",
+      "initial": "邓",
+      "color": "#2d8a8a",
+      "tags": ["最大悲观点", "全球分散", "逆向"],
+      "core": "在最悲观的地方买入，在全球范围里找被错杀的便宜货。",
+      "points": [
+        "买在「最大悲观点」，那时价格里几乎没有乐观预期",
+        "跨市场、跨行业分散，不被单一国家的周期绑住",
+        "情绪极端时，价格与价值的偏离最大"
+      ],
+      "quote": "牛市在悲观中诞生，在怀疑中成长，在乐观中成熟，在狂热中死亡。",
+      "quoteEn": "Bull markets are born on pessimism, grow on skepticism, mature on optimism and die on euphoria.",
+      "source": "邓普顿投资箴言",
+      "works": ["邓普顿成长基金", "全球逆向投资方法"]
+    },
+    {
+      "id": "soros",
+      "name": "乔治·索罗斯",
+      "en": "George Soros",
+      "life": "1930–",
+      "role": "量子基金",
+      "initial": "索",
+      "color": "#8a5a2b",
+      "tags": ["反身性", "试错", "盈亏比"],
+      "core": "市场永远带着偏见，反身性会让偏见自我强化，直到崩溃。",
+      "points": [
+        "价格会反过来改变基本面，不只是被动反映基本面",
+        "先提出假设，用小仓位试探，错了立刻认错离场",
+        "重要的不是对错概率，而是对时赚多少、错时亏多少"
+      ],
+      "quote": "重要的不是你对错，而是对的时候赚多少、错的时候亏多少。",
+      "quoteEn": "It's not whether you're right or wrong that's important, but how much money you make when you're right and how much you lose when you're wrong.",
+      "source": "《金融炼金术》",
+      "works": ["《金融炼金术》", "《索罗斯论全球化》"]
+    },
+    {
+      "id": "marks",
+      "name": "霍华德·马克斯",
+      "en": "Howard Marks",
+      "life": "1946–",
+      "role": "橡树资本",
+      "initial": "马",
+      "color": "#5a6b8c",
+      "tags": ["第二层思维", "周期", "风险控制"],
+      "core": "用第二层思维判断价格里已经包含了多少预期，靠控制风险取胜。",
+      "points": [
+        "第一层思维找好公司，第二层思维问「这价格里已经反映了什么」",
+        "钟摆在贪婪与恐惧之间摆动，极端处才是机会",
+        "活下来比赢一次更重要，先想亏损再想收益"
+      ],
+      "quote": "我们无法预测，但可以准备。",
+      "quoteEn": "We can't predict. We can prepare.",
+      "source": "《投资最重要的事》",
+      "works": ["《投资最重要的事》", "《周期》"]
+    },
+    {
+      "id": "dalio",
+      "name": "瑞·达利欧",
+      "en": "Ray Dalio",
+      "life": "1949–",
+      "role": "桥水基金",
+      "initial": "达",
+      "color": "#4a7fa5",
+      "tags": ["原则", "债务周期", "风险平价"],
+      "core": "把决策沉淀成可复用的原则，用分散和风险平价穿越周期。",
+      "points": [
+        "痛苦 + 反思 = 进步，把每次亏损写成一条规则",
+        "债务周期决定大类资产的长期节奏，看清所处位置",
+        "全天候组合：不预测涨跌，只平衡各类资产的风险"
+      ],
+      "quote": "痛苦 + 反思 = 进步。",
+      "quoteEn": "Pain + Reflection = Progress.",
+      "source": "《原则》",
+      "works": ["《原则》", "《债务危机》"]
+    },
+    {
+      "id": "klarman",
+      "name": "塞思·卡拉曼",
+      "en": "Seth Klarman",
+      "life": "1957–",
+      "role": "包普斯特集团",
+      "initial": "卡",
+      "color": "#7a5c8f",
+      "tags": ["安全边际", "绝对收益", "现金期权"],
+      "core": "只在安全边际足够大时出手，宁可拿着现金也不勉强投资。",
+      "points": [
+        "追求绝对收益：不亏钱比跑赢指数更重要",
+        "现金不是拖累，而是等待机会的期权",
+        "越少人关注的角落，越可能藏着被错杀的资产"
+      ],
+      "quote": "风险不是波动，而是本金永久损失的可能性。",
+      "quoteEn": "Risk is not volatility. Risk is the probability of permanent loss.",
+      "source": "《安全边际》",
+      "works": ["《安全边际》"]
+    },
+    {
+      "id": "bogle",
+      "name": "约翰·博格",
+      "en": "John Bogle",
+      "life": "1929–2019",
+      "role": "先锋集团创始人",
+      "initial": "博",
+      "color": "#3f7a52",
+      "tags": ["指数基金", "低成本", "长期"],
+      "core": "成本是唯一能确定的东西，长期持有低成本指数基金。",
+      "points": [
+        "扣除成本后的收益才是你的收益，费用是确定性的损耗",
+        "均值回归让大多数主动基金长期跑不赢指数",
+        "频繁进出是收益的敌人，时间才是复利的朋友"
+      ],
+      "quote": "在投资中，你得到的是你没有付出的那部分。",
+      "quoteEn": "In investing, you get what you don't pay for.",
+      "source": "《共同基金常识》",
+      "works": ["《共同基金常识》", "《长赢投资》"]
+    },
+    {
+      "id": "greenblatt",
+      "name": "乔尔·格林布拉特",
+      "en": "Joel Greenblatt",
+      "life": "1957–",
+      "role": "哥谭资本",
+      "initial": "格",
+      "color": "#b06a3b",
+      "tags": ["神奇公式", "好公司", "低价格"],
+      "core": "同时买好公司（高资本回报）和便宜价格（低估值），机械执行。",
+      "points": [
+        "把「资本回报率」和「市盈率」各排一次序，两者相加选股",
+        "规则化执行，避免情绪和消息干扰判断",
+        "给策略足够的时间，短期跑输是正常的"
+      ],
+      "quote": "选择便宜的好公司，然后耐心等待价值回归。",
+      "quoteEn": "Buy good companies at cheap prices, then wait.",
+      "source": "《股市天才》",
+      "works": ["《股市天才》", "《你可以成为股市天才》"]
+    }
+  ]
+}

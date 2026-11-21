@@ -62,6 +62,59 @@
       <p class="br-formula">{{money(principal,0)}} × {{rate.toFixed(2)}}% × {{years}} 年 = {{money(interest)}}（单利，到期一次性支取）</p>
     </div>
 
+    <details class="br-why">
+      <summary>
+        <span class="br-why-icon" aria-hidden="true">🏦</span>
+        <span class="br-why-title">这笔利息从哪来 · 银行拿你的本金做了什么</span>
+        <span class="br-why-tip" aria-hidden="true"></span>
+      </summary>
+      <div class="br-why-body">
+        <p class="br-why-lead">存款在法律上是「银行欠你的钱」：你按约定期限把钱借给银行，到期它还本付息。利息就是这笔借款的租金 —— 银行把你的钱用到收益更高的地方，再把其中一小部分分给你。</p>
+
+        <ol class="br-why-flow">
+          <li>
+            <b>约 6% 先冻在央行：存款准备金</b>
+            <span>每吸收 100 元存款，约 6 元要按加权平均 6.2% 的存款准备金率缴存央行，不能放贷，只拿很低的准备金利息。这是防挤兑的安全垫，不产生利差。</span>
+          </li>
+          <li>
+            <b>大头拿去放贷：银行最主要的收入</b>
+            <span>房贷、企业经营贷、消费贷。1 年期 LPR 3.00%、5 年期以上 3.50%，而 3 年期定存成本约 1.25% —— 这个差额叫「净息差」，2026 年三季度全行业只有 1.41%。</span>
+          </li>
+          <li>
+            <b>一部分买债券、做同业</b>
+            <span>国债、地方债、金融债、同业存单，收益略高于存款成本、又能随时卖出，用来应付你提前支取。</span>
+          </li>
+          <li>
+            <b>留一点现金和在央行备付</b>
+            <span>应付日常取现、转账和跨行清算，这部分同样不赚钱。</span>
+          </li>
+        </ol>
+
+        <p class="br-why-case">
+          按上面的输入算一遍：{{money(principalSafe,0)}} 元存 {{yearsLabel}}，银行付你利息 <b>{{money(interest)}}</b> 元；扣掉准备金后约 {{money(lendable,0)}} 元可用于放贷，按 1 年期 LPR 3.00% 贷出同样期限，毛收入约 <b>{{money(lendIncome)}}</b> 元，毛差价约 <b>{{money(grossSpread)}}</b> 元 —— 这还没扣不良核销、人工网点和税。所以利率给得越高的银行，越要靠收益更高（通常风险也更高）的资产来覆盖成本。
+        </p>
+
+        <dl class="br-why-qa">
+          <div>
+            <dt>为什么定期比活期高这么多</dt>
+            <dd>期限溢价：钱锁得越久，银行越敢拿去做长期贷款。1 年期 0.95% 与活期 0.05% 的差距，买的就是「随时能取」这个权利；提前支取按活期计息，等于你把流动性让渡给了银行。</dd>
+          </div>
+          <div>
+            <dt>银行为什么开始压长期利率</dt>
+            <dd>定期存款已占存款约 59%，负债成本压不下来息差就撑不住。所以部分银行的 5 年期不再比 3 年期高，长期的「锁死」未必更划算。</dd>
+          </div>
+          <div>
+            <dt>你要承担什么风险</dt>
+            <dd>你拿的是合同约定的固定利息，银行放贷赚多少、亏多少都与你无关（这点和买银行股、买理财不同）。存款保险对同一家银行 50 万元以内本息全额偿付，超过就分散到几家。</dd>
+          </div>
+          <div>
+            <dt>挂牌利率不等于到手利率</dt>
+            <dd>起存金额、额度、新客专享、线上线下的报价都可能不同，以柜台或 App 实际报价为准。</dd>
+          </div>
+        </dl>
+      </div>
+    </details>
+
     <div class="br-table-wrap">
       <table class="br-table">
         <caption class="br-caption">{{tenorLabel}}期 · 按本金 {{money(principal,0)}} 计算，点行可切换银行</caption>
@@ -109,6 +162,9 @@ export default {
     interest() { return this.principalSafe * (this.rate / 100) * this.years; },
     total() { return this.principalSafe + this.interest; },
     monthly() { return this.years > 0 ? this.interest / (this.years * 12) : 0; },
+    lendable() { return this.principalSafe * 0.938; },
+    lendIncome() { return this.lendable * 0.03 * this.years; },
+    grossSpread() { return this.lendIncome - this.interest; },
     ranking() {
       return this.banks
         .map(b => { const rate = Number(b.rates?.[this.tenorKey]) || 0; return { name: b.name, group: b.group, logo: b.logo || '', wide: !!b.wide, rate, interest: this.principalSafe * (rate / 100) * this.years }; })
@@ -171,6 +227,29 @@ export default {
 .br-meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin:8px 0 0;font-size:11px;color:var(--m-muted,#7b8799)}
 .br-meta b{color:var(--m-text,#26364c);font-weight:600;font-variant-numeric:tabular-nums}
 .br-formula{margin:8px 0 0;font-size:10px;color:var(--m-muted,#7b8799);line-height:1.6}
+.br-why{margin:0 0 14px;border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:10px;background:rgba(127,145,171,.035);overflow:hidden}
+.br-why>summary{display:flex;align-items:center;gap:7px;padding:9px 12px;font-size:11px;color:var(--m-text,#26364c);cursor:pointer;list-style:none}
+.br-why>summary::-webkit-details-marker{display:none}
+.br-why>summary::marker{content:''}
+.br-why>summary:hover{background:rgba(127,145,171,.06)}
+.br-why>summary:focus-visible{outline:2px solid #43898d;outline-offset:-2px}
+.br-why-icon{font-size:12px;line-height:1}
+.br-why-title{font-weight:600}
+.br-why-tip{margin-left:auto;flex:none;font-size:10px;color:#43898d}
+.br-why-tip::before{content:'展开'}
+.br-why[open] .br-why-tip::before{content:'收起'}
+.br-why-body{padding:2px 12px 12px;font-size:11px;color:var(--m-muted,#7b8799);line-height:1.75}
+.br-why-lead{margin:0 0 10px;color:var(--m-text,#26364c)}
+.br-why-flow{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:7px;counter-reset:brstep}
+.br-why-flow li{position:relative;padding-left:22px}
+.br-why-flow li::before{counter-increment:brstep;content:counter(brstep);position:absolute;left:0;top:2px;width:15px;height:15px;border-radius:50%;background:rgba(66,143,143,.12);color:#43898d;font-size:9px;line-height:15px;text-align:center;font-weight:600}
+.br-why-flow b{display:block;color:var(--m-text,#26364c);font-weight:600}
+.br-why-flow span{display:block}
+.br-why-case{margin:0 0 10px;padding:8px 10px;border-radius:8px;background:rgba(66,143,143,.06)}
+.br-why-case b{color:var(--m-text,#26364c);font-variant-numeric:tabular-nums}
+.br-why-qa{display:grid;gap:8px;margin:0}
+.br-why-qa dt{margin:0;color:var(--m-text,#26364c);font-weight:600}
+.br-why-qa dd{margin:2px 0 0}
 .br-table-wrap{overflow-x:auto;border:1px solid var(--m-line,rgba(105,128,160,.15));border-radius:10px}
 .br-table{width:100%;border-collapse:collapse;font-size:12px;min-width:420px}
 .br-caption{caption-side:top;text-align:left;font-size:10px;color:var(--m-muted,#7b8799);padding:8px 12px;background:rgba(127,145,171,.06);border-bottom:1px solid var(--m-line,rgba(105,128,160,.15))}
@@ -187,5 +266,5 @@ export default {
 .br-empty{padding:18px;text-align:center;font-size:12px;color:var(--m-muted,#7b8799)}
 .br-empty button{margin-left:6px;border:0;background:transparent;color:#43898d;font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
 @media(max-width:700px){.br-amount{font-size:22px}.br-form{grid-template-columns:repeat(2,minmax(0,1fr))}.br-table{min-width:360px}}
-@media(max-width:520px){.br-table{min-width:0}.br-table th:nth-child(2),.br-table td:nth-child(2){display:none}.br-table th,.br-table td{padding:7px 9px}.br-row-logo{width:16px;height:16px}.br-row-logo.wide{max-width:38px;height:13px}}
+@media(max-width:520px){.br-table{min-width:0}.br-table th:nth-child(2),.br-table td:nth-child(2){display:none}.br-table th,.br-table td{padding:7px 9px}.br-row-logo{width:16px;height:16px}.br-row-logo.wide{max-width:38px;height:13px}.br-why-body{padding:2px 10px 10px}}
 </style>

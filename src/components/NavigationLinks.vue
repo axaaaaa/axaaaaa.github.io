@@ -7020,6 +7020,7 @@ ul {
 .market-hub-tabs button[aria-pressed="true"]{background:var(--ui-accent-soft,rgba(67,137,141,.12));border-color:var(--market-hub-line);color:var(--ui-accent,#43898d);font-weight:600}
 .market-hub-tabs button:focus-visible{outline:2px solid var(--ui-accent,#43898d);outline-offset:2px}
 .market-hub :deep(.market-panel),.market-hub :deep(.currency-panel){margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.market-hub :deep(.market-panel){overflow:visible}
 @media(max-width:700px){.market-hub{padding:14px 12px 16px}.market-hub-tabs{gap:4px}.market-hub-tabs button{font-size:12px;padding:7px 8px}}
 </style>
 

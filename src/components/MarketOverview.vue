@@ -1,7 +1,7 @@
 <template>
 <section class="market-panel" :class="{'market-dark':dark}">
-    <div class="market-toolbar"><div class="market-tabs" aria-label="市场分类"><button v-for="tab in tabs" :key="tab" type="button" :class="{active:tab===selected}" :aria-pressed="tab===selected" @click="selectTab(tab)">{{tab}}{{tab==='加密货币'?` (${cryptoCount})`:''}}</button></div><span v-if="error&&selected!=='银行利率'" role="status">刷新失败，保留上次行情</span></div>
-    <div class="market-view-switch" v-if="selected!=='银行利率'" role="group" aria-label="行情展示方式"><button type="button" :class="{active:viewMode==='heatmap'}" :aria-pressed="viewMode==='heatmap'" @click="setView('heatmap')">热力图</button><button type="button" :class="{active:viewMode==='cards'}" :aria-pressed="viewMode==='cards'" @click="setView('cards')">卡片</button><button type="button" :class="{active:viewMode==='list'}" :aria-pressed="viewMode==='list'" @click="setView('list')">列表</button></div>
+    <div class="market-toolbar"><div class="market-tabs" aria-label="市场分类"><button v-for="tab in tabs" :key="tab" type="button" :class="{active:tab===selected}" :aria-pressed="tab===selected" @click="selectTab(tab)">{{tab}}{{tab==='加密货币'?` (${cryptoCount})`:''}}</button></div><span v-if="error&&!isInsightTab" role="status">刷新失败，保留上次行情</span></div>
+    <div class="market-view-switch" v-if="!isInsightTab" role="group" aria-label="行情展示方式"><button type="button" :class="{active:viewMode==='heatmap'}" :aria-pressed="viewMode==='heatmap'" @click="setView('heatmap')">热力图</button><button type="button" :class="{active:viewMode==='cards'}" :aria-pressed="viewMode==='cards'" @click="setView('cards')">卡片</button><button type="button" :class="{active:viewMode==='list'}" :aria-pressed="viewMode==='list'" @click="setView('list')">列表</button></div>
     <BankRateCalculator v-if="selected==='银行利率'" />
     <MarketHeatmap v-else-if="visible.length&&viewMode==='heatmap'" :items="visible" :red-up="redUp" :dark="dark" /><div v-else-if="visible.length&&viewMode==='list'" class="market-list"><div class="market-list-head"><span>名称</span><span>代码</span><span>价格</span><span>涨跌</span><span>时间</span></div><a v-for="item in visible" :key="item.symbol" :href="item.url" target="_blank" rel="noopener noreferrer" class="market-list-row" :class="direction(item)"><span class="ml-name"><img v-if="coinLogo(item)" class="coin-logo" :src="coinLogo(item)" :alt="item.ticker" loading="lazy">{{item.nameZh||item.name}}<small v-if="item.nameEn">{{item.nameEn}}</small></span><span class="ml-symbol">{{item.kind==='crypto'&&item.ticker?`${item.ticker} / ${item.currency}`:item.symbol}}</span><span class="ml-price">{{item.kind==='crypto'?cryptoNumber(item.price):number(item.price)}} <small>{{item.kind==='index'?'点':item.currency}}</small></span><span class="ml-change">{{item.kind==='crypto'?`${item.change>0?'+':''}${cryptoNumber(item.change)}`:signed(item.change)}} ({{signed(item.changePercent)}}%)</span><span class="ml-time">{{date(item.quoteAt)}}</span></a></div>
     <div v-else-if="visible.length&&viewMode==='cards'" class="market-grid">
@@ -14,7 +14,7 @@
       </a>
     </div>
     <div v-else class="market-empty">{{loading?'正在加载市场行情…':'此分类暂无可用行情。'}}<button v-if="!loading" type="button" @click="load">重试</button></div>
-    <footer class="market-footer"><span>{{viewMode==='heatmap'?'价格：Yahoo Finance / 东方财富 · 市值：CoinGecko / Nasdaq / 东方财富':'来源：Yahoo Finance / 东方财富'}} · 每小时采集 · 时间以设备本地时区显示</span><span>涨跌以数据源前收价为基准，不标注为滚动 24 小时涨跌。休市期间保留最近行情。</span><span>仅展示市场信息，不构成投资建议。</span></footer>
+    <footer v-if="!isInsightTab" class="market-footer"><span>{{viewMode==='heatmap'?'价格：Yahoo Finance / 东方财富 · 市值：CoinGecko / Nasdaq / 东方财富':'来源：Yahoo Finance / 东方财富'}} · 每小时采集 · 时间以设备本地时区显示</span><span>涨跌以数据源前收价为基准，不标注为滚动 24 小时涨跌。休市期间保留最近行情。</span><span>仅展示市场信息，不构成投资建议。</span></footer>
 </section>
 </template>
 <script>
@@ -24,7 +24,7 @@ export default {
  components:{MarketHeatmap,BankRateCalculator},
  name:'MarketOverview',props:{dark:Boolean},
  data:()=>({viewMode:'heatmap',items:[],selected:'',tabs:['A 股','美股','加密货币','银行利率'],redUp:true,loading:false,error:false,controller:null}),
- computed:{cryptoCount(){return this.items.filter(i=>i.kind==='crypto').length;},visible(){return this.items.filter(i=>!this.selected||i.category===this.selected);}},
+ computed:{cryptoCount(){return this.items.filter(i=>i.kind==='crypto').length;},visible(){return this.items.filter(i=>!this.selected||i.category===this.selected);},isInsightTab(){return this.selected==='银行利率';}},
  mounted(){try{const v=localStorage.getItem('market-view-v1');if(['heatmap','cards','list'].includes(v))this.viewMode=v;}catch{/* optional preference */}this.load();},beforeUnmount(){this.controller?.abort();},
  methods:{
  setView(view){this.viewMode=view;try{localStorage.setItem('market-view-v1',view);}catch{/* optional preference */}},

@@ -218,6 +218,8 @@
     </section>
     </div>
 
+    <InvestMasters v-show="!localSearchQuery.trim()" :dark="currentTheme === 'dark'" />
+
 
 
 
@@ -848,6 +850,7 @@ import ChinaCalendar from "./ChinaCalendar.vue";
 
 
 import CurrencyConverter from "./CurrencyConverter.vue";
+import InvestMasters from "./InvestMasters.vue";
 
 
 
@@ -975,7 +978,7 @@ export default {
 
 
 
-  components: { AiDigestPanel, CategoryPixelBadge, NasaApod, SourceSyncStatus, XNewsHub, XGlobalEvents, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, MarketOverview, NewsHotspotHub, GithubTrending, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check }, // 注册组件
+  components: { AiDigestPanel, CategoryPixelBadge, NasaApod, SourceSyncStatus, XNewsHub, XGlobalEvents, HistoryToday, WorldTime, SourceNewsCard, ChinaCalendar, CurrencyConverter, InvestMasters, MarketOverview, NewsHotspotHub, GithubTrending, BrowserFingerprint, HighlightText, SearchBackground, SearchPlanet, DocumentCopy, Search, Link, Check }, // 注册组件
 
 
 
